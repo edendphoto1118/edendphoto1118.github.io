@@ -13,21 +13,24 @@
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial;
     }
 
-    .hero {
-      height: 100vh;
-      background: 
-        linear-gradient(
-          rgba(0,0,0,0.45),
-          rgba(0,0,0,0.45)
-        ),
-        url("hero.jpg") center / cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      letter-spacing: 0.25em;
-    }
+.hero {
+  height: 100vh;
+  background:
+    linear-gradient(
+      rgba(0,0,0,0.6),
+      rgba(0,0,0,0.6)
+    ),
+    url("hero.jpg") center / cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.25em;
+
+  filter: grayscale(100%) brightness(0.85);
+}
+
 
     h1 {
       font-size: 2.8rem;
