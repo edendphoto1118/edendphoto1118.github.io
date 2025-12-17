@@ -2,19 +2,126 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN — Photography</title>
+  <title>EDEN — Photography & Design</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* 全站基礎設定 */
+    /* --- 全站基礎設定 --- */
     body {
       margin: 0;
       background: #000;
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial;
+      overflow-x: hidden; /* 防止左右滑動 */
+      cursor: none; /* 隱藏預設滑鼠 */
     }
 
-    /* --- Hero 區塊 (保持原本樣式) --- */
+    /* --- 客製化捲軸 (Webkit瀏覽器適用) --- */
+    ::-webkit-scrollbar {
+        width: 10px;
+        background: #000; /* 極黑底 */
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #00ffcc, #0066ff); /* 藍綠色極光漸層 */
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* 發光效果 */
+    }
+
+    /* --- 客製化滑鼠游標 --- */
+    .cursor-dot, .cursor-star {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      z-index: 99999;
+      transition: transform 0.1s ease-out, opacity 0.3s ease;
+    }
+
+    /* 中心小白點 */
+    .cursor-dot {
+      width: 4px;
+      height: 4px;
+      background-color: white;
+      border-radius: 50%;
+      mix-blend-mode: difference; /* 核心：色彩反相模式 */
+    }
+
+    /* 四線星芒 (使用SVG) */
+    .cursor-star {
+      width: 30px;
+      height: 30px;
+      background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0V30M0 15H30' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      mix-blend-mode: difference; /* 核心：色彩反相模式 */
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s, height 0.3s;
+    }
+
+    /* 滑鼠互動狀態：旋轉與放大 */
+    .cursor-hover .cursor-star {
+      transform: translate(-50%, -50%) rotate(360deg) scale(1.5);
+    }
+    
+    /* 手機版不顯示客製化滑鼠 */
+    @media (max-width: 768px) {
+        .cursor-dot, .cursor-star { display: none; }
+        body { cursor: auto; }
+    }
+
+
+    /* --- 背景極光動畫容器 --- */
+    #aurora-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none; /* 不擋住點擊 */
+      z-index: -1; /* 在最底層 */
+      overflow: hidden;
+    }
+
+    /* 單個極光元素 */
+    .aurora-blob {
+      position: absolute;
+      width: 40vw; /* 極光大小 */
+      height: 40vw;
+      border-radius: 50%;
+      /* 藍綠色高質感漸層 */
+      background: radial-gradient(circle, rgba(0,255,204,0.4) 0%, rgba(0,102,255,0.2) 50%, rgba(0,0,0,0) 70%);
+      filter: blur(80px); /* 強力模糊製造極光感 */
+      opacity: 0;
+      /* 使用 CSS 變數控制動態路徑 */
+      transform: translate(var(--startX), var(--startY)) scale(0.8);
+      animation: auroraMove 6s ease-in-out forwards;
+    }
+
+    /* 極光移動動畫 */
+    @keyframes auroraMove {
+      0% {
+        opacity: 0;
+        transform: translate(var(--startX), var(--startY)) scale(0.8);
+      }
+      20% {
+        opacity: 0.8; /* 出現 */
+      }
+      80% {
+        opacity: 0.6;
+      }
+      100% {
+        opacity: 0; /* 消失在終點 */
+        transform: translate(var(--endX), var(--endY)) scale(1.2);
+      }
+    }
+
+
+    /* --- 1. Hero 區塊 (首頁大圖) --- */
     .hero {
       height: 100vh;
       background:
@@ -30,7 +137,7 @@
       text-align: center;
       letter-spacing: 0.25em;
       
-      /* 這行讓 Hero 區塊強制黑白並壓暗 */
+      /* 強制黑白並壓暗，製造時尚雜誌感 */
       filter: grayscale(100%) brightness(0.85);
     }
 
@@ -39,92 +146,180 @@
       margin: 0;
     }
 
-    p {
+    .hero p {
       margin-top: 12px;
       font-size: 0.75rem;
       opacity: 0.9;
     }
 
-    a {
+    .hero a {
       margin-top: 28px;
       font-size: 0.7rem;
       color: #fff;
       text-decoration: none;
       opacity: 0.65;
       transition: opacity 0.3s ease;
+      border-bottom: 1px solid transparent;
     }
 
-    a:hover {
+    .hero a:hover {
       opacity: 1;
+      border-bottom: 1px solid #fff;
     }
 
-    /* --- Works 作品集區塊 (新增部分) --- */
+    /* --- 2. Works 作品集區塊 --- */
     .works {
-      padding: 100px 8vw; /* 上下留白，左右留邊 */
-      background: #000;
+      padding: 100px 8vw;
+      /* background: #000; 移除純黑背景，讓極光透出來 */
+      position: relative;
     }
 
-    .works h2 {
+    .section-title {
       font-size: 14px;
       letter-spacing: 0.3em;
-      color: #888;
+      color: #888; /* 把文字調亮一點以適應極光背景 */
       margin-bottom: 60px;
       text-transform: uppercase;
       text-align: center;
     }
 
-    /* 網格佈局：電腦版兩欄 */
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 40px; /* 圖片之間的間距 */
+      gap: 40px;
     }
 
-    /* 圖片互動特效核心 */
     .grid img {
       width: 100%;
       display: block;
-      filter: grayscale(100%); /* 平常狀態：完全黑白 */
-      transition: all 0.5s ease; /* 動畫過渡時間 */
-      cursor: pointer; /* 滑鼠變手手，暗示可點擊 */
+      filter: grayscale(100%);
+      transition: all 0.5s ease;
+      cursor: none; /* 確保圖片上也沒有預設滑鼠 */
     }
 
-    /* 滑鼠移上去：變回彩色 + 稍微放大 + 浮起 */
     .grid img:hover {
       filter: grayscale(0%);
       transform: scale(1.03); 
       z-index: 10;
     }
 
-    /* RWD 手機版調整：改為單欄，避免太擠 */
+    /* --- 3. LAB 工具區塊 (已更新) --- */
+    .lab {
+      padding: 100px 8vw;
+      background: rgba(8, 8, 8, 0.8); /* 改為半透明黑，讓極光透出 */
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      backdrop-filter: blur(10px); /* 毛玻璃效果增加質感 */
+    }
+
+    .lab-content h3 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    .lab-content p {
+      font-size: 0.9rem;
+      color: #aaa;
+      line-height: 1.6;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    .lab-link {
+      font-size: 0.9rem;
+      color: #00ffcc; /* 連結改為極光藍綠色 */
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+      padding-bottom: 5px;
+      transition: all 0.3s;
+      letter-spacing: 0.1em;
+    }
+
+    .lab-link:hover {
+      border-bottom: 1px solid #00ffcc;
+      color: #fff;
+    }
+
+    /* --- 4. Background 建築背景區塊 --- */
+    .background {
+      padding: 150px 8vw;
+      /* background: #000; 移除純黑 */
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .quote {
+      font-size: 1.2rem;
+      line-height: 2;
+      color: #ddd;
+      font-style: italic;
+      max-width: 600px;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .role {
+      font-size: 0.75rem;
+      color: #777;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* --- Footer 頁尾 --- */
+    footer {
+      padding: 50px 0;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #555;
+      border-top: 1px solid #111;
+      letter-spacing: 0.05em;
+      background: #000; /* 頁尾保持純黑 */
+    }
+
+    /* --- RWD 手機版調整 --- */
     @media (max-width: 768px) {
       .grid {
         grid-template-columns: 1fr;
       }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .lab, .background {
+        padding: 80px 6vw;
+      }
     }
 
-    /* --- Lightbox (燈箱放大鏡) 樣式 --- */
+    /* --- Lightbox 燈箱設定 --- */
     .lightbox {
-      display: none; /* 預設隱藏 */
+      display: none;
       position: fixed;
-      z-index: 9999; /* 確保在最最上層 */
+      z-index: 99999;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95); /* 深黑背景，微透 */
+      background-color: rgba(0, 0, 0, 0.95);
       justify-content: center;
       align-items: center;
+      cursor: auto; /* 燈箱模式恢復正常滑鼠，方便點擊 X */
     }
 
     .lightbox-content {
       max-width: 90%;
       max-height: 90%;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5); /* 讓圖片有浮起感 */
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
       border: 1px solid #333;
+      cursor: none;
     }
 
-    /* X 關閉按鈕 */
     .close-btn {
       position: absolute;
       top: 20px;
@@ -134,53 +329,142 @@
       font-weight: 100;
       cursor: pointer;
       transition: 0.3s;
-      z-index: 10000;
+      z-index: 100000;
     }
-
-    .close-btn:hover {
-      color: #bbb;
-    }
+    .close-btn:hover { color: #00ffcc; }
   </style>
 </head>
 
 <body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-star"></div>
+
+  <div id="aurora-container"></div>
 
   <section class="hero">
     <h1>EDEN</h1>
-    <p>PHOTOGRAPHY</p>
-    <a href="https://www.instagram.com/eden_d_photo/" target="_blank">
+    <p>PHOTOGRAPHY & DESIGN</p>
+    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="hover-target">
       Instagram →
     </a>
   </section>
 
   <section class="works" id="work">
-    <h2>WORKS</h2>
+    <h2 class="section-title">WORKS</h2>
     <div class="grid">
-      <img src="images/works/work01.jpg" onclick="openLightbox(this)" alt="Work 01">
-      <img src="images/works/work02.jpg" onclick="openLightbox(this)" alt="Work 02">
-      <img src="images/works/work03.jpg" onclick="openLightbox(this)" alt="Work 03">
-      <img src="images/works/work04.jpg" onclick="openLightbox(this)" alt="Work 04">
-      <img src="images/works/work05.jpg" onclick="openLightbox(this)" alt="Work 05">
-      <img src="images/works/work06.jpg" onclick="openLightbox(this)" alt="Work 06">
+      <img src="images/works/work01.jpg" onclick="openLightbox(this)" alt="Work 01" class="hover-target">
+      <img src="images/works/work02.jpg" onclick="openLightbox(this)" alt="Work 02" class="hover-target">
+      <img src="images/works/work03.jpg" onclick="openLightbox(this)" alt="Work 03" class="hover-target">
+      <img src="images/works/work04.jpg" onclick="openLightbox(this)" alt="Work 04" class="hover-target">
+      <img src="images/works/work05.jpg" onclick="openLightbox(this)" alt="Work 05" class="hover-target">
+      <img src="images/works/work06.jpg" onclick="openLightbox(this)" alt="Work 06" class="hover-target">
     </div>
   </section>
 
+  <section class="lab">
+    <h2 class="section-title" style="text-align: left; margin-bottom: 40px;">LAB</h2>
+    <div class="lab-content">
+      <h3>VIBE CHECK_氣氛博士</h3>
+      <p>一個專為酒局設計的氣氛升溫 Web App。<br>結合演算法與互動話題，讓聚會不再冷場。</p>
+      <a href="https://vibe-check-ih3e.vercel.app/" target="_blank" class="lab-link hover-target">
+        Launch VIBE CHECK →
+      </a>
+    </div>
+  </section>
+
+  <section class="background">
+    <h2 class="section-title">BACKGROUND</h2>
+    <p class="quote">“My visual language is deeply shaped by architectural thinking — structure, light, and spatial rhythm.”</p>
+    <p class="role">Architectural Design / Spatial Analysis</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 EDEN. All Rights Reserved.</p>
+  </footer>
+
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close-btn" onclick="closeLightbox()">&times;</span>
+    <span class="close-btn hover-target" onclick="closeLightbox()">&times;</span>
     <img class="lightbox-content" id="lightbox-img">
   </div>
 
   <script>
-    // 打開燈箱
+    // --- 客製化滑鼠游標邏輯 ---
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorStar = document.querySelector('.cursor-star');
+    const hoverTargets = document.querySelectorAll('a, img, .hover-target, button');
+
+    // 滑鼠移動時更新位置
+    document.addEventListener('mousemove', (e) => {
+      const posX = e.clientX;
+      const posY = e.clientY;
+
+      // 中心點直接跟隨
+      cursorDot.style.left = `${posX}px`;
+      cursorDot.style.top = `${posY}px`;
+
+      // 星芒稍微延遲跟隨，製造流暢感
+      cursorStar.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+      }, { duration: 500, fill: "forwards" });
+    });
+
+    // 互動元素 Hover 效果
+    hoverTargets.forEach(target => {
+      target.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-hover');
+      });
+      target.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-hover');
+      });
+    });
+
+
+    // --- 背景極光生成邏輯 ---
+    const auroraContainer = document.getElementById('aurora-container');
+
+    function createAurora() {
+      const aurora = document.createElement('div');
+      aurora.classList.add('aurora-blob');
+
+      // 計算隨機起點 (在當前視窗內)
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      
+      // 計算隨機終點 (導向畫面的四個角落附近)
+      const cornerX = Math.random() > 0.5 ? window.innerWidth + 200 : -200;
+      const cornerY = Math.random() > 0.5 ? window.innerHeight + 200 : -200;
+      // 加入一些隨機偏移，不要太死板
+      const endX = cornerX + (Math.random() * 400 - 200);
+      const endY = cornerY + (Math.random() * 400 - 200);
+
+      // 將計算好的座標傳給 CSS 變數
+      aurora.style.setProperty('--startX', `${startX}px`);
+      aurora.style.setProperty('--startY', `${startY}px`);
+      aurora.style.setProperty('--endX', `${endX}px`);
+      aurora.style.setProperty('--endY', `${endY}px`);
+
+      auroraContainer.appendChild(aurora);
+
+      // 6秒動畫結束後移除元素，避免記憶體洩漏
+      setTimeout(() => {
+        aurora.remove();
+      }, 6000);
+    }
+
+    // 每 3 秒生成一個極光
+    setInterval(createAurora, 3000);
+    // 頁面載入時先生成一個
+    createAurora();
+
+
+    // --- Lightbox 燈箱邏輯 ---
     function openLightbox(element) {
       var lightbox = document.getElementById("lightbox");
       var lightboxImg = document.getElementById("lightbox-img");
-      
-      lightbox.style.display = "flex"; // 顯示
-      lightboxImg.src = element.src;   // 把點到的圖傳進去
+      lightbox.style.display = "flex";
+      lightboxImg.src = element.src;
     }
-
-    // 關閉燈箱
     function closeLightbox() {
       document.getElementById("lightbox").style.display = "none";
     }
