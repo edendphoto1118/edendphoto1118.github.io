@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+    /* 全站基礎設定 */
     body {
       margin: 0;
       background: #000;
@@ -13,24 +14,25 @@
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial;
     }
 
-.hero {
-  height: 100vh;
-  background:
-    linear-gradient(
-      rgba(0,0,0,0.6),
-      rgba(0,0,0,0.6)
-    ),
-    url("hero.jpg") center / cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  letter-spacing: 0.25em;
-
-  filter: grayscale(100%) brightness(0.85);
-}
-
+    /* --- Hero 區塊 (保持原本樣式) --- */
+    .hero {
+      height: 100vh;
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.6),
+          rgba(0,0,0,0.6)
+        ),
+        url("hero.jpg") center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      letter-spacing: 0.25em;
+      
+      /* 這行讓 Hero 區塊強制黑白並壓暗 */
+      filter: grayscale(100%) brightness(0.85);
+    }
 
     h1 {
       font-size: 2.8rem;
@@ -55,10 +57,94 @@
     a:hover {
       opacity: 1;
     }
+
+    /* --- Works 作品集區塊 (新增部分) --- */
+    .works {
+      padding: 100px 8vw; /* 上下留白，左右留邊 */
+      background: #000;
+    }
+
+    .works h2 {
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      color: #888;
+      margin-bottom: 60px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* 網格佈局：電腦版兩欄 */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px; /* 圖片之間的間距 */
+    }
+
+    /* 圖片互動特效核心 */
+    .grid img {
+      width: 100%;
+      display: block;
+      filter: grayscale(100%); /* 平常狀態：完全黑白 */
+      transition: all 0.5s ease; /* 動畫過渡時間 */
+      cursor: pointer; /* 滑鼠變手手，暗示可點擊 */
+    }
+
+    /* 滑鼠移上去：變回彩色 + 稍微放大 + 浮起 */
+    .grid img:hover {
+      filter: grayscale(0%);
+      transform: scale(1.03); 
+      z-index: 10;
+    }
+
+    /* RWD 手機版調整：改為單欄，避免太擠 */
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* --- Lightbox (燈箱放大鏡) 樣式 --- */
+    .lightbox {
+      display: none; /* 預設隱藏 */
+      position: fixed;
+      z-index: 9999; /* 確保在最最上層 */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95); /* 深黑背景，微透 */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5); /* 讓圖片有浮起感 */
+      border: 1px solid #333;
+    }
+
+    /* X 關閉按鈕 */
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: #fff;
+      font-size: 50px;
+      font-weight: 100;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 10000;
+    }
+
+    .close-btn:hover {
+      color: #bbb;
+    }
   </style>
 </head>
 
 <body>
+
   <section class="hero">
     <h1>EDEN</h1>
     <p>PHOTOGRAPHY</p>
@@ -66,5 +152,39 @@
       Instagram →
     </a>
   </section>
+
+  <section class="works" id="work">
+    <h2>WORKS</h2>
+    <div class="grid">
+      <img src="images/works/work01.jpg" onclick="openLightbox(this)" alt="Work 01">
+      <img src="images/works/work02.jpg" onclick="openLightbox(this)" alt="Work 02">
+      <img src="images/works/work03.jpg" onclick="openLightbox(this)" alt="Work 03">
+      <img src="images/works/work04.jpg" onclick="openLightbox(this)" alt="Work 04">
+      <img src="images/works/work05.jpg" onclick="openLightbox(this)" alt="Work 05">
+      <img src="images/works/work06.jpg" onclick="openLightbox(this)" alt="Work 06">
+    </div>
+  </section>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close-btn" onclick="closeLightbox()">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
+  <script>
+    // 打開燈箱
+    function openLightbox(element) {
+      var lightbox = document.getElementById("lightbox");
+      var lightboxImg = document.getElementById("lightbox-img");
+      
+      lightbox.style.display = "flex"; // 顯示
+      lightboxImg.src = element.src;   // 把點到的圖傳進去
+    }
+
+    // 關閉燈箱
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+  </script>
+
 </body>
 </html>
