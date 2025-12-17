@@ -2,167 +2,282 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN — Photography & Design</title>
+  <title>EDEN — Visual Director</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
   <style>
     /* --- 全站基礎設定 --- */
     body {
       margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      background: #050505; /* 深炭黑，比純黑更有質感 */
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       cursor: none; /* 隱藏預設滑鼠 */
     }
 
-    /* --- 置頂導覽列 (Sticky Header) --- */
-    nav {
+    /* --- 電影感底片顆粒 (Film Grain Overlay) --- */
+    .noise-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 30px 50px;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* --- 置頂導覽列 --- */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 40px 60px;
       box-sizing: border-box;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       z-index: 10000;
-      mix-blend-mode: difference; /* 讓文字在任何背景上都反色可見 */
+      mix-blend-mode: difference; /* 確保在任何背景可見 */
     }
 
     .nav-logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       text-decoration: none;
       color: #fff;
-      text-transform: uppercase;
       cursor: none;
     }
 
-    .nav-menu { display: flex; gap: 40px; }
-    .nav-item { font-size: 0.8rem; color: #fff; text-decoration: none; letter-spacing: 0.1em; position: relative; cursor: none; text-transform: uppercase; }
-    .nav-item::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 0; background-color: #fff; transition: width 0.3s ease; }
+    .nav-menu { display: flex; gap: 50px; }
+    .nav-item {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      position: relative;
+      cursor: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .nav-item:hover { opacity: 1; }
+    .nav-item::after {
+      content: ''; position: absolute; width: 0; height: 1px; bottom: -8px; left: 0;
+      background-color: #fff; transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
     .nav-item:hover::after { width: 100%; }
 
 
-    /* --- 客製化捲軸 (修正版：時尚高質感極簡風) --- */
-    ::-webkit-scrollbar {
-        width: 5px; /* 變得更細緻 */
-        background: transparent; /* 軌道透明，融入背景 */
-    }
-    ::-webkit-scrollbar-track {
-        background: transparent; /* 確保軌道完全隱形 */
-    }
+    /* --- 客製化捲軸 (極簡隱形) --- */
+    ::-webkit-scrollbar { width: 4px; background: transparent; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.8); /* 使用微透明的純白，低調高級 */
-        border-radius: 10px; /* 圓潤俐落 */
-        transition: background 0.3s;
-        /* 移除原本的漸層與發光，回歸純粹 */
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 2px;
     }
-    /* 滑鼠移到捲軸上時稍微變亮 */
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 1);
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.9); }
+
+
+    /* --- 生物感滑鼠游標 (Organic Cursor) --- */
+    .cursor-dot {
+      width: 12px; height: 12px; /* 基礎大小：不迷你，清晰可見 */
+      background-color: #fff;
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 99999;
+      mix-blend-mode: difference; /* 反相核心 */
+      transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear; /* 平滑變形 */
+    }
+
+    /* 滑鼠互動狀態：放大 + 呼吸 */
+    body.hover-active .cursor-dot {
+      width: 60px;
+      height: 60px;
+      animation: breathe 3s infinite ease-in-out; /* 呼吸特效 */
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.15); } /* 輕微膨脹 */
     }
 
 
-    /* --- 客製化滑鼠游標 (極致銳利星芒) --- */
-    .cursor-dot, .cursor-star {
-      pointer-events: none; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 99999; transition: transform 0.1s ease-out;
+    /* --- 背景極光動畫 (可受物理干擾) --- */
+    #aurora-container {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: -1; overflow: hidden;
     }
-    .cursor-dot { width: 4px; height: 4px; background-color: white; border-radius: 50%; mix-blend-mode: difference; }
-    .cursor-star {
-      width: 50px; height: 50px;
-      background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0 L26.5 23.5 L50 25 L26.5 26.5 L25 50 L23.5 26.5 L0 25 L23.5 23.5 Z' fill='white'/%3E%3C/svg%3E");
-      background-size: contain; background-repeat: no-repeat; mix-blend-mode: difference;
-      transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    .cursor-hover .cursor-star { transform: translate(-50%, -50%) rotate(180deg) scale(1.8); }
     
-    @media (max-width: 768px) {
-        .cursor-dot, .cursor-star { display: none; }
-        body { cursor: auto; }
-        nav { padding: 20px; } .nav-menu { gap: 20px; } .nav-item { font-size: 0.7rem; }
-    }
-
-
-    /* --- 背景極光動畫 --- */
-    #aurora-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; overflow: hidden; }
     .aurora-blob {
-      position: absolute; width: 45vw; height: 45vw; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,204,0.3) 0%, rgba(0,102,255,0.15) 50%, rgba(0,0,0,0) 70%);
-      filter: blur(90px); opacity: 0; transform: translate(var(--startX), var(--startY)) scale(0.8);
-      animation: auroraMove 6s ease-in-out forwards;
-    }
-    @keyframes auroraMove {
-      0% { opacity: 0; transform: translate(var(--startX), var(--startY)) scale(0.8); }
-      20% { opacity: 0.7; } 80% { opacity: 0.5; }
-      100% { opacity: 0; transform: translate(var(--endX), var(--endY)) scale(1.2); }
+      position: absolute;
+      width: 50vw; height: 50vw;
+      border-radius: 50%;
+      /* 更高質感的藍綠色調 */
+      background: radial-gradient(circle, rgba(0,255,204,0.25) 0%, rgba(0,100,255,0.1) 60%, rgba(0,0,0,0) 80%);
+      filter: blur(80px);
+      opacity: 0;
+      /* 這裡的 transform 會被 JS 動態覆蓋以產生波動 */
+      transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 2s ease;
     }
 
 
-    /* --- 1. Hero 區塊 --- */
+    /* --- 1. Hero 區塊 (電影感排版) --- */
     .hero {
-      height: 100vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("hero.jpg") center / cover no-repeat;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
       display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-      letter-spacing: 0.25em; filter: grayscale(100%) brightness(0.85); position: relative;
     }
-    .hero h1 { font-size: 3rem; margin: 0; } .hero p { margin-top: 12px; font-size: 0.8rem; opacity: 0.9; }
+
+    /* 背景圖緩慢推進效果 (Ken Burns Effect) */
+    .hero-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: url("hero.jpg") center / cover no-repeat;
+      filter: grayscale(100%) brightness(0.7) contrast(1.1);
+      animation: slowZoom 20s infinite alternate linear;
+      z-index: -2;
+    }
+    @keyframes slowZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    .hero-content {
+      z-index: 1;
+      mix-blend-mode: overlay; /* 讓文字融入背景光影 */
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 5vw; /* 響應式大字 */
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      margin: 0;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+
+    .hero p {
+      margin-top: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      padding-top: 20px;
+      display: inline-block;
+    }
 
 
     /* --- 2. Works 作品集 (瀑布流) --- */
-    .works { padding: 120px 8vw; position: relative; }
-    .section-title { font-size: 14px; letter-spacing: 0.3em; color: #aaa; margin-bottom: 80px; text-transform: uppercase; text-align: center; }
-    .masonry-grid { column-count: 2; column-gap: 40px; }
-    .masonry-item { break-inside: avoid; margin-bottom: 40px; position: relative; }
-    .masonry-item img { width: 100%; height: auto; display: block; filter: grayscale(100%); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); cursor: none; }
-    .masonry-item img:hover { filter: grayscale(0%); transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .works { padding: 150px 8vw; position: relative; }
+    
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.4em;
+      color: #666;
+      margin-bottom: 100px;
+      text-transform: uppercase;
+      text-align: center;
+      position: relative;
+    }
+    /* 標題裝飾線 */
+    .section-title::after {
+      content: ''; display: block; width: 1px; height: 40px; background: #333;
+      margin: 20px auto 0;
+    }
+
+    .masonry-grid { column-count: 2; column-gap: 60px; }
+    .masonry-item { break-inside: avoid; margin-bottom: 60px; position: relative; }
+    
+    .masonry-item img {
+      width: 100%; height: auto; display: block;
+      filter: grayscale(100%) contrast(0.9);
+      transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+      cursor: none;
+    }
+
+    /* 懸停效果：顯色 + 輕微上浮 */
+    .masonry-item img:hover {
+      filter: grayscale(0%) contrast(1.05);
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+
     @media (max-width: 768px) { .masonry-grid { column-count: 1; } }
 
 
     /* --- 3. LAB & Background 區塊 --- */
-    .lab, .background { padding: 100px 8vw; border-top: 1px solid #1a1a1a; backdrop-filter: blur(5px); }
-    .lab { background: rgba(10, 10, 10, 0.6); }
-    .background { background: rgba(0, 0, 0, 0.8); text-align: center; display: flex; flex-direction: column; align-items: center; }
-    .lab-content h3 { font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem; color: #fff; }
-    .lab-content p { font-size: 0.9rem; color: #aaa; line-height: 1.6; max-width: 500px; margin-bottom: 30px; }
-    .lab-link { font-size: 0.9rem; color: #00ffcc; text-decoration: none; border-bottom: 1px solid rgba(0, 255, 204, 0.3); padding-bottom: 5px; transition: all 0.3s; letter-spacing: 0.1em; }
-    .lab-link:hover { border-bottom: 1px solid #00ffcc; color: #fff; }
-    .quote { font-size: 1.2rem; line-height: 2; color: #ddd; font-style: italic; max-width: 600px; opacity: 0.9; margin-bottom: 30px; }
-    .role { font-size: 0.75rem; color: #777; letter-spacing: 0.15em; text-transform: uppercase; }
-    footer { padding: 50px 0; text-align: center; font-size: 0.7rem; color: #555; border-top: 1px solid #111; background: #000; }
+    .lab, .background {
+      padding: 120px 8vw;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+    }
+    .lab { background: rgba(10, 10, 10, 0.4); }
+    .background { background: rgba(0, 0, 0, 0.6); text-align: center; display: flex; flex-direction: column; align-items: center; }
+
+    .lab-content h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 1rem; color: #fff; font-style: italic; }
+    .lab-content p { font-size: 0.95rem; color: #aaa; line-height: 1.8; max-width: 500px; margin-bottom: 40px; font-weight: 300; }
+    
+    .lab-link {
+      font-size: 0.8rem; color: #00ffcc; text-decoration: none;
+      padding-bottom: 5px; border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+      transition: all 0.3s; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .lab-link:hover { border-bottom: 1px solid #00ffcc; color: #fff; text-shadow: 0 0 10px rgba(0,255,204,0.5); }
+
+    .quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; line-height: 1.8; color: #ddd; font-style: italic;
+      max-width: 700px; opacity: 0.9; margin-bottom: 40px;
+    }
+    .role { font-size: 0.7rem; color: #555; letter-spacing: 0.2em; text-transform: uppercase; }
+
+    footer { padding: 60px 0; text-align: center; font-size: 0.65rem; color: #444; border-top: 1px solid #111; letter-spacing: 0.1em; }
 
 
     /* --- Lightbox --- */
-    .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); justify-content: center; align-items: center; cursor: auto; }
-    .lightbox-content { max-width: 90%; max-height: 90%; border: 1px solid #333; cursor: none; }
-    .close-btn { position: absolute; top: 30px; right: 50px; color: #fff; font-size: 40px; font-weight: 100; cursor: pointer; z-index: 100000; transition: 0.3s; }
+    .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); justify-content: center; align-items: center; cursor: none; }
+    .lightbox-content { max-width: 90%; max-height: 90%; box-shadow: 0 0 50px rgba(0,0,0,0.8); cursor: none; }
+    .close-btn { position: absolute; top: 40px; right: 60px; color: #fff; font-size: 40px; font-weight: 100; cursor: none; z-index: 100000; transition: 0.3s; mix-blend-mode: difference; }
     .close-btn:hover { color: #00ffcc; transform: rotate(90deg); }
 
   </style>
 </head>
 
 <body>
+  <div class="noise-overlay"></div>
+
   <div class="cursor-dot"></div>
-  <div class="cursor-star"></div>
+
   <div id="aurora-container"></div>
 
   <nav>
     <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target">EDEN</a>
     <div class="nav-menu">
-      <a href="#work" class="nav-item hover-target">PORTRAIT</a>
-      <a href="#background" class="nav-item hover-target">MORE ABOUT EDEN</a>
+      <a href="#work" class="nav-item hover-target">Portrait</a>
+      <a href="#background" class="nav-item hover-target">About</a>
     </div>
   </nav>
 
   <section class="hero">
-    <h1>EDEN</h1>
-    <p>PHOTOGRAPHY & DESIGN</p>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>EDEN D.</h1>
+      <p>Visual Director & Photographer</p>
+    </div>
   </section>
 
   <section class="works" id="work">
-    <h2 class="section-title">PORTRAIT / WORKS</h2>
+    <h2 class="section-title">Selected Works</h2>
     <div class="masonry-grid">
       <div class="masonry-item"><img src="images/works/work01.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
       <div class="masonry-item"><img src="images/works/work02.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
@@ -174,17 +289,17 @@
   </section>
 
   <section class="lab">
-    <h2 class="section-title" style="text-align: left; margin-bottom: 40px;">LAB</h2>
+    <h2 class="section-title" style="text-align: left; margin-bottom: 40px;">Experiment</h2>
     <div class="lab-content">
-      <h3>VIBE CHECK_氣氛博士</h3>
-      <p>一個專為酒局設計的氣氛升溫 Web App。<br>結合演算法與互動話題，讓聚會不再冷場。</p>
-      <a href="https://vibe-check-ih3e.vercel.app/" target="_blank" class="lab-link hover-target">Launch VIBE CHECK →</a>
+      <h3>Vibe Check / 氣氛博士</h3>
+      <p>A digital catalyst for social chemistry. Utilizing algorithms to modulate atmosphere in real-time gatherings.</p>
+      <a href="https://vibe-check-ih3e.vercel.app/" target="_blank" class="lab-link hover-target">Launch Project →</a>
     </div>
   </section>
 
   <section class="background" id="background">
-    <h2 class="section-title">BACKGROUND</h2>
-    <p class="quote">“My visual language is deeply shaped by architectural thinking — structure, light, and spatial rhythm.”</p>
+    <h2 class="section-title">Background</h2>
+    <p class="quote">“Structure is the music of light. My photography is an extension of architectural logic.”</p>
     <p class="role">Architectural Design / Spatial Analysis</p>
   </section>
 
@@ -192,37 +307,126 @@
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close-btn hover-target" onclick="closeLightbox()">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
+    <img class="lightbox-content" id="lightbox-img" class="hover-target">
   </div>
 
   <script>
+    /* --- 游標邏輯 (呼吸 + 反相 + 放大) --- */
     const cursorDot = document.querySelector('.cursor-dot');
-    const cursorStar = document.querySelector('.cursor-star');
     const hoverTargets = document.querySelectorAll('.hover-target, a, img, button');
+    
+    // 滑鼠位置追蹤
+    let mouseX = 0, mouseY = 0;
+    // 游標延遲位置 (用於極光波動計算)
+    let delayedX = 0, delayedY = 0;
+
     document.addEventListener('mousemove', (e) => {
-      const posX = e.clientX; const posY = e.clientY;
-      cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
-      cursorStar.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 400, fill: "forwards" });
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // 游標本體直接跟隨，不延遲以保持精準手感
+      cursorDot.style.left = `${mouseX}px`;
+      cursorDot.style.top = `${mouseY}px`;
     });
+
+    // 監聽所有互動元素，切換呼吸狀態
     hoverTargets.forEach(target => {
-      target.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      target.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      target.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+      target.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
     });
 
-    const auroraContainer = document.getElementById('aurora-container');
-    function createAurora() {
-      const aurora = document.createElement('div'); aurora.classList.add('aurora-blob');
-      const startX = Math.random() * window.innerWidth; const startY = Math.random() * window.innerHeight;
-      const endX = (Math.random() > 0.5 ? window.innerWidth + 200 : -200) + (Math.random() * 200);
-      const endY = (Math.random() > 0.5 ? window.innerHeight + 200 : -200) + (Math.random() * 200);
-      aurora.style.setProperty('--startX', `${startX}px`); aurora.style.setProperty('--startY', `${startY}px`);
-      aurora.style.setProperty('--endX', `${endX}px`); aurora.style.setProperty('--endY', `${endY}px`);
-      auroraContainer.appendChild(aurora); setTimeout(() => aurora.remove(), 6000);
-    }
-    setInterval(createAurora, 3000); createAurora();
 
-    function openLightbox(element) { document.getElementById("lightbox").style.display = "flex"; document.getElementById("lightbox-img").src = element.src; }
-    function closeLightbox() { document.getElementById("lightbox").style.display = "none"; }
+    /* --- 極光生成與物理波動邏輯 --- */
+    const auroraContainer = document.getElementById('aurora-container');
+    const auroras = []; // 儲存現存的極光物件
+
+    function createAurora() {
+      const el = document.createElement('div');
+      el.classList.add('aurora-blob');
+      
+      // 隨機起點
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      
+      // 設定初始位置
+      let posX = startX;
+      let posY = startY;
+      
+      // 隨機漂移目標
+      const driftX = (Math.random() - 0.5) * 200;
+      const driftY = (Math.random() - 0.5) * 200;
+
+      el.style.transform = `translate(${posX}px, ${posY}px) scale(0.8)`;
+      auroraContainer.appendChild(el);
+
+      const auroraObj = { el, posX, posY, driftX, driftY, life: 0 };
+      auroras.push(auroraObj);
+
+      // 6秒後移除
+      setTimeout(() => {
+        el.remove();
+        const index = auroras.indexOf(auroraObj);
+        if (index > -1) auroras.splice(index, 1);
+      }, 6000);
+    }
+
+    // 動畫循環：處理極光移動與滑鼠排斥
+    function animateAuroras() {
+      // 讓 delayedX 慢慢追上 mouseX，計算移動速度
+      delayedX += (mouseX - delayedX) * 0.1;
+      delayedY += (mouseY - delayedY) * 0.1;
+
+      auroras.forEach(obj => {
+        obj.life += 0.01;
+        
+        // 1. 自然漂移
+        obj.posX += obj.driftX * 0.005;
+        obj.posY += obj.driftY * 0.005;
+
+        // 2. 滑鼠排斥力 (波動效果)
+        // 計算極光與滑鼠的距離
+        const dx = obj.posX - mouseX;
+        const dy = obj.posY - mouseY;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        
+        // 如果距離夠近，產生推力
+        if (dist < 300) {
+          const force = (300 - dist) / 300;
+          const angle = Math.atan2(dy, dx);
+          const pushX = Math.cos(angle) * force * 5; // 推力強度
+          const pushY = Math.sin(angle) * force * 5;
+          
+          obj.posX += pushX;
+          obj.posY += pushY;
+        }
+
+        // 更新 DOM
+        obj.el.style.transform = `translate(${obj.posX}px, ${obj.posY}px) scale(${1 + Math.sin(obj.life)*0.2})`;
+        
+        // 淡入淡出邏輯由 CSS transition 處理，這裡只處理透明度觸發
+        if(obj.life < 0.1) obj.el.style.opacity = 0.6;
+        if(obj.life > 0.8) obj.el.style.opacity = 0; // 模擬 CSS animation 尾段
+      });
+
+      requestAnimationFrame(animateAuroras);
+    }
+
+    // 啟動循環
+    setInterval(createAurora, 2000); // 每2秒生成一顆
+    createAurora();
+    animateAuroras();
+
+
+    /* --- Lightbox 邏輯 --- */
+    function openLightbox(element) {
+      document.getElementById("lightbox").style.display = "flex";
+      document.getElementById("lightbox-img").src = element.src;
+      document.body.classList.add('hover-active'); // 打開燈箱時讓游標保持大圓狀態
+    }
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+      document.body.classList.remove('hover-active');
+    }
   </script>
 </body>
 </html>
