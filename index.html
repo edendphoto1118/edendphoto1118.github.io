@@ -129,23 +129,21 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 2. Film Strip (修正：軸心旋轉 + 中間全彩) --- */
+    /* --- 2. Film Strip (Netflix 軸心 3D) --- */
     .film-strip {
       padding: 100px 0 160px 0; position: relative;
       background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.9) 50%, #000 100%); z-index: 10;
-      perspective: 1500px; /* 增加透視感，讓旋轉更立體 */
+      perspective: 1500px;
     }
     .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
     
     .swiper-slide {
       background-position: center; background-size: cover;
-      width: 300px; height: 450px; /* 直式作品尺寸 */
+      width: 300px; height: 450px;
       flex-shrink: 0; 
-      /* 默認狀態：黑白、變暗、無陰影 */
+      /* 預設：黑白、變暗 */
       filter: grayscale(100%) brightness(0.3);
-      /* 加上 will-change 優化效能 */
-      will-change: transform, filter;
-      transition: filter 0.6s ease;
+      transition: filter 0.6s ease, transform 0.6s ease;
       pointer-events: auto; user-select: none;
     }
     .swiper-slide img {
@@ -153,16 +151,13 @@
       border-radius: 4px;
     }
     
-    /* [核心修正] 激活狀態：正中間的照片 */
-    /* 使用 !important 確保權重最高，強制彩色 */
+    /* 激活：彩色、發光、無陰影 */
     .swiper-slide-active, 
     .swiper-slide-duplicate-active {
-      filter: grayscale(0%) brightness(1.2) !important;
+      filter: grayscale(0%) brightness(1.1) !important;
       z-index: 20;
-      /* 輕微放大效果由 swiper coverflow 處理，這裡加一點發光 */
-      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
     }
-    /* Swiper Coverflow 陰影 */
     .swiper-slide-shadow-left, .swiper-slide-shadow-right {
       background-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0));
     }
@@ -202,7 +197,7 @@
     }
     .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
 
-    /* --- 5. [NEW] Lead Magnet Form (蒐集客戶資料) --- */
+    /* --- 5. Lead Magnet Form --- */
     .lead-form-section {
       padding: 120px 8vw 150px; background: #080808; text-align: center;
       border-top: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
@@ -214,24 +209,45 @@
     }
     .archive-container { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
     
-    .lead-title {
-      font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; margin-bottom: 20px; letter-spacing: 0.1em;
+    .archive-badge {
+      display: inline-block; padding: 4px 12px; border: 1px solid rgba(0, 255, 204, 0.3);
+      color: #00ffcc; font-size: 0.6rem; letter-spacing: 0.2em; margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif; text-transform: uppercase;
     }
+    .lead-title {
+      font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; margin-bottom: 15px; letter-spacing: 0.1em;
+    }
+    .scout-counter {
+      font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa;
+      margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 50px;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; background-color: #ff3333; border-radius: 50%;
+      box-shadow: 0 0 8px #ff3333; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+    .counter-num { color: #fff; font-weight: 600; }
+    
     .lead-desc {
       font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; margin-bottom: 50px;
       letter-spacing: 0.05em; line-height: 1.8;
     }
     
     .form-group { display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; }
-    .form-input {
+    .form-input, .form-select {
       background: transparent; border: none; border-bottom: 1px solid #444;
       padding: 15px 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 1rem;
       width: 100%; max-width: 400px; transition: border-color 0.3s; outline: none; border-radius: 0;
       text-align: center;
     }
     .form-input::placeholder { color: #555; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; }
-    .form-input:focus { border-bottom: 1px solid #fff; }
+    .form-input:focus, .form-select:focus { border-bottom: 1px solid #fff; }
     
+    .select-wrapper { width: 100%; max-width: 400px; position: relative; }
+    .form-select { appearance: none; cursor: pointer; color: #888; }
+    .form-select option { background: #000; color: #fff; text-align: left; }
+
     .form-submit {
       margin-top: 20px; background: #fff; color: #000; border: none; padding: 15px 40px;
       font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700;
@@ -351,19 +367,39 @@
 
   <section class="lead-form-section">
     <div class="archive-container">
-      <h3 class="lead-title">Unlock Visual Secrets</h3>
-      <p class="lead-desc">
-        留下您的聯絡資訊，即刻領取「EDEN 獨家攝影光影筆記」。<br>
-        探索構圖與氛圍的底層邏輯，提升你的視覺語言。
-      </p>
+      <span class="archive-badge">CASTING RADAR</span>
+      <h3 class="lead-title">The Face Archive ｜ 臉孔資料庫</h3>
       
+      <div class="scout-counter">
+        <span class="pulse-dot"></span>
+        👁️ 本季 Scout List 關注人數：<span class="counter-num">356</span> 人
+      </div>
+
+      <p class="lead-desc">
+        我們一直在尋找那張能撐起『王牌』的臉。<br>
+        如果你覺得自己的輪廓有建築般的幾何美感，或者風格獨特到無法被定義。<br>
+        請留下你的 IG，讓我們在靈感來襲時，第一個找到你。
+      </p>
+
       <form class="form-group" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input type="text" name="name" placeholder="Name / Nickname" class="form-input hover-target" required>
         <input type="text" name="ig_handle" placeholder="Instagram ID (@)" class="form-input hover-target" required>
-        <input type="email" name="email" placeholder="Your Email Address" class="form-input hover-target" required>
-        <button type="submit" class="form-submit hover-target">Get The Note</button>
+        
+        <div class="select-wrapper hover-target">
+          <select name="archetype" class="form-select" required>
+            <option value="" disabled selected>Pick Your Card (你屬於哪張牌?)</option>
+            <option value="Spade">♠️ 黑桃 (冷冽 / 建築感)</option>
+            <option value="Heart">♥️ 紅心 (迷幻 / 魅力感)</option>
+            <option value="Diamond">♦️ 方塊 (奢華 / 幾何感)</option>
+            <option value="Club">♣️ 梅花 (穩重 / 經典感)</option>
+            <option value="Joker">🃏 Joker (怪誕 / 獨特感)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="form-submit hover-target">Join the Archive</button>
       </form>
       
-      <p class="micro-copy">Your vision, elevated.</p>
+      <p class="micro-copy">這不是報名，這是讓我們記住你的方式。</p>
     </div>
   </section>
 
@@ -391,9 +427,9 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 圖片生成設定 (雙軌制：嚴格分流) --- */
-    const totalVerticalWorks = 33; // 直式 (有空格) work 01.jpg
-    const totalHorizontalWorks = 10; // 橫式 (無空格) work01.jpg
+    /* --- 圖片生成設定 (嚴格分流) --- */
+    const totalVerticalWorks = 33; // 直式 (work 01.jpg)
+    const totalHorizontalWorks = 10; // 橫式 (work01.jpg)
 
     const swiperWrapper = document.getElementById('swiperWrapper');
     const masonryGrid = document.getElementById('masonryGrid');
@@ -402,19 +438,18 @@
       swiperWrapper.innerHTML = '';
       masonryGrid.innerHTML = '';
 
-      // 1. 生成直式照片 (Film Strip) - 檔名格式: "work 01.jpg"
+      // 1. 直式 (Film Strip) - work 01.jpg
       for (let i = 1; i <= totalVerticalWorks; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/work ${num}.jpg`; // 有空格
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
-        // onerror 防止破圖
         slideDiv.innerHTML = `<img src="${imgPath}" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
       }
 
-      // 2. 生成橫式照片 (Masonry Grid) - 檔名格式: "work01.jpg"
+      // 2. 橫式 (Masonry) - work01.jpg
       for (let i = 1; i <= totalHorizontalWorks; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/work${num}.jpg`; // 無空格
@@ -427,33 +462,28 @@
     }
     generateGallery();
 
-    /* --- Swiper 3D 軸心旋轉初始化 --- */
+    /* --- Swiper 3D 軸心旋轉初始化 (Netflix Style) --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
 
         var swiper = new Swiper(".mySwiper", {
-          // [核心] 啟用 Coverflow
           effect: "coverflow",
           grabCursor: true,
           centeredSlides: true,
           slidesPerView: "auto", 
-          loop: true, // 循環模式
+          loop: true,
           
-          // [軸心旋轉參數] 
-          // rotate: 側邊旋轉角度 (越大越側)
-          // stretch: 間距 (0 為緊密)
-          // depth: 景深 (數值越大，側邊越遠/越小)
+          // [核心參數：Netflix 軸心]
           coverflowEffect: {
-            rotate: 35, 
-            stretch: 0,
-            depth: 120,
+            rotate: 40,    // 旋轉角度，營造環形感
+            stretch: 0,    // 間距
+            depth: 120,    // 深度
             modifier: 1,
-            slideShadows: true, // 開啟陰影以增強立體感
+            slideShadows: true, // 必須開啟陰影
           },
           
-          // 優化滾輪與速度
-          mousewheel: { enabled: true, sensitivity: 2, thresholdDelta: 10 },
+          mousewheel: { enabled: true, sensitivity: 2 },
           speed: 800, 
           slideToClickedSlide: true,
           
@@ -473,7 +503,7 @@
         });
     }, 500);
 
-    /* --- Email 複製功能 --- */
+    /* --- Email 複製 --- */
     function copyEmail() {
       const email = "edendphoto1118@gmail.com";
       navigator.clipboard.writeText(email).then(() => {
@@ -485,7 +515,7 @@
       });
     }
 
-    /* --- 游標邏輯 --- */
+    /* --- 游標與極光 (保持不變) --- */
     const cursorDot = document.querySelector('.cursor-dot');
     let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
     document.addEventListener('mousemove', (e) => {
@@ -493,17 +523,16 @@
       cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
     });
     document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
         document.body.classList.add('hover-active');
       }
     });
     document.addEventListener('mouseout', (e) => {
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
         document.body.classList.remove('hover-active');
       }
     });
 
-    /* --- 極光模擬 --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
@@ -533,7 +562,6 @@
     }
     setInterval(spawnAurora, 4000); spawnAurora(); spawnAurora(); animateAuroras();
 
-    /* --- Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
