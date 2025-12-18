@@ -2,517 +2,279 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN — VISUAL ARCHIVE</title>
+  <title>EDEN — SERVICE & PRICING</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
   <style>
-    /* --- 全站基礎設定 --- */
+    /* --- 基礎設定 --- */
     body {
-      margin: 0; background: #000; color: #e0e0e0;
+      margin: 0; background: #050505; color: #fff;
       font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden; cursor: none; user-select: none;
+      overflow-x: hidden; cursor: none;
     }
-    body.lightbox-open { cursor: auto; }
-    body.lightbox-open .cursor-dot { display: none; }
-    .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
-
-    /* --- 導覽列 --- */
-    nav {
-      position: fixed; top: 0; left: 0; width: 100%;
-      padding: 40px 60px; box-sizing: border-box;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 10000; mix-blend-mode: difference;
-    }
-    .nav-logo {
-      font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700;
-      letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: none;
-    }
-    .nav-menu { display: flex; gap: 60px; }
-    .nav-item {
-      font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; text-decoration: none;
-      letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
-      position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
-    }
-    .nav-item:hover { opacity: 1; }
-    .nav-item::after {
-      content: ''; position: absolute; width: 0; height: 1px; bottom: -8px; left: 0;
-      background-color: #fff; transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .nav-item:hover::after { width: 100%; }
-
-    /* --- 客製化捲軸 --- */
-    ::-webkit-scrollbar { width: 4px; background: transparent; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.1) 100%);
-      background-size: 100% 200%; border-radius: 2px; animation: scroll-flow 2s linear infinite;
-    }
-    @keyframes scroll-flow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
-
-    /* --- 游標 --- */
+    
+    /* 游標 (保持一致體驗) */
     .cursor-dot {
       width: 10px; height: 10px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
       pointer-events: none; z-index: 99999; mix-blend-mode: difference;
-      transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
+      transition: width 0.3s ease, height 0.3s ease;
     }
-    body.hover-active .cursor-dot {
-      width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent;
-      animation: rotateCursor 4s infinite linear;
-    }
-    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); } 50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); } }
+    body.hover-active .cursor-dot { width: 50px; height: 50px; border: 1px solid #fff; background: transparent; }
 
-    /* --- 極光背景 --- */
-    #aurora-container {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none; z-index: -1; overflow: hidden;
-      filter: url(#aurora-curtain) blur(80px); opacity: 0.25;
+    /* 導覽列 */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 40px 60px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      mix-blend-mode: difference; box-sizing: border-box;
     }
-    .aurora-ribbon {
-      position: absolute; width: 150vw; height: 50vh;
-      background: linear-gradient(180deg, rgba(0,10,30,0), rgba(0,50,100,0.4), rgba(0,150,120,0.3), rgba(0,10,30,0));
-      opacity: 0; transform-origin: center; will-change: transform, opacity;
+    .nav-logo { font-family: 'Cinzel', serif; font-weight: 700; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: none; }
+    .back-btn { 
+      color: #fff; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.2em; 
+      text-transform: uppercase; border-bottom: 1px solid transparent; padding-bottom: 5px; 
+      transition: all 0.3s; cursor: none;
     }
+    .back-btn:hover { border-bottom: 1px solid #fff; }
 
-    /* --- 1. Hero 區塊 --- */
-    .hero {
-      height: 100vh; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-      text-align: center; padding-bottom: 100px;
-    }
-    .hero-bg {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: url("hero.jpg") center / cover no-repeat;
-      filter: grayscale(100%) brightness(0.8) contrast(1.15);
-      animation: slowZoom 30s infinite alternate linear; z-index: -2;
-    }
-    .hero-overlay {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8) 90%, #000 100%);
-      z-index: -1;
-    }
-    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
-    .hero-content {
-      z-index: 1; animation: fadeInUp 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      opacity: 0; transform: translateY(40px); width: 100%;
-    }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    /* 主要容器 */
+    .container { max-width: 1200px; margin: 180px auto 100px; padding: 0 40px; }
     
-    .hero h1 {
-      font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
-      font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #ffffff;
-      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .hero h1 span {
-      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: 0;
-    }
-    .hero p {
-      margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
-      letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.8);
-      display: inline-block; padding: 0; border: none; font-weight: 300;
-      text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+    /* 頁面標題 */
+    .header { text-align: center; margin-bottom: 100px; }
+    .header h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; margin-bottom: 20px; letter-spacing: 0.05em; }
+    .header p { color: #888; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem; }
+
+    /* 價格卡片區塊 */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px; align-items: stretch;
     }
 
-    /* --- 標題樣式 --- */
-    .section-header {
-      text-align: center; margin-bottom: 80px; position: relative;
+    /* 卡片通用樣式 */
+    .plan-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 50px 30px;
+      display: flex; flex-direction: column;
+      transition: all 0.4s ease; position: relative;
     }
-    .section-title {
-      font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.2em; color: #fff;
-      text-transform: uppercase; font-weight: 400; margin: 0;
-    }
-    .section-subtitle {
-      font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.4em; color: #888;
-      text-transform: uppercase; margin-top: 15px; display: block;
-    }
+    .plan-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.04); }
 
-    /* --- 2. Film Strip (Netflix 軸心旋轉藝廊) --- */
-    .film-strip {
-      padding: 100px 0 160px 0; position: relative;
-      background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.9) 50%, #000 100%); z-index: 10;
-      perspective: 1000px; /* 增加 3D 透視感 */
-    }
-    .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+    /* 方案標題區 */
+    .plan-header { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+    .plan-name { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin-bottom: 10px; display: block; }
+    .plan-tagline { font-size: 0.8rem; color: #888; line-height: 1.6; display: block; min-height: 40px; }
     
-    .swiper-slide {
-      background-position: center; background-size: cover;
-      width: 300px; height: 450px; /* 直式作品尺寸 */
-      flex-shrink: 0; 
-      /* 預設：黑白、變暗，等待被旋轉 */
-      filter: grayscale(100%) brightness(0.3);
-      transition: all 0.5s ease;
-      pointer-events: auto; user-select: none;
+    /* 價格 */
+    .plan-price { 
+      font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 700; 
+      margin: 20px 0; display: block; letter-spacing: -0.02em; 
     }
-    .swiper-slide img {
-      display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
-      border-radius: 4px;
+    .plan-price span { font-size: 1rem; font-weight: 400; color: #666; margin-left: 5px; }
+
+    /* 推薦方案 (Plan B) 特殊樣式 */
+    .plan-card.featured {
+      border: 1px solid rgba(0, 255, 204, 0.5);
+      box-shadow: 0 0 30px rgba(0, 255, 204, 0.05);
+      z-index: 2;
     }
-    /* 正中間激活狀態：全彩、亮、正面 */
-    .swiper-slide-active {
-      filter: grayscale(0%) brightness(1);
-      z-index: 20;
-      box-shadow: 0 20px 80px rgba(0,0,0,1); /* 強烈的主角光環 */
-    }
-    /* Swiper 的陰影層 */
-    .swiper-slide-shadow-left, .swiper-slide-shadow-right {
-      background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    .plan-card.featured .plan-name { color: #00ffcc; }
+    .badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: #00ffcc; color: #000; padding: 4px 12px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     }
 
-    /* --- 3. Works (橫式作品) --- */
-    .works { padding: 150px 8vw; position: relative; }
-    .masonry-grid { column-count: 2; column-gap: 60px; }
-    .masonry-item { break-inside: avoid; margin-bottom: 60px; position: relative; }
-    .masonry-item img {
-      width: 100%; height: auto; display: block; filter: grayscale(100%) contrast(0.9);
-      transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1); cursor: none;
+    /* 功能列表 */
+    .plan-features { list-style: none; padding: 0; margin: 0 0 40px 0; flex-grow: 1; }
+    .plan-features li { 
+      margin-bottom: 15px; color: #ccc; font-size: 0.85rem; 
+      padding-left: 20px; position: relative; line-height: 1.6;
     }
-    .masonry-item img:hover {
-      filter: grayscale(0%) contrast(1.05); transform: translateY(-10px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    .plan-features li::before { 
+      content: '•'; position: absolute; left: 0; color: #444; 
     }
-    @media (max-width: 768px) {
-      .masonry-grid { column-count: 1; }
-      .hero h1 { font-size: 15vw; }
-      .swiper-slide { width: 220px; height: 330px; }
-    }
+    /* 強調的項目 */
+    .highlight-item { color: #fff !important; font-weight: 600; }
+    .highlight-item::before { color: #00ffcc !important; }
 
-    /* --- 4. LAB --- */
-    .lab { padding: 150px 8vw; border-top: 1px solid rgba(255,255,255,0.1); background: #050505; }
-    .lab-content h3 {
-      font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic;
-      font-weight: 400; margin-bottom: 2rem; color: #fff;
+    /* 按鈕 */
+    .book-btn {
+      display: block; width: 100%; padding: 18px 0; text-align: center;
+      background: transparent; border: 1px solid #fff; color: #fff;
+      text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 0.15em; font-size: 0.8rem;
+      transition: all 0.3s; cursor: none;
     }
-    .lab-content p {
-      font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa;
-      line-height: 2; letter-spacing: 0.05em; max-width: 500px; margin-bottom: 40px; font-weight: 300;
-    }
-    .lab-link {
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #fff;
-      text-decoration: none; padding-bottom: 5px; border-bottom: 1px solid #fff;
-      transition: all 0.3s; letter-spacing: 0.2em; text-transform: uppercase;
-    }
-    .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
-
-    /* --- 5. About (含 Email 複製功能) --- */
-    .background {
-      padding: 150px 8vw 100px; background: #000; text-align: center;
-      display: flex; flex-direction: column; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .quote {
-      font-family: 'Playfair Display', serif; font-size: 2rem; line-height: 1.6; color: #fff;
-      font-style: italic; max-width: 800px; margin-bottom: 60px;
-    }
-    .contact-info {
-      display: flex; flex-direction: column; gap: 25px; align-items: center;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .contact-link {
-      color: #888; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2em;
-      text-transform: uppercase; transition: color 0.3s; position: relative; cursor: none;
-    }
-    .contact-link:hover { color: #fff; }
-    .contact-link::after {
-      content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 50%; transform: translateX(-50%);
-      background: #fff; transition: width 0.3s;
-    }
-    .contact-link:hover::after { width: 100%; }
+    .book-btn:hover { background: #fff; color: #000; }
     
-    /* Email 複製按鈕樣式 */
-    .email-btn {
-      background: none; border: none; padding: 0; font: inherit; cursor: none;
-      color: #888; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.3s;
-      position: relative;
-    }
-    .email-btn:hover { color: #fff; }
-    .email-btn::after {
-      content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 50%; transform: translateX(-50%);
-      background: #fff; transition: width 0.3s;
-    }
-    .email-btn:hover::after { width: 100%; }
+    .plan-card.featured .book-btn { background: #00ffcc; border-color: #00ffcc; color: #000; }
+    .plan-card.featured .book-btn:hover { background: #fff; border-color: #fff; }
 
-    /* 複製成功提示框 (Toast) */
-    .toast {
-      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: rgba(255,255,255,0.9); color: #000; padding: 12px 24px;
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em;
-      border-radius: 4px; opacity: 0; pointer-events: none; transition: all 0.4s ease;
-      z-index: 20000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    .cta-text {
-      margin-top: 60px; font-family: 'Cinzel', serif; font-size: 1.2rem;
-      color: #fff; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.3);
-      padding: 20px 40px; transition: all 0.5s; cursor: none; text-decoration: none;
-    }
-    .cta-text:hover { background: #fff; color: #000; border-color: #fff; }
+    /* 條款區塊 (Accordion) */
+    .terms-section { max-width: 800px; margin: 100px auto 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 60px; }
+    .terms-title { font-family: 'Cinzel', serif; font-size: 1.5rem; text-align: center; margin-bottom: 40px; }
     
+    details {
+      background: rgba(255,255,255,0.02); margin-bottom: 10px; border-radius: 4px; overflow: hidden;
+      transition: all 0.3s;
+    }
+    details[open] { background: rgba(255,255,255,0.05); }
+    summary {
+      padding: 20px; cursor: none; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; font-size: 0.85rem; list-style: none; position: relative;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+'; position: absolute; right: 20px; font-weight: 300; font-size: 1.2rem;
+    }
+    details[open] summary::after { content: '-'; }
+    
+    .terms-content { padding: 0 20px 20px; color: #aaa; font-size: 0.85rem; line-height: 1.8; }
+    .terms-content p { margin: 0 0 10px 0; }
+    .term-label { color: #fff; font-weight: 600; margin-right: 5px; }
+
     footer {
-      padding: 60px 0; text-align: center; font-family: 'Montserrat', sans-serif;
-      font-size: 0.6rem; color: #444; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 60px 0; text-align: center; font-size: 0.6rem; color: #444; 
+      letter-spacing: 0.2em; text-transform: uppercase;
     }
 
-    /* --- Lightbox --- */
-    .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); justify-content: center; align-items: center; cursor: auto; }
-    .lightbox-content { max-width: 90%; max-height: 90%; box-shadow: 0 0 50px rgba(0,0,0,0.8); cursor: auto; }
-    .close-btn { position: absolute; top: 40px; right: 60px; color: #fff; font-size: 40px; font-weight: 100; cursor: pointer; z-index: 100000; transition: 0.3s; mix-blend-mode: difference; font-family: 'Helvetica', sans-serif; }
-    .close-btn:hover { color: #aaa; transform: rotate(90deg); }
+    @media (max-width: 768px) {
+      .header h1 { font-size: 2.5rem; }
+      .container { padding: 0 20px; }
+      .plan-card.featured { transform: scale(1); }
+    }
   </style>
 </head>
-
 <body>
-  <div id="toast" class="toast">已複製郵件</div>
-
-  <svg class="svg-filters">
-    <defs>
-      <filter id="aurora-curtain">
-        <feTurbulence type="turbulence" baseFrequency="0.002 0.02" numOctaves="3" result="turbulence" />
-        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="200" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </defs>
-  </svg>
-
+  
   <div class="cursor-dot"></div>
-  <div id="aurora-container"></div>
 
   <nav>
-    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target">EDEN</a>
-    <div class="nav-menu">
-      <a href="#work" class="nav-item hover-target">Portfolio</a>
-      <a href="#about" class="nav-item hover-target">Editor's Note</a>
-    </div>
+    <a href="index.html" class="nav-logo hover-target">EDEN</a>
+    <a href="index.html" class="back-btn hover-target">Back to Home</a>
   </nav>
 
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>EDEN <span>D.</span></h1>
-      <p>Visual Director / Photographer</p>
+  <div class="container">
+    <div class="header">
+      <h1>Service & Investment</h1>
+      <p>Transparent pricing for iconic visual storytelling.</p>
     </div>
-  </section>
 
-  <section class="film-strip">
-    <div class="section-header">
-      <h2 class="section-title">The Narrative</h2>
-      <span class="section-subtitle">Visual Series No.1</span>
-    </div>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper" id="swiperWrapper"></div>
-    </div>
-  </section>
+    <div class="pricing-grid">
+      <div class="plan-card">
+        <div class="plan-header">
+          <span class="plan-name">The Structure</span>
+          <span class="plan-tagline">不只是人像，是將你融入建築美學的藝術照。</span>
+          <span class="plan-price">NT$ 6,800</span>
+        </div>
+        <ul class="plan-features">
+          <li>1.5 小時拍攝</li>
+          <li>1 套造型 (提供幾何穿搭指南)</li>
+          <li>燈光：建築黑白 或 霓虹迷幻</li>
+          <li>精修 6 張 (含合成牌面)</li>
+          <li>全數毛片調色交付</li>
+          <li>IG 限動側拍花絮 (15s)</li>
+        </ul>
+        <a href="mailto:edendphoto1118@gmail.com?subject=Booking: The Structure (Plan A)" class="book-btn hover-target">Book Plan A</a>
+      </div>
 
-  <section class="works" id="work">
-    <div class="section-header">
-      <h2 class="section-title">Visual Anthology</h2>
-      <span class="section-subtitle">Selected Campaign</span>
-    </div>
-    <div class="masonry-grid" id="masonryGrid"></div>
-  </section>
+      <div class="plan-card featured">
+        <span class="badge">Best Value / Most Popular</span>
+        <div class="plan-header">
+          <span class="plan-name">The Architect</span>
+          <span class="plan-tagline">你的氣場，值得被設計成一座建築。含實體撲克牌成品。</span>
+          <span class="plan-price">NT$ 22,800</span>
+        </div>
+        <ul class="plan-features">
+          <li class="highlight-item">3 小時拍攝</li>
+          <li class="highlight-item">2 套造型 (含專業妝髮)</li>
+          <li>燈光全解鎖 (黑桃+紅心風格)</li>
+          <li>精修 18 張 (含 J/Q/K/Joker)</li>
+          <li class="highlight-item">獨家：專屬訂製撲克牌 5 副</li>
+          <li class="highlight-item">獨家：A3 藝術微噴海報 1 張</li>
+          <li>Reels 專屬短片 (特效轉場)</li>
+        </ul>
+        <a href="mailto:edendphoto1118@gmail.com?subject=Booking: The Architect (Plan B)" class="book-btn hover-target">Book Plan B</a>
+      </div>
 
-  <section class="lab">
-    <div class="section-header" style="text-align: left; margin-bottom: 60px;">
-      <h2 class="section-title">Digital Atelier</h2>
-      <span class="section-subtitle">Experimental Lab</span>
+      <div class="plan-card">
+        <div class="plan-header">
+          <span class="plan-name">The Kingdom</span>
+          <span class="plan-tagline">雙人合夥、情侶寫真。共同打造王國的視覺資產。</span>
+          <span class="plan-price">NT$ 36,800</span>
+        </div>
+        <ul class="plan-features">
+          <li>4 小時拍攝</li>
+          <li>雙人各 2 套造型 (含雙人妝髮)</li>
+          <li>雙人互動幾何構圖指導</li>
+          <li>精修 24 張 (單人+合照)</li>
+          <li class="highlight-item">獨家：訂製撲克牌 10 副 (雙人)</li>
+          <li class="highlight-item">獨家：A3 藝術微噴海報 2 張</li>
+          <li>Reels 雙人互動短片 + IG 共創</li>
+        </ul>
+        <a href="mailto:edendphoto1118@gmail.com?subject=Booking: The Kingdom (Plan C)" class="book-btn hover-target">Book Plan C</a>
+      </div>
     </div>
-    <div class="lab-content">
-      <h3>Vibe Check</h3>
-      <p>A digital catalyst for social chemistry. Utilizing algorithms to modulate atmosphere in real-time gatherings. Where logic meets aesthetics.</p>
-      <a href="https://vibe-check-ih3e.vercel.app/" target="_blank" class="lab-link hover-target">Enter The Lab</a>
-    </div>
-  </section>
 
-  <section class="background" id="about">
-    <div class="section-header">
-      <h2 class="section-title">Editor's Note</h2>
-      <span class="section-subtitle">Behind The Lens</span>
-    </div>
-    <p class="quote">“Structure is the music of light. My photography is an extension of architectural logic.”</p>
-    
-    <div class="contact-info">
-      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
-      <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
+    <div class="terms-section">
+      <h3 class="terms-title">Booking Terms 委託須知</h3>
       
-      <button class="email-btn hover-target" onclick="copyEmail()">edendphoto1118@gmail.com</button>
-      
-      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="cta-text hover-target">Crafting your visual legacy.<br>Let's create the iconic.</a>
+      <details class="hover-target">
+        <summary>費用與妝髮說明</summary>
+        <div class="terms-content">
+          <p><span class="term-label">費用說明：</span>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目，我們可以推薦優質合作夥伴。</p>
+        </div>
+      </details>
+
+      <details class="hover-target">
+        <summary>訂金與預約政策</summary>
+        <div class="terms-content">
+          <p><span class="term-label">訂金政策：</span>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p>
+          <p><span class="term-label">改期規範：</span>如需改期請於 3 天前告知，訂金可保留延期一次。</p>
+        </div>
+      </details>
+
+      <details class="hover-target">
+        <summary>拍攝當日規範</summary>
+        <div class="terms-content">
+          <p><span class="term-label">準時原則：</span>為確保光線與流程，請準時抵達。遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p>
+        </div>
+      </details>
+
+      <details class="hover-target">
+        <summary>成品交付細節</summary>
+        <div class="terms-content">
+          <p><span class="term-label">交付成品：</span>交付成品為調色/精修後之 JPG 檔。</p>
+          <p><span class="term-label">RAW 檔：</span>RAW 檔為半成品，恕不提供。</p>
+        </div>
+      </details>
     </div>
-  </section>
+
+  </div>
 
   <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
 
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close-btn hover-target" onclick="closeLightbox()">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
   <script>
-    /* --- 圖片生成設定 (雙軌制：嚴格分流) --- */
-    const totalVerticalWorks = 33; // 直式 (有空格)
-    const totalHorizontalWorks = 10; // 橫式 (無空格)
-
-    const swiperWrapper = document.getElementById('swiperWrapper');
-    const masonryGrid = document.getElementById('masonryGrid');
-
-    function generateGallery() {
-      swiperWrapper.innerHTML = '';
-      masonryGrid.innerHTML = '';
-
-      // 1. 生成直式照片 (Film Strip) - 檔名格式: "work 01.jpg"
-      for (let i = 1; i <= totalVerticalWorks; i++) {
-        const num = i.toString().padStart(2, '0');
-        // ✅ 嚴格路徑：有空格
-        const imgPath = `images/works/work ${num}.jpg`;
-        
-        const slideDiv = document.createElement('div');
-        slideDiv.className = 'swiper-slide';
-        slideDiv.innerHTML = `<img src="${imgPath}" onerror="this.parentElement.style.display='none'">`;
-        swiperWrapper.appendChild(slideDiv);
-      }
-
-      // 2. 生成橫式照片 (Masonry Grid) - 檔名格式: "work01.jpg"
-      for (let i = 1; i <= totalHorizontalWorks; i++) {
-        const num = i.toString().padStart(2, '0');
-        // ✅ 嚴格路徑：無空格
-        const imgPath = `images/works/work${num}.jpg`;
-        
-        const masonryDiv = document.createElement('div');
-        masonryDiv.className = 'masonry-item';
-        masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
-        masonryGrid.appendChild(masonryDiv);
-      }
-    }
-    generateGallery();
-
-    /* --- Swiper 3D 軸心旋轉初始化 --- */
-    setTimeout(() => {
-        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
-        realClickSound.volume = 0.2;
-
-        var swiper = new Swiper(".mySwiper", {
-          // [核心] 啟用 Coverflow
-          effect: "coverflow",
-          grabCursor: true,
-          centeredSlides: true,
-          slidesPerView: "auto", 
-          loop: true,
-          
-          // [軸心旋轉關鍵參數]
-          coverflowEffect: {
-            rotate: 40,    // 旋轉角度大一點，營造圓弧感
-            stretch: 0,    // 間距
-            depth: 100,    // 景深，讓旁邊的照片後退
-            modifier: 1,
-            slideShadows: true, // 開啟陰影，立體感的來源
-          },
-          
-          mousewheel: { enabled: true, sensitivity: 2 },
-          speed: 800, 
-          slideToClickedSlide: true,
-          
-          on: {
-            slideChange: function () {
-                 const soundClone = realClickSound.cloneNode();
-                 soundClone.volume = 0.2; soundClone.play().catch(() => {});
-            },
-            click: function(swiper, event) {
-                const clickedSlide = swiper.clickedSlide;
-                if (clickedSlide) {
-                    const img = clickedSlide.querySelector('img');
-                    if (img) openLightbox(img);
-                }
-            }
-          }
-        });
-    }, 500);
-
-    /* --- Email 複製功能 --- */
-    function copyEmail() {
-      const email = "edendphoto1118@gmail.com";
-      navigator.clipboard.writeText(email).then(() => {
-        const toast = document.getElementById("toast");
-        toast.classList.add("show");
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 2000);
-      });
-    }
-
-    /* --- 游標邏輯 --- */
+    /* 簡單的游標跟隨腳本 */
     const cursorDot = document.querySelector('.cursor-dot');
-    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
-    let delayedMouseX = mouseX, delayedMouseY = mouseY;
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
+      cursorDot.style.left = `${e.clientX}px`;
+      cursorDot.style.top = `${e.clientY}px`;
     });
     document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SUMMARY') {
         document.body.classList.add('hover-active');
       }
     });
     document.addEventListener('mouseout', (e) => {
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SUMMARY') {
         document.body.classList.remove('hover-active');
       }
     });
-
-    /* --- 極光模擬 --- */
-    const auroraContainer = document.getElementById('aurora-container');
-    const auroras = [];
-    function spawnAurora() {
-      const el = document.createElement('div'); el.classList.add('aurora-ribbon');
-      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.7);
-      let angle = (Math.random() - 0.5) * 30; 
-      const driftSpeed = 0.1 + Math.random() * 0.2; 
-      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed;
-      const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
-      el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
-      auroraContainer.appendChild(el);
-      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
-    }
-    function animateAuroras() {
-      delayedMouseX += (mouseX - delayedMouseX) * 0.05; delayedMouseY += (mouseY - delayedMouseY) * 0.05;
-      for (let i = auroras.length - 1; i >= 0; i--) {
-        let p = auroras[i]; p.life++;
-        let dx = p.x - delayedMouseX; let dy = p.y - delayedMouseY;
-        let dist = Math.sqrt(dx*dx + dy*dy); let interactRadius = 500;
-        if (dist < interactRadius) {
-          let force = (interactRadius - dist) / interactRadius;
-          p.vx += (dx / dist) * force * 0.4; p.vy += (dy / dist) * force * 0.4;
-        }
-        p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy; p.angle += 0.01;
-        let opacity = 0; let fadeDuration = 300;
-        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; }
-        else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; }
-        else { opacity = 1; }
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.15})`;
-        p.el.style.opacity = opacity * 0.4;
-        if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
-      }
-      requestAnimationFrame(animateAuroras);
-    }
-    setInterval(spawnAurora, 4000); spawnAurora(); spawnAurora(); animateAuroras();
-
-    /* --- Lightbox --- */
-    function openLightbox(element) {
-      document.getElementById("lightbox").style.display = "flex";
-      document.getElementById("lightbox-img").src = element.src;
-      document.body.classList.add('lightbox-open'); 
-    }
-    function closeLightbox() {
-      document.getElementById("lightbox").style.display = "none";
-      document.body.classList.remove('lightbox-open'); 
-      document.body.classList.remove('hover-active');
-    }
-    document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
   </script>
 </body>
 </html>
