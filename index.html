@@ -7,22 +7,21 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
-    /* --- 全站基礎設定 --- */
+    /* --- 1. 全站基礎 --- */
     body {
       margin: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif;
       overflow-x: hidden; cursor: none; user-select: none;
     }
-    /* 燈箱模式下恢復滑鼠 */
     body.lightbox-open { cursor: auto; }
     body.lightbox-open .cursor-dot { display: none; }
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-    /* --- 導覽列 (極致簡約) --- */
+    /* --- 2. 導覽列 --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%;
       padding: 40px 60px; box-sizing: border-box;
@@ -31,13 +30,13 @@
     }
     .nav-logo {
       font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700;
-      letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: none;
+      letter-spacing: 0.1em; text-decoration: none; color: #fff; cursor: none;
     }
     .nav-menu { display: flex; gap: 50px; }
     .nav-item {
-      font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #fff; text-decoration: none;
-      letter-spacing: 0.3em; text-transform: uppercase; font-weight: 500;
-      position: relative; cursor: none; opacity: 0.6; transition: opacity 0.3s;
+      font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; text-decoration: none;
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+      position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
     }
     .nav-item:hover { opacity: 1; }
     .nav-item::after {
@@ -46,32 +45,33 @@
     }
     .nav-item:hover::after { width: 100%; }
 
-    /* --- 客製化捲軸 --- */
-    ::-webkit-scrollbar { width: 3px; background: transparent; }
+    /* --- 3. 客製化捲軸 --- */
+    ::-webkit-scrollbar { width: 4px; background: transparent; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.3); border-radius: 2px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.1) 100%);
+      background-size: 100% 200%; border-radius: 2px; animation: scroll-flow 2s linear infinite;
     }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.8); }
+    @keyframes scroll-flow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
 
-    /* --- 游標 --- */
+    /* --- 4. 游標 --- */
     .cursor-dot {
-      width: 8px; height: 8px; background-color: #fff; border-radius: 50%;
+      width: 10px; height: 10px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
       pointer-events: none; z-index: 99999; mix-blend-mode: difference;
       transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
     }
     body.hover-active .cursor-dot {
-      width: 40px; height: 40px; border: 1px solid #fff; background-color: transparent;
-      animation: rotateCursor 8s infinite linear;
+      width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent;
+      animation: rotateCursor 4s infinite linear;
     }
-    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); } 50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); } }
 
-    /* --- 極光背景 --- */
+    /* --- 5. 極光背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
-      filter: url(#aurora-curtain) blur(80px); opacity: 0.25;
+      filter: url(#aurora-curtain) blur(80px); opacity: 0.3;
     }
     .aurora-ribbon {
       position: absolute; width: 150vw; height: 50vh;
@@ -79,7 +79,7 @@
       opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
-    /* --- 1. Hero 區塊 --- */
+    /* --- 6. Hero 區塊 --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
@@ -88,12 +88,12 @@
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: url("hero.jpg") center / cover no-repeat;
-      filter: grayscale(100%) brightness(0.7) contrast(1.15);
+      filter: grayscale(100%) brightness(0.8) contrast(1.15);
       animation: slowZoom 40s infinite alternate linear; z-index: -2;
     }
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.9) 100%);
+      background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.8) 90%, #000 100%);
       z-index: -1;
     }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
@@ -104,77 +104,74 @@
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     .hero h1 {
       font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
-      font-weight: 400; letter-spacing: 0.08em; margin: 0; color: #ffffff;
-      text-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #ffffff;
+      text-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
-    .hero h1 span {
-      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: 0;
-    }
+    .hero h1 span { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: 0; }
     .hero p {
-      margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem;
-      letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+      margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.8);
       display: inline-block; font-weight: 300;
     }
 
-    /* --- 標題樣式 (Section Headers) --- */
+    /* --- 標題樣式 --- */
     .section-header {
-      text-align: center; margin-bottom: 100px; position: relative;
+      text-align: center; margin-bottom: 80px; position: relative;
     }
     .section-title {
-      font-family: 'Cinzel', serif; font-size: 2.2rem; letter-spacing: 0.15em; color: #fff;
+      font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.2em; color: #fff;
       text-transform: uppercase; font-weight: 400; margin: 0;
     }
     .section-subtitle {
-      font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; color: #666;
-      text-transform: uppercase; margin-top: 15px; display: block; font-weight: 500;
+      font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.4em; color: #888;
+      text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 2. Film Strip (滾輪藝廊：選書風格) --- */
+    /* --- 7. Film Strip (修正：絕對亮顯 + 滾輪操作) --- */
     .film-strip {
-      padding: 120px 0 180px 0; position: relative;
+      padding: 100px 0 160px 0; position: relative;
       background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.9) 50%, #000 100%); z-index: 10;
     }
     .swiper { 
       width: 100%; 
-      padding-top: 60px; padding-bottom: 60px; /* 為向上浮起預留空間 */
+      padding-top: 80px; padding-bottom: 80px; /* 為向上浮起預留空間 */
     }
     
     .swiper-slide {
-      /* 固定寬度，確保排列整齊 */
-      width: 260px; height: 390px; 
+      background-position: center; background-size: cover;
+      /* 固定寬度確保計算準確 */
+      width: 280px; height: 420px; 
       flex-shrink: 0;
-      /* 預設：黑白、變暗、稍微縮小 */
+      /* [未選中狀態] 黑白、暗、小 */
       filter: grayscale(100%) brightness(0.4) contrast(0.9);
-      transform: scale(0.92);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* 極致絲滑曲線 */
+      transform: scale(0.9);
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
       pointer-events: auto; user-select: none;
-      margin-right: 40px; /* 間距 */
+      /* 右邊距 */
+      margin-right: 40px; 
     }
-    /* 最後一張無邊距 */
-    .swiper-slide:last-child { margin-right: 0; }
-
     .swiper-slide img {
       display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
       border-radius: 2px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
     }
     
-    /* [核心] 激活狀態 (正中間) */
+    /* [核心修正] 強制亮顯正中間 */
+    /* 使用 !important 覆蓋任何可能干擾的樣式 */
     .swiper-slide-active, 
     .swiper-slide-duplicate-active {
-      filter: grayscale(0%) brightness(1.1) contrast(1.05) !important;
-      /* 向上抽出 + 放大 */
-      transform: scale(1.15) translateY(-25px) !important;
-      z-index: 20;
+      filter: grayscale(0%) brightness(1.15) contrast(1.05) !important;
+      transform: scale(1.15) translateY(-30px) !important; /* 向上抽出 + 放大 */
+      z-index: 50;
     }
     
+    /* 讓激活圖片的陰影更重，製造浮空感 */
     .swiper-slide-active img,
     .swiper-slide-duplicate-active img {
-      /* 浮起時陰影加深 */
-      box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.9) !important;
     }
 
-    /* --- 3. Works --- */
+    /* --- 8. Works --- */
     .works { padding: 150px 8vw; position: relative; }
     .masonry-grid { column-count: 2; column-gap: 60px; }
     .masonry-item { break-inside: avoid; margin-bottom: 60px; position: relative; }
@@ -189,10 +186,10 @@
     @media (max-width: 768px) {
       .masonry-grid { column-count: 1; }
       .hero h1 { font-size: 15vw; }
-      .swiper-slide { width: 200px; height: 300px; }
+      .swiper-slide { width: 220px; height: 330px; }
     }
 
-    /* --- 4. LAB --- */
+    /* --- 9. LAB --- */
     .lab { padding: 150px 8vw; border-top: 1px solid rgba(255,255,255,0.1); background: #050505; }
     .lab-content h3 {
       font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic;
@@ -209,14 +206,13 @@
     }
     .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
 
-    /* --- 5. Lead Magnet Form (名單蒐集) --- */
+    /* --- 10. Lead Magnet --- */
     .lead-form-section {
       padding: 120px 8vw 150px; background: #080808; text-align: center;
       border-top: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
     }
-    /* 背景字裝飾 */
     .lead-form-section::before {
-      content: 'ARCHIVE'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      content: 'INSIGHTS'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
       font-family: 'Cinzel', serif; font-size: 18vw; color: rgba(255,255,255,0.015);
       pointer-events: none; white-space: nowrap; font-weight: 700;
     }
@@ -230,8 +226,6 @@
     .lead-title {
       font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; margin-bottom: 20px; letter-spacing: 0.1em;
     }
-    
-    /* 雷達波計數器 */
     .scout-counter {
       font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #888;
       margin-bottom: 40px; display: inline-flex; align-items: center; gap: 12px;
@@ -274,10 +268,9 @@
       text-transform: uppercase; letter-spacing: 0.15em; cursor: none; transition: all 0.3s;
     }
     .form-submit:hover { background: #00ffcc; box-shadow: 0 0 30px rgba(0, 255, 204, 0.3); }
-    
     .micro-copy { margin-top: 25px; font-size: 0.65rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
 
-    /* --- 6. About --- */
+    /* --- 11. About --- */
     .background {
       padding: 100px 8vw 100px; background: #000; text-align: center;
       display: flex; flex-direction: column; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);
@@ -286,20 +279,13 @@
       font-family: 'Playfair Display', serif; font-size: 2rem; line-height: 1.6; color: #fff;
       font-style: italic; max-width: 800px; margin-bottom: 60px;
     }
-    .contact-info {
-      display: flex; flex-direction: column; gap: 25px; align-items: center;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .contact-link {
+    .contact-info { display: flex; flex-direction: column; gap: 25px; align-items: center; font-family: 'Montserrat', sans-serif; }
+    .contact-link, .email-btn {
       color: #888; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2em;
       text-transform: uppercase; transition: color 0.3s; position: relative; cursor: none;
+      background: none; border: none; padding: 0; font: inherit;
     }
-    .contact-link:hover { color: #fff; }
-    .email-btn {
-      background: none; border: none; padding: 0; font: inherit; cursor: none;
-      color: #888; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.3s;
-    }
-    .email-btn:hover { color: #fff; }
+    .contact-link:hover, .email-btn:hover { color: #fff; }
 
     .toast {
       position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
@@ -310,10 +296,7 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    footer {
-      padding: 60px 0; text-align: center; font-family: 'Montserrat', sans-serif;
-      font-size: 0.6rem; color: #444; letter-spacing: 0.2em; text-transform: uppercase;
-    }
+    footer { padding: 60px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #444; letter-spacing: 0.2em; text-transform: uppercase; }
 
     /* --- Lightbox --- */
     .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); justify-content: center; align-items: center; cursor: auto; }
@@ -448,7 +431,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 圖片生成 (保持不變) --- */
+    /* --- 圖片生成 --- */
     const totalVerticalWorks = 33; 
     const totalHorizontalWorks = 10; 
 
@@ -459,6 +442,7 @@
       swiperWrapper.innerHTML = '';
       masonryGrid.innerHTML = '';
 
+      // 直式 Film Strip
       for (let i = 1; i <= totalVerticalWorks; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/work ${num}.jpg`; 
@@ -469,9 +453,10 @@
         swiperWrapper.appendChild(slideDiv);
       }
 
+      // 橫式 Works
       for (let i = 1; i <= totalHorizontalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work${num}.jpg`;
+        const imgPath = `images/works/work${num}.jpg`; 
         
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
@@ -481,28 +466,31 @@
     }
     generateGallery();
 
-    /* --- Swiper 初始化 (修正：僅滾輪 + 取消拖曳 + 中間亮顯) --- */
+    /* --- Swiper 初始化 (滾輪操作 + 中心亮顯) --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
 
         var swiper = new Swiper(".mySwiper", {
-          // 不使用 3D 效果，回歸平移
+          // 不使用 3D 效果
+          effect: 'slide',
+          grabCursor: false, // 禁止抓取手勢
+          allowTouchMove: false, // [關鍵] 禁止拖曳
+          
           centeredSlides: true,
           slidesPerView: "auto", 
-          spaceBetween: 40, // 增加間距，更優雅
+          spaceBetween: 40, // 間距
           loop: true,
           
-          // [核心修正] 互動限制
-          allowTouchMove: false, // 禁止滑鼠拖曳/手機滑動
           mousewheel: { 
             enabled: true, 
-            sensitivity: 1.5, // 靈敏度適中
-            eventsTarget: '.film-strip' // 只有滑鼠在區域內才觸發
+            sensitivity: 2, 
+            thresholdDelta: 10,
+            forceToAxis: true
           },
           
-          speed: 800, 
-          slideToClickedSlide: true, // 點擊可以切換到該張
+          speed: 600, 
+          slideToClickedSlide: true, // 點擊旁邊還是可以滑過去
           
           on: {
             slideChange: function () {
@@ -510,12 +498,10 @@
                  soundClone.volume = 0.2; soundClone.play().catch(() => {});
             },
             click: function(swiper, event) {
-                // 如果點擊的是 active (正中間) 的那一張，才打開燈箱
+                // 只有點擊中間那張才打開燈箱
                 if (swiper.clickedIndex === swiper.activeIndex) {
                     const img = swiper.clickedSlide.querySelector('img');
                     if (img) openLightbox(img);
-                } else {
-                    // 如果點擊旁邊的，就滑過去 (已經由 slideToClickedSlide 處理)
                 }
             }
           }
@@ -528,18 +514,15 @@
       navigator.clipboard.writeText(email).then(() => {
         const toast = document.getElementById("toast");
         toast.classList.add("show");
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 2000);
+        setTimeout(() => { toast.classList.remove("show"); }, 2000);
       });
     }
 
-    /* --- 游標與極光 --- */
+    /* --- 游標邏輯 --- */
     const cursorDot = document.querySelector('.cursor-dot');
-    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
+      cursorDot.style.left = `${e.clientX}px`;
+      cursorDot.style.top = `${e.clientY}px`;
     });
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
@@ -552,6 +535,7 @@
       }
     });
 
+    /* --- 極光模擬 --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
@@ -581,6 +565,7 @@
     }
     setInterval(spawnAurora, 4000); spawnAurora(); spawnAurora(); animateAuroras();
 
+    /* --- Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
