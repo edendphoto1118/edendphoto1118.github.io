@@ -14,7 +14,6 @@
     /* --- 全站基礎設定 --- */
     body {
       margin: 0; background: #000; color: #e0e0e0;
-      /* 預設字體改為 Montserrat，時尚界的標準無襯線體 */
       font-family: 'Montserrat', sans-serif;
       overflow-x: hidden; cursor: none; user-select: none;
     }
@@ -22,7 +21,7 @@
     body.lightbox-open .cursor-dot { display: none; }
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-    /* --- 導覽列 (雜誌目錄風格) --- */
+    /* --- 導覽列 --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%;
       padding: 40px 60px; box-sizing: border-box;
@@ -30,7 +29,6 @@
       z-index: 10000; mix-blend-mode: difference;
     }
     .nav-logo {
-      /* Logo 使用 Cinzel，展現羅馬石刻的高級感 */
       font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700;
       letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: none;
     }
@@ -106,7 +104,6 @@
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     
     .hero h1 {
-      /* Gucci 風格標題：Cinzel */
       font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
       font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #ffffff;
       text-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -121,7 +118,7 @@
       display: inline-block; padding: 0; border: none; font-weight: 300;
     }
 
-    /* --- 共同標題樣式 (雜誌小標) --- */
+    /* --- 標題樣式 --- */
     .section-header {
       text-align: center; margin-bottom: 80px; position: relative;
     }
@@ -170,7 +167,7 @@
       .swiper-slide { width: 220px; height: 330px; margin: 0 15px; }
     }
 
-    /* --- 4. LAB (Digital Atelier) --- */
+    /* --- 4. LAB --- */
     .lab { padding: 150px 8vw; border-top: 1px solid rgba(255,255,255,0.1); background: #050505; }
     .lab-content h3 {
       font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic;
@@ -187,7 +184,7 @@
     }
     .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
 
-    /* --- 5. About (Editor's Note) --- */
+    /* --- 5. About --- */
     .background {
       padding: 150px 8vw 100px;
       background: #000; text-align: center;
@@ -198,8 +195,6 @@
       font-family: 'Playfair Display', serif; font-size: 2rem; line-height: 1.6; color: #fff;
       font-style: italic; max-width: 800px; margin-bottom: 60px;
     }
-    
-    /* 聯絡資訊區塊 (Credits 風格) */
     .contact-info {
       display: flex; flex-direction: column; gap: 20px; align-items: center;
       font-family: 'Montserrat', sans-serif;
@@ -218,7 +213,7 @@
     .cta-text {
       margin-top: 60px; font-family: 'Cinzel', serif; font-size: 1.2rem;
       color: #fff; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.3);
-      padding: 20px 40px; transition: all 0.5s; cursor: none;
+      padding: 20px 40px; transition: all 0.5s; cursor: none; text-decoration: none;
     }
     .cta-text:hover { background: #fff; color: #000; border-color: #fff; }
 
@@ -305,9 +300,7 @@
     
     <div class="contact-info">
       <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
-      
       <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
-      
       <a href="mailto:edendphoto1118@gmail.com" class="contact-link hover-target">edendphoto1118@gmail.com</a>
       
       <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="cta-text hover-target">
@@ -336,10 +329,12 @@
       masonryGrid.innerHTML = '';
       for (let i = 1; i <= totalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work ${num}.jpg`;
+        // ✅ 修正點：移除空格，對應檔名 work01.jpg
+        const imgPath = `images/works/work${num}.jpg`;
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
+        // onerror 處理：如果某張圖片真的不見，會隱藏該區塊，避免破圖
         slideDiv.innerHTML = `<img src="${imgPath}" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
 
