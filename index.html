@@ -8,8 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+  
   <style>
     /* --- 1. 全站基礎 --- */
     html { scroll-behavior: smooth; }
@@ -90,7 +89,6 @@
     }
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      /* 請確認你的根目錄有 hero.jpg */
       background: url("hero.jpg") center / cover no-repeat;
       filter: grayscale(100%) brightness(0.6) contrast(1.2);
       animation: slowZoom 40s infinite alternate linear; z-index: -2;
@@ -129,64 +127,51 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 8. Film Strip (直式作品 - 重點優化區) --- */
-    .film-strip {
-      padding: 100px 0; 
-      position: relative; background: #000; z-index: 10; 
-      height: auto; overflow: hidden;
-      /* 增加最小高度，防止圖片沒載入時區塊塌陷 */
-      min-height: 700px; 
+    /* --- 8. Masterpiece Gallery (大師級作品集 - 瀑布流) --- */
+    .masterpiece-gallery {
+      padding: 100px 6vw;
+      position: relative;
+      min-height: 100vh;
     }
-    .swiper { 
-      width: 100%; padding: 80px 0; /* 增加上下內距，給放大效果留空間 */
+
+    /* CSS Columns 瀑布流核心 */
+    .gallery-container {
+      column-count: 3; /* 電腦版 3 欄 */
+      column-gap: 40px; /* 欄間距 */
+      width: 100%;
     }
-    .swiper-slide {
-      width: 300px; 
-      aspect-ratio: 2/3;
-      flex-shrink: 0;
-      filter: grayscale(100%) brightness(0.5); 
-      transform: scale(0.9); 
-      opacity: 0.6;
-      /* [關鍵修正] 移除 overflow: hidden，讓圖片可以超出框框放大 */
-      /* overflow: hidden; */
-      transition: all 0.7s cubic-bezier(0.25, 1, 0.2, 1); /* 更平滑的過渡 */
-      pointer-events: auto; 
-      display: flex; justify-content: center; align-items: center;
-      background: #0a0a0a; /* 圖片載入前的佔位背景色 */
+
+    .gallery-item {
+      break-inside: avoid; /* 防止圖片被切斷 */
+      margin-bottom: 40px; /* 上下間距 */
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* 平滑過渡 */
+      z-index: 1;
+      cursor: none;
     }
-    .swiper-slide img { 
-      width: 100%; height: 100%; object-fit: cover; object-position: center; 
-      /* 確保圖片本身不會溢出 slide 邊界 (雖然 slide 本身沒 hidden 了) */
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
       display: block;
-    }
-    
-    /* [關鍵修正] 激活狀態的放大與質感優化 */
-    .swiper-slide-active {
-      filter: grayscale(0%) brightness(1.1) !important; 
-      /* [重點] 加大放大比例 */
-      transform: scale(1.25) !important; 
-      opacity: 1 !important; 
-      z-index: 100; 
-      /* [重點] 增強陰影，製造浮起感 */
-      box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+      filter: grayscale(100%) brightness(0.8) contrast(1.1);
+      transition: filter 0.5s ease;
+      background: #111; /* 載入前的佔位 */
+      min-height: 100px;
     }
 
-    /* --- 9. Works (橫式作品) --- */
-    .works { padding: 100px 8vw; position: relative; min-height: 500px; }
-    .masonry-grid { column-count: 2; column-gap: 40px; }
-    .masonry-item { 
-      break-inside: avoid; margin-bottom: 40px; position: relative; overflow: hidden; 
-      background: #111; min-height: 200px; 
-    }
-    .masonry-item img {
-      width: 100%; height: auto; display: block; filter: grayscale(100%) contrast(0.95);
-      transition: all 0.6s ease; cursor: none;
-    }
-    .masonry-item:hover img {
-      filter: grayscale(0%) contrast(1.1); transform: scale(1.03);
+    /* Hover 效果：整體放大，無裁切 */
+    .gallery-item:hover {
+      transform: scale(1.05); /* 放大 */
+      z-index: 100; /* 浮到最上層 */
+      box-shadow: 0 30px 60px rgba(0,0,0,0.9); /* 強烈陰影 */
     }
 
-    /* --- 10. Pricing Section (折扣優化版) --- */
+    .gallery-item:hover img {
+      filter: grayscale(0%) brightness(1.05) contrast(1); /* 還原色彩 */
+    }
+
+    /* --- 9. Pricing Section --- */
     .pricing-section {
       padding: 120px 8vw;
       background: #050505;
@@ -258,7 +243,7 @@
     }
     .btn-book:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 11. Booking Calendar (Calendly) --- */
+    /* --- 10. Booking Calendar (Calendly) --- */
     .calendar-section {
       padding: 80px 8vw;
       background: #080808;
@@ -272,7 +257,7 @@
       max-width: 1000px;
     }
 
-    /* --- 12. Special Campaign (限定企劃) --- */
+    /* --- 11. Special Campaign (限定企劃) --- */
     .royal-section {
       padding: 100px 8vw;
       background: linear-gradient(135deg, #080808 0%, #000 100%);
@@ -302,7 +287,7 @@
     .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
 
-    /* --- 13. Face Archive (Form) --- */
+    /* --- 12. Face Archive (Form) --- */
     .lead-form-section {
       padding: 120px 8vw; background: #080808; text-align: center;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -330,7 +315,7 @@
     }
     .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
 
-    /* --- 14. Footer & About --- */
+    /* --- 13. Footer & About --- */
     .background { padding: 100px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     .quote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.6; color: #fff; font-style: italic; max-width: 800px; margin: 0 auto 60px; }
     .contact-info { display: flex; flex-direction: column; gap: 20px; align-items: center; font-family: 'Montserrat', sans-serif; }
@@ -358,11 +343,10 @@
       .nav-menu { display: none; } 
       .nav { justify-content: center; }
       
-      .swiper-slide { width: 70vw; } 
-      .masonry-grid { column-count: 1; }
+      /* 手機版改為單欄，但依然保持錯落感 */
+      .gallery-container { column-count: 1; }
       
       .pricing-grid { grid-template-columns: 1fr; gap: 40px; }
-      
       .royal-grid { flex-direction: column; gap: 40px; }
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 40px; width: 100%; }
       .royal-border { padding: 30px; }
@@ -403,22 +387,14 @@
     </div>
   </section>
 
-  <section class="film-strip">
+  <section class="masterpiece-gallery" id="work">
     <div class="section-header">
       <h2 class="section-title">The Narrative</h2>
-      <span class="section-subtitle">Visual Series No.1</span>
+      <span class="section-subtitle">A Visual Anthology</span>
     </div>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper" id="swiperWrapper"></div>
-    </div>
-  </section>
-
-  <section class="works" id="work">
-    <div class="section-header">
-      <h2 class="section-title">Visual Anthology</h2>
-      <span class="section-subtitle">Selected Campaign</span>
-    </div>
-    <div class="masonry-grid" id="masonryGrid"></div>
+    
+    <div class="gallery-container" id="galleryContainer">
+      </div>
   </section>
   
   <section class="pricing-section" id="pricing">
@@ -500,11 +476,10 @@
       <h2 class="section-title">Availability</h2>
       <span class="section-subtitle">Select a date to schedule your session.</span>
     </div>
-    
     <div class="calendar-container">
       <div style="color: #666; padding-top: 100px;">
         <p>Please integrate your Calendly Code here.</p>
-        <p>請至 Calendly 後台複製嵌入代碼並貼於 HTML 第 460 行左右處。</p>
+        <p>請至 Calendly 後台複製嵌入代碼並貼於 HTML 第 455 行左右處。</p>
       </div>
     </div>
   </section>
@@ -546,17 +521,10 @@
   <section class="lead-form-section" id="lead-form">
     <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
     <h3 class="lead-title">THE FACE ARCHIVE</h3>
-    
-    <p class="lead-desc">
-      我們一直在尋找那張能撐起『王牌』的臉。<br>
-      如果你覺得自己的輪廓有建築般的幾何美感，或者風格獨特到無法被定義。<br>
-      請留下你的 IG，讓我們在靈感來襲時，第一個找到你。
-    </p>
-
+    <p class="lead-desc">我們一直在尋找那張能撐起『王牌』的臉。<br>請留下你的 IG，讓我們在靈感來襲時，第一個找到你。</p>
     <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
       <input type="text" name="name" placeholder="NAME / NICKNAME" class="form-input hover-target" required>
       <input type="text" name="ig_handle" placeholder="INSTAGRAM ID (@)" class="form-input hover-target" required>
-      
       <div class="select-wrapper hover-target">
         <select name="archetype" class="form-select" required>
           <option value="" disabled selected>SELECT YOUR STYLE (選擇拍攝風格)</option>
@@ -567,10 +535,8 @@
           <option value="Joker">JOKER / 鬼牌 - 獨特藝術 (Unique)</option>
         </select>
       </div>
-
       <button type="submit" class="form-submit hover-target">JOIN THE ARCHIVE (加入關注名單)</button>
     </form>
-    
     <p class="micro-copy">Membership is by selection only.</p>
   </section>
 
@@ -580,7 +546,6 @@
       <span class="section-subtitle">Behind The Lens</span>
     </div>
     <p class="quote">“Structure is the music of light. My photography is an extension of architectural logic.”</p>
-    
     <div class="contact-info">
       <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
       <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
@@ -595,83 +560,36 @@
     <img class="lightbox-content" id="lightbox-img">
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
   <script>
-    /* --- 1. 圖片生成邏輯 (修復 Portfolio 空白問題) --- */
+    /* --- Masterpiece Gallery Logic --- */
     
-    // 直式作品數量 (請确认資料夾內有 work 01.jpg 到 work 33.jpg)
-    const totalVerticalWorks = 33; 
-    // 橫式作品數量 (請确认資料夾內有 work001.jpg 到 work006.jpg)
-    const totalHorizontalWorks = 6; 
-
-    const swiperWrapper = document.getElementById('swiperWrapper');
-    const masonryGrid = document.getElementById('masonryGrid');
+    // 設定你的作品總數 (117張)
+    const totalWorks = 117; 
+    
+    const galleryContainer = document.getElementById('galleryContainer');
 
     function generateGallery() {
-      swiperWrapper.innerHTML = '';
-      masonryGrid.innerHTML = '';
+      galleryContainer.innerHTML = '';
 
-      // --- 直式作品 (Swiper) ---
-      for (let i = 1; i <= totalVerticalWorks; i++) {
-        // [關鍵修正] 檔名加入空格：work 01.jpg
-        const num = i.toString().padStart(2, '0'); 
-        const imgPath = `images/works/work ${num}.jpg`; 
+      for (let i = 1; i <= totalWorks; i++) {
+        /* 檔名邏輯：portfolio0-1.jpg 到 portfolio0-117.jpg (無補零) */
+        const imgPath = `images/works/portfolio0-${i}.jpg`; 
         
-        const slideDiv = document.createElement('div');
-        slideDiv.className = 'swiper-slide';
-        // 加入 onclick 打開 Lightbox
-        slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
-        swiperWrapper.appendChild(slideDiv);
-      }
-
-      // --- 橫式作品 (Masonry) ---
-      for (let i = 1; i <= totalHorizontalWorks; i++) {
-        // [關鍵修正] 強制補齊 3 位數 (work001.jpg)
-        const num = i.toString().padStart(3, '0'); 
-        const imgPath = `images/works/work${num}.jpg`; 
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'gallery-item';
         
-        const masonryDiv = document.createElement('div');
-        masonryDiv.className = 'masonry-item';
-        // 加入 onerror 處理：如果圖片讀不到，顯示一個半透明的佔位框，而不是空白
-        masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.style.opacity='0.3'; this.style.minHeight='200px';">`;
-        masonryGrid.appendChild(masonryDiv);
+        // loading="lazy" 提升效能
+        // onerror 防呆機制：若檔名錯誤，直接隱藏該區塊，避免破圖
+        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        
+        galleryContainer.appendChild(itemDiv);
       }
     }
+    
+    // 執行生成
     generateGallery();
 
-    /* --- 2. Swiper 初始化 --- */
-    setTimeout(() => {
-        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
-        realClickSound.volume = 0.2;
-        let lastPlay = 0;
-
-        var swiper = new Swiper(".mySwiper", {
-          effect: 'slide',
-          allowTouchMove: true, 
-          threshold: 10,
-          centeredSlides: true,
-          slidesPerView: 'auto', 
-          spaceBetween: 40, 
-          loop: true,
-          mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
-          speed: 800, 
-          slideToClickedSlide: true, 
-          on: {
-            slideChange: function () {
-                 const now = Date.now();
-                 if(now - lastPlay > 200) {
-                    const sound = realClickSound.cloneNode();
-                    sound.volume = 0.15;
-                    sound.play().catch(()=>{});
-                    lastPlay = now;
-                 }
-            }
-          }
-        });
-    }, 500);
-
-    /* --- 3. Lightbox --- */
+    /* --- Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
@@ -684,7 +602,7 @@
     }
     document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
 
-    /* --- 4. Email 複製 --- */
+    /* --- Email Copy --- */
     function copyEmail() {
       const email = "edendphoto1118@gmail.com";
       navigator.clipboard.writeText(email).then(() => {
@@ -694,7 +612,7 @@
       });
     }
 
-    /* --- 5. 游標邏輯 --- */
+    /* --- Cursor Logic --- */
     const cursorDot = document.querySelector('.cursor-dot');
     document.addEventListener('mousemove', (e) => {
       cursorDot.style.left = `${e.clientX}px`;
@@ -711,7 +629,7 @@
       }
     });
 
-    /* --- 6. 極光背景 --- */
+    /* --- Aurora Background --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
