@@ -68,16 +68,19 @@
       50% { transform: translate(-50%, -50%) scale(1.15); }
     }
 
-    /* --- 極光背景 --- */
+    /* --- 極光背景 (樣式調整：更柔和) --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
-      filter: url(#aurora-curtain) blur(40px); opacity: 0.4;
+      filter: url(#aurora-curtain) blur(50px); opacity: 0.6;
     }
     .aurora-ribbon {
       position: absolute; width: 150vw; height: 40vh;
-      background: linear-gradient(180deg, rgba(0,20,50,0), rgba(0,100,180,0.4), rgba(0,200,200,0.3), rgba(0,20,50,0));
-      opacity: 0; transform-origin: center; will-change: transform, opacity;
+      /* 調整為更深邃、高級的冷色調 */
+      background: linear-gradient(180deg, rgba(0,20,50,0), rgba(0,120,200,0.3), rgba(0,220,200,0.2), rgba(0,20,50,0));
+      opacity: 0; /* 初始透明，由 JS 控制漸顯 */
+      transform-origin: center;
+      will-change: transform, opacity; /* 效能優化 */
     }
 
     /* --- 1. Hero 區塊 --- */
@@ -116,8 +119,7 @@
         content: ''; position: absolute; left: -40px; top: 50%; width: 30px; height: 1px; background: rgba(255,255,255,0.5);
     }
 
-
-    /* --- 2. Film Strip 橫向膠卷區塊 --- */
+    /* --- 2. Film Strip --- */
     .film-strip {
       padding: 120px 0;
       overflow: hidden; position: relative;
@@ -141,8 +143,7 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     }
 
-
-    /* --- 3. Works 作品集 (瀑布流) --- */
+    /* --- 3. Works --- */
     .works { padding: 150px 8vw; position: relative; }
     .section-title {
       font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.4em; color: #666;
@@ -250,54 +251,43 @@
   </div>
 
   <script>
-    /* --- 重要：自動生成圖片設定 --- */
-    // 這裡設定你有幾張圖片，目前設為 33
-    // 以後如果增加到 50 張，只要把這裡改成 50
+    /* --- 自動生成圖片 (含空格修正) --- */
     const totalWorks = 33; 
-
-    /* --- 1. 自動生成圖片邏輯 --- */
     const stripContainer = document.getElementById('stripContainer');
     const masonryGrid = document.getElementById('masonryGrid');
 
     function generateGallery() {
-      // 確保容器是空的，避免重複
       stripContainer.innerHTML = '';
       masonryGrid.innerHTML = '';
-
       for (let i = 1; i <= totalWorks; i++) {
-        // 格式化數字：把 1 變成 '01'，把 10 保持 '10'
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work${num}.jpg`;
-        const altText = `Eden Work ${num}`;
-
-        // A. 填入 Film Strip (橫向膠卷)
+        const imgPath = `images/works/work ${num}.jpg`; // 檔名：work 01.jpg
+        
         const stripDiv = document.createElement('div');
         stripDiv.className = 'strip-item';
-        // 注意：這裡加入了 onerror 處理，如果圖片不存在(例如 work34)，就不會顯示那個框框
         stripDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         stripContainer.appendChild(stripDiv);
 
-        // B. 填入 Masonry Grid (瀑布流)
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
         masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         masonryGrid.appendChild(masonryDiv);
       }
     }
-    // 執行生成
     generateGallery();
 
 
-    /* --- 2. 游標與極光邏輯 --- */
+    /* --- 游標邏輯 --- */
     const cursorDot = document.querySelector('.cursor-dot');
     let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+    // 使用延遲坐標來做物理撥動
     let delayedMouseX = mouseX, delayedMouseY = mouseY;
+    
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX; mouseY = e.clientY;
       cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
     });
     
-    // 由於圖片是動態生成的，我們需要使用事件委派(Event Delegation)來處理 Hover 效果
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
         document.body.classList.add('hover-active');
@@ -309,43 +299,113 @@
       }
     });
 
+
+    /* --- 真實極光物理模擬 (撥水 + 絲滑漸顯) --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
-    function createAurora() {
+
+    // 極光物件建構
+    function spawnAurora() {
       const el = document.createElement('div'); el.classList.add('aurora-ribbon');
-      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.5);
+      
+      // 隨機初始位置
+      let posX = Math.random() * window.innerWidth;
+      let posY = Math.random() * (window.innerHeight * 0.5);
       let angle = (Math.random() - 0.5) * 40; 
+      
+      // 基礎漂移速度 (自然流動)
       const driftSpeed = 0.3 + Math.random() * 0.4;
       const velX = Math.sin(angle * Math.PI / 180) * driftSpeed;
       const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.5;
+
       el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
       auroraContainer.appendChild(el);
-      const auroraObj = { el, posX, posY, angle, velX, velY, life: 0 };
-      auroras.push(auroraObj);
-      setTimeout(() => { el.remove(); auroras.splice(auroras.indexOf(auroraObj), 1); }, 12000);
-    }
-    function animateAuroras() {
-      delayedMouseX += (mouseX - delayedMouseX) * 0.1; delayedMouseY += (mouseY - delayedMouseY) * 0.1;
-      auroras.forEach(obj => {
-        obj.life += 0.01; obj.posX += obj.velX; obj.posY += obj.velY;
-        const dx = obj.posX - delayedMouseX; const dy = obj.posY - delayedMouseY;
-        const dist = Math.sqrt(dx*dx + dy*dy); const interactionRadius = 600;
-        if (dist < interactionRadius) {
-          const force = Math.pow((interactionRadius - dist) / interactionRadius, 3) * 20;
-          const angle = Math.atan2(dy, dx);
-          obj.posX += Math.cos(angle) * force; obj.posY += Math.sin(angle) * force;
-        }
-        obj.el.style.transform = `translate(${obj.posX}px, ${obj.posY}px) rotate(${obj.angle}deg) scaleY(${1 + Math.sin(obj.life)*0.2})`;
-        if(obj.life < 1) obj.el.style.opacity = 0.8; if(obj.life > 8) obj.el.style.opacity = 0;
+
+      // 初始化物理變數
+      auroras.push({
+        el: el,
+        x: posX,
+        y: posY,
+        vx: velX,   // X軸速度 (包含慣性)
+        vy: velY,   // Y軸速度 (包含慣性)
+        angle: angle,
+        life: 0,    // 生命週期
+        maxLife: 1000 + Math.random() * 500 // 隨機壽命
       });
+    }
+
+    function animateAuroras() {
+      // 讓延遲滑鼠平滑追蹤真實滑鼠 (用於計算撥動方向)
+      delayedMouseX += (mouseX - delayedMouseX) * 0.1;
+      delayedMouseY += (mouseY - delayedMouseY) * 0.1;
+
+      // 遍歷所有極光
+      for (let i = auroras.length - 1; i >= 0; i--) {
+        let p = auroras[i];
+        p.life++;
+
+        // 1. 計算與滑鼠的距離 (撥水判定)
+        let dx = p.x - delayedMouseX;
+        let dy = p.y - delayedMouseY;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        let interactRadius = 400; // 撥動範圍
+
+        // 2. 如果滑鼠靠近，施加推力 (撥水)
+        if (dist < interactRadius) {
+          let force = (interactRadius - dist) / interactRadius; // 越近推力越大
+          // 施加加速度到速度變數 (vx, vy)
+          // 這就是「撥水」的關鍵：不是直接改位置，而是改速度
+          p.vx += (dx / dist) * force * 0.8; 
+          p.vy += (dy / dist) * force * 0.8;
+        }
+
+        // 3. 摩擦力 (水阻)：讓速度慢慢衰減，不會永遠滑下去
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+
+        // 4. 更新位置
+        p.x += p.vx;
+        p.y += p.vy;
+        p.angle += 0.02; // 微微旋轉
+
+        // 5. 計算絲滑透明度 (Fade In -> Sustain -> Fade Out)
+        let opacity = 0;
+        let fadeDuration = 150; // 淡入淡出幀數
+        
+        if (p.life < fadeDuration) {
+           // 漸顯 (0 -> 1)
+           opacity = p.life / fadeDuration;
+        } else if (p.life > p.maxLife - fadeDuration) {
+           // 漸隱 (1 -> 0)
+           opacity = (p.maxLife - p.life) / fadeDuration;
+        } else {
+           // 維持
+           opacity = 1;
+        }
+
+        // 6. 套用樣式
+        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.01)*0.2})`;
+        p.el.style.opacity = opacity * 0.7; // 最大透明度 0.7
+
+        // 7. 移除壽命結束的極光
+        if (p.life > p.maxLife) {
+          p.el.remove();
+          auroras.splice(i, 1);
+        }
+      }
+      
       requestAnimationFrame(animateAuroras);
     }
-    setInterval(createAurora, 3000); createAurora(); createAurora(); animateAuroras();
+
+    // 啟動循環
+    setInterval(spawnAurora, 2000); // 每2秒產生一個新極光
+    spawnAurora();
+    spawnAurora();
+    animateAuroras();
 
 
-    /* --- 3. Film Strip 邏輯與音效 --- */
-    // 這裡我們需要重新選取動態生成的 items
-    setTimeout(() => { // 延遲一下確保圖片已生成
+    /* --- Film Strip 邏輯與音效 --- */
+    setTimeout(() => { 
         const stripItems = document.querySelectorAll('.strip-item');
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.3;
@@ -355,24 +415,18 @@
           const center = stripContainer.scrollLeft + stripContainer.offsetWidth / 2;
           let closestDist = Infinity;
           let closestIndex = -1;
-
           stripItems.forEach((item, index) => {
             const itemCenter = item.offsetLeft + item.offsetWidth / 2;
             const dist = Math.abs(center - itemCenter);
-            if (dist < closestDist) {
-              closestDist = dist;
-              closestIndex = index;
-            }
+            if (dist < closestDist) { closestDist = dist; closestIndex = index; }
             item.classList.remove('active');
           });
-
           if (closestIndex !== -1) {
             stripItems[closestIndex].classList.add('active');
             if (closestIndex !== lastActiveIndex) {
               if (lastActiveIndex !== -1) {
                  const soundClone = realClickSound.cloneNode();
-                 soundClone.volume = 0.2;
-                 soundClone.play().catch(() => {});
+                 soundClone.volume = 0.2; soundClone.play().catch(() => {});
               }
               lastActiveIndex = closestIndex;
             }
@@ -380,7 +434,7 @@
         }
         stripContainer.addEventListener('scroll', updateStrip);
         updateStrip();
-    }, 500); // 確保 DOM 生成後才執行
+    }, 500); 
 
     /* --- Lightbox --- */
     function openLightbox(element) {
