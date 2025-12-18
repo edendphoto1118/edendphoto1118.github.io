@@ -128,7 +128,7 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 8. The Narrative (Featured Swiper) --- */
+    /* --- 8. The Narrative (Featured Swiper - 混合比例修正版) --- */
     .film-strip {
       padding: 100px 0; 
       position: relative; background: #000; z-index: 10; 
@@ -139,8 +139,12 @@
       width: 100%; padding: 80px 0; 
     }
     .swiper-slide {
-      width: 300px; 
-      aspect-ratio: 2/3;
+      /* [修正] 不再強制寬度，改為高度固定，寬度自適應 */
+      width: auto; 
+      height: 60vh; /* 固定高度 */
+      max-height: 600px;
+      /* aspect-ratio: 2/3;  <-- 移除這行，解放比例 */
+      
       flex-shrink: 0;
       filter: grayscale(100%) brightness(0.5); 
       transform: scale(0.9); 
@@ -151,12 +155,14 @@
       background: #0a0a0a; 
     }
     .swiper-slide img { 
-      width: 100%; height: 100%; object-fit: cover; object-position: center; 
+      width: auto; /* 寬度自動 */
+      height: 100%; /* 填滿高度 */
+      object-fit: contain; /* 完整呈現 */
       display: block;
     }
     .swiper-slide-active {
       filter: grayscale(0%) brightness(1.1) !important; 
-      transform: scale(1.25) !important; 
+      transform: scale(1.1) !important; /* 稍微減小放大倍率以免橫圖衝出螢幕 */
       opacity: 1 !important; 
       z-index: 100; 
       box-shadow: 0 40px 80px rgba(0,0,0,0.9);
@@ -203,9 +209,9 @@
         background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
 
-    /* --- 10. Pricing Section --- */
+    /* --- 10. Pricing Section (移除按鈕版) --- */
     .pricing-section {
-      padding: 120px 8vw;
+      padding: 120px 8vw 60px; /* 減少下方 padding，因為按鈕移到底部 */
       background: #050505;
       border-top: 1px solid rgba(255,255,255,0.08);
     }
@@ -217,6 +223,7 @@
       border: 1px solid rgba(255,255,255,0.1); padding: 40px 30px;
       position: relative; transition: all 0.4s ease;
       display: flex; flex-direction: column; background: rgba(255,255,255,0.01);
+      min-height: 500px; /* 確保高度一致美觀 */
     }
     .price-card:hover {
       border-color: rgba(255,255,255,0.3); transform: translateY(-5px);
@@ -250,7 +257,6 @@
       font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #fff; 
       font-weight: 300; display: block; 
     }
-    
     .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 1.6; margin-bottom: 30px; min-height: 50px; }
     .price-specs { list-style: none; padding: 0; margin: 0 0 30px 0; flex-grow: 1; }
     .price-specs li {
@@ -259,24 +265,8 @@
     }
     .price-specs li::before { content: '▹'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 600; }
-    .btn-book {
-      display: inline-block; padding: 15px 0; width: 100%; text-align: center;
-      border: 1px solid rgba(255,255,255,0.2); color: #fff;
-      font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-      text-transform: uppercase; text-decoration: none; transition: all 0.3s;
-    }
-    .btn-book:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 11. Booking Calendar (Calendly) --- */
-    .calendar-section {
-      padding: 80px 8vw; background: #080808; text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .calendar-container {
-      margin: 40px auto 0; width: 100%; height: 700px; max-width: 1000px;
-    }
-
-    /* --- 12. Special Campaign --- */
+    /* --- 11. Special Campaign (Royal Deck) --- */
     .royal-section {
       padding: 100px 8vw; background: linear-gradient(135deg, #080808 0%, #000 100%);
       border-top: 1px solid #222; border-bottom: 1px solid #222;
@@ -300,10 +290,77 @@
     .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
 
+    /* --- 12. Main CTA Button & Hidden Booking Area --- */
+    .booking-cta-section {
+        padding: 80px 0;
+        text-align: center;
+        background: #000;
+    }
+    
+    .initiate-btn {
+        display: inline-block;
+        padding: 25px 80px;
+        background: transparent;
+        border: 1px solid #fff;
+        color: #fff;
+        font-family: 'Cinzel', serif;
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: none;
+        transition: all 0.5s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .initiate-btn:hover {
+        background: #fff;
+        color: #000;
+        box-shadow: 0 0 50px rgba(255,255,255,0.4);
+    }
+
+    /* Hidden Container for Terms & Calendar */
+    .hidden-booking-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1);
+        opacity: 0;
+        background: #080808;
+    }
+    
+    .hidden-booking-container.open {
+        max-height: 2000px; /* 足夠放下日曆的高度 */
+        opacity: 1;
+    }
+
+    .booking-terms {
+        padding: 80px 8vw 40px;
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 40px; }
+    .terms-grid { 
+        display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto; text-align: left; 
+    }
+    .term-item h4 { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; margin-bottom: 10px; }
+    .term-item p { color: #888; font-size: 0.8rem; line-height: 1.6; }
+
+    /* Integrated Calendar Style */
+    .calendar-wrapper {
+        padding: 40px 8vw 100px;
+        display: flex;
+        justify-content: center;
+    }
+    /* Calendly Container Styling */
+    .calendly-inline-widget {
+        border: 1px solid rgba(191, 149, 63, 0.3); /* 金色邊框 */
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
     /* --- 13. Face Archive (Form) --- */
     .lead-form-section {
-      padding: 120px 8vw; background: #080808; text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;
+        padding: 120px 8vw; background: #080808; text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;
     }
     .archive-meta { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #555; text-transform: uppercase; margin-bottom: 30px; }
     .archive-meta span { color: #fff; margin-left: 10px; font-weight: 600; }
@@ -311,9 +368,9 @@
     .lead-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; margin-bottom: 60px; line-height: 2; max-width: 600px; }
     .form-group { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 40px; }
     .form-input, .form-select {
-      background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding: 15px 0; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem;
-      letter-spacing: 0.1em; width: 100%; text-align: center; outline: none; transition: border-color 0.4s;
+        background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
+        padding: 15px 0; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem;
+        letter-spacing: 0.1em; width: 100%; text-align: center; outline: none; transition: border-color 0.4s;
     }
     .form-input::placeholder { font-family: 'Montserrat', sans-serif; color: #444; font-size: 0.75rem; letter-spacing: 0.25em; }
     .form-input:focus, .form-select:focus { border-bottom: 1px solid #fff; }
@@ -321,9 +378,9 @@
     .form-select { color: #888; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; cursor: none; }
     .form-select option { background: #111; color: #ccc; padding: 10px; }
     .form-submit {
-      margin-top: 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
-      color: #fff; padding: 20px 0; width: 100%; font-family: 'Montserrat', sans-serif;
-      font-size: 0.8rem; letter-spacing: 0.3em; cursor: none; transition: all 0.4s; text-transform: uppercase;
+        margin-top: 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
+        color: #fff; padding: 20px 0; width: 100%; font-family: 'Montserrat', sans-serif;
+        font-size: 0.8rem; letter-spacing: 0.3em; cursor: none; transition: all 0.4s; text-transform: uppercase;
     }
     .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
 
@@ -361,6 +418,8 @@
       .royal-grid { flex-direction: column; gap: 40px; }
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 40px; width: 100%; }
       .royal-border { padding: 30px; }
+      
+      .terms-grid { grid-template-columns: 1fr; gap: 20px; }
     }
   </style>
 </head>
@@ -446,7 +505,6 @@
           <li><strong>Feature：獨家建築幾何/黑白光影風格</strong></li>
           <li>Bonus：IG 限動側拍花絮 (15s)</li>
         </ul>
-        <a href="#calendar" class="btn-book hover-target">Check Availability</a>
       </div>
 
       <div class="price-card">
@@ -468,7 +526,6 @@
           <li><strong>Core Feature：Giant's Play 巨人視角攝影</strong></li>
           <li>Value：社群高互動率、吸睛流量款</li>
         </ul>
-        <a href="#calendar" class="btn-book hover-target">Check Availability</a>
       </div>
 
       <div class="price-card featured">
@@ -490,20 +547,8 @@
           <li><strong>Core Feature：Gravity Loop 虛擬運鏡 Reels</strong></li>
           <li>Bonus：贈送「時尚雜誌封面」排版設計 1 款</li>
         </ul>
-        <a href="#calendar" class="btn-book hover-target">Check Availability</a>
       </div>
     </div>
-  </section>
-
-  <section class="calendar-section" id="calendar">
-    <div class="section-header">
-      <h2 class="section-title">Availability</h2>
-      <span class="section-subtitle">Select a date to schedule your session.</span>
-    </div>
-    <div class="calendar-container">
-      <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min" style="min-width:320px;height:700px;"></div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      </div>
   </section>
 
   <section class="royal-section">
@@ -539,6 +584,40 @@
       </div>
     </div>
   </section>
+
+  <section class="booking-cta-section">
+      <button class="initiate-btn hover-target" onclick="toggleBooking()">INITIATE BOOKING (開始預約)</button>
+  </section>
+
+  <div id="hiddenBooking" class="hidden-booking-container">
+      
+      <div class="booking-terms">
+          <h3 class="terms-title">BOOKING POLICY</h3>
+          <div class="terms-grid">
+              <div class="term-item">
+                  <h4>費用說明</h4>
+                  <p>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目。</p>
+              </div>
+              <div class="term-item">
+                  <h4>訂金政策</h4>
+                  <p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p>
+              </div>
+              <div class="term-item">
+                  <h4>準時原則</h4>
+                  <p>遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p>
+              </div>
+              <div class="term-item">
+                  <h4>成品交付</h4>
+                  <p>交付成品為調色/精修後之 JPG 檔。RAW 檔為半成品，恕不提供。</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="calendar-wrapper">
+          <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=0a0a0a&text_color=ffffff&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          </div>
+  </div>
 
   <section class="lead-form-section" id="lead-form">
     <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
@@ -601,6 +680,7 @@
       // --- 1. 生成 Masonry 瀑布流 (使用舊命名邏輯 portfolio0-1.jpg ~ 117) ---
       for (let i = 1; i <= totalWorks; i++) {
         // 檔名格式: portfolio0-1.jpg (無補零)
+        const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
         
         const itemDiv = document.createElement('div');
@@ -647,6 +727,19 @@
         });
         document.getElementById('loadMoreBtn').style.display = 'none';
     }
+    
+    // --- Toggle Booking Function ---
+    function toggleBooking() {
+        const bookingSection = document.getElementById('hiddenBooking');
+        bookingSection.classList.toggle('open');
+        
+        // Smooth scroll to the booking section
+        if(bookingSection.classList.contains('open')) {
+            setTimeout(() => {
+                bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+    }
 
     /* --- Swiper Init --- */
     setTimeout(() => {
@@ -659,6 +752,7 @@
           allowTouchMove: true, 
           threshold: 10,
           centeredSlides: true,
+          // [修改] slidesPerView 自動，適應混合比例
           slidesPerView: 'auto', 
           spaceBetween: 40, 
           loop: true,
