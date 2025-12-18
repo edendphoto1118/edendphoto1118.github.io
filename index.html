@@ -24,7 +24,7 @@
       -moz-user-select: none;
       -ms-user-select: none;
     }
-    /* [防護] 禁止圖片拖曳與右鍵選單干擾 */
+    /* [防護] 禁止圖片拖曳 */
     img { pointer-events: none; -webkit-user-drag: none; }
     
     /* 允許互動的元素恢復游標事件 */
@@ -42,18 +42,42 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* --- 3. 大師級細節：Preloader (載入畫面) --- */
+    /* --- 3. 大師級細節：Dune Style Loading (沙丘美學) --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000;
       display: flex; justify-content: center; align-items: center;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity 1.5s ease, visibility 1.5s ease; /* 離開時更優雅 */
     }
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 1.5rem; letter-spacing: 0.5em;
-      color: #fff; animation: pulse 2s infinite;
+      font-family: 'Cinzel', serif; 
+      font-size: 1.2rem; 
+      color: #e0e0e0; 
+      /* 沙丘風格動畫 */
+      animation: duneBreathe 5s infinite ease-in-out;
+      opacity: 0; /* 初始狀態 */
     }
-    @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+    @keyframes duneBreathe {
+      0% { 
+        opacity: 0; 
+        letter-spacing: 0.3em; 
+        filter: blur(4px); 
+        transform: scale(0.95);
+      }
+      50% { 
+        opacity: 1; 
+        letter-spacing: 0.6em; /* 字距展開 */
+        filter: blur(0px); /* 清晰 */
+        transform: scale(1);
+      }
+      100% { 
+        opacity: 0; 
+        letter-spacing: 0.3em; 
+        filter: blur(4px); 
+        transform: scale(0.95);
+      }
+    }
     
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
@@ -160,35 +184,30 @@
       align-items: center; /* 垂直置中 */
     }
     .swiper-slide {
-      width: auto; /* 寬度自適應，不強制比例 */
+      width: auto; /* 寬度自適應 */
       height: 60vh; 
       max-height: 600px;
       flex-shrink: 0;
       
-      /* [大師級] 非主角圖片樣式：壓暗、微縮 */
       filter: grayscale(100%) brightness(0.3); 
       transform: scale(0.9); 
       opacity: 0.2; 
       
-      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* 高級緩動曲線 */
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); 
       pointer-events: auto; 
       display: flex; justify-content: center; align-items: center;
       background: transparent;
     }
     .swiper-slide img { 
       width: auto; height: 100%; object-fit: contain; display: block;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 基本陰影 */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
     }
     
-    /* [大師級] 主角圖片樣式：全亮、放大、聚焦 */
     .swiper-slide-active {
       filter: grayscale(0%) brightness(1.0) !important; 
-      transform: scale(1.05) !important; /* 微微放大 */
+      transform: scale(1.05) !important; 
       opacity: 1 !important; 
       z-index: 100; 
-      
-      /* 主角光暈與陰影 */
-      /* box-shadow: 0 40px 80px rgba(0,0,0,0.9); -- 移到 img 上效果更好 */
     }
     .swiper-slide-active img {
         box-shadow: 0 40px 100px rgba(0,0,0,0.9);
@@ -407,8 +426,12 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* --- RWD --- */
+    /* --- RWD Special Fixes (手機完美適配) --- */
     @media (max-width: 768px) {
+      /* 移除自訂游標，還原系統觸控 */
+      .cursor-dot { display: none !important; }
+      body { cursor: auto !important; }
+
       .hero h1 { font-size: 15vw; }
       .nav-menu { display: none; } 
       .nav { justify-content: center; }
@@ -418,6 +441,10 @@
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 40px; width: 100%; }
       .royal-border { padding: 30px; }
       .terms-grid { grid-template-columns: 1fr; gap: 20px; }
+      
+      /* [手機版封面裁切修正] */
+      /* 設定背景定位為 center 20% (水平置中，垂直偏上20%處，通常是臉的位置) */
+      .hero-bg { background-position: center 20% !important; }
     }
   </style>
 </head>
@@ -427,7 +454,7 @@
   <div class="noise-overlay"></div>
 
   <div id="preloader">
-    <div class="loader-text">LOADING ARCHIVE</div>
+    <div class="loader-text">EDEN D</div>
   </div>
 
   <div id="toast" class="toast">Email Copied</div>
@@ -669,12 +696,13 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 0. Preloader Logic --- */
+    /* --- 0. Preloader Logic (Eden D / Dune Style) --- */
     window.addEventListener('load', () => {
         const body = document.querySelector('body');
+        // 延遲一點點消失，確保動畫完整播放一次
         setTimeout(() => {
             body.classList.add('loaded');
-        }, 1000); 
+        }, 1200); 
     });
 
     /* --- 1. Masterpiece Gallery Logic (Dual Logic) --- */
