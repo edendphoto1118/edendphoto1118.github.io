@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
@@ -34,7 +34,7 @@
     }
     .nav-menu { display: flex; gap: 50px; }
     .nav-item {
-      font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; text-decoration: none;
+      font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #fff; text-decoration: none;
       letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
       position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
     }
@@ -45,16 +45,7 @@
     }
     .nav-item:hover::after { width: 100%; }
 
-    /* --- 3. 客製化捲軸 --- */
-    ::-webkit-scrollbar { width: 4px; background: transparent; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.1) 100%);
-      background-size: 100% 200%; border-radius: 2px; animation: scroll-flow 2s linear infinite;
-    }
-    @keyframes scroll-flow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
-
-    /* --- 4. 游標 --- */
+    /* --- 3. 游標 --- */
     .cursor-dot {
       width: 10px; height: 10px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
@@ -62,12 +53,12 @@
       transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
     }
     body.hover-active .cursor-dot {
-      width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent;
+      width: 60px; height: 60px; border: 1px solid #fff; background-color: transparent;
       animation: rotateCursor 4s infinite linear;
     }
-    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); } 50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); } }
+    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* --- 5. 極光背景 --- */
+    /* --- 4. 極光背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
@@ -79,7 +70,7 @@
       opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
-    /* --- 6. Hero 區塊 --- */
+    /* --- 5. Hero 區塊 --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
@@ -114,7 +105,7 @@
       display: inline-block; font-weight: 300;
     }
 
-    /* --- 標題樣式 --- */
+    /* --- 6. 標題樣式 --- */
     .section-header {
       text-align: center; margin-bottom: 80px; position: relative;
     }
@@ -127,48 +118,54 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 7. Film Strip (修正：絕對亮顯 + 滾輪操作) --- */
+    /* --- 7. Film Strip (重構：穩定版) --- */
     .film-strip {
-      padding: 100px 0 160px 0; position: relative;
-      background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.9) 50%, #000 100%); z-index: 10;
+      padding: 120px 0; 
+      position: relative;
+      background: #000;
+      z-index: 10;
+      height: 600px; /* 強制高度，避免縮小 */
+      display: flex;
+      align-items: center;
     }
+    
+    /* Swiper 容器 */
     .swiper { 
       width: 100%; 
-      padding-top: 80px; padding-bottom: 80px; /* 為向上浮起預留空間 */
+      height: 500px;
+      padding-top: 50px; 
+      padding-bottom: 50px;
     }
     
+    /* 單張 Slide 設定 */
     .swiper-slide {
-      background-position: center; background-size: cover;
-      /* 固定寬度確保計算準確 */
-      width: 280px; height: 420px; 
-      flex-shrink: 0;
-      /* [未選中狀態] 黑白、暗、小 */
-      filter: grayscale(100%) brightness(0.4) contrast(0.9);
-      transform: scale(0.9);
-      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      pointer-events: auto; user-select: none;
-      /* 右邊距 */
-      margin-right: 40px; 
+      background-position: center; 
+      background-size: cover;
+      width: 300px; /* 固定寬度 */
+      height: 450px; /* 固定高度 */
+      
+      /* [未選中狀態] */
+      filter: grayscale(100%) brightness(0.3); /* 黑白且很暗 */
+      transform: scale(0.85); /* 縮小 */
+      opacity: 0.6;
+      
+      transition: all 0.5s ease-out; /* 平滑過渡 */
+      pointer-events: auto; 
+      user-select: none;
     }
+    
     .swiper-slide img {
-      display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
-      border-radius: 2px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      display: block; width: 100%; height: 100%; object-fit: cover; 
+      pointer-events: none;
     }
     
-    /* [核心修正] 強制亮顯正中間 */
-    /* 使用 !important 覆蓋任何可能干擾的樣式 */
-    .swiper-slide-active, 
-    .swiper-slide-duplicate-active {
-      filter: grayscale(0%) brightness(1.15) contrast(1.05) !important;
-      transform: scale(1.15) translateY(-30px) !important; /* 向上抽出 + 放大 */
-      z-index: 50;
-    }
-    
-    /* 讓激活圖片的陰影更重，製造浮空感 */
-    .swiper-slide-active img,
-    .swiper-slide-duplicate-active img {
-      box-shadow: 0 40px 80px rgba(0,0,0,0.9) !important;
+    /* [選中狀態] - 權重加重 !important */
+    .swiper-slide-active {
+      filter: grayscale(0%) brightness(1.1) !important; /* 全彩高亮 */
+      transform: scale(1.1) !important; /* 放大 */
+      opacity: 1 !important;
+      z-index: 100;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* 浮起陰影 */
     }
 
     /* --- 8. Works --- */
@@ -206,69 +203,74 @@
     }
     .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
 
-    /* --- 10. Lead Magnet --- */
+    /* --- 10. The Face Archive (頂級雜誌版 - 純文字) --- */
     .lead-form-section {
-      padding: 120px 8vw 150px; background: #080808; text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+      padding: 150px 8vw;
+      background: #080808;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
     }
-    .lead-form-section::before {
-      content: 'INSIGHTS'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-family: 'Cinzel', serif; font-size: 18vw; color: rgba(255,255,255,0.015);
-      pointer-events: none; white-space: nowrap; font-weight: 700;
-    }
-    .archive-container { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
     
-    .archive-badge {
-      display: inline-block; padding: 6px 14px; border: 1px solid rgba(0, 255, 204, 0.4);
-      color: #00ffcc; font-size: 0.6rem; letter-spacing: 0.25em; margin-bottom: 25px;
-      font-family: 'Montserrat', sans-serif; text-transform: uppercase; border-radius: 50px;
+    /* 純文字裝飾標頭 */
+    .archive-meta {
+      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; color: #555;
+      text-transform: uppercase; margin-bottom: 30px; display: block;
     }
+    .archive-meta span { color: #fff; margin-left: 10px; font-weight: 600; }
+
     .lead-title {
-      font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; margin-bottom: 20px; letter-spacing: 0.1em;
+      font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin-bottom: 40px;
+      letter-spacing: 0.05em; line-height: 1.1;
     }
-    .scout-counter {
-      font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #888;
-      margin-bottom: 40px; display: inline-flex; align-items: center; gap: 12px;
-      background: rgba(20, 20, 20, 0.8); padding: 8px 18px; border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .radar-dot {
-      width: 8px; height: 8px; background-color: #ff3333; border-radius: 50%; position: relative;
-    }
-    .radar-dot::after {
-      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 100%; height: 100%; border-radius: 50%; border: 1px solid #ff3333;
-      animation: radarPing 2s infinite;
-    }
-    @keyframes radarPing { 0% { width: 100%; height: 100%; opacity: 1; } 100% { width: 300%; height: 300%; opacity: 0; } }
-    .counter-num { color: #fff; font-weight: 600; margin: 0 4px; }
     
     .lead-desc {
-      font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; margin-bottom: 50px;
-      letter-spacing: 0.05em; line-height: 1.8;
+      font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #888;
+      margin-bottom: 80px; letter-spacing: 0.05em; line-height: 2;
+      max-width: 600px; font-weight: 300;
     }
     
-    .form-group { display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; }
-    .form-input, .form-select {
-      background: transparent; border: none; border-bottom: 1px solid #333;
-      padding: 15px 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.95rem;
-      width: 100%; max-width: 400px; transition: border-color 0.3s; outline: none; border-radius: 0;
-      text-align: center;
+    .form-group {
+      width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 50px;
     }
-    .form-input::placeholder { color: #444; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.15em; }
+    
+    /* 雜誌風格輸入框：只有一條細線 */
+    .form-input, .form-select {
+      background: transparent; border: none; 
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding: 15px 0; color: #fff; 
+      font-family: 'Cinzel', serif; /* 輸入文字也用襯線體，更高級 */
+      font-size: 1.1rem; letter-spacing: 0.1em;
+      width: 100%; text-align: center; outline: none;
+      transition: border-color 0.4s; border-radius: 0;
+    }
+    .form-input::placeholder { 
+      font-family: 'Montserrat', sans-serif; color: #444; 
+      text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.25em; 
+    }
     .form-input:focus, .form-select:focus { border-bottom: 1px solid #fff; }
     
-    .select-wrapper { width: 100%; max-width: 400px; position: relative; }
-    .form-select { appearance: none; cursor: none; color: #888; }
-    .form-select option { background: #111; color: #fff; text-align: center; padding: 10px; }
+    .select-wrapper { position: relative; }
+    .form-select { cursor: none; color: #888; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; }
+    .form-select option { background: #111; color: #ccc; padding: 10px; }
 
+    /* 按鈕：極簡文字框 */
     .form-submit {
-      margin-top: 30px; background: #fff; color: #000; border: none; padding: 16px 45px;
-      font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.15em; cursor: none; transition: all 0.3s;
+      margin-top: 40px; background: transparent; 
+      border: 1px solid rgba(255,255,255,0.3); color: #fff;
+      padding: 25px 0; width: 100%;
+      font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.3em; cursor: none; transition: all 0.4s;
+      text-transform: uppercase;
     }
-    .form-submit:hover { background: #00ffcc; box-shadow: 0 0 30px rgba(0, 255, 204, 0.3); }
-    .micro-copy { margin-top: 25px; font-size: 0.65rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
+    .form-submit:hover { 
+      background: #fff; color: #000; border-color: #fff;
+    }
+    
+    .micro-copy { 
+      margin-top: 40px; font-size: 0.6rem; color: #333; 
+      letter-spacing: 0.15em; text-transform: uppercase; 
+    }
 
     /* --- 11. About --- */
     .background {
@@ -289,10 +291,10 @@
 
     .toast {
       position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: rgba(255,255,255,0.9); color: #000; padding: 12px 24px;
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em;
-      border-radius: 4px; opacity: 0; pointer-events: none; transition: all 0.4s ease;
-      z-index: 20000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: #fff; color: #000; padding: 15px 30px;
+      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em;
+      border-radius: 0; opacity: 0; pointer-events: none; transition: all 0.4s ease;
+      z-index: 20000; text-transform: uppercase; font-weight: 600;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -307,7 +309,7 @@
 </head>
 
 <body>
-  <div id="toast" class="toast">已複製郵件</div>
+  <div id="toast" class="toast">Email Copied</div>
 
   <svg class="svg-filters">
     <defs>
@@ -370,41 +372,34 @@
   </section>
 
   <section class="lead-form-section">
-    <div class="archive-container">
-      <span class="archive-badge">CASTING RADAR</span>
-      <h3 class="lead-title">The Face Archive ｜ 臉孔資料庫</h3>
+    <div class="archive-meta">Scouting List: <span>356+ Members</span></div>
+    <h3 class="lead-title">The Face Archive</h3>
+    
+    <p class="lead-desc">
+      我們一直在尋找那張能撐起『王牌』的臉。<br>
+      如果你覺得自己的輪廓有建築般的幾何美感，或風格獨特到無法被定義。<br>
+      請留下你的 IG，讓我們在靈感來襲時，第一個找到你。
+    </p>
+
+    <form class="form-group" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="text" name="name" placeholder="Name / Nickname" class="form-input hover-target" required>
+      <input type="text" name="ig_handle" placeholder="Instagram ID (@)" class="form-input hover-target" required>
       
-      <div class="scout-counter">
-        <div class="radar-dot"></div>
-        👁️ 本季 Scout List 關注人數：<span class="counter-num">356</span> 人
+      <div class="select-wrapper hover-target">
+        <select name="archetype" class="form-select" required>
+          <option value="" disabled selected>Pick Your Archetype</option>
+          <option value="Spade">SPADE / 黑桃 - 冷冽建築感</option>
+          <option value="Heart">HEART / 紅心 - 迷幻魅力感</option>
+          <option value="Diamond">DIAMOND / 方塊 - 奢華幾何感</option>
+          <option value="Club">CLUB / 梅花 - 穩重經典感</option>
+          <option value="Joker">JOKER / 鬼牌 - 怪誕獨特感</option>
+        </select>
       </div>
 
-      <p class="lead-desc">
-        我們一直在尋找那張能撐起『王牌』的臉。<br>
-        如果你覺得自己的輪廓有建築般的幾何美感，或者風格獨特到無法被定義。<br>
-        請留下你的 IG，讓我們在靈感來襲時，第一個找到你。
-      </p>
-
-      <form class="form-group" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <input type="text" name="name" placeholder="Name / Nickname" class="form-input hover-target" required>
-        <input type="text" name="ig_handle" placeholder="Instagram ID (@)" class="form-input hover-target" required>
-        
-        <div class="select-wrapper hover-target">
-          <select name="archetype" class="form-select" required>
-            <option value="" disabled selected>Pick Your Card (你屬於哪張牌?)</option>
-            <option value="Spade">♠️ 黑桃 (冷冽 / 建築感)</option>
-            <option value="Heart">♥️ 紅心 (迷幻 / 魅力感)</option>
-            <option value="Diamond">♦️ 方塊 (奢華 / 幾何感)</option>
-            <option value="Club">♣️ 梅花 (穩重 / 經典感)</option>
-            <option value="Joker">🃏 Joker (怪誕 / 獨特感)</option>
-          </select>
-        </div>
-
-        <button type="submit" class="form-submit hover-target">Join the Archive</button>
-      </form>
-      
-      <p class="micro-copy">這不是報名，這是讓我們記住你的方式。</p>
-    </div>
+      <button type="submit" class="form-submit hover-target">Join The Archive</button>
+    </form>
+    
+    <p class="micro-copy">Selection by Invitation Only.</p>
   </section>
 
   <section class="background" id="about">
@@ -432,8 +427,8 @@
 
   <script>
     /* --- 圖片生成 --- */
-    const totalVerticalWorks = 33; 
-    const totalHorizontalWorks = 10; 
+    const totalVerticalWorks = 33; // 直式 (有空格)
+    const totalHorizontalWorks = 10; // 橫式 (無空格)
 
     const swiperWrapper = document.getElementById('swiperWrapper');
     const masonryGrid = document.getElementById('masonryGrid');
@@ -442,10 +437,10 @@
       swiperWrapper.innerHTML = '';
       masonryGrid.innerHTML = '';
 
-      // 直式 Film Strip
+      // Film Strip (直式)
       for (let i = 1; i <= totalVerticalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work ${num}.jpg`; 
+        const imgPath = `images/works/work ${num}.jpg`; // 注意空格
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
@@ -453,10 +448,10 @@
         swiperWrapper.appendChild(slideDiv);
       }
 
-      // 橫式 Works
+      // Works (橫式)
       for (let i = 1; i <= totalHorizontalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work${num}.jpg`; 
+        const imgPath = `images/works/work${num}.jpg`; // 無空格
         
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
@@ -466,39 +461,49 @@
     }
     generateGallery();
 
-    /* --- Swiper 初始化 (滾輪操作 + 中心亮顯) --- */
+    /* --- Swiper 初始化 (修正：鎖死拖曳 + 音效 + 絕對亮顯) --- */
     setTimeout(() => {
+        // 音效物件 (防抖動)
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
+        let lastPlayTime = 0;
 
         var swiper = new Swiper(".mySwiper", {
-          // 不使用 3D 效果
+          // 不使用 3D，回歸穩定平移
           effect: 'slide',
-          grabCursor: false, // 禁止抓取手勢
-          allowTouchMove: false, // [關鍵] 禁止拖曳
+          
+          // [關鍵] 鎖死拖曳
+          allowTouchMove: false, 
+          grabCursor: false,
           
           centeredSlides: true,
-          slidesPerView: "auto", 
-          spaceBetween: 40, // 間距
+          slidesPerView: 'auto', // 自動計算寬度
+          spaceBetween: 50, // 間距
           loop: true,
           
+          // 滾輪設定
           mousewheel: { 
             enabled: true, 
-            sensitivity: 2, 
-            thresholdDelta: 10,
+            sensitivity: 1.5, 
+            thresholdDelta: 5,
             forceToAxis: true
           },
           
           speed: 600, 
-          slideToClickedSlide: true, // 點擊旁邊還是可以滑過去
+          slideToClickedSlide: true, 
           
           on: {
             slideChange: function () {
-                 const soundClone = realClickSound.cloneNode();
-                 soundClone.volume = 0.2; soundClone.play().catch(() => {});
+                 // 簡單的音效觸發限制，避免快速滾動時爆音
+                 const now = Date.now();
+                 if (now - lastPlayTime > 100) {
+                     const soundClone = realClickSound.cloneNode();
+                     soundClone.volume = 0.2; 
+                     soundClone.play().catch(() => {});
+                     lastPlayTime = now;
+                 }
             },
             click: function(swiper, event) {
-                // 只有點擊中間那張才打開燈箱
                 if (swiper.clickedIndex === swiper.activeIndex) {
                     const img = swiper.clickedSlide.querySelector('img');
                     if (img) openLightbox(img);
