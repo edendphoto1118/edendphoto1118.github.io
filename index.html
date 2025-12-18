@@ -24,7 +24,7 @@
       -moz-user-select: none;
       -ms-user-select: none;
     }
-    /* [防護] 禁止圖片拖曳 */
+    /* [防護] 禁止圖片拖曳與右鍵選單干擾 */
     img { pointer-events: none; -webkit-user-drag: none; }
     
     /* 允許互動的元素恢復游標事件 */
@@ -38,7 +38,7 @@
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000;
-      opacity: 0.05; /* 調整雜訊濃度 */
+      opacity: 0.05; 
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
@@ -55,7 +55,6 @@
     }
     @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
     
-    /* Preloader 隱藏狀態 */
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
     /* --- 4. 導覽列 --- */
@@ -147,7 +146,7 @@
       letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7);
     }
 
-    /* --- 9. The Narrative (Featured Swiper - 修正置中) --- */
+    /* --- 9. The Narrative (Featured Swiper - Master Centered Version) --- */
     .film-strip {
       padding: 100px 0; 
       position: relative; background: #000; z-index: 10; 
@@ -157,34 +156,42 @@
     .swiper { 
       width: 100%; padding: 80px 0; 
     }
-    /* 置中修正：確保 Wrapper 內的內容對齊 */
     .swiper-wrapper {
-      align-items: center; 
+      align-items: center; /* 垂直置中 */
     }
     .swiper-slide {
-      /* 固定高度，寬度自適應 */
-      width: auto; 
+      width: auto; /* 寬度自適應，不強制比例 */
       height: 60vh; 
       max-height: 600px;
       flex-shrink: 0;
-      filter: grayscale(100%) brightness(0.5); 
+      
+      /* [大師級] 非主角圖片樣式：壓暗、微縮 */
+      filter: grayscale(100%) brightness(0.3); 
       transform: scale(0.9); 
-      opacity: 0.6;
-      transition: all 0.7s cubic-bezier(0.25, 1, 0.2, 1); 
+      opacity: 0.2; 
+      
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* 高級緩動曲線 */
       pointer-events: auto; 
-      /* 確保內容居中 */
       display: flex; justify-content: center; align-items: center;
-      background: #0a0a0a; 
+      background: transparent;
     }
     .swiper-slide img { 
       width: auto; height: 100%; object-fit: contain; display: block;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 基本陰影 */
     }
+    
+    /* [大師級] 主角圖片樣式：全亮、放大、聚焦 */
     .swiper-slide-active {
-      filter: grayscale(0%) brightness(1.1) !important; 
-      transform: scale(1.1) !important; 
+      filter: grayscale(0%) brightness(1.0) !important; 
+      transform: scale(1.05) !important; /* 微微放大 */
       opacity: 1 !important; 
       z-index: 100; 
-      box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+      
+      /* 主角光暈與陰影 */
+      /* box-shadow: 0 40px 80px rgba(0,0,0,0.9); -- 移到 img 上效果更好 */
+    }
+    .swiper-slide-active img {
+        box-shadow: 0 40px 100px rgba(0,0,0,0.9);
     }
 
     /* --- 10. Masterpiece Gallery (Masonry + Scroll Reveal) --- */
@@ -199,12 +206,13 @@
     .gallery-item {
       break-inside: avoid; margin-bottom: 40px; position: relative;
       z-index: 1; cursor: none;
-      /* Scroll Reveal 初始狀態 */
+      /* Scroll Reveal */
       opacity: 0; transform: translateY(50px);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .gallery-item.reveal { opacity: 1; transform: translateY(0); }
     .gallery-item.hidden { display: none; }
+    
     .gallery-item img {
       width: 100%; height: auto; display: block;
       filter: grayscale(100%) brightness(0.8) contrast(1.1);
@@ -212,7 +220,7 @@
       background: #111; min-height: 100px;
     }
     .gallery-item:hover {
-      transform: scale(1.05) translateY(0) !important; 
+      transform: scale(1.03) translateY(0) !important;
       z-index: 100; box-shadow: 0 30px 60px rgba(0,0,0,0.9);
     }
     .gallery-item:hover img {
@@ -666,7 +674,7 @@
         const body = document.querySelector('body');
         setTimeout(() => {
             body.classList.add('loaded');
-        }, 1000); // 1秒後消失
+        }, 1000); 
     });
 
     /* --- 1. Masterpiece Gallery Logic (Dual Logic) --- */
@@ -685,6 +693,7 @@
       // --- 1. 生成 Masonry 瀑布流 (使用舊命名邏輯 portfolio0-1.jpg ~ 117) ---
       for (let i = 1; i <= totalWorks; i++) {
         // 檔名格式: portfolio0-1.jpg (無補零)
+        const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
         
         const itemDiv = document.createElement('div');
@@ -762,7 +771,7 @@
     // 確保圖片生成後再執行動畫觀察
     setTimeout(initScrollReveal, 500); 
 
-    /* --- Swiper Init --- */
+    /* --- Swiper Init (Loop Disabled for Perfection) --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
@@ -776,7 +785,9 @@
           // [重要] 自動適應混合比例
           slidesPerView: 'auto', 
           spaceBetween: 40, 
-          loop: true,
+          // [大師級修正] 關閉 Loop 以確保置中計算絕對精準
+          loop: false, 
+          grabCursor: true, // 增加手感
           mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
           speed: 800, 
           slideToClickedSlide: true, 
