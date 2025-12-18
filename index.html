@@ -2,27 +2,27 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN — Visual Director</title>
+  <title>EDEN D. — Visual Director</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
     /* --- 全站基礎設定 --- */
     body {
-      margin: 0;
-      background: #000;
-      color: #e0e0e0;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      cursor: none;
-      user-select: none; /* 防止拖曳時選取到文字 */
+      margin: 0; background: #000; color: #e0e0e0;
+      /* 預設字體改為 Montserrat，時尚界的標準無襯線體 */
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden; cursor: none; user-select: none;
     }
+    body.lightbox-open { cursor: auto; }
+    body.lightbox-open .cursor-dot { display: none; }
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-    /* --- 導覽列 --- */
+    /* --- 導覽列 (雜誌目錄風格) --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%;
       padding: 40px 60px; box-sizing: border-box;
@@ -30,13 +30,15 @@
       z-index: 10000; mix-blend-mode: difference;
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
-      letter-spacing: 0.1em; text-decoration: none; color: #fff; cursor: none;
+      /* Logo 使用 Cinzel，展現羅馬石刻的高級感 */
+      font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700;
+      letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: none;
     }
-    .nav-menu { display: flex; gap: 50px; }
+    .nav-menu { display: flex; gap: 60px; }
     .nav-item {
-      font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #fff; text-decoration: none;
-      letter-spacing: 0.2em; text-transform: uppercase; position: relative; cursor: none; opacity: 0.8; transition: opacity 0.3s;
+      font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; text-decoration: none;
+      letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+      position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
     }
     .nav-item:hover { opacity: 1; }
     .nav-item::after {
@@ -46,38 +48,36 @@
     .nav-item:hover::after { width: 100%; }
 
     /* --- 客製化捲軸 --- */
-    ::-webkit-scrollbar { width: 5px; background: transparent; }
+    ::-webkit-scrollbar { width: 4px; background: transparent; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.1) 100%);
-      background-size: 100% 200%; border-radius: 10px; animation: scroll-flow 2s linear infinite;
+      background-size: 100% 200%; border-radius: 2px; animation: scroll-flow 2s linear infinite;
     }
     @keyframes scroll-flow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
 
     /* --- 游標 --- */
     .cursor-dot {
-      width: 12px; height: 12px; background-color: #fff; border-radius: 50%;
+      width: 10px; height: 10px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
       pointer-events: none; z-index: 99999; mix-blend-mode: difference;
       transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
     }
     body.hover-active .cursor-dot {
-      width: 60px; height: 60px; animation: breathe 3s infinite ease-in-out;
+      width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent;
+      animation: rotateCursor 4s infinite linear;
     }
-    @keyframes breathe {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.15); }
-    }
+    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); } 50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); } }
 
     /* --- 極光背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
-      filter: url(#aurora-curtain) blur(50px); opacity: 0.6;
+      filter: url(#aurora-curtain) blur(80px); opacity: 0.25;
     }
     .aurora-ribbon {
-      position: absolute; width: 150vw; height: 40vh;
-      background: linear-gradient(180deg, rgba(0,20,50,0), rgba(0,120,200,0.3), rgba(0,220,200,0.2), rgba(0,20,50,0));
+      position: absolute; width: 150vw; height: 50vh;
+      background: linear-gradient(180deg, rgba(0,10,30,0), rgba(0,50,100,0.4), rgba(0,150,120,0.3), rgba(0,10,30,0));
       opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
@@ -85,17 +85,17 @@
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-      text-align: center; padding-bottom: 120px;
+      text-align: center; padding-bottom: 100px;
     }
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: url("hero.jpg") center / cover no-repeat;
-      filter: grayscale(100%) brightness(0.8) contrast(1.1);
+      filter: grayscale(100%) brightness(0.8) contrast(1.15);
       animation: slowZoom 30s infinite alternate linear; z-index: -2;
     }
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9) 90%, #000 100%);
+      background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8) 90%, #000 100%);
       z-index: -1;
     }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
@@ -104,63 +104,56 @@
       opacity: 0; transform: translateY(40px); width: 100%;
     }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    
     .hero h1 {
-      font-family: 'Playfair Display', serif; font-size: 10vw; line-height: 0.85;
-      font-weight: 700; letter-spacing: -0.02em; margin: 0; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      /* Gucci 風格標題：Cinzel */
+      font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
+      font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #ffffff;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .hero p {
-      margin-top: 30px; font-family: 'Inter', sans-serif; font-size: 1rem;
-      letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.9);
-      display: inline-block; padding: 0; background: none; backdrop-filter: none; border: none;
-      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    .hero h1 span {
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: 0;
     }
 
-    /* --- 2. Film Strip (修正互動設定) --- */
+    .hero p {
+      margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.8);
+      display: inline-block; padding: 0; border: none; font-weight: 300;
+    }
+
+    /* --- 共同標題樣式 (雜誌小標) --- */
+    .section-header {
+      text-align: center; margin-bottom: 80px; position: relative;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.2em; color: #fff;
+      text-transform: uppercase; font-weight: 400; margin: 0;
+    }
+    .section-subtitle {
+      font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.4em; color: #888;
+      text-transform: uppercase; margin-top: 15px; display: block;
+    }
+
+    /* --- 2. Film Strip --- */
     .film-strip {
-      padding: 120px 0;
-      overflow: hidden; position: relative;
-      background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.5) 50%, #000 100%);
-      z-index: 10; /* 確保在背景之上 */
+      padding: 100px 0 140px 0; position: relative;
+      background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.8) 50%, #000 100%); z-index: 10;
     }
-    .strip-container {
-      display: flex; overflow-x: auto; gap: 60px; padding: 0 50vw;
-      /* 移除 smooth，因為拖曳時需要即時響應 */
-      /* scroll-behavior: smooth; */ 
-      scrollbar-width: none; -ms-overflow-style: none;
-      align-items: center; height: 600px;
-      cursor: grab; /* 提示可拖曳 */
-      position: relative;
+    .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+    .swiper-slide {
+      background-position: center; background-size: cover; width: 300px; height: 450px;
+      flex-shrink: 0; filter: grayscale(100%) brightness(0.5) contrast(0.9);
+      transform: scale(0.85); transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+      pointer-events: auto; user-select: none; overflow: hidden; margin: 0 30px;
     }
-    .strip-container:active { cursor: grabbing; } /* 抓取時的游標 */
-    .strip-container::-webkit-scrollbar { display: none; }
-    
-    .strip-item {
-      flex: 0 0 auto; width: 300px; height: 450px; position: relative;
-      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease; /* 移除 all，避免與拖曳衝突 */
-      filter: grayscale(100%) brightness(0.6); transform: scale(0.9);
-      /* 恢復 pointer-events，確保圖片可點擊打開燈箱 */
-      pointer-events: auto; 
-      /* 禁止圖片被拖曳出瀏覽器 */
-      user-select: none; -webkit-user-drag: none; 
-    }
-    .strip-item img { 
-      width: 100%; height: 100%; object-fit: cover; display: block; 
-      pointer-events: none; /* 讓點擊穿透到 div */
-    }
-    .strip-item.active {
-      filter: grayscale(0%) brightness(1); transform: scale(1.15); z-index: 10;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .swiper-slide-active {
+      filter: grayscale(0%) brightness(1) contrast(1); transform: scale(1.15); z-index: 10;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
     }
 
     /* --- 3. Works --- */
     .works { padding: 150px 8vw; position: relative; }
-    .section-title {
-      font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.4em; color: #666;
-      margin-bottom: 100px; text-transform: uppercase; text-align: center; position: relative;
-    }
-    .section-title::after {
-      content: ''; display: block; width: 1px; height: 40px; background: #333; margin: 20px auto 0;
-    }
     .masonry-grid { column-count: 2; column-gap: 60px; }
     .masonry-item { break-inside: avoid; margin-bottom: 60px; position: relative; }
     .masonry-item img {
@@ -173,27 +166,72 @@
     }
     @media (max-width: 768px) {
       .masonry-grid { column-count: 1; }
-      .hero h1 { font-size: 18vw; }
-      .strip-item { width: 220px; height: 330px; }
+      .hero h1 { font-size: 15vw; }
+      .swiper-slide { width: 220px; height: 330px; margin: 0 15px; }
     }
 
-    /* --- 4. LAB & Background --- */
-    .lab, .background { padding: 120px 8vw; border-top: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
-    .lab { background: rgba(10, 10, 10, 0.4); }
-    .background { background: rgba(0, 0, 0, 0.6); text-align: center; display: flex; flex-direction: column; align-items: center; }
-    .lab-content h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 1rem; color: #fff; font-style: italic; }
-    .lab-content p { font-size: 0.95rem; color: #aaa; line-height: 1.8; max-width: 500px; margin-bottom: 40px; font-weight: 300; }
-    .lab-link { font-size: 0.8rem; color: #00ffcc; text-decoration: none; padding-bottom: 5px; border-bottom: 1px solid rgba(0, 255, 204, 0.3); transition: all 0.3s; letter-spacing: 0.1em; text-transform: uppercase; }
-    .lab-link:hover { border-bottom: 1px solid #00ffcc; color: #fff; text-shadow: 0 0 10px rgba(0,255,204,0.5); }
-    .quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; line-height: 1.8; color: #ddd; font-style: italic; max-width: 700px; opacity: 0.9; margin-bottom: 40px; }
-    .role { font-size: 0.7rem; color: #555; letter-spacing: 0.2em; text-transform: uppercase; }
-    footer { padding: 60px 0; text-align: center; font-size: 0.65rem; color: #444; border-top: 1px solid #111; letter-spacing: 0.1em; }
+    /* --- 4. LAB (Digital Atelier) --- */
+    .lab { padding: 150px 8vw; border-top: 1px solid rgba(255,255,255,0.1); background: #050505; }
+    .lab-content h3 {
+      font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic;
+      font-weight: 400; margin-bottom: 2rem; color: #fff;
+    }
+    .lab-content p {
+      font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa;
+      line-height: 2; letter-spacing: 0.05em; max-width: 500px; margin-bottom: 40px; font-weight: 300;
+    }
+    .lab-link {
+      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #fff;
+      text-decoration: none; padding-bottom: 5px; border-bottom: 1px solid #fff;
+      transition: all 0.3s; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
+
+    /* --- 5. About (Editor's Note) --- */
+    .background {
+      padding: 150px 8vw 100px;
+      background: #000; text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .quote {
+      font-family: 'Playfair Display', serif; font-size: 2rem; line-height: 1.6; color: #fff;
+      font-style: italic; max-width: 800px; margin-bottom: 60px;
+    }
+    
+    /* 聯絡資訊區塊 (Credits 風格) */
+    .contact-info {
+      display: flex; flex-direction: column; gap: 20px; align-items: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .contact-link {
+      color: #888; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2em;
+      text-transform: uppercase; transition: color 0.3s; position: relative;
+    }
+    .contact-link:hover { color: #fff; }
+    .contact-link::after {
+      content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 50%; transform: translateX(-50%);
+      background: #fff; transition: width 0.3s;
+    }
+    .contact-link:hover::after { width: 100%; }
+
+    .cta-text {
+      margin-top: 60px; font-family: 'Cinzel', serif; font-size: 1.2rem;
+      color: #fff; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.3);
+      padding: 20px 40px; transition: all 0.5s; cursor: none;
+    }
+    .cta-text:hover { background: #fff; color: #000; border-color: #fff; }
+
+    footer {
+      padding: 60px 0; text-align: center; font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; color: #444; letter-spacing: 0.2em; text-transform: uppercase;
+    }
 
     /* --- Lightbox --- */
-    .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); justify-content: center; align-items: center; cursor: none; }
-    .lightbox-content { max-width: 90%; max-height: 90%; box-shadow: 0 0 50px rgba(0,0,0,0.8); cursor: none; }
-    .close-btn { position: absolute; top: 40px; right: 60px; color: #fff; font-size: 40px; font-weight: 100; cursor: none; z-index: 100000; transition: 0.3s; mix-blend-mode: difference; }
-    .close-btn:hover { color: #00ffcc; transform: rotate(90deg); }
+    .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); justify-content: center; align-items: center; cursor: auto; }
+    .lightbox-content { max-width: 90%; max-height: 90%; box-shadow: 0 0 50px rgba(0,0,0,0.8); cursor: auto; }
+    .close-btn { position: absolute; top: 40px; right: 60px; color: #fff; font-size: 40px; font-weight: 100; cursor: pointer; z-index: 100000; transition: 0.3s; mix-blend-mode: difference; font-family: 'Helvetica', sans-serif; }
+    .close-btn:hover { color: #aaa; transform: rotate(90deg); }
   </style>
 </head>
 
@@ -202,7 +240,7 @@
     <defs>
       <filter id="aurora-curtain">
         <feTurbulence type="turbulence" baseFrequency="0.002 0.02" numOctaves="3" result="turbulence" />
-        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="150" xChannelSelector="R" yChannelSelector="G" />
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="200" xChannelSelector="R" yChannelSelector="G" />
       </filter>
     </defs>
   </svg>
@@ -211,10 +249,10 @@
   <div id="aurora-container"></div>
 
   <nav>
-    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target">EDEN</a>
+    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target">EDEN D.</a>
     <div class="nav-menu">
-      <a href="#work" class="nav-item hover-target">Portrait</a>
-      <a href="#background" class="nav-item hover-target">About</a>
+      <a href="#work" class="nav-item hover-target">Portfolio</a>
+      <a href="#about" class="nav-item hover-target">Editor's Note</a>
     </div>
   </nav>
 
@@ -222,64 +260,89 @@
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>EDEN D.</h1>
+      <h1>EDEN <span>D.</span></h1>
       <p>Visual Director / Photographer</p>
     </div>
   </section>
 
   <section class="film-strip">
-    <h2 class="section-title">Visual Series</h2>
-    <div class="strip-container" id="stripContainer"></div>
+    <div class="section-header">
+      <h2 class="section-title">The Narrative</h2>
+      <span class="section-subtitle">Visual Series No.1</span>
+    </div>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper" id="swiperWrapper"></div>
+    </div>
   </section>
 
   <section class="works" id="work">
-    <h2 class="section-title">Selected Works</h2>
+    <div class="section-header">
+      <h2 class="section-title">Visual Anthology</h2>
+      <span class="section-subtitle">Selected Campaign</span>
+    </div>
     <div class="masonry-grid" id="masonryGrid"></div>
   </section>
 
   <section class="lab">
-    <h2 class="section-title" style="text-align: left; margin-bottom: 40px;">Experiment</h2>
+    <div class="section-header" style="text-align: left; margin-bottom: 60px;">
+      <h2 class="section-title">Digital Atelier</h2>
+      <span class="section-subtitle">Experimental Lab</span>
+    </div>
     <div class="lab-content">
-      <h3>Vibe Check / 氣氛博士</h3>
-      <p>A digital catalyst for social chemistry. Utilizing algorithms to modulate atmosphere in real-time gatherings.</p>
-      <a href="https://vibe-check-ih3e.vercel.app/" target="_blank" class="lab-link hover-target">Launch Project →</a>
+      <h3>Vibe Check</h3>
+      <p>A digital catalyst for social chemistry. Utilizing algorithms to modulate atmosphere in real-time gatherings. Where logic meets aesthetics.</p>
+      <a href="https://vibe-check-ih3e.vercel.app/" target="_blank" class="lab-link hover-target">Enter The Lab</a>
     </div>
   </section>
 
-  <section class="background" id="background">
-    <h2 class="section-title">Background</h2>
+  <section class="background" id="about">
+    <div class="section-header">
+      <h2 class="section-title">Editor's Note</h2>
+      <span class="section-subtitle">Behind The Lens</span>
+    </div>
+    
     <p class="quote">“Structure is the music of light. My photography is an extension of architectural logic.”</p>
-    <p class="role">Architectural Design / Spatial Analysis</p>
+    
+    <div class="contact-info">
+      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
+      
+      <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
+      
+      <a href="mailto:edendphoto1118@gmail.com" class="contact-link hover-target">edendphoto1118@gmail.com</a>
+      
+      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="cta-text hover-target">
+        Crafting your visual legacy.<br>Let's create the iconic.
+      </a>
+    </div>
   </section>
 
   <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close-btn hover-target" onclick="closeLightbox()">&times;</span>
-    <img class="lightbox-content" id="lightbox-img" class="hover-target">
+    <img class="lightbox-content" id="lightbox-img">
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
     /* --- 自動生成圖片 --- */
     const totalWorks = 33; 
-    const stripContainer = document.getElementById('stripContainer');
+    const swiperWrapper = document.getElementById('swiperWrapper');
     const masonryGrid = document.getElementById('masonryGrid');
 
     function generateGallery() {
-      stripContainer.innerHTML = '';
+      swiperWrapper.innerHTML = '';
       masonryGrid.innerHTML = '';
       for (let i = 1; i <= totalWorks; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/work ${num}.jpg`;
         
-        // Film Strip: 注意這裡移除了 onclick，改由 JS 統一處理
-        const stripDiv = document.createElement('div');
-        stripDiv.className = 'strip-item';
-        // 確保 img 標籤沒有 onclick，以免干擾拖曳邏輯
-        stripDiv.innerHTML = `<img src="${imgPath}" class="hover-target" draggable="false" onerror="this.parentElement.style.display='none'">`;
-        stripContainer.appendChild(stripDiv);
+        const slideDiv = document.createElement('div');
+        slideDiv.className = 'swiper-slide';
+        slideDiv.innerHTML = `<img src="${imgPath}" onerror="this.parentElement.style.display='none'">`;
+        swiperWrapper.appendChild(slideDiv);
 
-        // Masonry Grid
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
         masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
@@ -287,6 +350,31 @@
       }
     }
     generateGallery();
+
+    /* --- Swiper 初始化 --- */
+    setTimeout(() => {
+        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
+        realClickSound.volume = 0.2;
+
+        var swiper = new Swiper(".mySwiper", {
+          slidesPerView: "auto", centeredSlides: true, spaceBetween: 0, loop: true,
+          mousewheel: { enabled: true, sensitivity: 1.5 },
+          freeMode: false, speed: 800, grabCursor: true, slideToClickedSlide: true,
+          on: {
+            slideChange: function () {
+                 const soundClone = realClickSound.cloneNode();
+                 soundClone.volume = 0.2; soundClone.play().catch(() => {});
+            },
+            click: function(swiper, event) {
+                const clickedSlide = swiper.clickedSlide;
+                if (clickedSlide) {
+                    const img = clickedSlide.querySelector('img');
+                    if (img) openLightbox(img);
+                }
+            }
+          }
+        });
+    }, 500);
 
     /* --- 游標邏輯 --- */
     const cursorDot = document.querySelector('.cursor-dot');
@@ -296,7 +384,6 @@
       mouseX = e.clientX; mouseY = e.clientY;
       cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
     });
-    
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
         document.body.classList.add('hover-active');
@@ -308,143 +395,55 @@
       }
     });
 
-    /* --- 極光物理 --- */
+    /* --- 極光模擬 --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
       const el = document.createElement('div'); el.classList.add('aurora-ribbon');
-      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.5);
-      let angle = (Math.random() - 0.5) * 40; 
-      const driftSpeed = 0.3 + Math.random() * 0.4;
+      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.7);
+      let angle = (Math.random() - 0.5) * 30; 
+      const driftSpeed = 0.1 + Math.random() * 0.2; 
       const velX = Math.sin(angle * Math.PI / 180) * driftSpeed;
-      const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.5;
+      const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
       el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
       auroraContainer.appendChild(el);
-      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1000 + Math.random() * 500 });
+      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
     }
     function animateAuroras() {
-      delayedMouseX += (mouseX - delayedMouseX) * 0.1; delayedMouseY += (mouseY - delayedMouseY) * 0.1;
+      delayedMouseX += (mouseX - delayedMouseX) * 0.05; delayedMouseY += (mouseY - delayedMouseY) * 0.05;
       for (let i = auroras.length - 1; i >= 0; i--) {
         let p = auroras[i]; p.life++;
         let dx = p.x - delayedMouseX; let dy = p.y - delayedMouseY;
-        let dist = Math.sqrt(dx*dx + dy*dy); let interactRadius = 400;
+        let dist = Math.sqrt(dx*dx + dy*dy); let interactRadius = 500;
         if (dist < interactRadius) {
           let force = (interactRadius - dist) / interactRadius;
-          p.vx += (dx / dist) * force * 0.8; p.vy += (dy / dist) * force * 0.8;
+          p.vx += (dx / dist) * force * 0.4; p.vy += (dy / dist) * force * 0.4;
         }
-        p.vx *= 0.96; p.vy *= 0.96;
-        p.x += p.vx; p.y += p.vy; p.angle += 0.02;
-        let opacity = 0; let fadeDuration = 150;
+        p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy; p.angle += 0.01;
+        let opacity = 0; let fadeDuration = 300;
         if (p.life < fadeDuration) { opacity = p.life / fadeDuration; }
         else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; }
         else { opacity = 1; }
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.01)*0.2})`;
-        p.el.style.opacity = opacity * 0.7;
+        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.15})`;
+        p.el.style.opacity = opacity * 0.4;
         if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
       }
       requestAnimationFrame(animateAuroras);
     }
-    setInterval(spawnAurora, 2000); spawnAurora(); spawnAurora(); animateAuroras();
-
-
-    /* --- Film Strip: 拖曳滑動 + 滾輪滑動 + 點擊放大 邏輯 --- */
-    setTimeout(() => { 
-        const container = document.getElementById('stripContainer');
-        const items = document.querySelectorAll('.strip-item');
-        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
-        realClickSound.volume = 0.3;
-        let lastActiveIndex = -1;
-
-        // 1. 滑鼠滾輪轉成左右滑動 (Wheel-to-Scroll)
-        container.addEventListener('wheel', (evt) => {
-            evt.preventDefault();
-            container.scrollLeft += evt.deltaY;
-            // 滾動時也更新中心狀態
-            updateStrip();
-        });
-
-        // 2. 拖曳滑動邏輯 (Drag-to-Scroll)
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        let isDragging = false; // 區分是「點擊」還是「拖曳」
-
-        container.addEventListener('mousedown', (e) => {
-            isDown = true;
-            isDragging = false; // 初始假設不是拖曳
-            container.classList.add('active'); // CSS可加 cursor: grabbing
-            startX = e.pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
-        });
-        container.addEventListener('mouseleave', () => {
-            isDown = false;
-            container.classList.remove('active');
-        });
-        container.addEventListener('mouseup', (e) => {
-            isDown = false;
-            container.classList.remove('active');
-            
-            // 如果不是拖曳 (即純點擊)，且點到的是圖片，就打開燈箱
-            if (!isDragging) {
-                const clickedItem = e.target.closest('.strip-item');
-                if (clickedItem) {
-                    const img = clickedItem.querySelector('img');
-                    if (img) openLightbox(img);
-                }
-            }
-        });
-        container.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 2; // 調整拖曳速度倍率
-            container.scrollLeft = scrollLeft - walk;
-            
-            // 只要有移動，就視為拖曳
-            if (Math.abs(walk) > 5) {
-                isDragging = true;
-            }
-            updateStrip();
-        });
-
-        // 3. 更新中心狀態 (音效與變大)
-        function updateStrip() {
-          const center = container.scrollLeft + container.offsetWidth / 2;
-          let closestDist = Infinity;
-          let closestIndex = -1;
-          items.forEach((item, index) => {
-            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-            const dist = Math.abs(center - itemCenter);
-            if (dist < closestDist) { closestDist = dist; closestIndex = index; }
-            item.classList.remove('active');
-          });
-          if (closestIndex !== -1) {
-            items[closestIndex].classList.add('active');
-            if (closestIndex !== lastActiveIndex) {
-              if (lastActiveIndex !== -1) {
-                 const soundClone = realClickSound.cloneNode();
-                 soundClone.volume = 0.2; soundClone.play().catch(() => {});
-              }
-              lastActiveIndex = closestIndex;
-            }
-          }
-        }
-        
-        // 初始化一次
-        updateStrip();
-        
-    }, 500); 
+    setInterval(spawnAurora, 4000); spawnAurora(); spawnAurora(); animateAuroras();
 
     /* --- Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
-      document.body.classList.add('hover-active');
+      document.body.classList.add('lightbox-open'); 
     }
     function closeLightbox() {
       document.getElementById("lightbox").style.display = "none";
+      document.body.classList.remove('lightbox-open'); 
       document.body.classList.remove('hover-active');
     }
+    document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
   </script>
 </body>
 </html>
