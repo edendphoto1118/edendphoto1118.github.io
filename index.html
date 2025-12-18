@@ -129,37 +129,52 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 2. Film Strip (Netflix 軸心 3D) --- */
+    /* --- 2. Film Strip (新版：平面選書風格) --- */
     .film-strip {
       padding: 100px 0 160px 0; position: relative;
       background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.9) 50%, #000 100%); z-index: 10;
-      perspective: 1500px;
+      /* 移除 3D 透視 */
     }
-    .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+    .swiper { 
+      width: 100%; 
+      /* 增加上下內距，為「向上抽出」的效果預留空間 */
+      padding-top: 80px; padding-bottom: 80px; 
+    }
     
     .swiper-slide {
-      background-position: center; background-size: cover;
-      width: 300px; height: 450px;
-      flex-shrink: 0; 
-      /* 預設：黑白、變暗 */
-      filter: grayscale(100%) brightness(0.3);
-      transition: filter 0.6s ease, transform 0.6s ease;
+      /* 設定一個基礎寬度，讓 slidesPerView: 'auto' 生效 */
+      width: 240px; height: 360px; 
+      flex-shrink: 0;
+      /* 預設狀態：黑白、變暗、稍微縮小 */
+      filter: grayscale(100%) brightness(0.5);
+      transform: scale(0.9);
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* 使用更滑順的貝茲曲線 */
       pointer-events: auto; user-select: none;
+      /* 幻燈片之間的間距，配合 JS 中的 spaceBetween */
+      margin-right: 30px; 
     }
+    /* 最後一個元素不需要右邊距 */
+    .swiper-slide:last-child { margin-right: 0; }
+
     .swiper-slide img {
       display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
       border-radius: 4px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* 預設輕微陰影 */
     }
     
-    /* 激活：彩色、發光、無陰影 */
+    /* 激活狀態 (正中間)：全彩、變亮、放大、向上抽出 */
     .swiper-slide-active, 
     .swiper-slide-duplicate-active {
       filter: grayscale(0%) brightness(1.1) !important;
+      /* 核心效果：放大 1.1 倍，並向上位移 30px */
+      transform: scale(1.1) translateY(-30px);
       z-index: 20;
-      box-shadow: 0 0 50px rgba(0,0,0,0.8);
     }
-    .swiper-slide-shadow-left, .swiper-slide-shadow-right {
-      background-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0));
+    
+    .swiper-slide-active img,
+    .swiper-slide-duplicate-active img {
+      /* 激活時陰影更強烈、更遠，增加浮空感 */
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
     }
 
     /* --- 3. Works --- */
@@ -177,7 +192,8 @@
     @media (max-width: 768px) {
       .masonry-grid { column-count: 1; }
       .hero h1 { font-size: 15vw; }
-      .swiper-slide { width: 220px; height: 330px; }
+      /* 手機版調整 slide 大小 */
+      .swiper-slide { width: 180px; height: 270px; }
     }
 
     /* --- 4. LAB --- */
@@ -428,8 +444,8 @@
 
   <script>
     /* --- 圖片生成設定 (嚴格分流) --- */
-    const totalVerticalWorks = 33; // 直式 (work 01.jpg)
-    const totalHorizontalWorks = 10; // 橫式 (work01.jpg)
+    const totalVerticalWorks = 33; 
+    const totalHorizontalWorks = 10; 
 
     const swiperWrapper = document.getElementById('swiperWrapper');
     const masonryGrid = document.getElementById('masonryGrid');
@@ -441,7 +457,7 @@
       // 1. 直式 (Film Strip) - work 01.jpg
       for (let i = 1; i <= totalVerticalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work ${num}.jpg`; // 有空格
+        const imgPath = `images/works/work ${num}.jpg`; 
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
@@ -452,7 +468,7 @@
       // 2. 橫式 (Masonry) - work01.jpg
       for (let i = 1; i <= totalHorizontalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work${num}.jpg`; // 無空格
+        const imgPath = `images/works/work${num}.jpg`; 
         
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
@@ -462,29 +478,21 @@
     }
     generateGallery();
 
-    /* --- Swiper 3D 軸心旋轉初始化 (Netflix Style) --- */
+    /* --- Swiper 初始化 (新版：平面選書風格) --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
 
         var swiper = new Swiper(".mySwiper", {
-          effect: "coverflow",
+          // 移除 effect: 'coverflow'，使用預設的 slide 效果
           grabCursor: true,
           centeredSlides: true,
           slidesPerView: "auto", 
+          spaceBetween: 30, // 增加幻燈片之間的間距
           loop: true,
           
-          // [核心參數：Netflix 軸心]
-          coverflowEffect: {
-            rotate: 40,    // 旋轉角度，營造環形感
-            stretch: 0,    // 間距
-            depth: 120,    // 深度
-            modifier: 1,
-            slideShadows: true, // 必須開啟陰影
-          },
-          
           mousewheel: { enabled: true, sensitivity: 2 },
-          speed: 800, 
+          speed: 600, // 稍微加快切換速度
           slideToClickedSlide: true,
           
           on: {
@@ -515,7 +523,7 @@
       });
     }
 
-    /* --- 游標與極光 (保持不變) --- */
+    /* --- 游標與極光 --- */
     const cursorDot = document.querySelector('.cursor-dot');
     let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
     document.addEventListener('mousemove', (e) => {
