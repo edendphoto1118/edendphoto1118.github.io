@@ -90,7 +90,6 @@
     }
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      /* 請確認根目錄有 hero.jpg */
       background: url("hero.jpg") center / cover no-repeat;
       filter: grayscale(100%) brightness(0.6) contrast(1.2);
       animation: slowZoom 40s infinite alternate linear; z-index: -2;
@@ -129,7 +128,7 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 8. The Narrative (Swiper Carousel) --- */
+    /* --- 8. The Narrative (Featured Swiper) --- */
     .film-strip {
       padding: 100px 0; 
       position: relative; background: #000; z-index: 10; 
@@ -586,11 +585,11 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- Masterpiece Gallery Logic (正式版 117 張) --- */
+    /* --- Masterpiece Gallery Logic (Dual Logic) --- */
     
-    // 設定作品總數
+    // 設定作品總數 (下方瀑布流)
     const totalWorks = 117; 
-    const initialShow = 15; // 預設顯示前 15 張
+    const initialShow = 15; 
     
     const galleryContainer = document.getElementById('galleryContainer');
     const swiperWrapper = document.getElementById('swiperWrapper');
@@ -599,11 +598,10 @@
       galleryContainer.innerHTML = '';
       swiperWrapper.innerHTML = '';
 
-      // --- 1. 生成 Masonry 瀑布流 (所有照片) ---
+      // --- 1. 生成 Masonry 瀑布流 (使用舊命名邏輯 portfolio0-1.jpg ~ 117) ---
       for (let i = 1; i <= totalWorks; i++) {
-        // 檔名格式: portfolio00-01.jpg ~ portfolio00-117.jpg (兩位數補零)
-        const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/portfolio00-${num}.jpg`; 
+        // 檔名格式: portfolio0-1.jpg (無補零)
+        const imgPath = `images/works/portfolio0-${i}.jpg`; 
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
@@ -613,19 +611,20 @@
             itemDiv.classList.add('hidden');
         }
         
-        // onerror: 讀不到圖時自動隱藏，避免破圖
+        // onerror 防呆：讀不到圖時自動隱藏
         itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         galleryContainer.appendChild(itemDiv);
       }
 
-      // --- 2. 生成 Swiper 輪播 (精選前 10 張) ---
-      // 這裡自動抓取 portfolio00-01 到 portfolio00-10 作為精選
+      // --- 2. 生成 Swiper 輪播 (使用新命名邏輯 portfolio00-01.jpg ~ 10) ---
       for (let i = 1; i <= 10; i++) {
+        // 檔名格式: portfolio00-01.jpg (兩位數補零)
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio00-${num}.jpg`;
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
+        // onerror 防呆
         slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
       }
@@ -638,7 +637,6 @@
         const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
         hiddenItems.forEach(item => {
             item.classList.remove('hidden');
-            // 淡入動畫
             item.style.opacity = '0';
             item.style.transform = 'translateY(20px)';
             setTimeout(() => {
