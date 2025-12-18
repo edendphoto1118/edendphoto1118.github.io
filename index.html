@@ -82,8 +82,11 @@
     /* --- 6. Hero 區塊 --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      display: flex; flex-direction: column; 
+      justify-content: flex-end; 
+      align-items: center;
       text-align: center;
+      padding-bottom: 15vh; 
     }
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -94,7 +97,7 @@
     }
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle, transparent 20%, #000 90%);
+      background: linear-gradient(to top, #000 10%, transparent 60%); 
       z-index: -1;
     }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
@@ -126,41 +129,55 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 8. Film Strip (直式作品) --- */
+    /* --- 8. Film Strip (直式作品 - 重點優化區) --- */
     .film-strip {
       padding: 100px 0; 
       position: relative; background: #000; z-index: 10; 
       height: auto; overflow: hidden;
+      /* 增加最小高度，防止圖片沒載入時區塊塌陷 */
+      min-height: 700px; 
     }
     .swiper { 
-      width: 100%; padding: 50px 0; 
+      width: 100%; padding: 80px 0; /* 增加上下內距，給放大效果留空間 */
     }
     .swiper-slide {
       width: 300px; 
       aspect-ratio: 2/3;
       flex-shrink: 0;
-      filter: grayscale(100%) brightness(0.4); 
+      filter: grayscale(100%) brightness(0.5); 
       transform: scale(0.9); 
-      opacity: 0.5;
-      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
+      opacity: 0.6;
+      /* [關鍵修正] 移除 overflow: hidden，讓圖片可以超出框框放大 */
+      /* overflow: hidden; */
+      transition: all 0.7s cubic-bezier(0.25, 1, 0.2, 1); /* 更平滑的過渡 */
       pointer-events: auto; 
-      display: flex; justify-content: center; align-items: center; overflow: hidden;
+      display: flex; justify-content: center; align-items: center;
+      background: #0a0a0a; /* 圖片載入前的佔位背景色 */
     }
     .swiper-slide img { 
       width: 100%; height: 100%; object-fit: cover; object-position: center; 
+      /* 確保圖片本身不會溢出 slide 邊界 (雖然 slide 本身沒 hidden 了) */
+      display: block;
     }
+    
+    /* [關鍵修正] 激活狀態的放大與質感優化 */
     .swiper-slide-active {
       filter: grayscale(0%) brightness(1.1) !important; 
-      transform: scale(1.1) !important;
+      /* [重點] 加大放大比例 */
+      transform: scale(1.25) !important; 
       opacity: 1 !important; 
       z-index: 100; 
-      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      /* [重點] 增強陰影，製造浮起感 */
+      box-shadow: 0 40px 80px rgba(0,0,0,0.9);
     }
 
     /* --- 9. Works (橫式作品) --- */
-    .works { padding: 100px 8vw; position: relative; }
+    .works { padding: 100px 8vw; position: relative; min-height: 500px; }
     .masonry-grid { column-count: 2; column-gap: 40px; }
-    .masonry-item { break-inside: avoid; margin-bottom: 40px; position: relative; overflow: hidden; }
+    .masonry-item { 
+      break-inside: avoid; margin-bottom: 40px; position: relative; overflow: hidden; 
+      background: #111; min-height: 200px; 
+    }
     .masonry-item img {
       width: 100%; height: auto; display: block; filter: grayscale(100%) contrast(0.95);
       transition: all 0.6s ease; cursor: none;
@@ -169,7 +186,7 @@
       filter: grayscale(0%) contrast(1.1); transform: scale(1.03);
     }
 
-    /* --- 10. Pricing Section (常態服務) --- */
+    /* --- 10. Pricing Section (折扣優化版) --- */
     .pricing-section {
       padding: 120px 8vw;
       background: #050505;
@@ -205,15 +222,26 @@
       font-size: 0.6rem; padding: 5px 12px; letter-spacing: 0.1em;
       text-transform: uppercase; font-weight: 600;
     }
-    .new-badge {
+    .discount-badge {
       position: absolute; top: 20px; right: 20px;
       background: #FF2A2A; color: #fff;
-      font-size: 0.5rem; padding: 4px 8px; letter-spacing: 0.1em;
+      font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em;
       text-transform: uppercase; font-weight: 700;
+      border-radius: 2px;
     }
     .price-title { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin-bottom: 5px; }
     .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 25px; }
-    .price-amount { font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #fff; font-weight: 300; margin-bottom: 20px; display: block; }
+    
+    .price-wrapper { margin-bottom: 20px; display: flex; flex-direction: column; }
+    .price-original {
+      font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #666;
+      text-decoration: line-through; margin-bottom: 5px;
+    }
+    .price-amount { 
+      font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #fff; 
+      font-weight: 300; display: block; 
+    }
+    
     .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 1.6; margin-bottom: 30px; min-height: 50px; }
     .price-specs { list-style: none; padding: 0; margin: 0 0 30px 0; flex-grow: 1; }
     .price-specs li {
@@ -230,14 +258,28 @@
     }
     .btn-book:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 11. Special Campaign (限定企劃) --- */
+    /* --- 11. Booking Calendar (Calendly) --- */
+    .calendar-section {
+      padding: 80px 8vw;
+      background: #080808;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .calendar-container {
+      margin: 40px auto 0;
+      width: 100%;
+      height: 700px; 
+      max-width: 1000px;
+    }
+
+    /* --- 12. Special Campaign (限定企劃) --- */
     .royal-section {
       padding: 100px 8vw;
       background: linear-gradient(135deg, #080808 0%, #000 100%);
       border-top: 1px solid #222; border-bottom: 1px solid #222;
     }
     .royal-border {
-      border: 1px solid rgba(191, 149, 63, 0.4); /* Goldish */
+      border: 1px solid rgba(191, 149, 63, 0.4); 
       padding: 60px; position: relative;
     }
     .royal-grid { display: flex; gap: 60px; justify-content: space-between; align-items: center; }
@@ -260,7 +302,7 @@
     .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
 
-    /* --- 12. Face Archive (Lead Gen) --- */
+    /* --- 13. Face Archive (Form) --- */
     .lead-form-section {
       padding: 120px 8vw; background: #080808; text-align: center;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -288,7 +330,7 @@
     }
     .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
 
-    /* --- 13. Footer & About --- */
+    /* --- 14. Footer & About --- */
     .background { padding: 100px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     .quote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.6; color: #fff; font-style: italic; max-width: 800px; margin: 0 auto 60px; }
     .contact-info { display: flex; flex-direction: column; gap: 20px; align-items: center; font-family: 'Montserrat', sans-serif; }
@@ -346,8 +388,8 @@
   <nav>
     <a href="#" class="nav-logo hover-target">EDEN</a>
     <div class="nav-menu">
-      <a href="#pricing" class="nav-item hover-target">Pricing</a>
       <a href="#work" class="nav-item hover-target">Portfolio</a>
+      <a href="#pricing" class="nav-item hover-target">Pricing</a>
       <a href="#about" class="nav-item hover-target">About</a>
     </div>
   </nav>
@@ -387,9 +429,15 @@
     
     <div class="pricing-grid">
       <div class="price-card">
+        <span class="discount-badge">Portfolio Offer</span>
         <h3 class="price-title">The Structure</h3>
         <span class="price-subtitle">結構・幾何形象</span>
-        <span class="price-amount">NT$ 6,800</span>
+        
+        <div class="price-wrapper">
+          <span class="price-original">NT$ 8,800</span>
+          <span class="price-amount">NT$ 6,800</span>
+        </div>
+        
         <p class="price-desc">極致的減法。將你融入建築線條的藝術頭像，打造不可忽視的專業感。</p>
         <ul class="price-specs">
           <li>拍攝時數：1.5 小時</li>
@@ -398,14 +446,20 @@
           <li><strong>Feature：獨家建築幾何/黑白光影風格</strong></li>
           <li>Bonus：IG 限動側拍花絮 (15s)</li>
         </ul>
-        <a href="#lead-form" class="btn-book hover-target">Inquire Now</a>
+        <a href="#calendar" class="btn-book hover-target">Check Availability</a>
       </div>
 
       <div class="price-card">
+        <span class="discount-badge">Limited Time</span>
         <span class="new-badge">New Arrival</span>
         <h3 class="price-title">The Scale</h3>
         <span class="price-subtitle">尺度・微縮錯位</span>
-        <span class="price-amount">NT$ 10,800</span>
+        
+        <div class="price-wrapper">
+          <span class="price-original">NT$ 12,800</span>
+          <span class="price-amount">NT$ 10,800</span>
+        </div>
+
         <p class="price-desc">城市是你的遊樂場。打破物理尺度的超現實視覺，創造社群高互動率。</p>
         <ul class="price-specs">
           <li>拍攝時數：2 小時</li>
@@ -414,14 +468,20 @@
           <li><strong>Core Feature：Giant's Play 巨人視角攝影</strong></li>
           <li>Value：社群高互動率、吸睛流量款</li>
         </ul>
-        <a href="#lead-form" class="btn-book hover-target">Inquire Now</a>
+        <a href="#calendar" class="btn-book hover-target">Check Availability</a>
       </div>
 
       <div class="price-card featured">
+        <span class="discount-badge">Best Value</span>
         <span class="card-badge">Host's Choice</span>
         <h3 class="price-title">The Dimension</h3>
         <span class="price-subtitle">維度・虛擬策展</span>
-        <span class="price-amount">NT$ 14,800</span>
+        
+        <div class="price-wrapper">
+          <span class="price-original">NT$ 16,800</span>
+          <span class="price-amount">NT$ 14,800</span>
+        </div>
+
         <p class="price-desc">這不只是照片，是一場關於引力的虛擬展覽。結合動態與靜態的旗艦體驗。</p>
         <ul class="price-specs">
           <li>拍攝時數：2.5 小時</li>
@@ -430,7 +490,21 @@
           <li><strong>Core Feature：Gravity Loop 虛擬運鏡 Reels</strong></li>
           <li>Bonus：贈送「時尚雜誌封面」排版設計 1 款</li>
         </ul>
-        <a href="#lead-form" class="btn-book hover-target">Inquire Now</a>
+        <a href="#calendar" class="btn-book hover-target">Check Availability</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="calendar-section" id="calendar">
+    <div class="section-header">
+      <h2 class="section-title">Availability</h2>
+      <span class="section-subtitle">Select a date to schedule your session.</span>
+    </div>
+    
+    <div class="calendar-container">
+      <div style="color: #666; padding-top: 100px;">
+        <p>Please integrate your Calendly Code here.</p>
+        <p>請至 Calendly 後台複製嵌入代碼並貼於 HTML 第 460 行左右處。</p>
       </div>
     </div>
   </section>
@@ -485,12 +559,12 @@
       
       <div class="select-wrapper hover-target">
         <select name="archetype" class="form-select" required>
-          <option value="" disabled selected>SELECT YOUR ARCHETYPE</option>
-          <option value="Spade">SPADE / 黑桃 - 建築感</option>
-          <option value="Heart">HEART / 紅心 - 魅力感</option>
-          <option value="Diamond">DIAMOND / 方塊 - 幾何感</option>
-          <option value="Club">CLUB / 梅花 - 經典感</option>
-          <option value="Joker">JOKER / 鬼牌 - 獨特感</option>
+          <option value="" disabled selected>SELECT YOUR STYLE (選擇拍攝風格)</option>
+          <option value="Spade">SPADE / 黑桃 - 時尚質感 (Fashion)</option>
+          <option value="Heart">HEART / 紅心 - 魅惑性感 (Glamour)</option>
+          <option value="Diamond">DIAMOND / 方塊 - 俏皮可愛 (Playful)</option>
+          <option value="Club">CLUB / 梅花 - 厭世憂鬱 (Melancholy)</option>
+          <option value="Joker">JOKER / 鬼牌 - 獨特藝術 (Unique)</option>
         </select>
       </div>
 
@@ -524,11 +598,11 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 1. 圖片生成邏輯 --- */
-    // 直式作品 (維持原樣，假設是 work01.jpg ~ work33.jpg)
-    const totalVerticalWorks = 33; 
+    /* --- 1. 圖片生成邏輯 (修復 Portfolio 空白問題) --- */
     
-    // 橫式作品 (已更新為 work001.jpg ~ work006.jpg)
+    // 直式作品數量 (請确认資料夾內有 work 01.jpg 到 work 33.jpg)
+    const totalVerticalWorks = 33; 
+    // 橫式作品數量 (請确认資料夾內有 work001.jpg 到 work006.jpg)
     const totalHorizontalWorks = 6; 
 
     const swiperWrapper = document.getElementById('swiperWrapper');
@@ -539,10 +613,10 @@
       masonryGrid.innerHTML = '';
 
       // --- 直式作品 (Swiper) ---
-      // 維持 2 位數補零 (例如: work01.jpg)
       for (let i = 1; i <= totalVerticalWorks; i++) {
+        // [關鍵修正] 檔名加入空格：work 01.jpg
         const num = i.toString().padStart(2, '0'); 
-        const imgPath = `images/works/work${num}.jpg`; 
+        const imgPath = `images/works/work ${num}.jpg`; 
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
@@ -552,54 +626,40 @@
       }
 
       // --- 橫式作品 (Masonry) ---
-      // [已更新] 改為 3 位數補零 (例如: work001.jpg)
       for (let i = 1; i <= totalHorizontalWorks; i++) {
+        // [關鍵修正] 強制補齊 3 位數 (work001.jpg)
         const num = i.toString().padStart(3, '0'); 
         const imgPath = `images/works/work${num}.jpg`; 
         
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
-        masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        // 加入 onerror 處理：如果圖片讀不到，顯示一個半透明的佔位框，而不是空白
+        masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.style.opacity='0.3'; this.style.minHeight='200px';">`;
         masonryGrid.appendChild(masonryDiv);
       }
     }
     generateGallery();
 
-    /* --- 2. Swiper 初始化 (修正手機版體驗) --- */
+    /* --- 2. Swiper 初始化 --- */
     setTimeout(() => {
-        // 音效 (可選)
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
         let lastPlay = 0;
 
         var swiper = new Swiper(".mySwiper", {
           effect: 'slide',
-          
-          // 允許觸控拖曳 (手機版需要)
           allowTouchMove: true, 
           threshold: 10,
-          
           centeredSlides: true,
           slidesPerView: 'auto', 
           spaceBetween: 40, 
           loop: true,
-          
-          // 滑鼠滾輪支援
-          mousewheel: { 
-            enabled: true, 
-            sensitivity: 1.5,
-            forceToAxis: true
-          },
-          
+          mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
           speed: 800, 
-          
-          // 點擊移動到該張
           slideToClickedSlide: true, 
-          
           on: {
             slideChange: function () {
                  const now = Date.now();
-                 // 限制音效觸發頻率
                  if(now - lastPlay > 200) {
                     const sound = realClickSound.cloneNode();
                     sound.volume = 0.15;
@@ -611,7 +671,7 @@
         });
     }, 500);
 
-    /* --- 3. Lightbox (點擊放大) --- */
+    /* --- 3. Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
@@ -640,7 +700,6 @@
       cursorDot.style.left = `${e.clientX}px`;
       cursorDot.style.top = `${e.clientY}px`;
     });
-    // 增加 hover 監聽對象
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
         document.body.classList.add('hover-active');
@@ -652,7 +711,7 @@
       }
     });
 
-    /* --- 6. 極光模擬 (背景動畫) --- */
+    /* --- 6. 極光背景 --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
