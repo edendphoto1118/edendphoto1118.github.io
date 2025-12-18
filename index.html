@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN D. — Visual Director</title>
+  <title>EDEN — VISUAL ARCHIVE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,6 +102,7 @@
       opacity: 0; transform: translateY(40px); width: 100%;
     }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    
     .hero h1 {
       font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
       font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #ffffff;
@@ -129,41 +130,34 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 2. Film Strip (升級為 3D Coverflow) --- */
+    /* --- 2. Film Strip (直式作品區) --- */
     .film-strip {
       padding: 100px 0 140px 0; position: relative;
       background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.8) 50%, #000 100%); z-index: 10;
     }
     .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
     
-    /* 3D Slide 樣式 */
     .swiper-slide {
       background-position: center; background-size: cover;
-      width: 300px; height: 450px;
-      /* 預設樣式：黑白、暗 */
+      width: 300px; height: 450px; /* 直式比例 */
+      /* 預設樣式 */
       filter: grayscale(100%) brightness(0.4);
       pointer-events: auto; user-select: none;
-      /* 不需要手動 scale，coverflow 會處理 */
       transition: filter 0.5s ease;
     }
     .swiper-slide img {
       display: block; width: 100%; height: 100%; object-fit: cover;
       pointer-events: none;
     }
-    
-    /* 激活狀態 (正中間)：全彩、亮 */
     .swiper-slide-active {
       filter: grayscale(0%) brightness(1);
-      /* Swiper Coverflow 會自動處理 transform，這裡不需要加 */
     }
-    
-    /* Coverflow 的陰影樣式 (由 Swiper 自動生成) */
     .swiper-slide-shadow-left,
     .swiper-slide-shadow-right {
       background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
     }
 
-    /* --- 3. Works --- */
+    /* --- 3. Works (橫式作品區) --- */
     .works { padding: 150px 8vw; position: relative; }
     .masonry-grid { column-count: 2; column-gap: 60px; }
     .masonry-item { break-inside: avoid; margin-bottom: 60px; position: relative; }
@@ -178,7 +172,7 @@
     @media (max-width: 768px) {
       .masonry-grid { column-count: 1; }
       .hero h1 { font-size: 15vw; }
-      .swiper-slide { width: 200px; height: 300px; }
+      .swiper-slide { width: 220px; height: 330px; margin: 0 15px; }
     }
 
     /* --- 4. LAB --- */
@@ -324,23 +318,39 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 自動生成圖片 --- */
-    const totalWorks = 33; 
+    /* --- 圖片生成設定 (雙軌制) ---
+      1. totalVerticalWorks: 直式照片數量 (有空格 work 01.jpg)
+      2. totalHorizontalWorks: 橫式照片數量 (無空格 work01.jpg)
+         -> 根據你之前的描述，橫式應該有 10 張左右，我先設為 10
+         -> 如果數量不對，請直接改下面的數字
+    */
+    const totalVerticalWorks = 33; // 直式 (膠卷)
+    const totalHorizontalWorks = 10; // 橫式 (瀑布流)
+
     const swiperWrapper = document.getElementById('swiperWrapper');
     const masonryGrid = document.getElementById('masonryGrid');
 
     function generateGallery() {
       swiperWrapper.innerHTML = '';
       masonryGrid.innerHTML = '';
-      for (let i = 1; i <= totalWorks; i++) {
+
+      // 1. 生成直式照片 (Film Strip) - 檔名有空格
+      for (let i = 1; i <= totalVerticalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work${num}.jpg`; // 檔名無空格
+        const imgPath = `images/works/work ${num}.jpg`; // 有空格
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
+        // 增加 onerror 隱藏機制
         slideDiv.innerHTML = `<img src="${imgPath}" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
+      }
 
+      // 2. 生成橫式照片 (Masonry Grid) - 檔名無空格
+      for (let i = 1; i <= totalHorizontalWorks; i++) {
+        const num = i.toString().padStart(2, '0');
+        const imgPath = `images/works/work${num}.jpg`; // 無空格
+        
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
         masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
@@ -349,30 +359,34 @@
     }
     generateGallery();
 
-    /* --- Swiper 3D Coverflow 初始化 --- */
+    /* --- Swiper 初始化 (優化絲滑感) --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
 
         var swiper = new Swiper(".mySwiper", {
-          // [核心] 啟用 Coverflow 效果
           effect: "coverflow",
           grabCursor: true,
           centeredSlides: true,
-          slidesPerView: "auto", // 自動根據寬度決定數量
-          loop: true, // 無限循環
+          slidesPerView: "auto", 
+          loop: true,
           
-          // Coverflow 3D 參數微調 (這是時尚感的關鍵)
           coverflowEffect: {
-            rotate: 30,    // 側邊照片旋轉角度 (不要太大，30度剛好)
-            stretch: 0,    // 圖片間距
-            depth: 200,    // 景深 (數值越大，側邊越遠、越小)
-            modifier: 1,   // 效果倍率
-            slideShadows: true, // 啟用側邊陰影 (讓立體感更真實)
+            rotate: 20, // 降低旋轉角度，更現代
+            stretch: 0,
+            depth: 150, // 景深適中
+            modifier: 1,
+            slideShadows: true,
           },
           
-          mousewheel: { enabled: true, sensitivity: 1.5 },
-          speed: 800, 
+          // 滾輪設定：更絲滑的參數
+          mousewheel: { 
+            enabled: true, 
+            sensitivity: 2, // 提高靈敏度
+            thresholdDelta: 10 // 防誤觸
+          },
+          speed: 1000, // 增加切換時間，營造慣性感
+          
           slideToClickedSlide: true,
           
           on: {
