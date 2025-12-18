@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <style>
     /* --- 1. 全站基礎 --- */
     html { scroll-behavior: smooth; }
@@ -89,6 +90,7 @@
     }
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      /* 請確認根目錄有 hero.jpg */
       background: url("hero.jpg") center / cover no-repeat;
       filter: grayscale(100%) brightness(0.6) contrast(1.2);
       animation: slowZoom 40s infinite alternate linear; z-index: -2;
@@ -127,74 +129,98 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 8. Masterpiece Gallery (大師級作品集 - 瀑布流) --- */
+    /* --- 8. The Narrative (Swiper Carousel) --- */
+    .film-strip {
+      padding: 100px 0; 
+      position: relative; background: #000; z-index: 10; 
+      height: auto; overflow: hidden;
+      min-height: 700px; 
+    }
+    .swiper { 
+      width: 100%; padding: 80px 0; 
+    }
+    .swiper-slide {
+      width: 300px; 
+      aspect-ratio: 2/3;
+      flex-shrink: 0;
+      filter: grayscale(100%) brightness(0.5); 
+      transform: scale(0.9); 
+      opacity: 0.6;
+      transition: all 0.7s cubic-bezier(0.25, 1, 0.2, 1); 
+      pointer-events: auto; 
+      display: flex; justify-content: center; align-items: center;
+      background: #0a0a0a; 
+    }
+    .swiper-slide img { 
+      width: 100%; height: 100%; object-fit: cover; object-position: center; 
+      display: block;
+    }
+    .swiper-slide-active {
+      filter: grayscale(0%) brightness(1.1) !important; 
+      transform: scale(1.25) !important; 
+      opacity: 1 !important; 
+      z-index: 100; 
+      box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+    }
+
+    /* --- 9. Masterpiece Gallery (Masonry) --- */
     .masterpiece-gallery {
       padding: 100px 6vw;
       position: relative;
       min-height: 100vh;
     }
-
-    /* CSS Columns 瀑布流核心 */
     .gallery-container {
-      column-count: 3; /* 電腦版 3 欄 */
-      column-gap: 40px; /* 欄間距 */
-      width: 100%;
+      column-count: 3; column-gap: 40px; width: 100%;
     }
-
     .gallery-item {
-      break-inside: avoid; /* 防止圖片被切斷 */
-      margin-bottom: 40px; /* 上下間距 */
-      position: relative;
-      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* 平滑過渡 */
-      z-index: 1;
-      cursor: none;
+      break-inside: avoid; margin-bottom: 40px; position: relative;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1; cursor: none;
     }
-
+    .gallery-item.hidden { display: none; }
     .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
+      width: 100%; height: auto; display: block;
       filter: grayscale(100%) brightness(0.8) contrast(1.1);
       transition: filter 0.5s ease;
-      background: #111; /* 載入前的佔位 */
-      min-height: 100px;
+      background: #111; min-height: 100px;
     }
-
-    /* Hover 效果：整體放大，無裁切 */
     .gallery-item:hover {
-      transform: scale(1.05); /* 放大 */
-      z-index: 100; /* 浮到最上層 */
-      box-shadow: 0 30px 60px rgba(0,0,0,0.9); /* 強烈陰影 */
+      transform: scale(1.05); z-index: 100; box-shadow: 0 30px 60px rgba(0,0,0,0.9);
     }
-
     .gallery-item:hover img {
-      filter: grayscale(0%) brightness(1.05) contrast(1); /* 還原色彩 */
+      filter: grayscale(0%) brightness(1.05) contrast(1);
+    }
+    /* Load More Button */
+    .load-more-container {
+        text-align: center; margin-top: 60px; padding-bottom: 40px;
+    }
+    .load-more-btn {
+        display: inline-block; padding: 20px 60px;
+        border: 1px solid rgba(255,255,255,0.3); color: #fff;
+        font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+        letter-spacing: 0.2em; text-transform: uppercase;
+        background: transparent; cursor: none; transition: all 0.4s ease;
+    }
+    .load-more-btn:hover {
+        background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
 
-    /* --- 9. Pricing Section --- */
+    /* --- 10. Pricing Section --- */
     .pricing-section {
       padding: 120px 8vw;
       background: #050505;
       border-top: 1px solid rgba(255,255,255,0.08);
     }
     .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      max-width: 1400px;
-      margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+      max-width: 1400px; margin: 0 auto;
     }
     .price-card {
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 40px 30px;
-      position: relative;
-      transition: all 0.4s ease;
-      display: flex; flex-direction: column;
-      background: rgba(255,255,255,0.01);
+      border: 1px solid rgba(255,255,255,0.1); padding: 40px 30px;
+      position: relative; transition: all 0.4s ease;
+      display: flex; flex-direction: column; background: rgba(255,255,255,0.01);
     }
     .price-card:hover {
-      border-color: rgba(255,255,255,0.3);
-      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.3); transform: translateY(-5px);
       background: rgba(255,255,255,0.03);
     }
     .price-card.featured {
@@ -211,8 +237,7 @@
       position: absolute; top: 20px; right: 20px;
       background: #FF2A2A; color: #fff;
       font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em;
-      text-transform: uppercase; font-weight: 700;
-      border-radius: 2px;
+      text-transform: uppercase; font-weight: 700; border-radius: 2px;
     }
     .price-title { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin-bottom: 5px; }
     .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 25px; }
@@ -243,41 +268,30 @@
     }
     .btn-book:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 10. Booking Calendar (Calendly) --- */
+    /* --- 11. Booking Calendar (Calendly) --- */
     .calendar-section {
-      padding: 80px 8vw;
-      background: #080808;
-      text-align: center;
+      padding: 80px 8vw; background: #080808; text-align: center;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .calendar-container {
-      margin: 40px auto 0;
-      width: 100%;
-      height: 700px; 
-      max-width: 1000px;
+      margin: 40px auto 0; width: 100%; height: 700px; max-width: 1000px;
     }
 
-    /* --- 11. Special Campaign (限定企劃) --- */
+    /* --- 12. Special Campaign --- */
     .royal-section {
-      padding: 100px 8vw;
-      background: linear-gradient(135deg, #080808 0%, #000 100%);
+      padding: 100px 8vw; background: linear-gradient(135deg, #080808 0%, #000 100%);
       border-top: 1px solid #222; border-bottom: 1px solid #222;
     }
-    .royal-border {
-      border: 1px solid rgba(191, 149, 63, 0.4); 
-      padding: 60px; position: relative;
-    }
+    .royal-border { border: 1px solid rgba(191, 149, 63, 0.4); padding: 60px; position: relative; }
     .royal-grid { display: flex; gap: 60px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.8; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 60px; }
-    
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 15px; display: block; }
     .royal-title {
       font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 25px 0;
       background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #999; line-height: 1.8; max-width: 500px; }
-    
     .royal-option { margin-bottom: 30px; }
     .royal-opt-head {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -287,11 +301,10 @@
     .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
 
-    /* --- 12. Face Archive (Form) --- */
+    /* --- 13. Face Archive (Form) --- */
     .lead-form-section {
       padding: 120px 8vw; background: #080808; text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      display: flex; flex-direction: column; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;
     }
     .archive-meta { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #555; text-transform: uppercase; margin-bottom: 30px; }
     .archive-meta span { color: #fff; margin-left: 10px; font-weight: 600; }
@@ -315,7 +328,7 @@
     }
     .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
 
-    /* --- 13. Footer & About --- */
+    /* --- 14. Footer & About --- */
     .background { padding: 100px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     .quote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.6; color: #fff; font-style: italic; max-width: 800px; margin: 0 auto 60px; }
     .contact-info { display: flex; flex-direction: column; gap: 20px; align-items: center; font-family: 'Montserrat', sans-serif; }
@@ -343,7 +356,6 @@
       .nav-menu { display: none; } 
       .nav { justify-content: center; }
       
-      /* 手機版改為單欄，但依然保持錯落感 */
       .gallery-container { column-count: 1; }
       
       .pricing-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -387,14 +399,27 @@
     </div>
   </section>
 
-  <section class="masterpiece-gallery" id="work">
+  <section class="film-strip">
     <div class="section-header">
       <h2 class="section-title">The Narrative</h2>
-      <span class="section-subtitle">A Visual Anthology</span>
+      <span class="section-subtitle">Featured Selections</span>
+    </div>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper" id="swiperWrapper"></div>
+    </div>
+  </section>
+
+  <section class="masterpiece-gallery" id="work">
+    <div class="section-header">
+      <h2 class="section-title">Visual Anthology</h2>
+      <span class="section-subtitle">Full Archive</span>
     </div>
     
-    <div class="gallery-container" id="galleryContainer">
-      </div>
+    <div class="gallery-container" id="galleryContainer"></div>
+    
+    <div class="load-more-container">
+        <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
+    </div>
   </section>
   
   <section class="pricing-section" id="pricing">
@@ -477,11 +502,9 @@
       <span class="section-subtitle">Select a date to schedule your session.</span>
     </div>
     <div class="calendar-container">
-      <div style="color: #666; padding-top: 100px;">
-        <p>Please integrate your Calendly Code here.</p>
-        <p>請至 Calendly 後台複製嵌入代碼並貼於 HTML 第 455 行左右處。</p>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min" style="min-width:320px;height:700px;"></div>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
       </div>
-    </div>
   </section>
 
   <section class="royal-section">
@@ -560,34 +583,103 @@
     <img class="lightbox-content" id="lightbox-img">
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <script>
-    /* --- Masterpiece Gallery Logic --- */
+    /* --- Masterpiece Gallery Logic (正式版 117 張) --- */
     
-    // 設定你的作品總數 (117張)
+    // 設定作品總數
     const totalWorks = 117; 
+    const initialShow = 15; // 預設顯示前 15 張
     
     const galleryContainer = document.getElementById('galleryContainer');
+    const swiperWrapper = document.getElementById('swiperWrapper');
 
     function generateGallery() {
       galleryContainer.innerHTML = '';
+      swiperWrapper.innerHTML = '';
 
+      // --- 1. 生成 Masonry 瀑布流 (所有照片) ---
       for (let i = 1; i <= totalWorks; i++) {
-        /* 檔名邏輯：portfolio0-1.jpg 到 portfolio0-117.jpg (無補零) */
-        const imgPath = `images/works/portfolio0-${i}.jpg`; 
+        // 檔名格式: portfolio00-01.jpg ~ portfolio00-117.jpg (兩位數補零)
+        const num = i.toString().padStart(2, '0');
+        const imgPath = `images/works/portfolio00-${num}.jpg`; 
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
         
-        // loading="lazy" 提升效能
-        // onerror 防呆機制：若檔名錯誤，直接隱藏該區塊，避免破圖
-        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        // 超過 initialShow 的照片先隱藏
+        if (i > initialShow) {
+            itemDiv.classList.add('hidden');
+        }
         
+        // onerror: 讀不到圖時自動隱藏，避免破圖
+        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         galleryContainer.appendChild(itemDiv);
+      }
+
+      // --- 2. 生成 Swiper 輪播 (精選前 10 張) ---
+      // 這裡自動抓取 portfolio00-01 到 portfolio00-10 作為精選
+      for (let i = 1; i <= 10; i++) {
+        const num = i.toString().padStart(2, '0');
+        const imgPath = `images/works/portfolio00-${num}.jpg`;
+        
+        const slideDiv = document.createElement('div');
+        slideDiv.className = 'swiper-slide';
+        slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        swiperWrapper.appendChild(slideDiv);
       }
     }
     
-    // 執行生成
     generateGallery();
+    
+    // --- Load More Function ---
+    function loadAllWorks() {
+        const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
+        hiddenItems.forEach(item => {
+            item.classList.remove('hidden');
+            // 淡入動畫
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                item.style.transition = 'all 0.6s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 50);
+        });
+        document.getElementById('loadMoreBtn').style.display = 'none';
+    }
+
+    /* --- Swiper Init --- */
+    setTimeout(() => {
+        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
+        realClickSound.volume = 0.2;
+        let lastPlay = 0;
+
+        var swiper = new Swiper(".mySwiper", {
+          effect: 'slide',
+          allowTouchMove: true, 
+          threshold: 10,
+          centeredSlides: true,
+          slidesPerView: 'auto', 
+          spaceBetween: 40, 
+          loop: true,
+          mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
+          speed: 800, 
+          slideToClickedSlide: true, 
+          on: {
+            slideChange: function () {
+                 const now = Date.now();
+                 if(now - lastPlay > 200) {
+                    const sound = realClickSound.cloneNode();
+                    sound.volume = 0.15;
+                    sound.play().catch(()=>{});
+                    lastPlay = now;
+                 }
+            }
+          }
+        });
+    }, 500);
 
     /* --- Lightbox --- */
     function openLightbox(element) {
