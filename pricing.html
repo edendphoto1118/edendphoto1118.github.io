@@ -14,16 +14,19 @@
     body {
       margin: 0; background: #050505; color: #fff;
       font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden; cursor: auto; /* 報價頁恢復正常滑鼠，方便點選 */
+      overflow-x: hidden; cursor: auto;
     }
     
-    /* 導覽列 (Fixed Top) */
+    /* 導覽列 (Fixed Top) - 增加背景與模糊效果 */
     nav {
       position: fixed; top: 0; left: 0; width: 100%; padding: 40px 60px;
       display: flex; justify-content: space-between; align-items: center; 
-      z-index: 9999; /* 確保層級最高，不被遮擋 */
-      mix-blend-mode: difference; box-sizing: border-box;
-      background: transparent; /* 確保背景透明 */
+      z-index: 9999;
+      mix-blend-mode: normal; /* 改回 normal 以便顯示背景 */
+      box-sizing: border-box;
+      background: rgba(5, 5, 5, 0.8); /* 半透明黑色背景 */
+      backdrop-filter: blur(10px); /* 毛玻璃效果 */
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .nav-logo { 
       font-family: 'Cinzel', serif; font-weight: 700; color: #fff; 
@@ -36,9 +39,13 @@
     }
     .back-btn:hover { border-bottom: 1px solid #fff; color: #00ffcc; }
 
-    /* 主要容器 */
+    /* 主要容器 - 修正 Margin */
     .container {
-      max-width: 900px; margin: 180px auto 100px; padding: 0 40px;
+      max-width: 900px; 
+      /* 將上方邊距從 180px 減少到 120px，解決跑版問題 */
+      margin: 120px auto 100px; 
+      padding: 0 40px;
+      min-height: calc(100vh - 220px); /* 確保至少佔滿畫面高度 */
     }
     
     /* 頁面標題 */
@@ -169,3 +176,108 @@
       <h1>Service & Investment</h1>
       <p>Transparent pricing for iconic visual storytelling.</p>
     </div>
+
+    <div class="plan-list">
+      
+      <div class="plan-item">
+        <div class="plan-header-side">
+          <span class="plan-name">The Structure</span>
+          <span class="plan-price">NT$ 6,800</span>
+        </div>
+        <div class="plan-content-side">
+          <span class="plan-tagline">"不只是人像，是將你融入建築美學的藝術照。"</span>
+          <ul class="plan-features">
+            <li>拍攝時數：1.5 小時</li>
+            <li>造型：1 套 (需自備，提供幾何穿搭指南)</li>
+            <li>風格：建築黑白 (幾何光影) 或 霓虹迷幻 (流動光繪)</li>
+            <li>成品：精修照片 6 張 (含 J/Q/K 牌面設計合成圖)</li>
+            <li>交付：全數毛片調色交付 (JPG)</li>
+            <li>加贈：IG 限動側拍花絮 (15s)</li>
+          </ul>
+          <a href="mailto:edendphoto1118@gmail.com?subject=Booking Inquiry: The Structure" class="book-link">Request Booking →</a>
+        </div>
+      </div>
+
+      <div class="plan-item">
+        <div class="plan-header-side">
+          <span class="rec-badge">Recommended</span>
+          <span class="plan-name" style="color: #00ffcc;">The Architect</span>
+          <span class="plan-price highlight-price">NT$ 22,800</span>
+        </div>
+        <div class="plan-content-side">
+          <span class="plan-tagline" style="color: #fff;">"你的氣場，值得被設計成一座建築。含實體撲克牌成品。"</span>
+          <ul class="plan-features">
+            <li>拍攝時數：3 小時</li>
+            <li class="feature-highlight">造型：2 套 (含專業妝髮一組)</li>
+            <li>風格：全解鎖 (黑桃建築風 + 紅心迷幻風)</li>
+            <li>成品：精修照片 18 張 (含 J/Q/K/Joker 完整牌面)</li>
+            <li class="feature-highlight">獨家實體：專屬訂製撲克牌 5 副 (德國黑芯紙)</li>
+            <li class="feature-highlight">獨家實體：A3 藝術微噴海報 1 張</li>
+            <li>社群：Reels 專屬短片 1 支 (真人鬼牌轉場特效)</li>
+          </ul>
+          <a href="mailto:edendphoto1118@gmail.com?subject=Booking Inquiry: The Architect" class="book-link" style="color: #00ffcc; border-color: #00ffcc;">Request Booking →</a>
+        </div>
+      </div>
+
+      <div class="plan-item">
+        <div class="plan-header-side">
+          <span class="plan-name">The Kingdom</span>
+          <span class="plan-price">NT$ 36,800</span>
+        </div>
+        <div class="plan-content-side">
+          <span class="plan-tagline">"雙人合夥、情侶寫真。共同打造王國的視覺資產。"</span>
+          <ul class="plan-features">
+            <li>拍攝時數：4 小時</li>
+            <li class="feature-highlight">造型：雙人各 2 套 (含雙人專業妝髮)</li>
+            <li>風格：雙人互動幾何構圖指導</li>
+            <li>成品：精修照片 24 張 (單人 + 雙人合照)</li>
+            <li class="feature-highlight">獨家實體：專屬訂製撲克牌 10 副 (雙人封面)</li>
+            <li class="feature-highlight">獨家實體：A3 藝術微噴海報 2 張</li>
+            <li>社群：Reels 雙人互動短片 1 支 + IG 共創推廣</li>
+          </ul>
+          <a href="mailto:edendphoto1118@gmail.com?subject=Booking Inquiry: The Kingdom" class="book-link">Request Booking →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="terms-section">
+      <h3 class="terms-title">Booking Terms</h3>
+      
+      <details>
+        <summary>費用與妝髮說明</summary>
+        <div class="terms-content">
+          <p><span class="term-label">費用說明：</span>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目，我們可以推薦優質合作夥伴。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>訂金與預約政策</summary>
+        <div class="terms-content">
+          <p><span class="term-label">訂金政策：</span>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p>
+          <p><span class="term-label">改期規範：</span>如需改期請於 3 天前告知，訂金可保留延期一次。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>拍攝當日規範</summary>
+        <div class="terms-content">
+          <p><span class="term-label">準時原則：</span>為確保光線與流程，請準時抵達。遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>成品交付細節</summary>
+        <div class="terms-content">
+          <p><span class="term-label">交付成品：</span>交付成品為調色/精修後之 JPG 檔。</p>
+          <p><span class="term-label">RAW 檔：</span>RAW 檔為半成品，恕不提供。</p>
+        </div>
+      </details>
+    </div>
+
+  </div>
+
+  <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
+
+</body>
+</html>
