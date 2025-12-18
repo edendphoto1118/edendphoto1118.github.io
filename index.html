@@ -58,7 +58,16 @@
     }
     @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* --- 4. 極光背景 --- */
+    /* --- 4. 客製化捲軸 --- */
+    ::-webkit-scrollbar { width: 4px; background: transparent; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.1) 100%);
+      background-size: 100% 200%; border-radius: 2px; animation: scroll-flow 2s linear infinite;
+    }
+    @keyframes scroll-flow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
+
+    /* --- 5. 極光背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
@@ -70,7 +79,7 @@
       opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
-    /* --- 5. Hero 區塊 --- */
+    /* --- 6. Hero 區塊 --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
@@ -105,7 +114,7 @@
       display: inline-block; font-weight: 300;
     }
 
-    /* --- 6. 標題樣式 --- */
+    /* --- 7. 標題樣式 --- */
     .section-header {
       text-align: center; margin-bottom: 80px; position: relative;
     }
@@ -118,57 +127,48 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 7. Film Strip (重構：穩定版) --- */
+    /* --- 8. Film Strip (滾輪藝廊：修正版) --- */
     .film-strip {
       padding: 120px 0; 
       position: relative;
       background: #000;
       z-index: 10;
-      height: 600px; /* 強制高度，避免縮小 */
+      height: 600px;
       display: flex;
       align-items: center;
     }
-    
-    /* Swiper 容器 */
     .swiper { 
-      width: 100%; 
-      height: 500px;
-      padding-top: 50px; 
-      padding-bottom: 50px;
+      width: 100%; height: 500px;
+      padding-top: 50px; padding-bottom: 50px;
     }
     
-    /* 單張 Slide 設定 */
     .swiper-slide {
-      background-position: center; 
-      background-size: cover;
-      width: 300px; /* 固定寬度 */
-      height: 450px; /* 固定高度 */
+      background-position: center; background-size: cover;
+      width: 300px; height: 450px;
+      flex-shrink: 0;
       
-      /* [未選中狀態] */
-      filter: grayscale(100%) brightness(0.3); /* 黑白且很暗 */
-      transform: scale(0.85); /* 縮小 */
+      /* 未選中：暗、小 */
+      filter: grayscale(100%) brightness(0.3);
+      transform: scale(0.85);
       opacity: 0.6;
       
-      transition: all 0.5s ease-out; /* 平滑過渡 */
-      pointer-events: auto; 
-      user-select: none;
+      transition: all 0.5s ease-out;
+      pointer-events: auto; user-select: none;
     }
-    
     .swiper-slide img {
-      display: block; width: 100%; height: 100%; object-fit: cover; 
-      pointer-events: none;
+      display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
     }
     
-    /* [選中狀態] - 權重加重 !important */
+    /* [核心] 激活狀態 (正中間) - 強制高亮 */
     .swiper-slide-active {
-      filter: grayscale(0%) brightness(1.1) !important; /* 全彩高亮 */
-      transform: scale(1.1) !important; /* 放大 */
+      filter: grayscale(0%) brightness(1.1) !important;
+      transform: scale(1.1) !important;
       opacity: 1 !important;
       z-index: 100;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* 浮起陰影 */
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     }
 
-    /* --- 8. Works --- */
+    /* --- 9. Works --- */
     .works { padding: 150px 8vw; position: relative; }
     .masonry-grid { column-count: 2; column-gap: 60px; }
     .masonry-item { break-inside: avoid; margin-bottom: 60px; position: relative; }
@@ -186,7 +186,7 @@
       .swiper-slide { width: 220px; height: 330px; }
     }
 
-    /* --- 9. LAB --- */
+    /* --- 10. LAB --- */
     .lab { padding: 150px 8vw; border-top: 1px solid rgba(255,255,255,0.1); background: #050505; }
     .lab-content h3 {
       font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic;
@@ -203,18 +203,15 @@
     }
     .lab-link:hover { color: #aaa; border-bottom: 1px solid #aaa; }
 
-    /* --- 10. The Face Archive (頂級雜誌版 - 純文字) --- */
+    /* --- 11. The Face Archive (表單區) --- */
     .lead-form-section {
-      padding: 150px 8vw;
-      background: #080808;
+      padding: 150px 8vw; background: #080808; text-align: center;
       border-top: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
       display: flex; flex-direction: column; align-items: center;
     }
     
-    /* 純文字裝飾標頭 */
     .archive-meta {
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; color: #555;
+      font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #555;
       text-transform: uppercase; margin-bottom: 30px; display: block;
     }
     .archive-meta span { color: #fff; margin-left: 10px; font-weight: 600; }
@@ -234,12 +231,12 @@
       width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 50px;
     }
     
-    /* 雜誌風格輸入框：只有一條細線 */
+    /* 輸入框 */
     .form-input, .form-select {
       background: transparent; border: none; 
       border-bottom: 1px solid rgba(255,255,255,0.2);
       padding: 15px 0; color: #fff; 
-      font-family: 'Cinzel', serif; /* 輸入文字也用襯線體，更高級 */
+      font-family: 'Cinzel', serif;
       font-size: 1.1rem; letter-spacing: 0.1em;
       width: 100%; text-align: center; outline: none;
       transition: border-color 0.4s; border-radius: 0;
@@ -250,11 +247,11 @@
     }
     .form-input:focus, .form-select:focus { border-bottom: 1px solid #fff; }
     
-    .select-wrapper { position: relative; }
+    .select-wrapper { width: 100%; position: relative; }
     .form-select { cursor: none; color: #888; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; }
-    .form-select option { background: #111; color: #ccc; padding: 10px; }
+    .form-select option { background: #111; color: #ccc; text-align: center; padding: 10px; }
 
-    /* 按鈕：極簡文字框 */
+    /* 按鈕 */
     .form-submit {
       margin-top: 40px; background: transparent; 
       border: 1px solid rgba(255,255,255,0.3); color: #fff;
@@ -272,7 +269,7 @@
       letter-spacing: 0.15em; text-transform: uppercase; 
     }
 
-    /* --- 11. About --- */
+    /* --- 12. About --- */
     .background {
       padding: 100px 8vw 100px; background: #000; text-align: center;
       display: flex; flex-direction: column; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);
@@ -372,34 +369,34 @@
   </section>
 
   <section class="lead-form-section">
-    <div class="archive-meta">Scouting List: <span>356+ Members</span></div>
-    <h3 class="lead-title">The Face Archive</h3>
+    <span class="archive-meta">SCOUTING LIST: <span>356+ MEMBERS</span></span>
+    <h3 class="lead-title">THE FACE ARCHIVE</h3>
     
     <p class="lead-desc">
       我們一直在尋找那張能撐起『王牌』的臉。<br>
-      如果你覺得自己的輪廓有建築般的幾何美感，或風格獨特到無法被定義。<br>
+      如果你覺得自己的輪廓有建築般的幾何美感，或者風格獨特到無法被定義。<br>
       請留下你的 IG，讓我們在靈感來襲時，第一個找到你。
     </p>
 
-    <form class="form-group" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <input type="text" name="name" placeholder="Name / Nickname" class="form-input hover-target" required>
-      <input type="text" name="ig_handle" placeholder="Instagram ID (@)" class="form-input hover-target" required>
+    <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
+      <input type="text" name="name" placeholder="NAME / NICKNAME" class="form-input hover-target" required>
+      <input type="text" name="ig_handle" placeholder="INSTAGRAM ID (@)" class="form-input hover-target" required>
       
       <div class="select-wrapper hover-target">
         <select name="archetype" class="form-select" required>
-          <option value="" disabled selected>Pick Your Archetype</option>
-          <option value="Spade">SPADE / 黑桃 - 冷冽建築感</option>
-          <option value="Heart">HEART / 紅心 - 迷幻魅力感</option>
-          <option value="Diamond">DIAMOND / 方塊 - 奢華幾何感</option>
-          <option value="Club">CLUB / 梅花 - 穩重經典感</option>
-          <option value="Joker">JOKER / 鬼牌 - 怪誕獨特感</option>
+          <option value="" disabled selected>SELECT YOUR ARCHETYPE</option>
+          <option value="Spade">SPADE / 黑桃 - 建築感</option>
+          <option value="Heart">HEART / 紅心 - 魅力感</option>
+          <option value="Diamond">DIAMOND / 方塊 - 幾何感</option>
+          <option value="Club">CLUB / 梅花 - 經典感</option>
+          <option value="Joker">JOKER / 鬼牌 - 獨特感</option>
         </select>
       </div>
 
-      <button type="submit" class="form-submit hover-target">Join The Archive</button>
+      <button type="submit" class="form-submit hover-target">CONFIRM ENTRY</button>
     </form>
     
-    <p class="micro-copy">Selection by Invitation Only.</p>
+    <p class="micro-copy">Membership is by selection only.</p>
   </section>
 
   <section class="background" id="about">
@@ -426,9 +423,9 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 圖片生成 --- */
-    const totalVerticalWorks = 33; // 直式 (有空格)
-    const totalHorizontalWorks = 10; // 橫式 (無空格)
+    /* --- 圖片生成邏輯 --- */
+    const totalVerticalWorks = 33; 
+    const totalHorizontalWorks = 10; 
 
     const swiperWrapper = document.getElementById('swiperWrapper');
     const masonryGrid = document.getElementById('masonryGrid');
@@ -440,7 +437,7 @@
       // Film Strip (直式)
       for (let i = 1; i <= totalVerticalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work ${num}.jpg`; // 注意空格
+        const imgPath = `images/works/work ${num}.jpg`; 
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
@@ -451,7 +448,7 @@
       // Works (橫式)
       for (let i = 1; i <= totalHorizontalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/work${num}.jpg`; // 無空格
+        const imgPath = `images/works/work${num}.jpg`; 
         
         const masonryDiv = document.createElement('div');
         masonryDiv.className = 'masonry-item';
@@ -461,31 +458,31 @@
     }
     generateGallery();
 
-    /* --- Swiper 初始化 (修正：鎖死拖曳 + 音效 + 絕對亮顯) --- */
+    /* --- Swiper 初始化 (核心修復) --- */
     setTimeout(() => {
-        // 音效物件 (防抖動)
+        // 機械音效
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
-        realClickSound.volume = 0.2;
-        let lastPlayTime = 0;
+        realClickSound.volume = 0.3;
+        let lastPlay = 0;
 
         var swiper = new Swiper(".mySwiper", {
-          // 不使用 3D，回歸穩定平移
+          // 平滑移動
           effect: 'slide',
           
-          // [關鍵] 鎖死拖曳
+          // [關鍵] 1. 禁止拖曳
           allowTouchMove: false, 
-          grabCursor: false,
+          simulateTouch: false,
           
+          // [關鍵] 2. 居中
           centeredSlides: true,
-          slidesPerView: 'auto', // 自動計算寬度
-          spaceBetween: 50, // 間距
+          slidesPerView: 'auto', 
+          spaceBetween: 50, 
           loop: true,
           
-          // 滾輪設定
+          // [關鍵] 3. 強制開啟滾輪
           mousewheel: { 
             enabled: true, 
-            sensitivity: 1.5, 
-            thresholdDelta: 5,
+            sensitivity: 1.5,
             forceToAxis: true
           },
           
@@ -494,13 +491,12 @@
           
           on: {
             slideChange: function () {
-                 // 簡單的音效觸發限制，避免快速滾動時爆音
                  const now = Date.now();
-                 if (now - lastPlayTime > 100) {
-                     const soundClone = realClickSound.cloneNode();
-                     soundClone.volume = 0.2; 
-                     soundClone.play().catch(() => {});
-                     lastPlayTime = now;
+                 if(now - lastPlay > 150) {
+                    const sound = realClickSound.cloneNode();
+                    sound.volume = 0.2;
+                    sound.play().catch(()=>{});
+                    lastPlay = now;
                  }
             },
             click: function(swiper, event) {
