@@ -13,17 +13,15 @@
     /* --- 全站基礎設定 --- */
     body {
       margin: 0;
-      background: #000; /* 純粹黑，無噪點 */
+      background: #000;
       color: #e0e0e0;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       cursor: none;
     }
-
-    /* 隱藏 SVG 濾鏡定義 */
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-    /* --- 置頂導覽列 --- */
+    /* --- 導覽列 --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%;
       padding: 40px 60px; box-sizing: border-box;
@@ -31,8 +29,8 @@
       z-index: 10000; mix-blend-mode: difference;
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
-      letter-spacing: 0.05em; text-decoration: none; color: #fff; cursor: none;
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      letter-spacing: 0.1em; text-decoration: none; color: #fff; cursor: none;
     }
     .nav-menu { display: flex; gap: 50px; }
     .nav-item {
@@ -46,15 +44,16 @@
     }
     .nav-item:hover::after { width: 100%; }
 
-
     /* --- 客製化捲軸 --- */
-    ::-webkit-scrollbar { width: 4px; background: transparent; }
+    ::-webkit-scrollbar { width: 5px; background: transparent; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.5); border-radius: 2px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.9); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.1) 100%);
+      background-size: 100% 200%; border-radius: 10px; animation: scroll-flow 2s linear infinite;
+    }
+    @keyframes scroll-flow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
 
-
-    /* --- 生物感滑鼠游標 (呼吸原點) --- */
+    /* --- 游標 --- */
     .cursor-dot {
       width: 12px; height: 12px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
@@ -62,102 +61,88 @@
       transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
     }
     body.hover-active .cursor-dot {
-      width: 60px; height: 60px;
-      animation: breathe 3s infinite ease-in-out;
+      width: 60px; height: 60px; animation: breathe 3s infinite ease-in-out;
     }
     @keyframes breathe {
       0%, 100% { transform: translate(-50%, -50%) scale(1); }
       50% { transform: translate(-50%, -50%) scale(1.15); }
     }
 
-
-    /* --- 極光背景 (修正：真實光簾型態) --- */
+    /* --- 極光背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
-      /* 使用新的濾鏡參數，製造絲帶感 */
-      filter: url(#aurora-curtain) blur(30px);
-      opacity: 0.8; /* 提高亮度 */
+      filter: url(#aurora-curtain) blur(40px); opacity: 0.4;
     }
-    
     .aurora-ribbon {
-      position: absolute;
-      width: 150vw; /* 更寬 */
-      height: 40vh;
-      /* 藍綠色調，更明顯 */
-      background: linear-gradient(180deg, rgba(0,255,204,0), rgba(0,255,204,0.5), rgba(0,100,255,0.4), rgba(0,100,255,0));
-      opacity: 0;
-      transform-origin: center;
-      will-change: transform, opacity;
+      position: absolute; width: 150vw; height: 40vh;
+      background: linear-gradient(180deg, rgba(0,20,50,0), rgba(0,100,180,0.4), rgba(0,200,200,0.3), rgba(0,20,50,0));
+      opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
-
-    /* --- 1. Hero 區塊 (修正：字體清晰度與質感) --- */
+    /* --- 1. Hero 區塊 --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+      text-align: left; padding-bottom: 150px; padding-left: 8vw;
     }
-    
-    /* 背景圖：加強暗角，確保文字區域夠黑 */
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: url("hero.jpg") center / cover no-repeat;
-      /* 降低整體亮度，增加對比度 */
-      filter: grayscale(100%) brightness(0.65) contrast(1.1);
-      animation: slowZoom 20s infinite alternate linear; z-index: -2;
+      filter: grayscale(100%) brightness(0.8) contrast(1.1);
+      animation: slowZoom 30s infinite alternate linear; z-index: -2;
     }
-    /* 額外的漸層遮罩，專門保護文字區 */
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9) 90%, #000 100%);
       z-index: -1;
     }
-
-    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
-
+    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
     .hero-content {
-      z-index: 1;
-      /* 移除 mix-blend-mode，這是讓字消失的元兇 */
-      /* 加入進場動畫 */
-      animation: fadeInUp 1.5s ease-out forwards;
-      opacity: 0;
-      transform: translateY(20px);
+      z-index: 1; animation: fadeInUp 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      opacity: 0; transform: translateY(40px);
     }
-
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 6vw; /* 稍微放大 */
-      font-weight: 700; /* 加粗，對抗背景 */
-      letter-spacing: 0.12em;
-      margin: 0;
-      color: #ffffff;
-      /* 電影級長陰影：保證在白臉上也看得見 */
-      text-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
+      font-family: 'Playfair Display', serif; font-size: 10vw; line-height: 0.85;
+      font-weight: 700; letter-spacing: -0.02em; margin: 0; color: #ffffff; text-shadow: none;
     }
-
     .hero p {
-      margin-top: 30px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.9);
-      
-      /* 磨砂玻璃底板效果，增加質感並保護文字 */
-      display: inline-block;
-      padding: 12px 24px;
-      background: rgba(0, 0, 0, 0.3); /* 半透明黑底 */
-      backdrop-filter: blur(4px); /* 模糊背景 */
-      border: 1px solid rgba(255, 255, 255, 0.1); /* 極細邊框 */
-      text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+      margin-top: 40px; font-family: 'Inter', sans-serif; font-size: 1rem;
+      letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.8);
+      position: relative;
+    }
+    .hero p::before {
+        content: ''; position: absolute; left: -40px; top: 50%; width: 30px; height: 1px; background: rgba(255,255,255,0.5);
     }
 
 
-    /* --- 2. Works 作品集 --- */
+    /* --- 2. Film Strip 橫向膠卷區塊 --- */
+    .film-strip {
+      padding: 120px 0;
+      overflow: hidden; position: relative;
+      background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.5) 50%, #000 100%);
+    }
+    .strip-container {
+      display: flex; overflow-x: auto; gap: 60px; padding: 0 50vw;
+      scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none;
+      align-items: center; height: 600px;
+    }
+    .strip-container::-webkit-scrollbar { display: none; }
+    .strip-item {
+      flex: 0 0 auto; width: 300px; height: 450px; position: relative;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      filter: grayscale(100%) brightness(0.6); transform: scale(0.9);
+      cursor: none; overflow: hidden;
+    }
+    .strip-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .strip-item.active {
+      filter: grayscale(0%) brightness(1); transform: scale(1.15); z-index: 10;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+
+
+    /* --- 3. Works 作品集 (瀑布流) --- */
     .works { padding: 150px 8vw; position: relative; }
     .section-title {
       font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.4em; color: #666;
@@ -176,36 +161,29 @@
       filter: grayscale(0%) contrast(1.05); transform: translateY(-10px);
       box-shadow: 0 30px 60px rgba(0,0,0,0.6);
     }
-    @media (max-width: 768px) { .masonry-grid { column-count: 1; } }
-
-
-    /* --- 3. LAB & Background --- */
-    .lab, .background {
-      padding: 120px 8vw; border-top: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+    @media (max-width: 768px) {
+      .masonry-grid { column-count: 1; }
+      .hero h1 { font-size: 18vw; } .hero { padding-left: 30px; } .hero p::before { display: none; }
+      .strip-item { width: 220px; height: 330px; }
     }
+
+    /* --- 4. LAB & Background --- */
+    .lab, .background { padding: 120px 8vw; border-top: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
     .lab { background: rgba(10, 10, 10, 0.4); }
     .background { background: rgba(0, 0, 0, 0.6); text-align: center; display: flex; flex-direction: column; align-items: center; }
     .lab-content h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 1rem; color: #fff; font-style: italic; }
     .lab-content p { font-size: 0.95rem; color: #aaa; line-height: 1.8; max-width: 500px; margin-bottom: 40px; font-weight: 300; }
-    .lab-link {
-      font-size: 0.8rem; color: #00ffcc; text-decoration: none; padding-bottom: 5px;
-      border-bottom: 1px solid rgba(0, 255, 204, 0.3); transition: all 0.3s; letter-spacing: 0.1em; text-transform: uppercase;
-    }
+    .lab-link { font-size: 0.8rem; color: #00ffcc; text-decoration: none; padding-bottom: 5px; border-bottom: 1px solid rgba(0, 255, 204, 0.3); transition: all 0.3s; letter-spacing: 0.1em; text-transform: uppercase; }
     .lab-link:hover { border-bottom: 1px solid #00ffcc; color: #fff; text-shadow: 0 0 10px rgba(0,255,204,0.5); }
-    .quote {
-      font-family: 'Playfair Display', serif; font-size: 1.5rem; line-height: 1.8; color: #ddd; font-style: italic;
-      max-width: 700px; opacity: 0.9; margin-bottom: 40px;
-    }
+    .quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; line-height: 1.8; color: #ddd; font-style: italic; max-width: 700px; opacity: 0.9; margin-bottom: 40px; }
     .role { font-size: 0.7rem; color: #555; letter-spacing: 0.2em; text-transform: uppercase; }
     footer { padding: 60px 0; text-align: center; font-size: 0.65rem; color: #444; border-top: 1px solid #111; letter-spacing: 0.1em; }
-
 
     /* --- Lightbox --- */
     .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); justify-content: center; align-items: center; cursor: none; }
     .lightbox-content { max-width: 90%; max-height: 90%; box-shadow: 0 0 50px rgba(0,0,0,0.8); cursor: none; }
     .close-btn { position: absolute; top: 40px; right: 60px; color: #fff; font-size: 40px; font-weight: 100; cursor: none; z-index: 100000; transition: 0.3s; mix-blend-mode: difference; }
     .close-btn:hover { color: #00ffcc; transform: rotate(90deg); }
-
   </style>
 </head>
 
@@ -220,7 +198,6 @@
   </svg>
 
   <div class="cursor-dot"></div>
-
   <div id="aurora-container"></div>
 
   <nav>
@@ -233,22 +210,21 @@
 
   <section class="hero">
     <div class="hero-bg"></div>
-    <div class="hero-overlay"></div> <div class="hero-content">
-      <h1>EDEN D.</h1>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>EDEN<br>D.</h1>
       <p>Visual Director / Photographer</p>
     </div>
   </section>
 
+  <section class="film-strip">
+    <h2 class="section-title">Visual Series</h2>
+    <div class="strip-container" id="stripContainer"></div>
+  </section>
+
   <section class="works" id="work">
     <h2 class="section-title">Selected Works</h2>
-    <div class="masonry-grid">
-      <div class="masonry-item"><img src="images/works/work01.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
-      <div class="masonry-item"><img src="images/works/work02.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
-      <div class="masonry-item"><img src="images/works/work03.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
-      <div class="masonry-item"><img src="images/works/work04.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
-      <div class="masonry-item"><img src="images/works/work05.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
-      <div class="masonry-item"><img src="images/works/work06.jpg" onclick="openLightbox(this)" class="hover-target" alt="Work"></div>
-    </div>
+    <div class="masonry-grid" id="masonryGrid"></div>
   </section>
 
   <section class="lab">
@@ -274,96 +250,137 @@
   </div>
 
   <script>
-    /* --- 游標邏輯 --- */
+    /* --- 重要：自動生成圖片設定 --- */
+    // 這裡設定你有幾張圖片，目前設為 33
+    // 以後如果增加到 50 張，只要把這裡改成 50
+    const totalWorks = 33; 
+
+    /* --- 1. 自動生成圖片邏輯 --- */
+    const stripContainer = document.getElementById('stripContainer');
+    const masonryGrid = document.getElementById('masonryGrid');
+
+    function generateGallery() {
+      // 確保容器是空的，避免重複
+      stripContainer.innerHTML = '';
+      masonryGrid.innerHTML = '';
+
+      for (let i = 1; i <= totalWorks; i++) {
+        // 格式化數字：把 1 變成 '01'，把 10 保持 '10'
+        const num = i.toString().padStart(2, '0');
+        const imgPath = `images/works/work${num}.jpg`;
+        const altText = `Eden Work ${num}`;
+
+        // A. 填入 Film Strip (橫向膠卷)
+        const stripDiv = document.createElement('div');
+        stripDiv.className = 'strip-item';
+        // 注意：這裡加入了 onerror 處理，如果圖片不存在(例如 work34)，就不會顯示那個框框
+        stripDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        stripContainer.appendChild(stripDiv);
+
+        // B. 填入 Masonry Grid (瀑布流)
+        const masonryDiv = document.createElement('div');
+        masonryDiv.className = 'masonry-item';
+        masonryDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        masonryGrid.appendChild(masonryDiv);
+      }
+    }
+    // 執行生成
+    generateGallery();
+
+
+    /* --- 2. 游標與極光邏輯 --- */
     const cursorDot = document.querySelector('.cursor-dot');
-    const hoverTargets = document.querySelectorAll('.hover-target, a, img, button');
     let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
     let delayedMouseX = mouseX, delayedMouseY = mouseY;
-
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = `${mouseX}px`;
-      cursorDot.style.top = `${mouseY}px`;
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
+    });
+    
+    // 由於圖片是動態生成的，我們需要使用事件委派(Event Delegation)來處理 Hover 效果
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+        document.body.classList.add('hover-active');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+        document.body.classList.remove('hover-active');
+      }
     });
 
-    hoverTargets.forEach(target => {
-      target.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
-      target.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
-    });
-
-    /* --- 真實極光物理模擬 --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
-
     function createAurora() {
-      const el = document.createElement('div');
-      el.classList.add('aurora-ribbon');
-      
-      // 隨機出現位置 (多在上方)
-      let posX = Math.random() * window.innerWidth;
-      let posY = Math.random() * (window.innerHeight * 0.5);
-      
-      // 角度垂直為主，帶一點傾斜
+      const el = document.createElement('div'); el.classList.add('aurora-ribbon');
+      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.5);
       let angle = (Math.random() - 0.5) * 40; 
-      
       const driftSpeed = 0.3 + Math.random() * 0.4;
       const velX = Math.sin(angle * Math.PI / 180) * driftSpeed;
       const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.5;
-
       el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
       auroraContainer.appendChild(el);
-
       const auroraObj = { el, posX, posY, angle, velX, velY, life: 0 };
       auroras.push(auroraObj);
-
-      setTimeout(() => {
-        el.remove();
-        const index = auroras.indexOf(auroraObj);
-        if (index > -1) auroras.splice(index, 1);
-      }, 12000);
+      setTimeout(() => { el.remove(); auroras.splice(auroras.indexOf(auroraObj), 1); }, 12000);
     }
-
     function animateAuroras() {
-      delayedMouseX += (mouseX - delayedMouseX) * 0.1;
-      delayedMouseY += (mouseY - delayedMouseY) * 0.1;
-
+      delayedMouseX += (mouseX - delayedMouseX) * 0.1; delayedMouseY += (mouseY - delayedMouseY) * 0.1;
       auroras.forEach(obj => {
-        obj.life += 0.01;
-        
-        // 1. 自然流動
-        obj.posX += obj.velX;
-        obj.posY += obj.velY;
-        
-        // 2. 強化波動 (Interact)
-        const dx = obj.posX - delayedMouseX;
-        const dy = obj.posY - delayedMouseY;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        
-        const interactionRadius = 600; // 加大互動範圍
-
+        obj.life += 0.01; obj.posX += obj.velX; obj.posY += obj.velY;
+        const dx = obj.posX - delayedMouseX; const dy = obj.posY - delayedMouseY;
+        const dist = Math.sqrt(dx*dx + dy*dy); const interactionRadius = 600;
         if (dist < interactionRadius) {
-          // 強力推開
           const force = Math.pow((interactionRadius - dist) / interactionRadius, 3) * 20;
           const angle = Math.atan2(dy, dx);
-          obj.posX += Math.cos(angle) * force;
-          obj.posY += Math.sin(angle) * force;
+          obj.posX += Math.cos(angle) * force; obj.posY += Math.sin(angle) * force;
         }
-
         obj.el.style.transform = `translate(${obj.posX}px, ${obj.posY}px) rotate(${obj.angle}deg) scaleY(${1 + Math.sin(obj.life)*0.2})`;
-        
-        // 淡入淡出
-        if(obj.life < 1) obj.el.style.opacity = 0.8;
-        if(obj.life > 8) obj.el.style.opacity = 0;
+        if(obj.life < 1) obj.el.style.opacity = 0.8; if(obj.life > 8) obj.el.style.opacity = 0;
       });
-
       requestAnimationFrame(animateAuroras);
     }
+    setInterval(createAurora, 3000); createAurora(); createAurora(); animateAuroras();
 
-    setInterval(createAurora, 3000);
-    createAurora();
-    createAurora();
-    animateAuroras();
+
+    /* --- 3. Film Strip 邏輯與音效 --- */
+    // 這裡我們需要重新選取動態生成的 items
+    setTimeout(() => { // 延遲一下確保圖片已生成
+        const stripItems = document.querySelectorAll('.strip-item');
+        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
+        realClickSound.volume = 0.3;
+        let lastActiveIndex = -1;
+
+        function updateStrip() {
+          const center = stripContainer.scrollLeft + stripContainer.offsetWidth / 2;
+          let closestDist = Infinity;
+          let closestIndex = -1;
+
+          stripItems.forEach((item, index) => {
+            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+            const dist = Math.abs(center - itemCenter);
+            if (dist < closestDist) {
+              closestDist = dist;
+              closestIndex = index;
+            }
+            item.classList.remove('active');
+          });
+
+          if (closestIndex !== -1) {
+            stripItems[closestIndex].classList.add('active');
+            if (closestIndex !== lastActiveIndex) {
+              if (lastActiveIndex !== -1) {
+                 const soundClone = realClickSound.cloneNode();
+                 soundClone.volume = 0.2;
+                 soundClone.play().catch(() => {});
+              }
+              lastActiveIndex = closestIndex;
+            }
+          }
+        }
+        stripContainer.addEventListener('scroll', updateStrip);
+        updateStrip();
+    }, 500); // 確保 DOM 生成後才執行
 
     /* --- Lightbox --- */
     function openLightbox(element) {
