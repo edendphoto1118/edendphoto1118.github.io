@@ -7,13 +7,13 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-    /* --- 全站基礎設定 (回歸純黑) --- */
+    /* --- 全站基礎設定 --- */
     body {
       margin: 0;
-      background: #000; /* 純粹的黑 */
+      background: #000; /* 純粹黑，無噪點 */
       color: #e0e0e0;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
@@ -23,7 +23,6 @@
     /* 隱藏 SVG 濾鏡定義 */
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-
     /* --- 置頂導覽列 --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%;
@@ -32,7 +31,7 @@
       z-index: 10000; mix-blend-mode: difference;
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600;
+      font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
       letter-spacing: 0.05em; text-decoration: none; color: #fff; cursor: none;
     }
     .nav-menu { display: flex; gap: 50px; }
@@ -55,7 +54,7 @@
     ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.9); }
 
 
-    /* --- 生物感滑鼠游標 (會呼吸的原點) --- */
+    /* --- 生物感滑鼠游標 (呼吸原點) --- */
     .cursor-dot {
       width: 12px; height: 12px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
@@ -72,51 +71,89 @@
     }
 
 
-    /* --- 極光背景 (重新設計：絲帶狀有機流體) --- */
+    /* --- 極光背景 (修正：真實光簾型態) --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
-      /* 應用 SVG 湍流濾鏡，讓色塊扭曲成絲帶 */
-      filter: url(#aurora-turbulence) blur(60px);
-      opacity: 0.7;
+      /* 使用新的濾鏡參數，製造絲帶感 */
+      filter: url(#aurora-curtain) blur(30px);
+      opacity: 0.8; /* 提高亮度 */
     }
     
     .aurora-ribbon {
       position: absolute;
-      /* 不再是圓形，而是長條狀 */
-      width: 120vw; 
-      height: 30vw;
-      background: linear-gradient(90deg, rgba(0,255,204,0), rgba(0,255,204,0.4), rgba(0,100,255,0.3), rgba(0,100,255,0));
+      width: 150vw; /* 更寬 */
+      height: 40vh;
+      /* 藍綠色調，更明顯 */
+      background: linear-gradient(180deg, rgba(0,255,204,0), rgba(0,255,204,0.5), rgba(0,100,255,0.4), rgba(0,100,255,0));
       opacity: 0;
-      /* 旋轉角度讓它斜向劃過畫面 */
       transform-origin: center;
-      transition: opacity 2s ease;
-      will-change: transform; /* 優化效能 */
+      will-change: transform, opacity;
     }
 
 
-    /* --- 1. Hero 區塊 --- */
+    /* --- 1. Hero 區塊 (修正：字體清晰度與質感) --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
     }
+    
+    /* 背景圖：加強暗角，確保文字區域夠黑 */
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: url("hero.jpg") center / cover no-repeat;
-      filter: grayscale(100%) brightness(0.7) contrast(1.1);
+      /* 降低整體亮度，增加對比度 */
+      filter: grayscale(100%) brightness(0.65) contrast(1.1);
       animation: slowZoom 20s infinite alternate linear; z-index: -2;
     }
-    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
-    .hero-content { z-index: 1; mix-blend-mode: overlay; }
-    .hero h1 {
-      font-family: 'Playfair Display', serif; font-size: 5vw; font-weight: 400;
-      letter-spacing: 0.15em; margin: 0; color: rgba(255,255,255,0.9);
-      text-shadow: 0 0 30px rgba(255,255,255,0.2);
+    /* 額外的漸層遮罩，專門保護文字區 */
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+      z-index: -1;
     }
+
+    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+    .hero-content {
+      z-index: 1;
+      /* 移除 mix-blend-mode，這是讓字消失的元兇 */
+      /* 加入進場動畫 */
+      animation: fadeInUp 1.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 6vw; /* 稍微放大 */
+      font-weight: 700; /* 加粗，對抗背景 */
+      letter-spacing: 0.12em;
+      margin: 0;
+      color: #ffffff;
+      /* 電影級長陰影：保證在白臉上也看得見 */
+      text-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
+    }
+
     .hero p {
-      margin-top: 20px; font-family: 'Inter', sans-serif; font-size: 0.8rem;
-      letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.7;
-      border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px; display: inline-block;
+      margin-top: 30px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      
+      /* 磨砂玻璃底板效果，增加質感並保護文字 */
+      display: inline-block;
+      padding: 12px 24px;
+      background: rgba(0, 0, 0, 0.3); /* 半透明黑底 */
+      backdrop-filter: blur(4px); /* 模糊背景 */
+      border: 1px solid rgba(255, 255, 255, 0.1); /* 極細邊框 */
+      text-shadow: 0 2px 5px rgba(0,0,0,0.8);
     }
 
 
@@ -175,9 +212,9 @@
 <body>
   <svg class="svg-filters">
     <defs>
-      <filter id="aurora-turbulence">
-        <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="3" result="turbulence" />
-        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="200" xChannelSelector="R" yChannelSelector="G" />
+      <filter id="aurora-curtain">
+        <feTurbulence type="turbulence" baseFrequency="0.002 0.02" numOctaves="3" result="turbulence" />
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="150" xChannelSelector="R" yChannelSelector="G" />
       </filter>
     </defs>
   </svg>
@@ -196,9 +233,9 @@
 
   <section class="hero">
     <div class="hero-bg"></div>
-    <div class="hero-content">
+    <div class="hero-overlay"></div> <div class="hero-content">
       <h1>EDEN D.</h1>
-      <p>Visual Director & Photographer</p>
+      <p>Visual Director / Photographer</p>
     </div>
   </section>
 
@@ -237,11 +274,10 @@
   </div>
 
   <script>
-    /* --- 游標邏輯 (不變) --- */
+    /* --- 游標邏輯 --- */
     const cursorDot = document.querySelector('.cursor-dot');
     const hoverTargets = document.querySelectorAll('.hover-target, a, img, button');
     let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
-    // 增加一個延遲的滑鼠位置，讓極光反應更平滑自然
     let delayedMouseX = mouseX, delayedMouseY = mouseY;
 
     document.addEventListener('mousemove', (e) => {
@@ -256,7 +292,6 @@
       target.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
     });
 
-
     /* --- 真實極光物理模擬 --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
@@ -265,16 +300,16 @@
       const el = document.createElement('div');
       el.classList.add('aurora-ribbon');
       
-      // 隨機起始位置與角度
+      // 隨機出現位置 (多在上方)
       let posX = Math.random() * window.innerWidth;
-      let posY = Math.random() * window.innerHeight;
-      let angle = Math.random() * 360;
+      let posY = Math.random() * (window.innerHeight * 0.5);
       
-      // 自然漂移速度
-      const driftSpeed = 0.2 + Math.random() * 0.3;
-      const driftDir = Math.random() * Math.PI * 2;
-      const velX = Math.cos(driftDir) * driftSpeed;
-      const velY = Math.sin(driftDir) * driftSpeed;
+      // 角度垂直為主，帶一點傾斜
+      let angle = (Math.random() - 0.5) * 40; 
+      
+      const driftSpeed = 0.3 + Math.random() * 0.4;
+      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed;
+      const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.5;
 
       el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
       auroraContainer.appendChild(el);
@@ -282,69 +317,55 @@
       const auroraObj = { el, posX, posY, angle, velX, velY, life: 0 };
       auroras.push(auroraObj);
 
-      // 生命週期結束後移除
-      setTimeout(() => {
-        // 開始淡出
-        obj.life = 100; 
-      }, 8000);
       setTimeout(() => {
         el.remove();
         const index = auroras.indexOf(auroraObj);
         if (index > -1) auroras.splice(index, 1);
-      }, 11000);
+      }, 12000);
     }
 
     function animateAuroras() {
-      // 讓延遲滑鼠追趕真實滑鼠，創造拖曳感
       delayedMouseX += (mouseX - delayedMouseX) * 0.1;
       delayedMouseY += (mouseY - delayedMouseY) * 0.1;
 
       auroras.forEach(obj => {
         obj.life += 0.01;
-
-        // 1. 自然漂移
+        
+        // 1. 自然流動
         obj.posX += obj.velX;
         obj.posY += obj.velY;
-        obj.angle += 0.05; // 緩慢旋轉
-
-        // 2. 強化的滑鼠物理波動
-        // 計算極光中心到「延遲滑鼠」的距離
+        
+        // 2. 強化波動 (Interact)
         const dx = obj.posX - delayedMouseX;
         const dy = obj.posY - delayedMouseY;
         const dist = Math.sqrt(dx*dx + dy*dy);
         
-        // 互動半徑增大到 500px
-        const interactionRadius = 500;
+        const interactionRadius = 600; // 加大互動範圍
 
         if (dist < interactionRadius) {
-          // 距離越近，推力越強 (非線性增強)
-          const force = Math.pow((interactionRadius - dist) / interactionRadius, 2) * 15;
+          // 強力推開
+          const force = Math.pow((interactionRadius - dist) / interactionRadius, 3) * 20;
           const angle = Math.atan2(dy, dx);
-          
-          // 將推力施加到位置上
           obj.posX += Math.cos(angle) * force;
           obj.posY += Math.sin(angle) * force;
         }
 
-        // 更新 DOM
-        obj.el.style.transform = `translate(${obj.posX}px, ${obj.posY}px) rotate(${obj.angle}deg) scale(${1 + Math.sin(obj.life)*0.1})`;
+        obj.el.style.transform = `translate(${obj.posX}px, ${obj.posY}px) rotate(${obj.angle}deg) scaleY(${1 + Math.sin(obj.life)*0.2})`;
         
         // 淡入淡出
-        if(obj.life < 0.5) obj.el.style.opacity = 0.6; // 淡入
-        if(obj.life > 6) obj.el.style.opacity = 0; // 淡出
+        if(obj.life < 1) obj.el.style.opacity = 0.8;
+        if(obj.life > 8) obj.el.style.opacity = 0;
       });
 
       requestAnimationFrame(animateAuroras);
     }
 
-    // 啟動
-    setInterval(createAurora, 3500); // 生成頻率稍慢
-    createAurora(); // 初始生成兩個
-    setTimeout(createAurora, 1000);
+    setInterval(createAurora, 3000);
+    createAurora();
+    createAurora();
     animateAuroras();
 
-
-    /* --- Lightbox 邏輯 --- */
+    /* --- Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
