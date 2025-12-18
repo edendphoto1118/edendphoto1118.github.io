@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>EDEN — SERVICE & PRICING</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- 基礎設定 --- */
+    body {
+      margin: 0; background: #050505; color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden; cursor: auto;
+    }
+    
+    /* 導覽列 */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 40px 60px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      mix-blend-mode: difference; box-sizing: border-box;
+    }
+    .nav-logo { font-family: 'Cinzel', serif; font-weight: 700; color: #fff; text-decoration: none; font-size: 1.2rem; }
+    .back-btn { 
+      color: #fff; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.2em; 
+      text-transform: uppercase; border-bottom: 1px solid transparent; padding-bottom: 5px; 
+      transition: all 0.3s;
+    }
+    .back-btn:hover { border-bottom: 1px solid #fff; }
+
+    /* 主要容器 */
+    .container {
+      max-width: 900px; margin: 180px auto 100px; padding: 0 40px;
+    }
+    
+    /* 頁面標題 */
+    .header { text-align: center; margin-bottom: 120px; }
+    .header h1 { font-family: 'Cinzel', serif; font-size: 3rem; margin-bottom: 20px; letter-spacing: 0.05em; }
+    .header p { color: #666; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.75rem; }
+
+    /* --- 方案列表 (List Layout) --- */
+    .plan-list {
+      display: flex; flex-direction: column; gap: 80px;
+    }
+
+    .plan-item {
+      position: relative;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.1); /* 極細分隔線 */
+      display: grid;
+      grid-template-columns: 1fr 1.5fr; /* 左側標題，右側內容 */
+      gap: 40px;
+    }
+    
+    /* 最後一項不畫線 */
+    .plan-item:last-child { border-bottom: none; }
+
+    /* 左側：方案名稱與價格 */
+    .plan-header-side {
+      text-align: right;
+      padding-right: 40px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .plan-name {
+      font-family: 'Cinzel', serif; font-size: 1.8rem; color: #fff; margin-bottom: 15px; display: block;
+    }
+    .plan-price {
+      font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 400; color: #888;
+      display: block; letter-spacing: 0.05em;
+    }
+    .highlight-price { color: #00ffcc; font-weight: 600; } /* 推薦方案價格色 */
+
+    /* 右側：詳細內容 */
+    .plan-content-side {
+      text-align: left;
+    }
+    .plan-tagline {
+      font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem;
+      color: #ccc; margin-bottom: 30px; display: block; opacity: 0.8;
+    }
+    .plan-features {
+      list-style: none; padding: 0; margin: 0 0 40px 0;
+    }
+    .plan-features li {
+      margin-bottom: 12px; color: #aaa; font-size: 0.85rem; line-height: 1.6;
+      display: flex; align-items: flex-start;
+    }
+    .plan-features li::before {
+      content: '—'; margin-right: 15px; color: #444;
+    }
+    .feature-highlight { color: #fff; font-weight: 500; }
+
+    /* 按鈕樣式 */
+    .book-link {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #fff; text-decoration: none;
+      padding-bottom: 5px; border-bottom: 1px solid #444;
+      transition: all 0.3s;
+    }
+    .book-link:hover { color: #00ffcc; border-color: #00ffcc; }
+
+    /* 推薦標籤 */
+    .rec-badge {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #00ffcc; border: 1px solid #00ffcc; padding: 4px 10px;
+      margin-bottom: 15px; display: inline-block;
+    }
+
+    /* --- 委託須知 (Accordion) --- */
+    .terms-section {
+      margin: 100px auto 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 80px;
+    }
+    .terms-title { 
+      font-family: 'Cinzel', serif; font-size: 1.5rem; text-align: center; margin-bottom: 60px; color: #666;
+    }
+    
+    details {
+      margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;
+    }
+    summary {
+      padding: 15px 0; cursor: pointer; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; font-size: 0.8rem; list-style: none; position: relative; color: #aaa;
+      transition: color 0.3s;
+    }
+    summary:hover { color: #fff; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+'; position: absolute; right: 0; font-weight: 300; font-size: 1rem; color: #444;
+    }
+    details[open] summary::after { content: '-'; }
+    
+    .terms-content { padding: 10px 0 20px; color: #888; font-size: 0.85rem; line-height: 2; }
+    .term-label { color: #fff; font-weight: 500; margin-right: 8px; }
+
+    footer {
+      padding: 60px 0; text-align: center; font-size: 0.6rem; color: #444; 
+      letter-spacing: 0.2em; text-transform: uppercase;
+    }
+
+    /* RWD 手機適配 */
+    @media (max-width: 768px) {
+      .container { padding: 0 25px; margin-top: 120px; }
+      .header h1 { font-size: 2rem; }
+      
+      /* 手機版改為垂直堆疊 */
+      .plan-item { grid-template-columns: 1fr; gap: 20px; padding-bottom: 50px; text-align: left; }
+      .plan-header-side { text-align: left; padding-right: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
+      .plan-name { margin-bottom: 5px; font-size: 1.5rem; }
+      .plan-tagline { margin-bottom: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">EDEN</a>
+    <a href="index.html" class="back-btn">Close</a>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h1>Service & Investment</h1>
+      <p>Transparent pricing for iconic visual storytelling.</p>
+    </div>
+
+    <div class="plan-list">
+      
+      <div class="plan-item">
+        <div class="plan-header-side">
+          <span class="plan-name">The Structure</span>
+          <span class="plan-price">NT$ 6,800</span>
+        </div>
+        <div class="plan-content-side">
+          <span class="plan-tagline">"不只是人像，是將你融入建築美學的藝術照。"</span>
+          <ul class="plan-features">
+            <li>拍攝時數：1.5 小時</li>
+            <li>造型：1 套 (需自備，提供幾何穿搭指南)</li>
+            <li>風格：建築黑白 (幾何光影) 或 霓虹迷幻 (流動光繪)</li>
+            <li>成品：精修照片 6 張 (含 J/Q/K 牌面設計合成圖)</li>
+            <li>交付：全數毛片調色交付 (JPG)</li>
+            <li>加贈：IG 限動側拍花絮 (15s)</li>
+          </ul>
+          <a href="mailto:edendphoto1118@gmail.com?subject=Booking Inquiry: The Structure" class="book-link">Request Booking →</a>
+        </div>
+      </div>
+
+      <div class="plan-item">
+        <div class="plan-header-side">
+          <span class="rec-badge">Recommended</span>
+          <span class="plan-name" style="color: #00ffcc;">The Architect</span>
+          <span class="plan-price highlight-price">NT$ 22,800</span>
+        </div>
+        <div class="plan-content-side">
+          <span class="plan-tagline" style="color: #fff;">"你的氣場，值得被設計成一座建築。含實體撲克牌成品。"</span>
+          <ul class="plan-features">
+            <li>拍攝時數：3 小時</li>
+            <li class="feature-highlight">造型：2 套 (含專業妝髮一組)</li>
+            <li>風格：全解鎖 (黑桃建築風 + 紅心迷幻風)</li>
+            <li>成品：精修照片 18 張 (含 J/Q/K/Joker 完整牌面)</li>
+            <li class="feature-highlight">獨家實體：專屬訂製撲克牌 5 副 (德國黑芯紙)</li>
+            <li class="feature-highlight">獨家實體：A3 藝術微噴海報 1 張</li>
+            <li>社群：Reels 專屬短片 1 支 (真人鬼牌轉場特效)</li>
+          </ul>
+          <a href="mailto:edendphoto1118@gmail.com?subject=Booking Inquiry: The Architect" class="book-link" style="color: #00ffcc; border-color: #00ffcc;">Request Booking →</a>
+        </div>
+      </div>
+
+      <div class="plan-item">
+        <div class="plan-header-side">
+          <span class="plan-name">The Kingdom</span>
+          <span class="plan-price">NT$ 36,800</span>
+        </div>
+        <div class="plan-content-side">
+          <span class="plan-tagline">"雙人合夥、情侶寫真。共同打造王國的視覺資產。"</span>
+          <ul class="plan-features">
+            <li>拍攝時數：4 小時</li>
+            <li class="feature-highlight">造型：雙人各 2 套 (含雙人專業妝髮)</li>
+            <li>風格：雙人互動幾何構圖指導</li>
+            <li>成品：精修照片 24 張 (單人 + 雙人合照)</li>
+            <li class="feature-highlight">獨家實體：專屬訂製撲克牌 10 副 (雙人封面)</li>
+            <li class="feature-highlight">獨家實體：A3 藝術微噴海報 2 張</li>
+            <li>社群：Reels 雙人互動短片 1 支 + IG 共創推廣</li>
+          </ul>
+          <a href="mailto:edendphoto1118@gmail.com?subject=Booking Inquiry: The Kingdom" class="book-link">Request Booking →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="terms-section">
+      <h3 class="terms-title">Booking Terms</h3>
+      
+      <details>
+        <summary>費用與妝髮說明</summary>
+        <div class="terms-content">
+          <p><span class="term-label">費用說明：</span>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目，我們可以推薦優質合作夥伴。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>訂金與預約政策</summary>
+        <div class="terms-content">
+          <p><span class="term-label">訂金政策：</span>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p>
+          <p><span class="term-label">改期規範：</span>如需改期請於 3 天前告知，訂金可保留延期一次。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>拍攝當日規範</summary>
+        <div class="terms-content">
+          <p><span class="term-label">準時原則：</span>為確保光線與流程，請準時抵達。遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>成品交付細節</summary>
+        <div class="terms-content">
+          <p><span class="term-label">交付成品：</span>交付成品為調色/精修後之 JPG 檔。</p>
+          <p><span class="term-label">RAW 檔：</span>RAW 檔為半成品，恕不提供。</p>
+        </div>
+      </details>
+    </div>
+
+  </div>
+
+  <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
+
+</body>
+</html>
