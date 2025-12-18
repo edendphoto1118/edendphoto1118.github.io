@@ -11,18 +11,54 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
-    /* --- 1. 全站基礎 --- */
+    /* --- 1. 全站基礎 & 防護設定 --- */
     html { scroll-behavior: smooth; }
     body {
       margin: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden; cursor: none; user-select: none;
+      overflow-x: hidden; 
+      cursor: none; 
+      /* [防護] 禁止選取文字與圖片 */
+      user-select: none; 
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
+    /* [防護] 禁止圖片拖曳 */
+    img { pointer-events: none; -webkit-user-drag: none; }
+    
+    /* 允許互動的元素恢復游標事件 */
+    a, button, input, select, .swiper-wrapper, .gallery-item { pointer-events: auto; }
+
     body.lightbox-open { cursor: auto; overflow: hidden; }
     body.lightbox-open .cursor-dot { display: none; }
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-    /* --- 2. 導覽列 --- */
+    /* --- 2. 大師級細節：Film Grain (底片噪點) --- */
+    .noise-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9000;
+      opacity: 0.05; /* 調整雜訊濃度 */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* --- 3. 大師級細節：Preloader (載入畫面) --- */
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; z-index: 20000;
+      display: flex; justify-content: center; align-items: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .loader-text {
+      font-family: 'Cinzel', serif; font-size: 1.5rem; letter-spacing: 0.5em;
+      color: #fff; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+    
+    /* Preloader 隱藏狀態 */
+    body.loaded #preloader { opacity: 0; visibility: hidden; }
+
+    /* --- 4. 導覽列 --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%;
       padding: 30px 50px; box-sizing: border-box;
@@ -47,7 +83,7 @@
     }
     .nav-item:hover::after { width: 100%; }
 
-    /* --- 3. 游標 --- */
+    /* --- 5. 游標 --- */
     .cursor-dot {
       width: 10px; height: 10px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
@@ -60,14 +96,12 @@
     }
     @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* --- 4. 客製化捲軸 --- */
+    /* --- 6. 客製化捲軸 --- */
     ::-webkit-scrollbar { width: 6px; background: #000; }
-    ::-webkit-scrollbar-thumb {
-      background: #333; border-radius: 3px;
-    }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-    /* --- 5. 極光背景 --- */
+    /* --- 7. 極光背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
@@ -79,14 +113,12 @@
       opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
-    /* --- 6. Hero 區塊 --- */
+    /* --- 8. Hero 區塊 --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; 
-      justify-content: flex-end; 
-      align-items: center;
-      text-align: center;
-      padding-bottom: 15vh; 
+      justify-content: flex-end; align-items: center;
+      text-align: center; padding-bottom: 15vh; 
     }
     .hero-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -115,20 +147,7 @@
       letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7);
     }
 
-    /* --- 7. 通用標題 --- */
-    .section-header {
-      text-align: center; margin-bottom: 80px; position: relative; padding: 0 20px;
-    }
-    .section-title {
-      font-family: 'Cinzel', serif; font-size: 2.5rem; letter-spacing: 0.15em; color: #fff;
-      font-weight: 400; margin: 0;
-    }
-    .section-subtitle {
-      font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #666;
-      text-transform: uppercase; margin-top: 15px; display: block;
-    }
-
-    /* --- 8. The Narrative (Featured Swiper) --- */
+    /* --- 9. The Narrative (Featured Swiper - 修正置中) --- */
     .film-strip {
       padding: 100px 0; 
       position: relative; background: #000; z-index: 10; 
@@ -138,7 +157,12 @@
     .swiper { 
       width: 100%; padding: 80px 0; 
     }
+    /* 置中修正：確保 Wrapper 內的內容對齊 */
+    .swiper-wrapper {
+      align-items: center; 
+    }
     .swiper-slide {
+      /* 固定高度，寬度自適應 */
       width: auto; 
       height: 60vh; 
       max-height: 600px;
@@ -148,6 +172,7 @@
       opacity: 0.6;
       transition: all 0.7s cubic-bezier(0.25, 1, 0.2, 1); 
       pointer-events: auto; 
+      /* 確保內容居中 */
       display: flex; justify-content: center; align-items: center;
       background: #0a0a0a; 
     }
@@ -162,7 +187,7 @@
       box-shadow: 0 40px 80px rgba(0,0,0,0.9);
     }
 
-    /* --- 9. Masterpiece Gallery (Masonry + Scroll Reveal) --- */
+    /* --- 10. Masterpiece Gallery (Masonry + Scroll Reveal) --- */
     .masterpiece-gallery {
       padding: 100px 6vw;
       position: relative;
@@ -171,26 +196,15 @@
     .gallery-container {
       column-count: 3; column-gap: 40px; width: 100%;
     }
-    
-    /* 大師級 Scroll Reveal 初始狀態 */
     .gallery-item {
       break-inside: avoid; margin-bottom: 40px; position: relative;
       z-index: 1; cursor: none;
-      
-      /* 動態進場設定 */
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* 大師級緩動 */
+      /* Scroll Reveal 初始狀態 */
+      opacity: 0; transform: translateY(50px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
-    /* 當元素進入畫面，加上這個 class */
-    .gallery-item.reveal {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .gallery-item.reveal { opacity: 1; transform: translateY(0); }
     .gallery-item.hidden { display: none; }
-    
     .gallery-item img {
       width: 100%; height: auto; display: block;
       filter: grayscale(100%) brightness(0.8) contrast(1.1);
@@ -198,14 +212,13 @@
       background: #111; min-height: 100px;
     }
     .gallery-item:hover {
-      transform: scale(1.05) translateY(0) !important; /* 強制覆蓋 */
+      transform: scale(1.05) translateY(0) !important; 
       z-index: 100; box-shadow: 0 30px 60px rgba(0,0,0,0.9);
     }
     .gallery-item:hover img {
       filter: grayscale(0%) brightness(1.05) contrast(1);
     }
     
-    /* Load More Button */
     .load-more-container {
         text-align: center; margin-top: 60px; padding-bottom: 40px;
     }
@@ -220,7 +233,7 @@
         background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
 
-    /* --- 10. Pricing Section (No Buttons) --- */
+    /* --- 11. Pricing Section --- */
     .pricing-section {
       padding: 120px 8vw 60px;
       background: #050505;
@@ -276,7 +289,7 @@
     .price-specs li::before { content: '▹'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 600; }
 
-    /* --- 11. Special Campaign (Royal Deck) --- */
+    /* --- 12. Special Campaign --- */
     .royal-section {
       padding: 100px 8vw; background: linear-gradient(135deg, #080808 0%, #000 100%);
       border-top: 1px solid #222; border-bottom: 1px solid #222;
@@ -300,7 +313,7 @@
     .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
 
-    /* --- 12. Main CTA Button & Hidden Booking Area --- */
+    /* --- 13. CTA & Hidden Booking --- */
     .booking-cta-section {
         padding: 80px 0; text-align: center; background: #000;
     }
@@ -314,8 +327,6 @@
     .initiate-btn:hover {
         background: #fff; color: #000; box-shadow: 0 0 50px rgba(255,255,255,0.4);
     }
-
-    /* Hidden Container */
     .hidden-booking-container {
         max-height: 0; overflow: hidden; transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1);
         opacity: 0; background: #080808;
@@ -332,8 +343,6 @@
     }
     .term-item h4 { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; margin-bottom: 10px; }
     .term-item p { color: #888; font-size: 0.8rem; line-height: 1.6; }
-
-    /* Calendar */
     .calendar-wrapper {
         padding: 40px 8vw 100px; display: flex; justify-content: center;
     }
@@ -341,7 +350,7 @@
         border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 30px rgba(0,0,0,0.5);
     }
 
-    /* --- 13. Face Archive (Form) --- */
+    /* --- 14. Face Archive (Form) --- */
     .lead-form-section {
         padding: 120px 8vw; background: #080808; text-align: center;
         border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;
@@ -368,7 +377,7 @@
     }
     .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
 
-    /* --- 14. Footer & About --- */
+    /* --- 15. Footer & About --- */
     .background { padding: 100px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     .quote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.6; color: #fff; font-style: italic; max-width: 800px; margin: 0 auto 60px; }
     .contact-info { display: flex; flex-direction: column; gap: 20px; align-items: center; font-family: 'Montserrat', sans-serif; }
@@ -395,20 +404,24 @@
       .hero h1 { font-size: 15vw; }
       .nav-menu { display: none; } 
       .nav { justify-content: center; }
-      
       .gallery-container { column-count: 1; }
-      
       .pricing-grid { grid-template-columns: 1fr; gap: 40px; }
       .royal-grid { flex-direction: column; gap: 40px; }
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 40px; width: 100%; }
       .royal-border { padding: 30px; }
-      
       .terms-grid { grid-template-columns: 1fr; gap: 20px; }
     }
   </style>
 </head>
 
-<body>
+<body oncontextmenu="return false">
+  
+  <div class="noise-overlay"></div>
+
+  <div id="preloader">
+    <div class="loader-text">LOADING ARCHIVE</div>
+  </div>
+
   <div id="toast" class="toast">Email Copied</div>
 
   <svg class="svg-filters">
@@ -570,7 +583,7 @@
   </section>
 
   <section class="booking-cta-section">
-      <button class="initiate-btn hover-target" onclick="toggleBooking()">INITIATE BOOKING (開始預約)</button>
+      <button class="initiate-btn hover-target" onclick="toggleBooking()">INITIATE BOOKING (啟動預約程序)</button>
   </section>
 
   <div id="hiddenBooking" class="hidden-booking-container">
@@ -648,7 +661,15 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- Masterpiece Gallery Logic (Dual Logic) --- */
+    /* --- 0. Preloader Logic --- */
+    window.addEventListener('load', () => {
+        const body = document.querySelector('body');
+        setTimeout(() => {
+            body.classList.add('loaded');
+        }, 1000); // 1秒後消失
+    });
+
+    /* --- 1. Masterpiece Gallery Logic (Dual Logic) --- */
     
     // 設定作品總數 (下方瀑布流)
     const totalWorks = 117; 
@@ -664,7 +685,6 @@
       // --- 1. 生成 Masonry 瀑布流 (使用舊命名邏輯 portfolio0-1.jpg ~ 117) ---
       for (let i = 1; i <= totalWorks; i++) {
         // 檔名格式: portfolio0-1.jpg (無補零)
-        const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
         
         const itemDiv = document.createElement('div');
@@ -753,6 +773,7 @@
           allowTouchMove: true, 
           threshold: 10,
           centeredSlides: true,
+          // [重要] 自動適應混合比例
           slidesPerView: 'auto', 
           spaceBetween: 40, 
           loop: true,
@@ -785,6 +806,25 @@
       document.body.classList.remove('hover-active');
     }
     document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
+
+    /* --- Content Protection: Prevent Keyboard Shortcuts --- */
+    document.onkeydown = function(e) {
+      if (e.keyCode == 123) { // F12
+        return false;
+      }
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+        return false;
+      }
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+        return false;
+      }
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+        return false;
+      }
+      if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { // Ctrl+S
+        return false;
+      }
+    }
 
     /* --- Email Copy --- */
     function copyEmail() {
