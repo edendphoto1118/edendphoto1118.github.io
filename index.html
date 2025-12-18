@@ -102,7 +102,6 @@
       opacity: 0; transform: translateY(40px); width: 100%;
     }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-    
     .hero h1 {
       font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
       font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #ffffff;
@@ -111,7 +110,6 @@
     .hero h1 span {
       font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: 0;
     }
-
     .hero p {
       margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
       letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.8);
@@ -131,22 +129,38 @@
       text-transform: uppercase; margin-top: 15px; display: block;
     }
 
-    /* --- 2. Film Strip --- */
+    /* --- 2. Film Strip (升級為 3D Coverflow) --- */
     .film-strip {
       padding: 100px 0 140px 0; position: relative;
       background: linear-gradient(to bottom, #000 0%, rgba(10,10,10,0.8) 50%, #000 100%); z-index: 10;
     }
     .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+    
+    /* 3D Slide 樣式 */
     .swiper-slide {
-      background-position: center; background-size: cover; width: 300px; height: 450px;
-      flex-shrink: 0; filter: grayscale(100%) brightness(0.5) contrast(0.9);
-      transform: scale(0.85); transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000);
-      pointer-events: auto; user-select: none; overflow: hidden; margin: 0 30px;
+      background-position: center; background-size: cover;
+      width: 300px; height: 450px;
+      /* 預設樣式：黑白、暗 */
+      filter: grayscale(100%) brightness(0.4);
+      pointer-events: auto; user-select: none;
+      /* 不需要手動 scale，coverflow 會處理 */
+      transition: filter 0.5s ease;
     }
-    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .swiper-slide img {
+      display: block; width: 100%; height: 100%; object-fit: cover;
+      pointer-events: none;
+    }
+    
+    /* 激活狀態 (正中間)：全彩、亮 */
     .swiper-slide-active {
-      filter: grayscale(0%) brightness(1) contrast(1); transform: scale(1.15); z-index: 10;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      filter: grayscale(0%) brightness(1);
+      /* Swiper Coverflow 會自動處理 transform，這裡不需要加 */
+    }
+    
+    /* Coverflow 的陰影樣式 (由 Swiper 自動生成) */
+    .swiper-slide-shadow-left,
+    .swiper-slide-shadow-right {
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
     }
 
     /* --- 3. Works --- */
@@ -164,7 +178,7 @@
     @media (max-width: 768px) {
       .masonry-grid { column-count: 1; }
       .hero h1 { font-size: 15vw; }
-      .swiper-slide { width: 220px; height: 330px; margin: 0 15px; }
+      .swiper-slide { width: 200px; height: 300px; }
     }
 
     /* --- 4. LAB --- */
@@ -186,10 +200,8 @@
 
     /* --- 5. About --- */
     .background {
-      padding: 150px 8vw 100px;
-      background: #000; text-align: center;
-      display: flex; flex-direction: column; align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 150px 8vw 100px; background: #000; text-align: center;
+      display: flex; flex-direction: column; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);
     }
     .quote {
       font-family: 'Playfair Display', serif; font-size: 2rem; line-height: 1.6; color: #fff;
@@ -209,14 +221,12 @@
       background: #fff; transition: width 0.3s;
     }
     .contact-link:hover::after { width: 100%; }
-
     .cta-text {
       margin-top: 60px; font-family: 'Cinzel', serif; font-size: 1.2rem;
       color: #fff; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.3);
       padding: 20px 40px; transition: all 0.5s; cursor: none; text-decoration: none;
     }
     .cta-text:hover { background: #fff; color: #000; border-color: #fff; }
-
     footer {
       padding: 60px 0; text-align: center; font-family: 'Montserrat', sans-serif;
       font-size: 0.6rem; color: #444; letter-spacing: 0.2em; text-transform: uppercase;
@@ -295,17 +305,12 @@
       <h2 class="section-title">Editor's Note</h2>
       <span class="section-subtitle">Behind The Lens</span>
     </div>
-    
     <p class="quote">“Structure is the music of light. My photography is an extension of architectural logic.”</p>
-    
     <div class="contact-info">
       <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
       <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
       <a href="mailto:edendphoto1118@gmail.com" class="contact-link hover-target">edendphoto1118@gmail.com</a>
-      
-      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="cta-text hover-target">
-        Crafting your visual legacy.<br>Let's create the iconic.
-      </a>
+      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="cta-text hover-target">Crafting your visual legacy.<br>Let's create the iconic.</a>
     </div>
   </section>
 
@@ -329,12 +334,10 @@
       masonryGrid.innerHTML = '';
       for (let i = 1; i <= totalWorks; i++) {
         const num = i.toString().padStart(2, '0');
-        // ✅ 修正點：移除空格，對應檔名 work01.jpg
-        const imgPath = `images/works/work${num}.jpg`;
+        const imgPath = `images/works/work${num}.jpg`; // 檔名無空格
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
-        // onerror 處理：如果某張圖片真的不見，會隱藏該區塊，避免破圖
         slideDiv.innerHTML = `<img src="${imgPath}" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
 
@@ -346,15 +349,32 @@
     }
     generateGallery();
 
-    /* --- Swiper 初始化 --- */
+    /* --- Swiper 3D Coverflow 初始化 --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
 
         var swiper = new Swiper(".mySwiper", {
-          slidesPerView: "auto", centeredSlides: true, spaceBetween: 0, loop: true,
+          // [核心] 啟用 Coverflow 效果
+          effect: "coverflow",
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: "auto", // 自動根據寬度決定數量
+          loop: true, // 無限循環
+          
+          // Coverflow 3D 參數微調 (這是時尚感的關鍵)
+          coverflowEffect: {
+            rotate: 30,    // 側邊照片旋轉角度 (不要太大，30度剛好)
+            stretch: 0,    // 圖片間距
+            depth: 200,    // 景深 (數值越大，側邊越遠、越小)
+            modifier: 1,   // 效果倍率
+            slideShadows: true, // 啟用側邊陰影 (讓立體感更真實)
+          },
+          
           mousewheel: { enabled: true, sensitivity: 1.5 },
-          freeMode: false, speed: 800, grabCursor: true, slideToClickedSlide: true,
+          speed: 800, 
+          slideToClickedSlide: true,
+          
           on: {
             slideChange: function () {
                  const soundClone = realClickSound.cloneNode();
