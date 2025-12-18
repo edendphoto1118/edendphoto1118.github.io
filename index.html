@@ -18,76 +18,45 @@
       font-family: 'Montserrat', sans-serif;
       overflow-x: hidden; 
       cursor: none; 
-      /* [防護] 禁止選取文字與圖片 */
-      user-select: none; 
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
+      user-select: none; -webkit-user-select: none;
     }
-    /* [防護] 禁止圖片拖曳 */
     img { pointer-events: none; -webkit-user-drag: none; }
-    
-    /* 允許互動的元素恢復游標事件 */
     a, button, input, select, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
     body.lightbox-open { cursor: auto; overflow: hidden; }
     body.lightbox-open .cursor-dot { display: none; }
     .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-    /* --- 2. 大師級細節：Film Grain (底片噪點) --- */
+    /* --- 2. Film Grain --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 9000;
-      opacity: 0.05; 
+      pointer-events: none; z-index: 9000; opacity: 0.05; 
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* --- 3. 大師級細節：Dune Style Loading (沙丘美學) --- */
+    /* --- 3. Preloader --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000;
       display: flex; justify-content: center; align-items: center;
-      transition: opacity 1.5s ease, visibility 1.5s ease; /* 離開時更優雅 */
+      transition: opacity 1.5s ease, visibility 1.5s ease;
     }
     .loader-text {
-      font-family: 'Cinzel', serif; 
-      font-size: 1.2rem; 
-      color: #e0e0e0; 
-      /* 沙丘風格動畫 */
-      animation: duneBreathe 5s infinite ease-in-out;
-      opacity: 0; /* 初始狀態 */
+      font-family: 'Cinzel', serif; font-size: 1.2rem; color: #e0e0e0; 
+      animation: duneBreathe 5s infinite ease-in-out; opacity: 0;
     }
-
     @keyframes duneBreathe {
-      0% { 
-        opacity: 0; 
-        letter-spacing: 0.3em; 
-        filter: blur(4px); 
-        transform: scale(0.95);
-      }
-      50% { 
-        opacity: 1; 
-        letter-spacing: 0.6em; /* 字距展開 */
-        filter: blur(0px); /* 清晰 */
-        transform: scale(1);
-      }
-      100% { 
-        opacity: 0; 
-        letter-spacing: 0.3em; 
-        filter: blur(4px); 
-        transform: scale(0.95);
-      }
+      0% { opacity: 0; letter-spacing: 0.3em; filter: blur(4px); transform: scale(0.95); }
+      50% { opacity: 1; letter-spacing: 0.6em; filter: blur(0px); transform: scale(1); }
+      100% { opacity: 0; letter-spacing: 0.3em; filter: blur(4px); transform: scale(0.95); }
     }
-    
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
     /* --- 4. 導覽列 --- */
     nav {
-      position: fixed; top: 0; left: 0; width: 100%;
-      padding: 30px 50px; box-sizing: border-box;
+      position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
       display: flex; justify-content: space-between; align-items: center;
-      z-index: 10000; mix-blend-mode: difference;
-      transition: all 0.3s ease;
+      z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease;
     }
     .nav-logo {
       font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700;
@@ -119,12 +88,12 @@
     }
     @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* --- 6. 客製化捲軸 --- */
+    /* --- 6. 捲軸 --- */
     ::-webkit-scrollbar { width: 6px; background: #000; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-    /* --- 7. 極光背景 --- */
+    /* --- 7. 背景 --- */
     #aurora-container {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none; z-index: -1; overflow: hidden;
@@ -136,11 +105,10 @@
       opacity: 0; transform-origin: center; will-change: transform, opacity;
     }
 
-    /* --- 8. Hero 區塊 --- */
+    /* --- 8. Hero --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; 
-      justify-content: flex-end; align-items: center;
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
       text-align: center; padding-bottom: 15vh; 
     }
     .hero-bg {
@@ -151,14 +119,11 @@
     }
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to top, #000 10%, transparent 60%); 
-      z-index: -1;
+      background: linear-gradient(to top, #000 10%, transparent 60%); z-index: -1;
     }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
-    
     .hero-content { z-index: 1; animation: fadeInUp 1.5s ease-out forwards; opacity: 0; transform: translateY(30px); }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-    
     .hero h1 {
       font-family: 'Cinzel', serif; font-size: 9vw; line-height: 1;
       font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #fff;
@@ -170,60 +135,47 @@
       letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7);
     }
 
-    /* --- 9. The Narrative (Featured Swiper - Master Centered Version) --- */
+    /* --- 9. Swiper (Featured) --- */
     .film-strip {
-      padding: 100px 0; 
-      position: relative; background: #000; z-index: 10; 
-      height: auto; overflow: hidden;
-      min-height: 700px; 
+      padding: 100px 0; position: relative; background: #000; z-index: 10; 
+      height: auto; overflow: hidden; min-height: 700px; 
     }
-    .swiper { 
-      width: 100%; padding: 80px 0; 
-    }
-    .swiper-wrapper {
-      align-items: center; /* 垂直置中 */
-    }
+    .swiper { width: 100%; padding: 80px 0; }
+    .swiper-wrapper { align-items: center; }
     .swiper-slide {
-      width: auto; /* 寬度自適應 */
-      height: 60vh; 
-      max-height: 600px;
-      flex-shrink: 0;
-      
-      filter: grayscale(100%) brightness(0.3); 
-      transform: scale(0.9); 
-      opacity: 0.2; 
-      
+      width: auto; height: 60vh; max-height: 600px; flex-shrink: 0;
+      filter: grayscale(100%) brightness(0.3); transform: scale(0.9); opacity: 0.2; 
       transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); 
-      pointer-events: auto; 
-      display: flex; justify-content: center; align-items: center;
+      pointer-events: auto; display: flex; justify-content: center; align-items: center;
       background: transparent;
     }
     .swiper-slide img { 
       width: auto; height: 100%; object-fit: contain; display: block;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
     }
-    
     .swiper-slide-active {
       filter: grayscale(0%) brightness(1.0) !important; 
-      transform: scale(1.05) !important; 
-      opacity: 1 !important; 
-      z-index: 100; 
+      transform: scale(1.05) !important; opacity: 1 !important; z-index: 100; 
     }
-    .swiper-slide-active img {
-        box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-    }
+    .swiper-slide-active img { box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
 
-    /* --- 10. Masterpiece Gallery (Masonry + Scroll Reveal) --- */
+    /* --- 10. Masterpiece Gallery (New High-End Layout) --- */
     .masterpiece-gallery {
-      padding: 100px 6vw;
+      padding: 100px 4vw; /* 略微減少外距 */
       position: relative;
       min-height: 100vh;
     }
     .gallery-container {
-      column-count: 3; column-gap: 40px; width: 100%;
+      /* [大師級修正] 增加間距，讓作品呼吸 */
+      column-count: 3; 
+      column-gap: 60px; 
+      width: 100%;
     }
     .gallery-item {
-      break-inside: avoid; margin-bottom: 40px; position: relative;
+      break-inside: avoid; 
+      /* [大師級修正] 增加底部留白，放置編號 */
+      margin-bottom: 80px; 
+      position: relative;
       z-index: 1; cursor: none;
       /* Scroll Reveal */
       opacity: 0; transform: translateY(50px);
@@ -237,13 +189,48 @@
       filter: grayscale(100%) brightness(0.8) contrast(1.1);
       transition: filter 0.5s ease;
       background: #111; min-height: 100px;
+      /* 移除過多的陰影，保持平面設計感，除非 hover */
     }
+    
+    /* [新增] 檔案編號美學 (Archive Meta Data) */
+    .item-meta {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        opacity: 0.5; /* 預設半透明，低調 */
+        transition: opacity 0.3s ease;
+    }
+    .meta-id {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        color: #fff;
+    }
+    .meta-line {
+        height: 1px;
+        background: #333;
+        flex-grow: 1;
+        margin: 0 15px;
+    }
+    .meta-tag {
+        font-family: 'Cinzel', serif;
+        font-size: 0.5rem;
+        color: #888;
+        letter-spacing: 0.1em;
+    }
+
+    /* Hover 效果：圖片變亮，文字變清楚 */
     .gallery-item:hover {
-      transform: scale(1.03) translateY(0) !important;
-      z-index: 100; box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+      transform: translateY(-10px) !important; /* 輕微上浮 */
+      z-index: 100; 
     }
     .gallery-item:hover img {
       filter: grayscale(0%) brightness(1.05) contrast(1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+    .gallery-item:hover .item-meta {
+        opacity: 1; /* 資訊變亮 */
     }
     
     .load-more-container {
@@ -260,63 +247,45 @@
         background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
 
-    /* --- 11. Pricing Section --- */
+    /* --- 11. Pricing --- */
     .pricing-section {
-      padding: 120px 8vw 60px;
-      background: #050505;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 120px 8vw 60px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08);
     }
     .pricing-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
-      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto;
     }
     .price-card {
       border: 1px solid rgba(255,255,255,0.1); padding: 40px 30px;
       position: relative; transition: all 0.4s ease;
-      display: flex; flex-direction: column; background: rgba(255,255,255,0.01);
-      min-height: 500px;
+      display: flex; flex-direction: column; background: rgba(255,255,255,0.01); min-height: 500px;
     }
     .price-card:hover {
-      border-color: rgba(255,255,255,0.3); transform: translateY(-5px);
-      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.3); transform: translateY(-5px); background: rgba(255,255,255,0.03);
     }
     .price-card.featured {
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      background: linear-gradient(180deg, rgba(0,240,255,0.03) 0%, transparent 100%);
+      border: 1px solid rgba(0, 240, 255, 0.3); background: linear-gradient(180deg, rgba(0,240,255,0.03) 0%, transparent 100%);
     }
     .card-badge {
       position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
       background: #000; border: 1px solid #00F0FF; color: #00F0FF;
-      font-size: 0.6rem; padding: 5px 12px; letter-spacing: 0.1em;
-      text-transform: uppercase; font-weight: 600;
+      font-size: 0.6rem; padding: 5px 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
     }
     .discount-badge {
       position: absolute; top: 20px; right: 20px;
-      background: #FF2A2A; color: #fff;
-      font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em;
-      text-transform: uppercase; font-weight: 700; border-radius: 2px;
+      background: #FF2A2A; color: #fff; font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; border-radius: 2px;
     }
     .price-title { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin-bottom: 5px; }
     .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 25px; }
     .price-wrapper { margin-bottom: 20px; display: flex; flex-direction: column; }
-    .price-original {
-      font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #666;
-      text-decoration: line-through; margin-bottom: 5px;
-    }
-    .price-amount { 
-      font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #fff; 
-      font-weight: 300; display: block; 
-    }
+    .price-original { font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #666; text-decoration: line-through; margin-bottom: 5px; }
+    .price-amount { font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #fff; font-weight: 300; display: block; }
     .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 1.6; margin-bottom: 30px; min-height: 50px; }
     .price-specs { list-style: none; padding: 0; margin: 0 0 30px 0; flex-grow: 1; }
-    .price-specs li {
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #ccc;
-      margin-bottom: 12px; padding-left: 15px; position: relative; line-height: 1.4;
-    }
+    .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #ccc; margin-bottom: 12px; padding-left: 15px; position: relative; line-height: 1.4; }
     .price-specs li::before { content: '▹'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 600; }
 
-    /* --- 12. Special Campaign --- */
+    /* --- 12. Royal --- */
     .royal-section {
       padding: 100px 8vw; background: linear-gradient(135deg, #080808 0%, #000 100%);
       border-top: 1px solid #222; border-bottom: 1px solid #222;
@@ -326,85 +295,45 @@
     .royal-info { flex: 1; }
     .royal-price { flex: 0.8; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 60px; }
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 15px; display: block; }
-    .royal-title {
-      font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 25px 0;
-      background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .royal-title { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 25px 0; background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #999; line-height: 1.8; max-width: 500px; }
     .royal-option { margin-bottom: 30px; }
-    .royal-opt-head {
-      display: flex; justify-content: space-between; align-items: baseline;
-      border-bottom: 1px solid rgba(191,149,63,0.3); padding-bottom: 8px; margin-bottom: 10px;
-    }
+    .royal-opt-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(191,149,63,0.3); padding-bottom: 8px; margin-bottom: 10px; }
     .royal-opt-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: #fff; }
     .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
 
-    /* --- 13. CTA & Hidden Booking --- */
-    .booking-cta-section {
-        padding: 80px 0; text-align: center; background: #000;
-    }
-    .initiate-btn {
-        display: inline-block; padding: 25px 80px;
-        background: transparent; border: 1px solid #fff;
-        color: #fff; font-family: 'Cinzel', serif; font-size: 1.2rem;
-        letter-spacing: 0.2em; text-transform: uppercase;
-        cursor: none; transition: all 0.5s ease; position: relative; overflow: hidden;
-    }
-    .initiate-btn:hover {
-        background: #fff; color: #000; box-shadow: 0 0 50px rgba(255,255,255,0.4);
-    }
-    .hidden-booking-container {
-        max-height: 0; overflow: hidden; transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1);
-        opacity: 0; background: #080808;
-    }
-    .hidden-booking-container.open {
-        max-height: 2000px; opacity: 1;
-    }
-    .booking-terms {
-        padding: 80px 8vw 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
-    }
+    /* --- 13. Booking --- */
+    .booking-cta-section { padding: 80px 0; text-align: center; background: #000; }
+    .initiate-btn { display: inline-block; padding: 25px 80px; background: transparent; border: 1px solid #fff; color: #fff; font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: none; transition: all 0.5s ease; position: relative; overflow: hidden; }
+    .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 50px rgba(255,255,255,0.4); }
+    .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; background: #080808; }
+    .hidden-booking-container.open { max-height: 2000px; opacity: 1; }
+    .booking-terms { padding: 80px 8vw 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
     .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 40px; }
-    .terms-grid { 
-        display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto; text-align: left; 
-    }
+    .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto; text-align: left; }
     .term-item h4 { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; margin-bottom: 10px; }
     .term-item p { color: #888; font-size: 0.8rem; line-height: 1.6; }
-    .calendar-wrapper {
-        padding: 40px 8vw 100px; display: flex; justify-content: center;
-    }
-    .calendly-inline-widget {
-        border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    }
+    .calendar-wrapper { padding: 40px 8vw 100px; display: flex; justify-content: center; }
+    .calendly-inline-widget { border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 
-    /* --- 14. Face Archive (Form) --- */
-    .lead-form-section {
-        padding: 120px 8vw; background: #080808; text-align: center;
-        border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;
-    }
+    /* --- 14. Form --- */
+    .lead-form-section { padding: 120px 8vw; background: #080808; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; }
     .archive-meta { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #555; text-transform: uppercase; margin-bottom: 30px; }
     .archive-meta span { color: #fff; margin-left: 10px; font-weight: 600; }
     .lead-title { font-family: 'Cinzel', serif; font-size: 3rem; color: #fff; margin-bottom: 30px; letter-spacing: 0.1em; font-weight: 400; }
     .lead-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; margin-bottom: 60px; line-height: 2; max-width: 600px; }
     .form-group { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 40px; }
-    .form-input, .form-select {
-        background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
-        padding: 15px 0; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem;
-        letter-spacing: 0.1em; width: 100%; text-align: center; outline: none; transition: border-color 0.4s;
-    }
+    .form-input, .form-select { background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding: 15px 0; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.1em; width: 100%; text-align: center; outline: none; transition: border-color 0.4s; }
     .form-input::placeholder { font-family: 'Montserrat', sans-serif; color: #444; font-size: 0.75rem; letter-spacing: 0.25em; }
     .form-input:focus, .form-select:focus { border-bottom: 1px solid #fff; }
     .select-wrapper { width: 100%; position: relative; }
     .form-select { color: #888; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; cursor: none; }
     .form-select option { background: #111; color: #ccc; padding: 10px; }
-    .form-submit {
-        margin-top: 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
-        color: #fff; padding: 20px 0; width: 100%; font-family: 'Montserrat', sans-serif;
-        font-size: 0.8rem; letter-spacing: 0.3em; cursor: none; transition: all 0.4s; text-transform: uppercase;
-    }
+    .form-submit { margin-top: 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 20px 0; width: 100%; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: none; transition: all 0.4s; text-transform: uppercase; }
     .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
 
-    /* --- 15. Footer & About --- */
+    /* --- 15. Footer --- */
     .background { padding: 100px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     .quote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.6; color: #fff; font-style: italic; max-width: 800px; margin: 0 auto 60px; }
     .contact-info { display: flex; flex-direction: column; gap: 20px; align-items: center; font-family: 'Montserrat', sans-serif; }
@@ -419,11 +348,7 @@
     .close-btn:hover { color: #aaa; transform: rotate(90deg); }
 
     /* --- Toast --- */
-    .toast {
-      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 600;
-    }
+    .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 600; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* --- RWD Special Fixes (手機完美適配) --- */
@@ -443,7 +368,7 @@
       .terms-grid { grid-template-columns: 1fr; gap: 20px; }
       
       /* [手機版封面裁切修正] */
-      /* 設定背景定位為 center 20% (水平置中，垂直偏上20%處，通常是臉的位置) */
+      /* 設定背景定位為 center 20% (水平置中，垂直偏上20%處，鎖定人臉) */
       .hero-bg { background-position: center 20% !important; }
     }
   </style>
@@ -622,7 +547,6 @@
   </section>
 
   <div id="hiddenBooking" class="hidden-booking-container">
-      
       <div class="booking-terms">
           <h3 class="terms-title">BOOKING POLICY</h3>
           <div class="terms-grid">
@@ -648,7 +572,7 @@
       <div class="calendar-wrapper">
           <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=0a0a0a&text_color=ffffff&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-          </div>
+      </div>
   </div>
 
   <section class="lead-form-section" id="lead-form">
@@ -699,15 +623,13 @@
     /* --- 0. Preloader Logic (Eden D / Dune Style) --- */
     window.addEventListener('load', () => {
         const body = document.querySelector('body');
-        // 延遲一點點消失，確保動畫完整播放一次
         setTimeout(() => {
             body.classList.add('loaded');
         }, 1200); 
     });
 
-    /* --- 1. Masterpiece Gallery Logic (Dual Logic) --- */
+    /* --- 1. Masterpiece Gallery Logic (With Archive Meta) --- */
     
-    // 設定作品總數 (下方瀑布流)
     const totalWorks = 117; 
     const initialShow = 15; 
     
@@ -718,34 +640,39 @@
       galleryContainer.innerHTML = '';
       swiperWrapper.innerHTML = '';
 
-      // --- 1. 生成 Masonry 瀑布流 (使用舊命名邏輯 portfolio0-1.jpg ~ 117) ---
+      // --- 1. Masonry (Old naming portfolio0-1.jpg) ---
       for (let i = 1; i <= totalWorks; i++) {
-        // 檔名格式: portfolio0-1.jpg (無補零)
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
+        // 生成編號，例如 "FIG. 001"
+        const figNum = i.toString().padStart(3, '0'); 
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
         
-        // 超過 initialShow 的照片先隱藏
         if (i > initialShow) {
             itemDiv.classList.add('hidden');
         }
         
-        // onerror 防呆：讀不到圖時自動隱藏
-        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        // [大師級] 加入 Meta Data 結構
+        itemDiv.innerHTML = `
+            <img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">
+            <div class="item-meta">
+                <span class="meta-id">FIG. ${figNum}</span>
+                <div class="meta-line"></div>
+                <span class="meta-tag">ARCHIVE</span>
+            </div>
+        `;
         galleryContainer.appendChild(itemDiv);
       }
 
-      // --- 2. 生成 Swiper 輪播 (使用新命名邏輯 portfolio00-01.jpg ~ 10) ---
+      // --- 2. Swiper (New naming portfolio00-01.jpg) ---
       for (let i = 1; i <= 10; i++) {
-        // 檔名格式: portfolio00-01.jpg (兩位數補零)
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio00-${num}.jpg`;
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
-        // onerror 防呆
         slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
       }
@@ -753,24 +680,20 @@
     
     generateGallery();
     
-    // --- Load More Function (With Observer Re-init) ---
+    // --- Load More Function ---
     function loadAllWorks() {
         const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
         hiddenItems.forEach(item => {
             item.classList.remove('hidden');
         });
         document.getElementById('loadMoreBtn').style.display = 'none';
-        
-        // 重新初始化 Scroll Reveal 以便捕捉新顯示的圖片
         setTimeout(initScrollReveal, 100);
     }
     
-    // --- Toggle Booking Function ---
+    // --- Toggle Booking ---
     function toggleBooking() {
         const bookingSection = document.getElementById('hiddenBooking');
         bookingSection.classList.toggle('open');
-        
-        // Smooth scroll to the booking section
         if(bookingSection.classList.contains('open')) {
             setTimeout(() => {
                 bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -778,7 +701,7 @@
         }
     }
 
-    /* --- Scroll Reveal Logic --- */
+    /* --- Scroll Reveal --- */
     function initScrollReveal() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -796,10 +719,9 @@
       items.forEach(item => observer.observe(item));
     }
     
-    // 確保圖片生成後再執行動畫觀察
     setTimeout(initScrollReveal, 500); 
 
-    /* --- Swiper Init (Loop Disabled for Perfection) --- */
+    /* --- Swiper Init --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
@@ -810,12 +732,10 @@
           allowTouchMove: true, 
           threshold: 10,
           centeredSlides: true,
-          // [重要] 自動適應混合比例
           slidesPerView: 'auto', 
           spaceBetween: 40, 
-          // [大師級修正] 關閉 Loop 以確保置中計算絕對精準
           loop: false, 
-          grabCursor: true, // 增加手感
+          grabCursor: true, 
           mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
           speed: 800, 
           slideToClickedSlide: true, 
@@ -846,23 +766,13 @@
     }
     document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
 
-    /* --- Content Protection: Prevent Keyboard Shortcuts --- */
+    /* --- Content Protection --- */
     document.onkeydown = function(e) {
-      if (e.keyCode == 123) { // F12
-        return false;
-      }
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
-        return false;
-      }
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
-        return false;
-      }
-      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
-        return false;
-      }
-      if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { // Ctrl+S
-        return false;
-      }
+      if (e.keyCode == 123) return false;
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+      if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false;
     }
 
     /* --- Email Copy --- */
@@ -892,7 +802,7 @@
       }
     });
 
-    /* --- Aurora Background --- */
+    /* --- Aurora --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
