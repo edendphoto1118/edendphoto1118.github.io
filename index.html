@@ -47,21 +47,32 @@
     }
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 3. UI Elements: Nav & Cursor --- */
+    /* --- 3. UI Elements: Nav & Cursor (FIXED LAYOUT) --- */
     nav {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 40px 60px;
+      position: fixed; top: 0; left: 0; width: 100%; 
+      /* [修正] 縮減 Padding 防止溢出 */
+      padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease;
+      box-sizing: border-box; /* 確保 padding 包含在寬度內 */
     }
     .nav-logo {
       font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 500;
       letter-spacing: 0.1em; text-decoration: none; color: #fff; cursor: none;
+      flex-shrink: 0; /* 防止 Logo 被壓縮 */
     }
-    .nav-menu { display: flex; gap: 50px; align-items: center; }
+    .nav-menu { 
+        display: flex; 
+        /* [修正] 縮減 Gap 防止溢出 */
+        gap: 30px; 
+        align-items: center; 
+        flex-shrink: 0;
+    }
     .nav-item {
       font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #fff; text-decoration: none;
-      letter-spacing: 0.25em; text-transform: uppercase; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400;
       position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
+      white-space: nowrap; /* 防止文字換行 */
     }
     .nav-item:hover { opacity: 1; }
     
@@ -71,6 +82,7 @@
         color: #fff; padding: 5px 15px; font-size: 0.6rem; letter-spacing: 0.2em;
         font-family: 'Montserrat', sans-serif; cursor: none; transition: all 0.3s;
         border-radius: 20px; display: flex; align-items: center; gap: 8px;
+        white-space: nowrap;
     }
     .audio-btn:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
     .sound-wave {
@@ -180,7 +192,7 @@
     
     .gallery-item img {
       width: 100%; height: auto; display: block;
-      filter: grayscale(100%) brightness(0.9) contrast(1.05); /* 微調預設質感 */
+      filter: grayscale(100%) brightness(0.9) contrast(1.05); 
       transition: filter 0.6s ease, transform 0.6s ease;
       background: #111; min-height: 100px;
     }
@@ -229,6 +241,10 @@
       position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
       background: #000; border: 1px solid #BF953F; color: #BF953F;
       font-size: 0.6rem; padding: 6px 15px; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .discount-badge {
+      position: absolute; top: 20px; right: 20px;
+      background: #FF2A2A; color: #fff; font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; border-radius: 2px;
     }
     .price-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #fff; margin-bottom: 10px; font-weight: 400; }
     .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 40px; display: block; }
@@ -280,13 +296,13 @@
     .calendar-wrapper { padding: 0 8vw 120px; display: flex; justify-content: center; }
     .calendly-inline-widget { border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 40px rgba(0,0,0,0.6); }
 
-    /* --- 14. Artist Statement (Replaces Form for now, or keeps it minimal) --- */
+    /* --- 14. Artist Statement --- */
     .background { padding: 150px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     .section-title-about { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 60px; letter-spacing: 0.1em; }
     .artist-statement {
         max-width: 700px; margin: 0 auto 80px;
         font-family: 'Montserrat', sans-serif; font-size: 0.9rem; line-height: 2.2; color: #aaa; font-weight: 300;
-        text-align: justify; text-align-last: center; /* 雜誌感排版 */
+        text-align: justify; text-align-last: center;
     }
     .artist-statement span { color: #fff; font-weight: 400; }
     
@@ -306,11 +322,17 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* --- RWD --- */
+    @media (max-width: 1200px) {
+        /* [修正] 中尺寸螢幕的導覽列適配 */
+        nav { padding: 20px 30px; }
+        .nav-menu { gap: 20px; }
+    }
+
     @media (max-width: 768px) {
       .cursor-dot { display: none !important; }
       body { cursor: auto !important; }
       .nav { padding: 20px 30px; }
-      .nav-menu { display: none; } /* 手機版隱藏選單，保持極簡 */
+      .nav-menu { display: none; } /* 手機版隱藏選單 */
       .hero h1 { font-size: 15vw; }
       .gallery-container { column-count: 1; }
       .pricing-grid { grid-template-columns: 1fr; gap: 60px; }
