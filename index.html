@@ -16,7 +16,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
@@ -211,63 +211,116 @@
     .royal-opt-price { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #BF953F; }
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; font-weight: 300; }
 
-    /* --- 10. Booking (REDESIGNED: CENTERED & BOXED) --- */
+    /* --- 10. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #000; width: 100%; }
     .initiate-btn { display: inline-block; padding: 30px 90px; background: transparent; border: 1px solid #fff; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.6s ease; position: relative; overflow: hidden; }
     .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 60px rgba(255,255,255,0.3); }
-    
-    .hidden-booking-container { 
-        max-height: 0; overflow: hidden; 
-        transition: max-height 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease; 
-        opacity: 0; background: #080808; width: 100%; 
-        /* Flexbox for centering everything */
-        display: flex; justify-content: center;
-    }
+    .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 3000px; opacity: 1; padding: 100px 4vw; }
-
-    /* [關鍵設計] VIP 終端機容器 */
-    .booking-interface {
-        width: 100%; max-width: 1000px;
-        border: 1px solid rgba(191, 149, 63, 0.3); /* 金色細邊框 */
-        background: radial-gradient(circle at top, #111, #000);
-        padding: 60px;
-        position: relative;
-        box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    }
-    .booking-interface::before {
-        content: 'SESSION TERMINAL // 001';
-        position: absolute; top: 20px; left: 20px;
-        font-family: 'Montserrat', sans-serif; font-size: 0.5rem; letter-spacing: 0.3em; color: #444;
-    }
-
-    /* Terms Re-layout */
+    .booking-interface { width: 100%; max-width: 1000px; border: 1px solid rgba(191, 149, 63, 0.3); background: radial-gradient(circle at top, #111, #000); padding: 60px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+    .booking-interface::before { content: 'SESSION TERMINAL // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Montserrat', sans-serif; font-size: 0.5rem; letter-spacing: 0.3em; color: #444; }
     .booking-terms { padding: 0 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 60px; border-top: none; }
     .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 40px; letter-spacing: 0.1em; }
-    .terms-grid { 
-        display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; 
-        text-align: left; 
-    }
+    .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; text-align: left; }
     .term-item h4 { color: #fff; font-family: 'Cinzel', serif; font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 0.05em; border-left: 2px solid #BF953F; padding-left: 15px; }
     .term-item p { color: #888; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 1.8; font-weight: 300; padding-left: 17px; }
-
-    /* Calendar Wrapper */
     .calendar-wrapper { width: 100%; display: flex; justify-content: center; }
-    .calendly-inline-widget { 
-        width: 100%; height: 700px; 
-        border: none; /* 移除原本的醜框，由外層容器負責 */
-    }
+    .calendly-inline-widget { width: 100%; height: 700px; border: none; }
 
-    /* --- 11. About --- */
-    .background { padding: 150px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
-    .section-title-about { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 60px; letter-spacing: 0.1em; }
-    .artist-statement { max-width: 700px; margin: 0 auto 80px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; line-height: 2.2; color: #aaa; font-weight: 300; text-align: justify; text-align-last: center; }
-    .artist-statement span { color: #fff; font-weight: 400; }
-    .contact-info { display: flex; flex-direction: column; gap: 25px; align-items: center; font-family: 'Montserrat', sans-serif; }
-    .contact-link, .email-btn { color: #666; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; }
-    .contact-link:hover, .email-btn:hover { color: #fff; }
+    /* --- 11. Lead Form --- */
+    .lead-form-section {
+      padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center; position: relative;
+    }
+    .archive-meta {
+      font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.3em;
+      color: #BF953F; text-transform: uppercase; display: block; margin-bottom: 20px;
+    }
+    .archive-meta span { color: #fff; font-weight: 500; }
+    .lead-title {
+      font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff;
+      margin: 0 0 30px 0; letter-spacing: 0.1em; font-weight: 400;
+    }
+    .lead-desc {
+      font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888;
+      line-height: 1.8; max-width: 500px; margin: 0 auto 60px; font-weight: 300;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 25px; max-width: 500px; margin: 0 auto; }
+    .form-input, .form-select {
+      width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding: 15px 0; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #fff; letter-spacing: 0.1em;
+      border-radius: 0; outline: none; transition: all 0.3s ease; text-align: center; /* [修正] 置中輸入文字 */
+    }
+    .form-input::placeholder, .form-select { color: rgba(255,255,255,0.4); text-align: center; }
+    .form-input:focus, .form-select:focus { border-bottom-color: #BF953F; }
+    .select-wrapper { position: relative; }
+    .select-wrapper::after {
+        content: '↓'; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+        color: #BF953F; font-size: 0.8rem; pointer-events: none;
+    }
+    .form-select { appearance: none; -webkit-appearance: none; cursor: none; }
+    .form-select option { background: #111; color: #fff; padding: 15px; font-family: 'Montserrat', sans-serif;}
+    .form-submit {
+      margin-top: 40px; padding: 20px 0; width: 100%;
+      background: #BF953F; border: none; color: #000;
+      font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.2em;
+      text-transform: uppercase; cursor: none; transition: all 0.5s ease;
+    }
+    .form-submit:hover { background: #fff; box-shadow: 0 0 30px rgba(191, 149, 63, 0.5); }
+
+    /* --- [大師級] 12. About Section (Editorial Layout) --- */
+    .background { 
+        padding: 180px 8vw; background: #000; 
+        border-top: 1px solid rgba(255,255,255,0.05); width: 100%; 
+        position: relative;
+    }
+    .editorial-grid {
+        display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px;
+        max-width: 1200px; margin: 0 auto; align-items: flex-start;
+    }
+    .about-name {
+        font-family: 'Cinzel', serif; font-size: 6rem; line-height: 0.9;
+        color: #1a1a1a; /* VOGUE 風格的超大背景字 */
+        letter-spacing: -0.05em; font-weight: 600;
+        position: relative; text-align: right;
+    }
+    .about-name span {
+        display: block; color: #fff; font-size: 1.5rem; letter-spacing: 0.5em;
+        margin-top: 20px; font-weight: 400; opacity: 0.8;
+    }
+    
+    .artist-statement {
+        font-family: 'Playfair Display', serif; /* 更具詩意的字體 */
+        font-size: 1.1rem; line-height: 2.4; color: #ccc; 
+        font-weight: 400; text-align: justify;
+        position: relative;
+    }
+    /* 雜誌首字放大 */
+    .artist-statement::first-letter {
+        float: left; font-size: 3.5rem; line-height: 0.8; 
+        padding-right: 15px; color: #BF953F; font-family: 'Cinzel', serif;
+    }
+    .artist-statement span { color: #fff; font-style: italic; }
+    
+    /* Signature */
+    .signature {
+        margin-top: 50px; text-align: right;
+        font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: #fff;
+    }
+    
+    .contact-info { 
+        margin-top: 100px; display: flex; gap: 40px; justify-content: center; 
+        grid-column: 1 / -1; /* 跨兩欄 */
+    }
+    .contact-link, .email-btn { 
+        color: #555; text-decoration: none; font-size: 0.7rem; 
+        letter-spacing: 0.25em; text-transform: uppercase; 
+        background: none; border: none; cursor: none; transition: color 0.3s; 
+    }
+    .contact-link:hover, .email-btn:hover { color: #BF953F; }
     footer { padding: 50px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
-    /* --- 12. Lightbox & Toast --- */
+    /* --- 13. Lightbox & Toast --- */
     .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; backdrop-filter: blur(10px); }
     .lightbox-content { max-width: 90%; max-height: 90vh; box-shadow: 0 0 50px rgba(0,0,0,0.5); object-fit: contain; }
     .close-btn { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 40px; font-weight: 100; cursor: pointer; transition: 0.3s; z-index: 100000; }
@@ -279,6 +332,9 @@
     @media (max-width: 1200px) {
         nav { padding: 20px 30px; }
         .nav-menu { gap: 20px; }
+        .editorial-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+        .about-name { text-align: center; font-size: 4rem; }
+        .signature { text-align: center; }
     }
     @media (max-width: 768px) {
       .cursor-dot { display: none !important; }
@@ -304,6 +360,7 @@
       
       .filter-tabs { gap: 20px; }
       .filter-btn { font-size: 0.65rem; }
+      
       .artist-statement { padding: 0 20px; text-align: left; }
     }
   </style>
@@ -465,13 +522,13 @@
                   <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p></div>
                   <div class="term-item"><h4>準時原則</h4><p>遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p></div>
                   <div class="term-item"><h4>成品交付</h4><p>交付成品為調色/精修後之 JPG 檔。RAW 檔為半成品，恕不提供。</p></div>
-              </div>
-          </div>
-          <div class="calendar-wrapper">
-              <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=0a0a0a&text_color=ffffff&primary_color=bf953f"></div>
-              <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
           </div>
       </div>
+      <div class="calendar-wrapper">
+          <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=0a0a0a&text_color=ffffff&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </div>
+  </div>
   </div>
 
   <section class="lead-form-section" id="lead-form">
@@ -497,22 +554,30 @@
   </section>
 
   <section class="background" id="about">
-    <div class="section-header">
-      <h2 class="section-title-about">The Vision</h2>
-    </div>
-    <div class="artist-statement">
-      <p>
-        攝影不只是按下快門，而是對<span>光線</span>與<span>結構</span>的重新編碼。<br><br>
-        在 EDEN D. 的鏡頭下，我們剝除繁雜的雜訊，專注於人與空間的絕對關係。
-        無論是幾何線條的冷靜，還是情感流動的溫度，
-        我們致力於捕捉那些稍縱即逝、卻又永恆存在的<span>維度</span>。<br><br>
-        這不只是一張照片，這是你的<span>視覺資產</span>。
-      </p>
-    </div>
-    <div class="contact-info">
-      <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
-      <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
-      <button class="email-btn hover-target" onclick="copyEmail()">edendphoto1118@gmail.com</button>
+    <div class="editorial-grid">
+        <div class="about-name">
+            EDEN<br>D.
+            <span>VISUAL<br>DIRECTOR</span>
+        </div>
+        <div>
+            <div class="artist-statement">
+                我是 EDEN。光影建築師。
+                <br><br>
+                在這個充滿雜訊的世界裡，沉默是頂級的奢華。
+                我的鏡頭不只是觀察，而是將現實重組為永恆的資產。
+                <br><br>
+                我們不拍照。我們為您策展人生。
+                <br><br>
+                <span>We do not take photos. We curate your legacy.</span>
+            </div>
+            <div class="signature">EDEN D.</div>
+        </div>
+        
+        <div class="contact-info">
+          <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
+          <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
+          <button class="email-btn hover-target" onclick="copyEmail()">edendphoto1118@gmail.com</button>
+        </div>
     </div>
   </section>
 
