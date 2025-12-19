@@ -274,15 +274,13 @@
         border-top: 1px solid rgba(255,255,255,0.05); width: 100%; 
         position: relative; overflow: hidden;
     }
-    /* 雜誌感雙欄排版 */
     .editorial-grid {
         display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px;
         max-width: 1200px; margin: 0 auto; align-items: flex-start;
     }
-    /* 左側巨大的名字錨點 */
     .about-name {
         font-family: 'Cinzel', serif; font-size: 7rem; line-height: 0.85;
-        color: rgba(255,255,255,0.1); /* 極具質感的低調背景字 */
+        color: rgba(255,255,255,0.1); 
         letter-spacing: -0.05em; font-weight: 600;
         text-align: right; position: relative;
     }
@@ -291,22 +289,15 @@
         margin-top: 25px; font-weight: 400; opacity: 1;
     }
     
-    /* 右側的個人宣言 */
     .artist-statement {
-        font-family: 'Playfair Display', serif; /* 使用更具詩意的高級襯線體 */
+        font-family: 'Playfair Display', serif; /* 雜誌襯線體 */
         font-size: 1.15rem; line-height: 2.2; color: #ccc; 
         font-weight: 400; text-align: justify;
         position: relative; max-width: 650px;
     }
-    /* 雜誌首字放大效果 (Drop Cap) */
-    .artist-statement::first-letter {
-        float: left; font-size: 4.5rem; line-height: 0.8; 
-        padding-right: 20px; color: #fff; font-family: 'Cinzel', serif; margin-top: 5px;
-    }
-    /* 強調的關鍵字 */
-    .artist-statement strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; }
+    /* [修正] 移除Drop Cap，改為純粹排版 */
+    .artist-statement strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; display: block; margin-top: 20px; }
     
-    /* 簽名檔 */
     .signature {
         margin-top: 60px; text-align: right;
         font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: #BF953F;
@@ -316,10 +307,9 @@
         content: ''; position: absolute; top: 0; right: 0; width: 50px; height: 1px; background: rgba(191, 149, 63, 0.5);
     }
     
-    /* 聯絡資訊 */
     .contact-info { 
         margin-top: 120px; display: flex; gap: 40px; justify-content: center; 
-        grid-column: 1 / -1; /* 跨兩欄 */
+        grid-column: 1 / -1; 
         border-top: 1px solid rgba(255,255,255,0.05); padding-top: 50px;
     }
     .contact-link, .email-btn { 
@@ -343,7 +333,6 @@
         nav { padding: 20px 30px; }
         .nav-menu { gap: 20px; }
         
-        /* [修正] 平板/手機版轉為單欄並置中 */
         .editorial-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; }
         .about-name { text-align: center; font-size: 5rem; }
         .artist-statement { text-align: left; margin: 0 auto; }
@@ -375,7 +364,6 @@
       .filter-btn { font-size: 0.65rem; }
       
       .artist-statement { padding: 0 20px; }
-      /* 手機版縮小巨大標題 */
       .about-name { font-size: 4rem; }
     }
   </style>
@@ -478,7 +466,7 @@
         <h3 class="price-title">The Ambiance</h3>
         <span class="price-subtitle">尺度・場景氛圍</span>
         <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
-        <p class="price-desc">探索人與空間的對話。無論是城市大景的孤寂，還是自然光影的療癒，我們捕捉你與環境共鳴的瞬間。</p>
+        <p class="price-desc">探索人與空間的對話。無論是城市大景的孤寂，還是自然光影的療癒，捕捉你與環境共鳴的瞬間。</p>
         <ul class="price-specs">
           <li><strong>Session Time:</strong> 2 Hours</li>
           <li><strong>Look:</strong> 1 Outfit</li>
@@ -549,7 +537,7 @@
   <section class="lead-form-section" id="lead-form">
     <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
     <h3 class="lead-title">THE FACE ARCHIVE</h3>
-    <p class="lead-desc">我們一直在尋找那張能撐起『王牌』的臉。<br>請留下你的 IG，讓我們在靈感來襲時，第一個找到你。</p>
+    <p class="lead-desc">一直在尋找那張能撐起『王牌』的臉。<br>請留下你的 IG，在靈感來襲時，第一個找到你。</p>
     <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
       <input type="text" name="name" placeholder="NAME / NICKNAME" class="form-input hover-target" required>
       <input type="text" name="ig_handle" placeholder="INSTAGRAM ID (@)" class="form-input hover-target" required>
@@ -576,13 +564,13 @@
         </div>
         <div>
             <div class="artist-statement">
-                我是 EDEN。光影的建築師。
+                在這個充滿雜訊的世界裡，沉默是頂級的奢華。<br>
+                鏡頭不只是觀察，而是將現實重組為永恆的結構。<br>
+                剝離多餘，只留下形式與光線的絕對關係。
                 <br><br>
-                在這個充滿雜訊的世界裡，沉默是頂級的奢華。我的鏡頭不只是觀察，而是將現實重組為永恆的結構。剝離多餘，只留下形式與光線的絕對關係。
+                用影像 策展人生。
                 <br><br>
-                我不拍照片。我為您策展人生。
-                <br><br>
-                <strong>I don't take photographs. I curate legacy.</strong>
+                <strong>Curating life through imagery.</strong>
             </div>
             <div class="signature">EDEN D.</div>
         </div>
