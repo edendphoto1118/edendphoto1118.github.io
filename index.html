@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <title>EDEN — VISUAL ARCHIVE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="EDEN D. — Visual Director & Photographer. A curated archive of structure, scale, and dimension.">
   
   <meta property="og:title" content="EDEN — VISUAL ARCHIVE">
   <meta property="og:description" content="Visual Director / Photographer. Exploring the dimensions of light and structure.">
-  <meta property="og:image" content="hero.jpg"> <meta property="og:url" content="https://yourwebsite.com">
+  <meta property="og:image" content="hero.jpg">
+  <meta property="og:url" content="https://yourwebsite.com">
   <meta name="theme-color" content="#000000">
 
   <link rel="icon" type="image/png" href="images/favicon.png"> 
@@ -19,18 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
-    /* --- 1. Base --- */
-    html { scroll-behavior: smooth; }
+    /* --- 1. Base & Reset (CRITICAL FIX FOR MOBILE) --- */
+    * { box-sizing: border-box; } /* [關鍵修正] 防止 Padding 撐開寬度 */
+    
+    html { 
+        scroll-behavior: smooth; 
+        width: 100%;
+        overflow-x: hidden; /* [關鍵修正] 禁止橫向捲動 */
+    }
     body {
-      margin: 0; background: #000; color: #e0e0e0;
+      margin: 0; padding: 0;
+      background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden; cursor: none; 
+      width: 100%;
+      max-width: 100vw; /* [關鍵修正] 強制最大寬度 */
+      overflow-x: hidden; /* [關鍵修正] 雙重保險 */
+      cursor: none; 
       user-select: none; -webkit-user-select: none;
     }
-    img { pointer-events: none; -webkit-user-drag: none; }
+    img { pointer-events: none; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader --- */
+    /* --- 2. Grain & Preloader (Calm Breathing) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -40,16 +51,17 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000;
       display: flex; justify-content: center; align-items: center;
-      transition: opacity 1.5s ease, visibility 1.5s ease;
+      transition: opacity 2s ease, visibility 2s ease;
     }
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 1.2rem; color: #e0e0e0; 
-      animation: duneBreathe 5s infinite ease-in-out; opacity: 0;
+      font-family: 'Cinzel', serif; font-size: 1.1rem; color: #ccc; 
+      /* [修改] 6秒極慢速呼吸，更平靜 */
+      animation: duneBreathe 6s infinite ease-in-out; opacity: 0;
     }
     @keyframes duneBreathe {
-      0% { opacity: 0; letter-spacing: 0.3em; filter: blur(4px); transform: scale(0.95); }
-      50% { opacity: 1; letter-spacing: 0.6em; filter: blur(0px); transform: scale(1); }
-      100% { opacity: 0; letter-spacing: 0.3em; filter: blur(4px); transform: scale(0.95); }
+      0% { opacity: 0.1; letter-spacing: 0.2em; filter: blur(3px); }
+      50% { opacity: 1; letter-spacing: 0.5em; filter: blur(0px); }
+      100% { opacity: 0.1; letter-spacing: 0.2em; filter: blur(3px); }
     }
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
@@ -57,7 +69,7 @@
     nav {
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
-      z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
+      z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease;
     }
     .nav-logo {
       font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 500;
@@ -95,7 +107,7 @@
 
     /* --- 4. Hero Video & Scroll Indicator --- */
     .hero {
-      height: 100vh; position: relative; overflow: hidden;
+      height: 100vh; position: relative; overflow: hidden; width: 100%;
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
       text-align: center; padding-bottom: 15vh; 
     }
@@ -109,7 +121,7 @@
       background: linear-gradient(to top, rgba(0,0,0,0.9) 5%, transparent 60%); z-index: -1;
     }
     
-    .hero-content { z-index: 1; animation: fadeInUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); }
+    .hero-content { z-index: 1; animation: fadeInUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     .hero h1 {
       font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
@@ -122,7 +134,7 @@
       letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.7);
     }
     
-    /* Scroll Indicator (New) */
+    /* Scroll Indicator */
     .scroll-indicator {
         position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
         display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -134,13 +146,16 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     /* --- 5. Sections --- */
-    .section-header { text-align: center; margin-bottom: 100px; position: relative; padding: 0 20px; }
-    .section-title { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.1em; color: #fff; weight: 400; margin: 0; }
+    .section-header { text-align: center; margin-bottom: 100px; position: relative; padding: 0 20px; width: 100%; }
+    .section-title { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.1em; color: #fff; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #666; text-transform: uppercase; margin-top: 20px; display: block; }
 
-    /* --- 6. Swiper --- */
-    .film-strip { padding: 100px 0; background: #000; min-height: 700px; }
-    .swiper { width: 100%; padding: 80px 0; }
+    /* --- 6. Swiper (Overflow Fix) --- */
+    .film-strip { 
+        padding: 100px 0; background: #000; min-height: 700px; 
+        width: 100%; overflow: hidden; /* [關鍵修正] 確保容器裁切 */
+    }
+    .swiper { width: 100%; padding: 80px 0; overflow: visible; } /* 讓陰影可見，但被外層 film-strip 裁切 */
     .swiper-wrapper { align-items: center; }
     .swiper-slide {
       width: auto; height: 60vh; max-height: 600px; flex-shrink: 0;
@@ -153,8 +168,8 @@
     .swiper-slide-active img { box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
 
     /* --- 7. Gallery & Filter --- */
-    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; }
-    .filter-tabs { display: flex; justify-content: center; gap: 50px; margin-bottom: 100px; flex-wrap: wrap; }
+    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
+    .filter-tabs { display: flex; justify-content: center; gap: 50px; margin-bottom: 100px; flex-wrap: wrap; width: 100%; }
     .filter-btn { background: transparent; border: none; color: #555; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; position: relative; padding-bottom: 10px; transition: all 0.4s ease; }
     .filter-btn:hover, .filter-btn.active { color: #fff; }
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
@@ -181,8 +196,8 @@
     .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
     /* --- 8. Pricing --- */
-    .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; }
+    .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); width: 100%; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
     .price-card { border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px; position: relative; transition: all 0.6s ease; display: flex; flex-direction: column; background: transparent; min-height: 550px; }
     .price-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-10px); background: rgba(255,255,255,0.02); }
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); background: linear-gradient(180deg, rgba(191,149,63,0.05) 0%, transparent 100%); }
@@ -200,7 +215,7 @@
     .price-specs li strong { color: #fff; font-weight: 500; }
 
     /* --- 9. Royal --- */
-    .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; }
+    .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; }
     .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; }
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
@@ -215,28 +230,28 @@
     .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; font-weight: 300; }
 
     /* --- 10. Booking --- */
-    .booking-cta-section { padding: 100px 0; text-align: center; background: #000; }
+    .booking-cta-section { padding: 100px 0; text-align: center; background: #000; width: 100%; }
     .initiate-btn { display: inline-block; padding: 30px 90px; background: transparent; border: 1px solid #fff; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.6s ease; position: relative; overflow: hidden; }
     .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 60px rgba(255,255,255,0.3); }
-    .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; background: #080808; }
+    .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; background: #080808; width: 100%; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; }
     .booking-terms { padding: 80px 8vw 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
     .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 60px; letter-spacing: 0.1em; }
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; max-width: 1000px; margin: 0 auto; text-align: left; }
     .term-item h4 { color: #e0e0e0; font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 15px; letter-spacing: 0.05em; }
     .term-item p { color: #777; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; line-height: 1.8; font-weight: 300; }
-    .calendar-wrapper { padding: 0 8vw 120px; display: flex; justify-content: center; }
-    .calendly-inline-widget { border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 40px rgba(0,0,0,0.6); }
+    .calendar-wrapper { padding: 0 8vw 120px; display: flex; justify-content: center; width: 100%; }
+    .calendly-inline-widget { border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 40px rgba(0,0,0,0.6); max-width: 100%; }
 
     /* --- 11. About --- */
-    .background { padding: 150px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+    .background { padding: 150px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .section-title-about { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 60px; letter-spacing: 0.1em; }
     .artist-statement { max-width: 700px; margin: 0 auto 80px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; line-height: 2.2; color: #aaa; font-weight: 300; text-align: justify; text-align-last: center; }
     .artist-statement span { color: #fff; font-weight: 400; }
     .contact-info { display: flex; flex-direction: column; gap: 25px; align-items: center; font-family: 'Montserrat', sans-serif; }
     .contact-link, .email-btn { color: #666; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; }
     .contact-link:hover, .email-btn:hover { color: #fff; }
-    footer { padding: 50px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; }
+    footer { padding: 50px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
     /* --- 12. Lightbox & Toast --- */
     .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; backdrop-filter: blur(10px); }
@@ -254,20 +269,27 @@
     @media (max-width: 768px) {
       .cursor-dot { display: none !important; }
       body { cursor: auto !important; }
+      
       .nav { padding: 20px 30px; }
-      .nav-menu { display: none; }
+      .nav-menu { display: none; } /* Mobile hides menu */
+      
       .hero h1 { font-size: 15vw; }
+      /* [關鍵修正] 手機版 Hero 影片聚焦人臉 */
+      .hero-video { object-position: center 20%; } 
+      
       .gallery-container { column-count: 1; }
+      
       .pricing-grid { grid-template-columns: 1fr; gap: 60px; }
       .royal-grid { flex-direction: column; gap: 50px; }
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 50px; width: 100%; }
       .royal-border { padding: 30px; }
+      
       .terms-grid { grid-template-columns: 1fr; gap: 30px; }
+      
       .filter-tabs { gap: 20px; }
       .filter-btn { font-size: 0.65rem; }
+      
       .artist-statement { padding: 0 20px; text-align: left; }
-      /* Mobile Hero Crop Fix */
-      .hero-video { object-position: center 20%; }
     }
   </style>
 </head>
@@ -304,7 +326,7 @@
   </nav>
 
   <section class="hero">
-    <video autoplay muted loop playsinline class="hero-video" poster="hero.jpg">
+    <video autoplay muted playsinline class="hero-video" poster="hero.jpg">
         <source src="hero-video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
