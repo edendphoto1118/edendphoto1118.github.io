@@ -29,7 +29,7 @@
       cursor: none; user-select: none; -webkit-user-select: none;
     }
     img { pointer-events: none; -webkit-user-drag: none; max-width: 100%; }
-    a, button, input, select, .swiper-wrapper, .gallery-item { pointer-events: auto; }
+    a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
     /* --- 2. Grain & Preloader --- */
     .noise-overlay {
@@ -249,7 +249,7 @@
     .form-input, .form-select {
       width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
       padding: 15px 0; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #fff; letter-spacing: 0.1em;
-      border-radius: 0; outline: none; transition: all 0.3s ease; text-align: center; /* [修正] 置中輸入文字 */
+      border-radius: 0; outline: none; transition: all 0.3s ease; text-align: center;
     }
     .form-input::placeholder, .form-select { color: rgba(255,255,255,0.4); text-align: center; }
     .form-input:focus, .form-select:focus { border-bottom-color: #BF953F; }
@@ -268,49 +268,59 @@
     }
     .form-submit:hover { background: #fff; box-shadow: 0 0 30px rgba(191, 149, 63, 0.5); }
 
-    /* --- [大師級] 12. About Section (Editorial Layout) --- */
+    /* --- [大師級重塑] 12. About Section (The Singular Vision) --- */
     .background { 
         padding: 180px 8vw; background: #000; 
         border-top: 1px solid rgba(255,255,255,0.05); width: 100%; 
-        position: relative;
+        position: relative; overflow: hidden;
     }
+    /* 雜誌感雙欄排版 */
     .editorial-grid {
         display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px;
         max-width: 1200px; margin: 0 auto; align-items: flex-start;
     }
+    /* 左側巨大的名字錨點 */
     .about-name {
-        font-family: 'Cinzel', serif; font-size: 6rem; line-height: 0.9;
-        color: #1a1a1a; /* VOGUE 風格的超大背景字 */
+        font-family: 'Cinzel', serif; font-size: 7rem; line-height: 0.85;
+        color: rgba(255,255,255,0.1); /* 極具質感的低調背景字 */
         letter-spacing: -0.05em; font-weight: 600;
-        position: relative; text-align: right;
+        text-align: right; position: relative;
     }
     .about-name span {
-        display: block; color: #fff; font-size: 1.5rem; letter-spacing: 0.5em;
-        margin-top: 20px; font-weight: 400; opacity: 0.8;
+        display: block; color: #BF953F; font-size: 1.2rem; letter-spacing: 0.4em;
+        margin-top: 25px; font-weight: 400; opacity: 1;
     }
     
+    /* 右側的個人宣言 */
     .artist-statement {
-        font-family: 'Playfair Display', serif; /* 更具詩意的字體 */
-        font-size: 1.1rem; line-height: 2.4; color: #ccc; 
+        font-family: 'Playfair Display', serif; /* 使用更具詩意的高級襯線體 */
+        font-size: 1.15rem; line-height: 2.2; color: #ccc; 
         font-weight: 400; text-align: justify;
-        position: relative;
+        position: relative; max-width: 650px;
     }
-    /* 雜誌首字放大 */
+    /* 雜誌首字放大效果 (Drop Cap) */
     .artist-statement::first-letter {
-        float: left; font-size: 3.5rem; line-height: 0.8; 
-        padding-right: 15px; color: #BF953F; font-family: 'Cinzel', serif;
+        float: left; font-size: 4.5rem; line-height: 0.8; 
+        padding-right: 20px; color: #fff; font-family: 'Cinzel', serif; margin-top: 5px;
     }
-    .artist-statement span { color: #fff; font-style: italic; }
+    /* 強調的關鍵字 */
+    .artist-statement strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; }
     
-    /* Signature */
+    /* 簽名檔 */
     .signature {
-        margin-top: 50px; text-align: right;
-        font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: #fff;
+        margin-top: 60px; text-align: right;
+        font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: #BF953F;
+        position: relative; padding-top: 30px;
+    }
+    .signature::before {
+        content: ''; position: absolute; top: 0; right: 0; width: 50px; height: 1px; background: rgba(191, 149, 63, 0.5);
     }
     
+    /* 聯絡資訊 */
     .contact-info { 
-        margin-top: 100px; display: flex; gap: 40px; justify-content: center; 
+        margin-top: 120px; display: flex; gap: 40px; justify-content: center; 
         grid-column: 1 / -1; /* 跨兩欄 */
+        border-top: 1px solid rgba(255,255,255,0.05); padding-top: 50px;
     }
     .contact-link, .email-btn { 
         color: #555; text-decoration: none; font-size: 0.7rem; 
@@ -332,9 +342,13 @@
     @media (max-width: 1200px) {
         nav { padding: 20px 30px; }
         .nav-menu { gap: 20px; }
-        .editorial-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
-        .about-name { text-align: center; font-size: 4rem; }
+        
+        /* [修正] 平板/手機版轉為單欄並置中 */
+        .editorial-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+        .about-name { text-align: center; font-size: 5rem; }
+        .artist-statement { text-align: left; margin: 0 auto; }
         .signature { text-align: center; }
+        .signature::before { right: 50%; transform: translateX(50%); }
     }
     @media (max-width: 768px) {
       .cursor-dot { display: none !important; }
@@ -353,7 +367,6 @@
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 50px; width: 100%; }
       .royal-border { padding: 30px; }
       
-      /* Mobile Booking Fix */
       .hidden-booking-container.open { padding: 60px 4vw; }
       .booking-interface { padding: 30px 20px; }
       .terms-grid { grid-template-columns: 1fr; gap: 30px; }
@@ -361,7 +374,9 @@
       .filter-tabs { gap: 20px; }
       .filter-btn { font-size: 0.65rem; }
       
-      .artist-statement { padding: 0 20px; text-align: left; }
+      .artist-statement { padding: 0 20px; }
+      /* 手機版縮小巨大標題 */
+      .about-name { font-size: 4rem; }
     }
   </style>
 </head>
@@ -557,18 +572,17 @@
     <div class="editorial-grid">
         <div class="about-name">
             EDEN<br>D.
-            <span>VISUAL<br>DIRECTOR</span>
+            <span>VISUAL DIRECTOR</span>
         </div>
         <div>
             <div class="artist-statement">
-                我是 EDEN。光影建築師。
+                我是 EDEN。光影的建築師。
                 <br><br>
-                在這個充滿雜訊的世界裡，沉默是頂級的奢華。
-                我的鏡頭不只是觀察，而是將現實重組為永恆的資產。
+                在這個充滿雜訊的世界裡，沉默是頂級的奢華。我的鏡頭不只是觀察，而是將現實重組為永恆的結構。剝離多餘，只留下形式與光線的絕對關係。
                 <br><br>
-                我們不拍照。我們為您策展人生。
+                我不拍照片。我為您策展人生。
                 <br><br>
-                <span>We do not take photos. We curate your legacy.</span>
+                <strong>I don't take photographs. I curate legacy.</strong>
             </div>
             <div class="signature">EDEN D.</div>
         </div>
