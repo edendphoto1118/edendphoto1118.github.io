@@ -159,93 +159,100 @@
     }
     .swiper-slide-active img { box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
 
-    /* --- 10. Masterpiece Gallery (New High-End Layout) --- */
+    /* --- 10. Masterpiece Gallery (With Filter) --- */
     .masterpiece-gallery {
-      padding: 100px 4vw; /* 略微減少外距 */
+      padding: 100px 4vw;
       position: relative;
       min-height: 100vh;
     }
+    
+    /* [新增] Filter Tabs Styling */
+    .filter-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-bottom: 80px;
+        flex-wrap: wrap;
+    }
+    .filter-btn {
+        background: transparent;
+        border: none;
+        color: #666;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: none; /* 使用自訂游標 */
+        position: relative;
+        padding-bottom: 5px;
+        transition: all 0.3s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        color: #fff;
+    }
+    .filter-btn::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: #BF953F; /* 金色底線 */
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+    .filter-btn.active::after {
+        width: 100%;
+    }
+
     .gallery-container {
-      /* [大師級修正] 增加間距，讓作品呼吸 */
-      column-count: 3; 
-      column-gap: 60px; 
-      width: 100%;
+      column-count: 3; column-gap: 60px; width: 100%;
     }
     .gallery-item {
-      break-inside: avoid; 
-      /* [大師級修正] 增加底部留白，放置編號 */
-      margin-bottom: 80px; 
-      position: relative;
+      break-inside: avoid; margin-bottom: 80px; position: relative;
       z-index: 1; cursor: none;
       /* Scroll Reveal */
       opacity: 0; transform: translateY(50px);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .gallery-item.reveal { opacity: 1; transform: translateY(0); }
-    .gallery-item.hidden { display: none; }
+    /* 用 display: none 來處理篩選隱藏 */
+    .gallery-item.filtered-out { display: none; }
+    
+    /* Load More 隱藏 */
+    .gallery-item.hidden-loadmore { display: none; }
     
     .gallery-item img {
       width: 100%; height: auto; display: block;
       filter: grayscale(100%) brightness(0.8) contrast(1.1);
       transition: filter 0.5s ease;
       background: #111; min-height: 100px;
-      /* 移除過多的陰影，保持平面設計感，除非 hover */
     }
     
-    /* [新增] 檔案編號美學 (Archive Meta Data) */
     .item-meta {
         margin-top: 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        opacity: 0.5; /* 預設半透明，低調 */
-        transition: opacity 0.3s ease;
+        display: flex; justify-content: space-between; align-items: center;
+        opacity: 0.5; transition: opacity 0.3s ease;
     }
-    .meta-id {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.6rem;
-        letter-spacing: 0.2em;
-        color: #fff;
-    }
-    .meta-line {
-        height: 1px;
-        background: #333;
-        flex-grow: 1;
-        margin: 0 15px;
-    }
-    .meta-tag {
-        font-family: 'Cinzel', serif;
-        font-size: 0.5rem;
-        color: #888;
-        letter-spacing: 0.1em;
-    }
+    .meta-id { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #fff; }
+    .meta-line { height: 1px; background: #333; flex-grow: 1; margin: 0 15px; }
+    .meta-tag { font-family: 'Cinzel', serif; font-size: 0.5rem; color: #888; letter-spacing: 0.1em; }
 
-    /* Hover 效果：圖片變亮，文字變清楚 */
-    .gallery-item:hover {
-      transform: translateY(-10px) !important; /* 輕微上浮 */
-      z-index: 100; 
-    }
+    .gallery-item:hover { transform: translateY(-10px) !important; z-index: 100; }
     .gallery-item:hover img {
       filter: grayscale(0%) brightness(1.05) contrast(1);
       box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     }
-    .gallery-item:hover .item-meta {
-        opacity: 1; /* 資訊變亮 */
-    }
+    .gallery-item:hover .item-meta { opacity: 1; }
     
-    .load-more-container {
-        text-align: center; margin-top: 60px; padding-bottom: 40px;
-    }
+    .load-more-container { text-align: center; margin-top: 60px; padding-bottom: 40px; }
     .load-more-btn {
         display: inline-block; padding: 20px 60px;
         border: 1px solid rgba(255,255,255,0.3); color: #fff;
-        font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
-        letter-spacing: 0.2em; text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
         background: transparent; cursor: none; transition: all 0.4s ease;
     }
-    .load-more-btn:hover {
-        background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3);
-    }
+    .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
     /* --- 11. Pricing --- */
     .pricing-section {
@@ -353,10 +360,8 @@
 
     /* --- RWD Special Fixes (手機完美適配) --- */
     @media (max-width: 768px) {
-      /* 移除自訂游標，還原系統觸控 */
       .cursor-dot { display: none !important; }
       body { cursor: auto !important; }
-
       .hero h1 { font-size: 15vw; }
       .nav-menu { display: none; } 
       .nav { justify-content: center; }
@@ -366,10 +371,11 @@
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 40px; width: 100%; }
       .royal-border { padding: 30px; }
       .terms-grid { grid-template-columns: 1fr; gap: 20px; }
-      
-      /* [手機版封面裁切修正] */
-      /* 設定背景定位為 center 20% (水平置中，垂直偏上20%處，鎖定人臉) */
       .hero-bg { background-position: center 20% !important; }
+      
+      /* 手機版 Filter 按鈕優化 */
+      .filter-tabs { gap: 20px; }
+      .filter-btn { font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -427,7 +433,14 @@
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
       <h2 class="section-title">Visual Anthology</h2>
-      <span class="section-subtitle">Full Archive</span>
+      <span class="section-subtitle">Categorized Archive</span>
+    </div>
+    
+    <div class="filter-tabs">
+        <button class="filter-btn active hover-target" onclick="filterGallery('all', this)">ALL</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Structure', this)">STRUCTURE</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Scale', this)">SCALE</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Dimension', this)">DIMENSION</button>
     </div>
     
     <div class="gallery-container" id="galleryContainer"></div>
@@ -442,67 +455,45 @@
       <h2 class="section-title">EDEN VISUALS</h2>
       <span class="section-subtitle">以建築為骨架，光影為靈魂。三種維度，重塑你的個人品牌。</span>
     </div>
-    
     <div class="pricing-grid">
       <div class="price-card">
         <span class="discount-badge">Portfolio Offer</span>
         <h3 class="price-title">The Structure</h3>
         <span class="price-subtitle">結構・幾何形象</span>
-        
-        <div class="price-wrapper">
-          <span class="price-original">NT$ 8,800</span>
-          <span class="price-amount">NT$ 6,800</span>
-        </div>
-        
+        <div class="price-wrapper"><span class="price-original">NT$ 8,800</span><span class="price-amount">NT$ 6,800</span></div>
         <p class="price-desc">極致的減法。將你融入建築線條的藝術頭像，打造不可忽視的專業感。</p>
         <ul class="price-specs">
           <li>拍攝時數：1.5 小時</li>
-          <li>造型數：1 套 (需自備，提供幾何穿搭指南)</li>
+          <li>造型數：1 套 (需自備)</li>
           <li>成品：精修照片 6 張</li>
           <li><strong>Feature：獨家建築幾何/黑白光影風格</strong></li>
-          <li>Bonus：IG 限動側拍花絮 (15s)</li>
         </ul>
       </div>
-
       <div class="price-card">
         <span class="discount-badge">Limited Time</span>
-        <span class="new-badge">New Arrival</span>
         <h3 class="price-title">The Scale</h3>
         <span class="price-subtitle">尺度・微縮錯位</span>
-        
-        <div class="price-wrapper">
-          <span class="price-original">NT$ 12,800</span>
-          <span class="price-amount">NT$ 10,800</span>
-        </div>
-
+        <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
         <p class="price-desc">城市是你的遊樂場。打破物理尺度的超現實視覺，創造社群高互動率。</p>
         <ul class="price-specs">
           <li>拍攝時數：2 小時</li>
           <li>造型數：1 套 (需自備)</li>
           <li>成品：精修照片 9 張 (含 3 張高難度微縮合成)</li>
           <li><strong>Core Feature：Giant's Play 巨人視角攝影</strong></li>
-          <li>Value：社群高互動率、吸睛流量款</li>
         </ul>
       </div>
-
       <div class="price-card featured">
         <span class="discount-badge">Best Value</span>
         <span class="card-badge">Host's Choice</span>
         <h3 class="price-title">The Dimension</h3>
         <span class="price-subtitle">維度・虛擬策展</span>
-        
-        <div class="price-wrapper">
-          <span class="price-original">NT$ 16,800</span>
-          <span class="price-amount">NT$ 14,800</span>
-        </div>
-
+        <div class="price-wrapper"><span class="price-original">NT$ 16,800</span><span class="price-amount">NT$ 14,800</span></div>
         <p class="price-desc">這不只是照片，是一場關於引力的虛擬展覽。結合動態與靜態的旗艦體驗。</p>
         <ul class="price-specs">
           <li>拍攝時數：2.5 小時</li>
           <li><strong>造型數：2 套 (含一組專業妝髮)</strong></li>
           <li>成品：精修照片 12 張</li>
           <li><strong>Core Feature：Gravity Loop 虛擬運鏡 Reels</strong></li>
-          <li>Bonus：贈送「時尚雜誌封面」排版設計 1 款</li>
         </ul>
       </div>
     </div>
@@ -518,24 +509,12 @@
         </div>
         <div class="royal-price">
           <div class="royal-option">
-            <div class="royal-opt-head">
-              <span class="royal-opt-title">Single Seat / 個人席位</span>
-              <span class="royal-opt-price">NT$ 22,800</span>
-            </div>
-            <div class="royal-opt-list">
-               全套雙風格拍攝 (含妝髮) · 精修 18 張 (J/Q/K/Joker)<br>
-               <strong>交付：專屬訂製撲克牌 5 副 + A3 藝術微噴海報</strong>
-            </div>
+            <div class="royal-opt-head"><span class="royal-opt-title">Single Seat</span><span class="royal-opt-price">NT$ 22,800</span></div>
+            <div class="royal-opt-list">全套雙風格拍攝 · 精修 18 張 · 專屬訂製撲克牌 5 副</div>
           </div>
           <div class="royal-option" style="margin-bottom:0;">
-            <div class="royal-opt-head">
-              <span class="royal-opt-title">Double Throne / 雙人聯名</span>
-              <span class="royal-opt-price">NT$ 38,800</span>
-            </div>
-            <div class="royal-opt-list">
-               雙人互動拍攝 (含雙人妝髮) · 精修 24 張 (King & Queen)<br>
-               <strong>交付：專屬訂製撲克牌 10 副 + 雙人互動轉場 Reels</strong>
-            </div>
+            <div class="royal-opt-head"><span class="royal-opt-title">Double Throne</span><span class="royal-opt-price">NT$ 38,800</span></div>
+            <div class="royal-opt-list">雙人互動拍攝 · 精修 24 張 · 專屬訂製撲克牌 10 副</div>
           </div>
         </div>
       </div>
@@ -550,25 +529,12 @@
       <div class="booking-terms">
           <h3 class="terms-title">BOOKING POLICY</h3>
           <div class="terms-grid">
-              <div class="term-item">
-                  <h4>費用說明</h4>
-                  <p>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目。</p>
-              </div>
-              <div class="term-item">
-                  <h4>訂金政策</h4>
-                  <p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p>
-              </div>
-              <div class="term-item">
-                  <h4>準時原則</h4>
-                  <p>遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p>
-              </div>
-              <div class="term-item">
-                  <h4>成品交付</h4>
-                  <p>交付成品為調色/精修後之 JPG 檔。RAW 檔為半成品，恕不提供。</p>
-              </div>
+              <div class="term-item"><h4>費用說明</h4><p>報價為純攝影與成品費。</p></div>
+              <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期。</p></div>
+              <div class="term-item"><h4>準時原則</h4><p>遲到超過 30 分鐘視同放棄。</p></div>
+              <div class="term-item"><h4>成品交付</h4><p>交付成品為精修 JPG 檔。</p></div>
           </div>
       </div>
-
       <div class="calendar-wrapper">
           <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=0a0a0a&text_color=ffffff&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
@@ -578,31 +544,27 @@
   <section class="lead-form-section" id="lead-form">
     <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
     <h3 class="lead-title">THE FACE ARCHIVE</h3>
-    <p class="lead-desc">我們一直在尋找那張能撐起『王牌』的臉。<br>請留下你的 IG，讓我們在靈感來襲時，第一個找到你。</p>
+    <p class="lead-desc">我們一直在尋找那張能撐起『王牌』的臉。</p>
     <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
-      <input type="text" name="name" placeholder="NAME / NICKNAME" class="form-input hover-target" required>
-      <input type="text" name="ig_handle" placeholder="INSTAGRAM ID (@)" class="form-input hover-target" required>
+      <input type="text" name="name" placeholder="NAME" class="form-input hover-target" required>
+      <input type="text" name="ig_handle" placeholder="INSTAGRAM ID" class="form-input hover-target" required>
       <div class="select-wrapper hover-target">
         <select name="archetype" class="form-select" required>
-          <option value="" disabled selected>SELECT YOUR STYLE (選擇拍攝風格)</option>
-          <option value="Spade">SPADE / 黑桃 - 時尚質感 (Fashion)</option>
-          <option value="Heart">HEART / 紅心 - 魅惑性感 (Glamour)</option>
-          <option value="Diamond">DIAMOND / 方塊 - 俏皮可愛 (Playful)</option>
-          <option value="Club">CLUB / 梅花 - 厭世憂鬱 (Melancholy)</option>
-          <option value="Joker">JOKER / 鬼牌 - 獨特藝術 (Unique)</option>
+          <option value="" disabled selected>SELECT STYLE</option>
+          <option value="Spade">SPADE (Fashion)</option>
+          <option value="Heart">HEART (Glamour)</option>
+          <option value="Diamond">DIAMOND (Playful)</option>
+          <option value="Club">CLUB (Melancholy)</option>
+          <option value="Joker">JOKER (Unique)</option>
         </select>
       </div>
-      <button type="submit" class="form-submit hover-target">JOIN THE ARCHIVE (加入關注名單)</button>
+      <button type="submit" class="form-submit hover-target">JOIN THE ARCHIVE</button>
     </form>
-    <p class="micro-copy">Membership is by selection only.</p>
   </section>
 
   <section class="background" id="about">
-    <div class="section-header">
-      <h2 class="section-title">About</h2>
-      <span class="section-subtitle">Behind The Lens</span>
-    </div>
-    <p class="quote">“Structure is the music of light. My photography is an extension of architectural logic.”</p>
+    <div class="section-header"><h2 class="section-title">About</h2><span class="section-subtitle">Behind The Lens</span></div>
+    <p class="quote">“Structure is the music of light.”</p>
     <div class="contact-info">
       <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
       <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
@@ -620,88 +582,103 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- 0. Preloader Logic (Eden D / Dune Style) --- */
-    window.addEventListener('load', () => {
-        const body = document.querySelector('body');
-        setTimeout(() => {
-            body.classList.add('loaded');
-        }, 1200); 
-    });
+    window.addEventListener('load', () => { setTimeout(() => { document.body.classList.add('loaded'); }, 1200); });
 
-    /* --- 1. Masterpiece Gallery Logic (With Archive Meta) --- */
-    
     const totalWorks = 117; 
     const initialShow = 15; 
-    
     const galleryContainer = document.getElementById('galleryContainer');
     const swiperWrapper = document.getElementById('swiperWrapper');
+    
+    // [大師級] 分類清單 (對應你的方案)
+    const categories = ['Structure', 'Scale', 'Dimension'];
 
     function generateGallery() {
       galleryContainer.innerHTML = '';
       swiperWrapper.innerHTML = '';
 
-      // --- 1. Masonry (Old naming portfolio0-1.jpg) ---
+      // --- Masonry with Random Categories ---
       for (let i = 1; i <= totalWorks; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
-        // 生成編號，例如 "FIG. 001"
-        const figNum = i.toString().padStart(3, '0'); 
+        const figNum = i.toString().padStart(3, '0');
+        
+        // 隨機分配一個分類 (之後你可以手動指定)
+        const randomCat = categories[Math.floor(Math.random() * categories.length)];
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
+        // 將分類寫入 data-category 屬性
+        itemDiv.setAttribute('data-category', randomCat);
         
-        if (i > initialShow) {
-            itemDiv.classList.add('hidden');
-        }
+        if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
-        // [大師級] 加入 Meta Data 結構
         itemDiv.innerHTML = `
             <img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">
             <div class="item-meta">
                 <span class="meta-id">FIG. ${figNum}</span>
                 <div class="meta-line"></div>
-                <span class="meta-tag">ARCHIVE</span>
+                <span class="meta-tag">${randomCat.toUpperCase()}</span>
             </div>
         `;
         galleryContainer.appendChild(itemDiv);
       }
 
-      // --- 2. Swiper (New naming portfolio00-01.jpg) ---
+      // --- Swiper ---
       for (let i = 1; i <= 10; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio00-${num}.jpg`;
-        
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
         slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
       }
     }
-    
     generateGallery();
     
-    // --- Load More Function ---
-    function loadAllWorks() {
-        const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
-        hiddenItems.forEach(item => {
-            item.classList.remove('hidden');
+    // --- Filter Function ---
+    function filterGallery(category, btn) {
+        // 1. Update Buttons
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // 2. Filter Items
+        const items = document.querySelectorAll('.gallery-item');
+        items.forEach(item => {
+            // 先移除所有隱藏狀態，讓篩選重新計算
+            item.classList.remove('hidden-loadmore'); 
+            
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.classList.remove('filtered-out');
+                // 觸發重現動畫
+                item.classList.remove('reveal');
+                setTimeout(() => item.classList.add('reveal'), 50);
+            } else {
+                item.classList.add('filtered-out');
+            }
         });
+        
+        // 篩選後隱藏 Load More 按鈕 (因為已經重新洗牌了)
+        document.getElementById('loadMoreBtn').style.display = 'none';
+        
+        // 重新初始化 Scroll Reveal
+        setTimeout(initScrollReveal, 100);
+    }
+
+    function loadAllWorks() {
+        const hiddenItems = document.querySelectorAll('.hidden-loadmore');
+        hiddenItems.forEach(item => item.classList.remove('hidden-loadmore'));
         document.getElementById('loadMoreBtn').style.display = 'none';
         setTimeout(initScrollReveal, 100);
     }
     
-    // --- Toggle Booking ---
     function toggleBooking() {
         const bookingSection = document.getElementById('hiddenBooking');
         bookingSection.classList.toggle('open');
         if(bookingSection.classList.contains('open')) {
-            setTimeout(() => {
-                bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 300);
+            setTimeout(() => { bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
         }
     }
 
-    /* --- Scroll Reveal --- */
     function initScrollReveal() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -710,50 +687,25 @@
             observer.unobserve(entry.target);
           }
         });
-      }, {
-        threshold: 0.1, 
-        rootMargin: "0px 0px -50px 0px"
-      });
-
-      const items = document.querySelectorAll('.gallery-item');
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+      const items = document.querySelectorAll('.gallery-item:not(.filtered-out)');
       items.forEach(item => observer.observe(item));
     }
-    
     setTimeout(initScrollReveal, 500); 
 
-    /* --- Swiper Init --- */
     setTimeout(() => {
         const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
         realClickSound.volume = 0.2;
         let lastPlay = 0;
-
         var swiper = new Swiper(".mySwiper", {
-          effect: 'slide',
-          allowTouchMove: true, 
-          threshold: 10,
-          centeredSlides: true,
-          slidesPerView: 'auto', 
-          spaceBetween: 40, 
-          loop: false, 
-          grabCursor: true, 
+          effect: 'slide', allowTouchMove: true, threshold: 10, centeredSlides: true,
+          slidesPerView: 'auto', spaceBetween: 40, loop: false, grabCursor: true, 
           mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
-          speed: 800, 
-          slideToClickedSlide: true, 
-          on: {
-            slideChange: function () {
-                 const now = Date.now();
-                 if(now - lastPlay > 200) {
-                    const sound = realClickSound.cloneNode();
-                    sound.volume = 0.15;
-                    sound.play().catch(()=>{});
-                    lastPlay = now;
-                 }
-            }
-          }
+          speed: 800, slideToClickedSlide: true, 
+          on: { slideChange: function () { const now = Date.now(); if(now - lastPlay > 200) { const sound = realClickSound.cloneNode(); sound.volume = 0.15; sound.play().catch(()=>{}); lastPlay = now; } } }
         });
     }, 500);
 
-    /* --- Lightbox --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
@@ -766,16 +718,8 @@
     }
     document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
 
-    /* --- Content Protection --- */
-    document.onkeydown = function(e) {
-      if (e.keyCode == 123) return false;
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
-      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-      if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false;
-    }
+    document.onkeydown = function(e) { if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'S'.charCodeAt(0)))) return false; }
 
-    /* --- Email Copy --- */
     function copyEmail() {
       const email = "edendphoto1118@gmail.com";
       navigator.clipboard.writeText(email).then(() => {
@@ -785,62 +729,34 @@
       });
     }
 
-    /* --- Cursor Logic --- */
     const cursorDot = document.querySelector('.cursor-dot');
-    document.addEventListener('mousemove', (e) => {
-      cursorDot.style.left = `${e.clientX}px`;
-      cursorDot.style.top = `${e.clientY}px`;
-    });
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
-        document.body.classList.add('hover-active');
-      }
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
-        document.body.classList.remove('hover-active');
-      }
-    });
+    document.addEventListener('mousemove', (e) => { cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`; });
+    document.addEventListener('mouseover', (e) => { if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { document.body.classList.add('hover-active'); } });
+    document.addEventListener('mouseout', (e) => { if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { document.body.classList.remove('hover-active'); } });
 
-    /* --- Aurora --- */
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
     function spawnAurora() {
       const el = document.createElement('div'); el.classList.add('aurora-ribbon');
-      let posX = Math.random() * window.innerWidth; 
-      let posY = Math.random() * (window.innerHeight * 0.8);
-      let angle = (Math.random() - 0.5) * 40; 
-      const driftSpeed = 0.1 + Math.random() * 0.2; 
-      
-      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed;
-      const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
-      
+      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.8);
+      let angle = (Math.random() - 0.5) * 40; const driftSpeed = 0.1 + Math.random() * 0.2; 
+      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed; const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
       el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
       auroraContainer.appendChild(el);
-      
       auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
     }
-    
     function animateAuroras() {
       for (let i = auroras.length - 1; i >= 0; i--) {
-        let p = auroras[i]; p.life++;
-        p.x += p.vx; p.y += p.vy;
-        
+        let p = auroras[i]; p.life++; p.x += p.vx; p.y += p.vy;
         let opacity = 0; let fadeDuration = 300;
-        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; }
-        else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; }
-        else { opacity = 1; }
-        
+        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; } else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; } else { opacity = 1; }
         p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.2})`;
         p.el.style.opacity = opacity * 0.35; 
-        
         if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
       }
       requestAnimationFrame(animateAuroras);
     }
-    setInterval(spawnAurora, 3500); 
-    spawnAurora(); spawnAurora(); 
-    animateAuroras();
+    setInterval(spawnAurora, 3500); spawnAurora(); spawnAurora(); animateAuroras();
   </script>
 </body>
 </html>
