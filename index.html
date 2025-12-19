@@ -7,11 +7,11 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
-    /* --- 1. 全站基礎 & 防護設定 --- */
+    /* --- 1. 全站基礎 --- */
     html { scroll-behavior: smooth; }
     body {
       margin: 0; background: #000; color: #e0e0e0;
@@ -23,18 +23,13 @@
     img { pointer-events: none; -webkit-user-drag: none; }
     a, button, input, select, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    body.lightbox-open { cursor: auto; overflow: hidden; }
-    body.lightbox-open .cursor-dot { display: none; }
-    .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
-
-    /* --- 2. Film Grain --- */
+    /* --- 2. Film Grain & Preloader --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 9000; opacity: 0.05; 
+      pointer-events: none; z-index: 9000; opacity: 0.04; 
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
-
-    /* --- 3. Preloader --- */
+    
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000;
@@ -52,301 +47,253 @@
     }
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. 導覽列 --- */
+    /* --- 3. UI Elements: Nav & Cursor --- */
     nav {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
+      position: fixed; top: 0; left: 0; width: 100%; padding: 40px 60px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease;
     }
     .nav-logo {
-      font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700;
+      font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 500;
       letter-spacing: 0.1em; text-decoration: none; color: #fff; cursor: none;
     }
-    .nav-menu { display: flex; gap: 40px; }
+    .nav-menu { display: flex; gap: 50px; align-items: center; }
     .nav-item {
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #fff; text-decoration: none;
-      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #fff; text-decoration: none;
+      letter-spacing: 0.25em; text-transform: uppercase; font-weight: 400;
       position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
     }
     .nav-item:hover { opacity: 1; }
-    .nav-item::after {
-      content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 0;
-      background-color: #fff; transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    /* Audio Toggle */
+    .audio-btn {
+        background: transparent; border: 1px solid rgba(255,255,255,0.3);
+        color: #fff; padding: 5px 15px; font-size: 0.6rem; letter-spacing: 0.2em;
+        font-family: 'Montserrat', sans-serif; cursor: none; transition: all 0.3s;
+        border-radius: 20px; display: flex; align-items: center; gap: 8px;
     }
-    .nav-item:hover::after { width: 100%; }
+    .audio-btn:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+    .sound-wave {
+        display: flex; gap: 2px; height: 10px; align-items: flex-end;
+    }
+    .bar { width: 1px; background: #fff; height: 100%; animation: wave 1s infinite ease-in-out; }
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.2s; }
+    .bar:nth-child(3) { animation-delay: 0.4s; }
+    .paused .bar { animation-play-state: paused; height: 2px; }
+    @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* --- 5. 游標 --- */
+    /* Cursor */
     .cursor-dot {
-      width: 10px; height: 10px; background-color: #fff; border-radius: 50%;
+      width: 8px; height: 8px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
       pointer-events: none; z-index: 99999; mix-blend-mode: difference;
       transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
     }
     body.hover-active .cursor-dot {
-      width: 60px; height: 60px; border: 1px solid #fff; background-color: transparent;
+      width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent;
       animation: rotateCursor 4s infinite linear;
     }
     @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* --- 6. 捲軸 --- */
-    ::-webkit-scrollbar { width: 6px; background: #000; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
-
-    /* --- 7. 背景 --- */
-    #aurora-container {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none; z-index: -1; overflow: hidden;
-      filter: url(#aurora-curtain) blur(60px); opacity: 0.4;
-    }
-    .aurora-ribbon {
-      position: absolute; width: 200vw; height: 60vh;
-      background: linear-gradient(120deg, rgba(0,0,0,0), rgba(50,10,80,0.3), rgba(0,100,200,0.2), rgba(0,0,0,0));
-      opacity: 0; transform-origin: center; will-change: transform, opacity;
-    }
-
-    /* --- 8. Hero --- */
+    /* --- 4. Hero Video --- */
     .hero {
       height: 100vh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-      text-align: center; padding-bottom: 15vh; 
+      text-align: center; padding-bottom: 12vh; 
     }
-    .hero-bg {
+    .hero-video {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: url("hero.jpg") center / cover no-repeat;
-      filter: grayscale(100%) brightness(0.6) contrast(1.2);
-      animation: slowZoom 40s infinite alternate linear; z-index: -2;
+      object-fit: cover; z-index: -2;
+      filter: grayscale(100%) brightness(0.6) contrast(1.1);
     }
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to top, #000 10%, transparent 60%); z-index: -1;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 5%, transparent 60%); z-index: -1;
     }
-    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
-    .hero-content { z-index: 1; animation: fadeInUp 1.5s ease-out forwards; opacity: 0; transform: translateY(30px); }
+    
+    .hero-content { z-index: 1; animation: fadeInUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     .hero h1 {
-      font-family: 'Cinzel', serif; font-size: 9vw; line-height: 1;
-      font-weight: 400; letter-spacing: 0.05em; margin: 0; color: #fff;
-      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+      font-family: 'Cinzel', serif; font-size: 8vw; line-height: 1;
+      font-weight: 400; letter-spacing: 0.08em; margin: 0; color: #fff;
+      text-shadow: 0 0 30px rgba(255,255,255,0.2);
     }
-    .hero h1 span { font-family: 'Playfair Display', serif; font-style: italic; }
+    .hero h1 span { font-style: italic; font-family: 'Cinzel', serif; }
     .hero p {
-      margin-top: 20px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
-      letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+      margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+      letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.7);
     }
 
-    /* --- 9. Swiper (Featured) --- */
-    .film-strip {
-      padding: 100px 0; position: relative; background: #000; z-index: 10; 
-      height: auto; overflow: hidden; min-height: 700px; 
+    /* --- 5. Sections --- */
+    .section-header {
+      text-align: center; margin-bottom: 100px; position: relative; padding: 0 20px;
     }
+    .section-title {
+      font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.1em; color: #fff;
+      font-weight: 400; margin: 0;
+    }
+    .section-subtitle {
+      font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #666;
+      text-transform: uppercase; margin-top: 20px; display: block;
+    }
+
+    /* --- 6. Swiper --- */
+    .film-strip { padding: 100px 0; background: #000; min-height: 700px; }
     .swiper { width: 100%; padding: 80px 0; }
     .swiper-wrapper { align-items: center; }
     .swiper-slide {
       width: auto; height: 60vh; max-height: 600px; flex-shrink: 0;
       filter: grayscale(100%) brightness(0.3); transform: scale(0.9); opacity: 0.2; 
-      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); 
-      pointer-events: auto; display: flex; justify-content: center; align-items: center;
-      background: transparent;
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: auto; 
+      display: flex; justify-content: center; align-items: center; background: transparent;
     }
-    .swiper-slide img { 
-      width: auto; height: 100%; object-fit: contain; display: block;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-    }
+    .swiper-slide img { width: auto; height: 100%; object-fit: contain; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .swiper-slide-active {
       filter: grayscale(0%) brightness(1.0) !important; 
       transform: scale(1.05) !important; opacity: 1 !important; z-index: 100; 
     }
     .swiper-slide-active img { box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
 
-    /* --- 10. Masterpiece Gallery (With Filter) --- */
-    .masterpiece-gallery {
-      padding: 100px 4vw;
-      position: relative;
-      min-height: 100vh;
-    }
-    
-    /* [新增] Filter Tabs Styling */
-    .filter-tabs {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        margin-bottom: 80px;
-        flex-wrap: wrap;
-    }
+    /* --- 7. Gallery & Filter --- */
+    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; }
+    .filter-tabs { display: flex; justify-content: center; gap: 50px; margin-bottom: 100px; flex-wrap: wrap; }
     .filter-btn {
-        background: transparent;
-        border: none;
-        color: #666;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.75rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        cursor: none; /* 使用自訂游標 */
-        position: relative;
-        padding-bottom: 5px;
-        transition: all 0.3s ease;
+        background: transparent; border: none; color: #555; font-family: 'Montserrat', sans-serif;
+        font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none;
+        position: relative; padding-bottom: 10px; transition: all 0.4s ease;
     }
-    .filter-btn:hover, .filter-btn.active {
-        color: #fff;
-    }
+    .filter-btn:hover, .filter-btn.active { color: #fff; }
     .filter-btn::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 1px;
-        background: #BF953F; /* 金色底線 */
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
+        content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px;
+        background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%);
     }
-    .filter-btn.active::after {
-        width: 100%;
-    }
+    .filter-btn.active::after { width: 100%; }
 
-    .gallery-container {
-      column-count: 3; column-gap: 60px; width: 100%;
-    }
+    .gallery-container { column-count: 3; column-gap: 60px; width: 100%; }
     .gallery-item {
-      break-inside: avoid; margin-bottom: 80px; position: relative;
-      z-index: 1; cursor: none;
-      /* Scroll Reveal */
-      opacity: 0; transform: translateY(50px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      break-inside: avoid; margin-bottom: 100px; position: relative; z-index: 1; cursor: none;
+      opacity: 0; transform: translateY(60px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .gallery-item.reveal { opacity: 1; transform: translateY(0); }
-    /* 用 display: none 來處理篩選隱藏 */
-    .gallery-item.filtered-out { display: none; }
-    
-    /* Load More 隱藏 */
-    .gallery-item.hidden-loadmore { display: none; }
+    .gallery-item.filtered-out, .gallery-item.hidden-loadmore { display: none; }
     
     .gallery-item img {
       width: 100%; height: auto; display: block;
-      filter: grayscale(100%) brightness(0.8) contrast(1.1);
-      transition: filter 0.5s ease;
+      filter: grayscale(100%) brightness(0.9) contrast(1.05); /* 微調預設質感 */
+      transition: filter 0.6s ease, transform 0.6s ease;
       background: #111; min-height: 100px;
     }
-    
     .item-meta {
-        margin-top: 15px;
-        display: flex; justify-content: space-between; align-items: center;
-        opacity: 0.5; transition: opacity 0.3s ease;
+        margin-top: 20px; display: flex; justify-content: space-between; align-items: center;
+        opacity: 0.3; transition: opacity 0.4s ease;
     }
     .meta-id { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #fff; }
     .meta-line { height: 1px; background: #333; flex-grow: 1; margin: 0 15px; }
-    .meta-tag { font-family: 'Cinzel', serif; font-size: 0.5rem; color: #888; letter-spacing: 0.1em; }
+    .meta-tag { font-family: 'Cinzel', serif; font-size: 0.55rem; color: #888; letter-spacing: 0.1em; }
 
-    .gallery-item:hover { transform: translateY(-10px) !important; z-index: 100; }
+    .gallery-item:hover { z-index: 100; }
     .gallery-item:hover img {
+      transform: scale(1.02);
       filter: grayscale(0%) brightness(1.05) contrast(1);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.8);
     }
     .gallery-item:hover .item-meta { opacity: 1; }
     
-    .load-more-container { text-align: center; margin-top: 60px; padding-bottom: 40px; }
+    .load-more-container { text-align: center; margin-top: 80px; padding-bottom: 40px; }
     .load-more-btn {
-        display: inline-block; padding: 20px 60px;
-        border: 1px solid rgba(255,255,255,0.3); color: #fff;
-        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
-        background: transparent; cursor: none; transition: all 0.4s ease;
+        display: inline-block; padding: 25px 70px;
+        border: 1px solid rgba(255,255,255,0.2); color: #fff;
+        font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+        background: transparent; cursor: none; transition: all 0.5s ease;
     }
-    .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
+    .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
-    /* --- 11. Pricing --- */
+    /* --- 11. Pricing (Refined) --- */
     .pricing-section {
-      padding: 120px 8vw 60px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08);
     }
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto;
-    }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; }
     .price-card {
-      border: 1px solid rgba(255,255,255,0.1); padding: 40px 30px;
-      position: relative; transition: all 0.4s ease;
-      display: flex; flex-direction: column; background: rgba(255,255,255,0.01); min-height: 500px;
+      border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px;
+      position: relative; transition: all 0.6s ease;
+      display: flex; flex-direction: column; background: transparent; min-height: 550px;
     }
     .price-card:hover {
-      border-color: rgba(255,255,255,0.3); transform: translateY(-5px); background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.3); transform: translateY(-10px); background: rgba(255,255,255,0.02);
     }
     .price-card.featured {
-      border: 1px solid rgba(0, 240, 255, 0.3); background: linear-gradient(180deg, rgba(0,240,255,0.03) 0%, transparent 100%);
+      border: 1px solid rgba(191, 149, 63, 0.3); background: linear-gradient(180deg, rgba(191,149,63,0.05) 0%, transparent 100%);
     }
     .card-badge {
-      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-      background: #000; border: 1px solid #00F0FF; color: #00F0FF;
-      font-size: 0.6rem; padding: 5px 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: #000; border: 1px solid #BF953F; color: #BF953F;
+      font-size: 0.6rem; padding: 6px 15px; letter-spacing: 0.2em; text-transform: uppercase;
     }
-    .discount-badge {
-      position: absolute; top: 20px; right: 20px;
-      background: #FF2A2A; color: #fff; font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; border-radius: 2px;
-    }
-    .price-title { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin-bottom: 5px; }
-    .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 25px; }
-    .price-wrapper { margin-bottom: 20px; display: flex; flex-direction: column; }
-    .price-original { font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #666; text-decoration: line-through; margin-bottom: 5px; }
-    .price-amount { font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #fff; font-weight: 300; display: block; }
-    .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 1.6; margin-bottom: 30px; min-height: 50px; }
+    .price-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #fff; margin-bottom: 10px; font-weight: 400; }
+    .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 40px; display: block; }
+    .price-wrapper { margin-bottom: 30px; display: flex; flex-direction: column; }
+    .price-original { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #555; text-decoration: line-through; margin-bottom: 8px; }
+    .price-amount { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; font-weight: 400; display: block; }
+    .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 1.8; margin-bottom: 40px; min-height: 60px; font-weight: 300; }
     .price-specs { list-style: none; padding: 0; margin: 0 0 30px 0; flex-grow: 1; }
-    .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #ccc; margin-bottom: 12px; padding-left: 15px; position: relative; line-height: 1.4; }
-    .price-specs li::before { content: '▹'; position: absolute; left: 0; color: #555; }
-    .price-specs li strong { color: #fff; font-weight: 600; }
+    .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #ccc; margin-bottom: 15px; padding-left: 15px; position: relative; line-height: 1.6; font-weight: 300; }
+    .price-specs li::before { content: '•'; position: absolute; left: 0; color: #555; }
+    .price-specs li strong { color: #fff; font-weight: 500; }
 
     /* --- 12. Royal --- */
     .royal-section {
-      padding: 100px 8vw; background: linear-gradient(135deg, #080808 0%, #000 100%);
+      padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%);
       border-top: 1px solid #222; border-bottom: 1px solid #222;
     }
-    .royal-border { border: 1px solid rgba(191, 149, 63, 0.4); padding: 60px; position: relative; }
-    .royal-grid { display: flex; gap: 60px; justify-content: space-between; align-items: center; }
+    .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; }
+    .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
-    .royal-price { flex: 0.8; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 60px; }
-    .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 15px; display: block; }
-    .royal-title { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 25px 0; background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #999; line-height: 1.8; max-width: 500px; }
-    .royal-option { margin-bottom: 30px; }
-    .royal-opt-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(191,149,63,0.3); padding-bottom: 8px; margin-bottom: 10px; }
-    .royal-opt-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: #fff; }
-    .royal-opt-price { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #BF953F; }
-    .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; }
+    .royal-price { flex: 0.9; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 80px; }
+    .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; display: block; }
+    .royal-title { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 30px 0; background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; line-height: 2; max-width: 500px; font-weight: 300; }
+    .royal-option { margin-bottom: 40px; }
+    .royal-opt-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(191,149,63,0.3); padding-bottom: 10px; margin-bottom: 15px; }
+    .royal-opt-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #fff; }
+    .royal-opt-price { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #BF953F; }
+    .royal-opt-list { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; line-height: 1.6; font-weight: 300; }
 
-    /* --- 13. Booking --- */
-    .booking-cta-section { padding: 80px 0; text-align: center; background: #000; }
-    .initiate-btn { display: inline-block; padding: 25px 80px; background: transparent; border: 1px solid #fff; color: #fff; font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: none; transition: all 0.5s ease; position: relative; overflow: hidden; }
-    .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 50px rgba(255,255,255,0.4); }
+    /* --- 13. Booking Flow --- */
+    .booking-cta-section { padding: 100px 0; text-align: center; background: #000; }
+    .initiate-btn { 
+        display: inline-block; padding: 30px 90px; background: transparent; border: 1px solid #fff; 
+        color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; 
+        text-transform: uppercase; cursor: none; transition: all 0.6s ease; position: relative; overflow: hidden; 
+    }
+    .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 60px rgba(255,255,255,0.3); }
+    
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; background: #080808; }
-    .hidden-booking-container.open { max-height: 2000px; opacity: 1; }
-    .booking-terms { padding: 80px 8vw 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
-    .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 40px; }
-    .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto; text-align: left; }
-    .term-item h4 { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; margin-bottom: 10px; }
-    .term-item p { color: #888; font-size: 0.8rem; line-height: 1.6; }
-    .calendar-wrapper { padding: 40px 8vw 100px; display: flex; justify-content: center; }
-    .calendly-inline-widget { border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    .hidden-booking-container.open { max-height: 2500px; opacity: 1; }
+    
+    .booking-terms { padding: 80px 8vw 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+    .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 60px; letter-spacing: 0.1em; }
+    .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; max-width: 1000px; margin: 0 auto; text-align: left; }
+    .term-item h4 { color: #e0e0e0; font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 15px; letter-spacing: 0.05em; }
+    .term-item p { color: #777; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; line-height: 1.8; font-weight: 300; }
+    
+    .calendar-wrapper { padding: 0 8vw 120px; display: flex; justify-content: center; }
+    .calendly-inline-widget { border: 1px solid rgba(191, 149, 63, 0.3); box-shadow: 0 0 40px rgba(0,0,0,0.6); }
 
-    /* --- 14. Form --- */
-    .lead-form-section { padding: 120px 8vw; background: #080808; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; }
-    .archive-meta { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #555; text-transform: uppercase; margin-bottom: 30px; }
-    .archive-meta span { color: #fff; margin-left: 10px; font-weight: 600; }
-    .lead-title { font-family: 'Cinzel', serif; font-size: 3rem; color: #fff; margin-bottom: 30px; letter-spacing: 0.1em; font-weight: 400; }
-    .lead-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; margin-bottom: 60px; line-height: 2; max-width: 600px; }
-    .form-group { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 40px; }
-    .form-input, .form-select { background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding: 15px 0; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.1em; width: 100%; text-align: center; outline: none; transition: border-color 0.4s; }
-    .form-input::placeholder { font-family: 'Montserrat', sans-serif; color: #444; font-size: 0.75rem; letter-spacing: 0.25em; }
-    .form-input:focus, .form-select:focus { border-bottom: 1px solid #fff; }
-    .select-wrapper { width: 100%; position: relative; }
-    .form-select { color: #888; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; cursor: none; }
-    .form-select option { background: #111; color: #ccc; padding: 10px; }
-    .form-submit { margin-top: 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 20px 0; width: 100%; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: none; transition: all 0.4s; text-transform: uppercase; }
-    .form-submit:hover { border-color: #fff; background: #fff; color: #000; }
-
-    /* --- 15. Footer --- */
-    .background { padding: 100px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
-    .quote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.6; color: #fff; font-style: italic; max-width: 800px; margin: 0 auto 60px; }
-    .contact-info { display: flex; flex-direction: column; gap: 20px; align-items: center; font-family: 'Montserrat', sans-serif; }
-    .contact-link, .email-btn { color: #888; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; }
+    /* --- 14. Artist Statement (Replaces Form for now, or keeps it minimal) --- */
+    .background { padding: 150px 8vw; background: #000; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+    .section-title-about { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 60px; letter-spacing: 0.1em; }
+    .artist-statement {
+        max-width: 700px; margin: 0 auto 80px;
+        font-family: 'Montserrat', sans-serif; font-size: 0.9rem; line-height: 2.2; color: #aaa; font-weight: 300;
+        text-align: justify; text-align-last: center; /* 雜誌感排版 */
+    }
+    .artist-statement span { color: #fff; font-weight: 400; }
+    
+    .contact-info { display: flex; flex-direction: column; gap: 25px; align-items: center; font-family: 'Montserrat', sans-serif; }
+    .contact-link, .email-btn { color: #666; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; }
     .contact-link:hover, .email-btn:hover { color: #fff; }
-    footer { padding: 50px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; }
+    footer { padding: 50px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; }
 
     /* --- Lightbox --- */
     .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; backdrop-filter: blur(10px); }
@@ -355,27 +302,25 @@
     .close-btn:hover { color: #aaa; transform: rotate(90deg); }
 
     /* --- Toast --- */
-    .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 600; }
+    .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 500; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* --- RWD Special Fixes (手機完美適配) --- */
+    /* --- RWD --- */
     @media (max-width: 768px) {
       .cursor-dot { display: none !important; }
       body { cursor: auto !important; }
+      .nav { padding: 20px 30px; }
+      .nav-menu { display: none; } /* 手機版隱藏選單，保持極簡 */
       .hero h1 { font-size: 15vw; }
-      .nav-menu { display: none; } 
-      .nav { justify-content: center; }
       .gallery-container { column-count: 1; }
-      .pricing-grid { grid-template-columns: 1fr; gap: 40px; }
-      .royal-grid { flex-direction: column; gap: 40px; }
-      .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 40px; width: 100%; }
+      .pricing-grid { grid-template-columns: 1fr; gap: 60px; }
+      .royal-grid { flex-direction: column; gap: 50px; }
+      .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 50px; width: 100%; }
       .royal-border { padding: 30px; }
-      .terms-grid { grid-template-columns: 1fr; gap: 20px; }
-      .hero-bg { background-position: center 20% !important; }
-      
-      /* 手機版 Filter 按鈕優化 */
+      .terms-grid { grid-template-columns: 1fr; gap: 30px; }
       .filter-tabs { gap: 20px; }
       .filter-btn { font-size: 0.65rem; }
+      .artist-statement { padding: 0 20px; text-align: left; }
     }
   </style>
 </head>
@@ -384,20 +329,15 @@
   
   <div class="noise-overlay"></div>
 
+  <audio id="bgMusic" loop>
+      <source src="ambient.mp3" type="audio/mpeg">
+  </audio>
+
   <div id="preloader">
     <div class="loader-text">EDEN D</div>
   </div>
 
   <div id="toast" class="toast">Email Copied</div>
-
-  <svg class="svg-filters">
-    <defs>
-      <filter id="aurora-curtain">
-        <feTurbulence type="turbulence" baseFrequency="0.002 0.02" numOctaves="3" result="turbulence" />
-        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="200" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </defs>
-  </svg>
 
   <div class="cursor-dot"></div>
   <div id="aurora-container"></div>
@@ -407,12 +347,19 @@
     <div class="nav-menu">
       <a href="#work" class="nav-item hover-target">Portfolio</a>
       <a href="#pricing" class="nav-item hover-target">Pricing</a>
-      <a href="#about" class="nav-item hover-target">About</a>
+      <button class="audio-btn hover-target" onclick="toggleAudio()">
+          SOUND
+          <div class="sound-wave paused" id="soundWave">
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+      </button>
     </div>
   </nav>
 
   <section class="hero">
-    <div class="hero-bg"></div>
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="https://videos.pexels.com/video-files/5527833/5527833-hd_1920_1080_25fps.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
@@ -435,16 +382,13 @@
       <h2 class="section-title">Visual Anthology</h2>
       <span class="section-subtitle">Categorized Archive</span>
     </div>
-    
     <div class="filter-tabs">
         <button class="filter-btn active hover-target" onclick="filterGallery('all', this)">ALL</button>
         <button class="filter-btn hover-target" onclick="filterGallery('Structure', this)">STRUCTURE</button>
         <button class="filter-btn hover-target" onclick="filterGallery('Scale', this)">SCALE</button>
         <button class="filter-btn hover-target" onclick="filterGallery('Dimension', this)">DIMENSION</button>
     </div>
-    
     <div class="gallery-container" id="galleryContainer"></div>
-    
     <div class="load-more-container">
         <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
     </div>
@@ -453,47 +397,46 @@
   <section class="pricing-section" id="pricing">
     <div class="section-header">
       <h2 class="section-title">EDEN VISUALS</h2>
-      <span class="section-subtitle">以建築為骨架，光影為靈魂。三種維度，重塑你的個人品牌。</span>
+      <span class="section-subtitle">Beyond Photography. We Curate Identity.</span>
     </div>
     <div class="pricing-grid">
       <div class="price-card">
-        <span class="discount-badge">Portfolio Offer</span>
-        <h3 class="price-title">The Structure</h3>
+        <span class="discount-badge">Structure</span>
+        <h3 class="price-title">The Portrait</h3>
         <span class="price-subtitle">結構・幾何形象</span>
         <div class="price-wrapper"><span class="price-original">NT$ 8,800</span><span class="price-amount">NT$ 6,800</span></div>
-        <p class="price-desc">極致的減法。將你融入建築線條的藝術頭像，打造不可忽視的專業感。</p>
+        <p class="price-desc">剝離多餘的背景，回歸人物本質。運用光影切割與幾何構圖，打造極具穿透力的專業形象。</p>
         <ul class="price-specs">
-          <li>拍攝時數：1.5 小時</li>
-          <li>造型數：1 套 (需自備)</li>
-          <li>成品：精修照片 6 張</li>
-          <li><strong>Feature：獨家建築幾何/黑白光影風格</strong></li>
+          <li><strong>Session Time:</strong> 1.5 Hours</li>
+          <li><strong>Look:</strong> 1 Outfit</li>
+          <li><strong>Deliverables:</strong> 6 Retouched Images</li>
+          <li><strong>Focus:</strong> Minimalist, High-Contrast, Form.</li>
         </ul>
       </div>
       <div class="price-card">
-        <span class="discount-badge">Limited Time</span>
-        <h3 class="price-title">The Scale</h3>
-        <span class="price-subtitle">尺度・微縮錯位</span>
+        <span class="discount-badge">Scale</span>
+        <h3 class="price-title">The Ambiance</h3>
+        <span class="price-subtitle">尺度・場景氛圍</span>
         <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
-        <p class="price-desc">城市是你的遊樂場。打破物理尺度的超現實視覺，創造社群高互動率。</p>
+        <p class="price-desc">探索人與空間的對話。無論是城市大景的孤寂，還是自然光影的療癒，我們捕捉你與環境共鳴的瞬間。</p>
         <ul class="price-specs">
-          <li>拍攝時數：2 小時</li>
-          <li>造型數：1 套 (需自備)</li>
-          <li>成品：精修照片 9 張 (含 3 張高難度微縮合成)</li>
-          <li><strong>Core Feature：Giant's Play 巨人視角攝影</strong></li>
+          <li><strong>Session Time:</strong> 2 Hours</li>
+          <li><strong>Look:</strong> 1 Outfit</li>
+          <li><strong>Deliverables:</strong> 9 Retouched Images</li>
+          <li><strong>Focus:</strong> Space, Mood, Breath.</li>
         </ul>
       </div>
       <div class="price-card featured">
-        <span class="discount-badge">Best Value</span>
-        <span class="card-badge">Host's Choice</span>
-        <h3 class="price-title">The Dimension</h3>
-        <span class="price-subtitle">維度・虛擬策展</span>
+        <span class="discount-badge">Dimension</span>
+        <h3 class="price-title">The Cinematic</h3>
+        <span class="price-subtitle">維度・電影敘事</span>
         <div class="price-wrapper"><span class="price-original">NT$ 16,800</span><span class="price-amount">NT$ 14,800</span></div>
-        <p class="price-desc">這不只是照片，是一場關於引力的虛擬展覽。結合動態與靜態的旗艦體驗。</p>
+        <p class="price-desc">不只是照片，是一場靜止的電影。透過色彩張力與情緒引導，為你的個人品牌注入深層的敘事維度。</p>
         <ul class="price-specs">
-          <li>拍攝時數：2.5 小時</li>
-          <li><strong>造型數：2 套 (含一組專業妝髮)</strong></li>
-          <li>成品：精修照片 12 張</li>
-          <li><strong>Core Feature：Gravity Loop 虛擬運鏡 Reels</strong></li>
+          <li><strong>Session Time:</strong> 2.5 Hours</li>
+          <li><strong>Look:</strong> 2 Outfits (w/ Hair & Makeup)</li>
+          <li><strong>Deliverables:</strong> 12 Retouched Images</li>
+          <li><strong>Focus:</strong> Storytelling, Emotion, Color.</li>
         </ul>
       </div>
     </div>
@@ -503,18 +446,18 @@
     <div class="royal-border">
       <div class="royal-grid">
         <div class="royal-info">
-          <span class="royal-tag">Special Campaign</span>
+          <span class="royal-tag">Limited Edition</span>
           <h2 class="royal-title">PROJECT: ROYAL DECK</h2>
-          <p class="royal-desc">本季限定企劃。我們將你的形象，鑄造成可流通的實體王牌。<br>採用德國黑芯紙與燙金工藝，這是屬於你的社交貨幣。</p>
+          <p class="royal-desc">將你的形象鑄造成可流通的實體王牌。採用德國黑芯紙與燙金工藝，這是屬於你的頂級社交貨幣。</p>
         </div>
         <div class="royal-price">
           <div class="royal-option">
-            <div class="royal-opt-head"><span class="royal-opt-title">Single Seat</span><span class="royal-opt-price">NT$ 22,800</span></div>
-            <div class="royal-opt-list">全套雙風格拍攝 · 精修 18 張 · 專屬訂製撲克牌 5 副</div>
+            <div class="royal-opt-head"><span class="royal-opt-title">Single Seat / 個人席位</span><span class="royal-opt-price">NT$ 22,800</span></div>
+            <div class="royal-opt-list">全套雙風格拍攝 · 精修 18 張 · 訂製撲克牌 5 副 + 藝術海報</div>
           </div>
           <div class="royal-option" style="margin-bottom:0;">
-            <div class="royal-opt-head"><span class="royal-opt-title">Double Throne</span><span class="royal-opt-price">NT$ 38,800</span></div>
-            <div class="royal-opt-list">雙人互動拍攝 · 精修 24 張 · 專屬訂製撲克牌 10 副</div>
+            <div class="royal-opt-head"><span class="royal-opt-title">Double Throne / 雙人聯名</span><span class="royal-opt-price">NT$ 38,800</span></div>
+            <div class="royal-opt-list">雙人互動拍攝 · 精修 24 張 · 訂製撲克牌 10 副 + 轉場 Reels</div>
           </div>
         </div>
       </div>
@@ -522,17 +465,17 @@
   </section>
 
   <section class="booking-cta-section">
-      <button class="initiate-btn hover-target" onclick="toggleBooking()">INITIATE BOOKING (啟動預約程序)</button>
+      <button class="initiate-btn hover-target" onclick="toggleBooking()">INITIATE BOOKING</button>
   </section>
 
   <div id="hiddenBooking" class="hidden-booking-container">
       <div class="booking-terms">
           <h3 class="terms-title">BOOKING POLICY</h3>
           <div class="terms-grid">
-              <div class="term-item"><h4>費用說明</h4><p>報價為純攝影與成品費。</p></div>
-              <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期。</p></div>
-              <div class="term-item"><h4>準時原則</h4><p>遲到超過 30 分鐘視同放棄。</p></div>
-              <div class="term-item"><h4>成品交付</h4><p>交付成品為精修 JPG 檔。</p></div>
+              <div class="term-item"><h4>費用說明</h4><p>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目。</p></div>
+              <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p></div>
+              <div class="term-item"><h4>準時原則</h4><p>遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p></div>
+              <div class="term-item"><h4>成品交付</h4><p>交付成品為調色/精修後之 JPG 檔。RAW 檔為半成品，恕不提供。</p></div>
           </div>
       </div>
       <div class="calendar-wrapper">
@@ -541,30 +484,19 @@
       </div>
   </div>
 
-  <section class="lead-form-section" id="lead-form">
-    <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
-    <h3 class="lead-title">THE FACE ARCHIVE</h3>
-    <p class="lead-desc">我們一直在尋找那張能撐起『王牌』的臉。</p>
-    <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
-      <input type="text" name="name" placeholder="NAME" class="form-input hover-target" required>
-      <input type="text" name="ig_handle" placeholder="INSTAGRAM ID" class="form-input hover-target" required>
-      <div class="select-wrapper hover-target">
-        <select name="archetype" class="form-select" required>
-          <option value="" disabled selected>SELECT STYLE</option>
-          <option value="Spade">SPADE (Fashion)</option>
-          <option value="Heart">HEART (Glamour)</option>
-          <option value="Diamond">DIAMOND (Playful)</option>
-          <option value="Club">CLUB (Melancholy)</option>
-          <option value="Joker">JOKER (Unique)</option>
-        </select>
-      </div>
-      <button type="submit" class="form-submit hover-target">JOIN THE ARCHIVE</button>
-    </form>
-  </section>
-
   <section class="background" id="about">
-    <div class="section-header"><h2 class="section-title">About</h2><span class="section-subtitle">Behind The Lens</span></div>
-    <p class="quote">“Structure is the music of light.”</p>
+    <div class="section-header">
+      <h2 class="section-title-about">The Vision</h2>
+    </div>
+    <div class="artist-statement">
+      <p>
+        攝影不只是按下快門，而是對<span>光線</span>與<span>結構</span>的重新編碼。<br><br>
+        在 EDEN D. 的鏡頭下，我們剝除繁雜的雜訊，專注於人與空間的絕對關係。
+        無論是幾何線條的冷靜，還是情感流動的溫度，
+        我們致力於捕捉那些稍縱即逝、卻又永恆存在的<span>維度</span>。<br><br>
+        這不只是一張照片，這是你的<span>視覺資產</span>。
+      </p>
+    </div>
     <div class="contact-info">
       <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
       <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
@@ -584,46 +516,39 @@
   <script>
     window.addEventListener('load', () => { setTimeout(() => { document.body.classList.add('loaded'); }, 1200); });
 
+    /* --- Gallery Logic --- */
     const totalWorks = 117; 
     const initialShow = 15; 
     const galleryContainer = document.getElementById('galleryContainer');
     const swiperWrapper = document.getElementById('swiperWrapper');
-    
-    // [大師級] 分類清單 (對應你的方案)
-    const categories = ['Structure', 'Scale', 'Dimension'];
 
     function generateGallery() {
       galleryContainer.innerHTML = '';
       swiperWrapper.innerHTML = '';
 
-      // --- Masonry with Random Categories ---
+      // Masonry
       for (let i = 1; i <= totalWorks; i++) {
-        const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
         const figNum = i.toString().padStart(3, '0');
         
-        // 隨機分配一個分類 (之後你可以手動指定)
-        const randomCat = categories[Math.floor(Math.random() * categories.length)];
+        let category = 'Structure'; 
+        if (i <= 40) { category = 'Structure'; } 
+        else if (i <= 80) { category = 'Scale'; } 
+        else { category = 'Dimension'; }
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
-        // 將分類寫入 data-category 屬性
-        itemDiv.setAttribute('data-category', randomCat);
-        
+        itemDiv.setAttribute('data-category', category);
         if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
         itemDiv.innerHTML = `
             <img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">
-            <div class="item-meta">
-                <span class="meta-id">FIG. ${figNum}</span>
-                <div class="meta-line"></div>
-                <span class="meta-tag">${randomCat.toUpperCase()}</span>
-            </div>
+            <div class="item-meta"><span class="meta-id">FIG. ${figNum}</span><div class="meta-line"></div><span class="meta-tag">${category.toUpperCase()}</span></div>
         `;
         galleryContainer.appendChild(itemDiv);
       }
 
-      // --- Swiper ---
+      // Swiper
       for (let i = 1; i <= 10; i++) {
         const num = i.toString().padStart(2, '0');
         const imgPath = `images/works/portfolio00-${num}.jpg`;
@@ -635,32 +560,36 @@
     }
     generateGallery();
     
-    // --- Filter Function ---
+    /* --- Audio Logic --- */
+    let isPlaying = false;
+    function toggleAudio() {
+        const audio = document.getElementById('bgMusic');
+        const wave = document.getElementById('soundWave');
+        if (isPlaying) {
+            audio.pause();
+            wave.classList.add('paused');
+        } else {
+            audio.volume = 0.3; // Default volume 30%
+            audio.play().catch(e => console.log("Audio play failed:", e));
+            wave.classList.remove('paused');
+        }
+        isPlaying = !isPlaying;
+    }
+
+    /* --- Filter --- */
     function filterGallery(category, btn) {
-        // 1. Update Buttons
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
-        // 2. Filter Items
         const items = document.querySelectorAll('.gallery-item');
         items.forEach(item => {
-            // 先移除所有隱藏狀態，讓篩選重新計算
             item.classList.remove('hidden-loadmore'); 
-            
             if (category === 'all' || item.getAttribute('data-category') === category) {
                 item.classList.remove('filtered-out');
-                // 觸發重現動畫
                 item.classList.remove('reveal');
                 setTimeout(() => item.classList.add('reveal'), 50);
-            } else {
-                item.classList.add('filtered-out');
-            }
+            } else { item.classList.add('filtered-out'); }
         });
-        
-        // 篩選後隱藏 Load More 按鈕 (因為已經重新洗牌了)
         document.getElementById('loadMoreBtn').style.display = 'none';
-        
-        // 重新初始化 Scroll Reveal
         setTimeout(initScrollReveal, 100);
     }
 
@@ -717,7 +646,6 @@
       document.body.classList.remove('hover-active');
     }
     document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
-
     document.onkeydown = function(e) { if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'S'.charCodeAt(0)))) return false; }
 
     function copyEmail() {
