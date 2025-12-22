@@ -41,7 +41,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (THE DUNE EFFECT) --- */
+    /* --- 2. Grain & Preloader --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -52,35 +52,25 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      /* 轉場時背景淡出 */
       transition: opacity 2s ease, visibility 2s ease; 
     }
     
-    /* 史詩感字體設計 */
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2rem; color: #e0e0e0; 
-      letter-spacing: 0.8em; /* 極寬字距 */
-      text-transform: uppercase;
-      opacity: 0; 
-      transform: scale(1);
-      /* 初始顯現 */
+      letter-spacing: 0.8em; text-transform: uppercase;
+      opacity: 0; transform: scale(1);
       animation: fadeInStatic 2s ease-out forwards;
       will-change: transform, opacity, filter;
     }
     
-    /* 靜止狀態，無呼吸，純粹的莊嚴 */
     @keyframes fadeInStatic {
         0% { opacity: 0; letter-spacing: 1.2em; filter: blur(5px); }
         100% { opacity: 1; letter-spacing: 0.8em; filter: blur(0px); }
     }
 
-    /* 穿梭特效 (Warp Effect) */
     body.warping .loader-text {
-        transition: all 1.5s cubic-bezier(0.7, 0, 0.2, 1); /* 加速曲線 */
-        transform: scale(30); /* 巨大放大 */
-        opacity: 0;
-        filter: blur(20px); /* 動態模糊 */
-        letter-spacing: 5em;
+        transition: all 1.5s cubic-bezier(0.7, 0, 0.2, 1);
+        transform: scale(30); opacity: 0; filter: blur(20px); letter-spacing: 5em;
     }
     
     body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -91,7 +81,7 @@
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 2s ease 1s; /* 進入後緩慢顯現 */
+      opacity: 0; transition: opacity 2s ease 1s;
     }
     body.site-active nav { opacity: 1; }
 
@@ -242,7 +232,7 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s ease; }
     .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
-    /* --- 8. Pricing --- */
+    /* --- 8. Pricing (UPDATED WITH HEALING HOVER) --- */
     .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -253,7 +243,6 @@
         overflow: hidden; 
     }
     
-    /* [修正] 背景圖樣式 */
     .card-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
@@ -294,7 +283,7 @@
     .price-specs li::before { content: '•'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 500; }
 
-    /* [新增] Jump Button (防呆按鈕) */
+    /* Jump Button */
     .jump-btn {
         margin-top: 20px; padding: 10px 0;
         background: transparent; border: 1px solid rgba(255,255,255,0.2);
@@ -304,12 +293,34 @@
     }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 9. Royal --- */
-    .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; }
-    .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; }
+    /* --- 9. Royal (UPDATED: SUIT STROKE ANIMATION) --- */
+    .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; position: relative; overflow: hidden; }
+    .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; z-index: 2; }
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 80px; }
+    
+    /* [新增] Royal Suits Background (SVG Layers) */
+    .royal-suits-bg {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: 1;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0 5vw; opacity: 0.15; /* 極低透明度，隱約可見 */
+    }
+    .suit-icon { width: 15vw; height: 15vw; max-width: 200px; max-height: 200px; fill: none; stroke: #BF953F; stroke-width: 1; }
+    
+    /* 描邊動畫：利用 stroke-dasharray 和 stroke-dashoffset */
+    .suit-icon path {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000; /* 初始隱藏線條 */
+        transition: stroke-dashoffset 2s ease-in-out;
+    }
+    
+    /* 滑鼠移入 Section 時觸發描邊 */
+    .royal-section:hover .suit-icon path {
+        stroke-dashoffset: 0; /* 線條畫出 */
+    }
+
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; display: block; }
     .royal-title { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 30px 0; background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #999; line-height: 1.8; max-width: 500px; font-weight: 300; }
@@ -450,10 +461,10 @@
     
     footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
-    /* --- 13. Lightbox (Refined for Clickability) --- */
+    /* --- 13. Lightbox --- */
     .lightbox { 
         display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,1); /* 純黑沉浸 */
+        background-color: rgba(0,0,0,1); 
         justify-content: center; align-items: center; 
         opacity: 0; transition: opacity 0.3s ease;
         cursor: zoom-out;
@@ -513,6 +524,10 @@
       .filter-btn { font-size: 0.65rem; }
       .artist-statement { padding: 0 20px; }
       .about-name { font-size: 4rem; }
+      
+      /* Mobile Royal Suit Fix */
+      .royal-suits-bg { opacity: 0.1; }
+      .suit-icon { width: 30vw; height: 30vw; }
     }
   </style>
 </head>
@@ -657,6 +672,13 @@
   </section>
 
   <section class="royal-section">
+    <div class="royal-suits-bg">
+        <svg class="suit-icon" viewBox="0 0 24 24"><path d="M12,2 C12,2 4,12 4,16 C4,20 7,22 9.5,22 C11,22 12,21 12,21 C12,21 13,22 14.5,22 C17,22 20,20 20,16 C20,12 12,2 12,2 Z M12,22 L11,24 L13,24 L12,22 Z"></path></svg>
+        <svg class="suit-icon" viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path></svg>
+        <svg class="suit-icon" viewBox="0 0 24 24"><path d="M12,2 C14.5,2 16,4 16,6 C16,7.5 15,9 14,10 C16,10 19,11 19,14 C19,17 16,18 14.5,18 C14,18 13,17.5 13,17.5 L14,22 L10,22 L11,17.5 C11,17.5 10,18 9.5,18 C8,18 5,17 5,14 C5,11 8,10 10,10 C9,9 8,7.5 8,6 C8,4 9.5,2 12,2 Z"></path></svg>
+        <svg class="suit-icon" viewBox="0 0 24 24"><path d="M12,2L22,12L12,22L2,12L12,2Z"></path></svg>
+    </div>
+
     <div class="royal-border">
       <div class="royal-grid">
         <div class="royal-info">
@@ -1002,36 +1024,4 @@
     
     document.addEventListener('mouseout', (e) => { 
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { 
-        document.body.classList.remove('hover-active'); 
-      }
-      if (e.target.classList.contains('image-hover-target')) {
-        document.body.classList.remove('image-hover-active');
-      }
-    });
-
-    const auroraContainer = document.getElementById('aurora-container');
-    const auroras = [];
-    function spawnAurora() {
-      const el = document.createElement('div'); el.classList.add('aurora-ribbon');
-      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.8);
-      let angle = (Math.random() - 0.5) * 40; const driftSpeed = 0.1 + Math.random() * 0.2; 
-      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed; const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
-      el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
-      auroraContainer.appendChild(el);
-      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
-    }
-    function animateAuroras() {
-      for (let i = auroras.length - 1; i >= 0; i--) {
-        let p = auroras[i]; p.life++; p.x += p.vx; p.y += p.vy;
-        let opacity = 0; let fadeDuration = 300;
-        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; } else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; } else { opacity = 1; }
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.2})`;
-        p.el.style.opacity = opacity * 0.35; 
-        if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
-      }
-      requestAnimationFrame(animateAuroras);
-    }
-    setInterval(spawnAurora, 3500); spawnAurora(); spawnAurora(); animateAuroras();
-  </script>
-</body>
-</html>
+        document.body.classList.remove('
