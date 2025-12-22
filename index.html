@@ -9,7 +9,8 @@
   
   <meta property="og:title" content="EDEN — VISUAL ARCHIVE">
   <meta property="og:description" content="Curating life through imagery.">
-  <meta property="og:image" content="images/works/portfolio0-1.jpg"> <meta property="og:url" content="https://yourwebsite.com">
+  <meta property="og:image" content="images/works/portfolio0-1.jpg">
+  <meta property="og:url" content="https://yourwebsite.com">
   <meta name="theme-color" content="#000000">
 
   <link rel="icon" type="image/png" href="images/favicon.png"> 
@@ -42,7 +43,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (THE CINEMATIC CONVERGENCE) --- */
+    /* --- 2. Grain & Preloader (THE DUNE RITUAL) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -53,32 +54,41 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      /* 網站進入時，遮罩緩慢消失 */
-      transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
+      /* 黑幕退場：極慢速的消散，像巨大的門緩緩開啟 */
+      transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1), visibility 3s linear;
     }
     
-    /* 聚攏動畫：從極寬、模糊 -> 緩慢聚焦 */
+    /* 沙丘聚攏儀式 */
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       text-transform: uppercase;
-      will-change: opacity, letter-spacing, filter;
+      will-change: opacity, letter-spacing, filter, transform;
       text-align: center;
       opacity: 0;
-      /* 4.5秒的極致慢動作 */
-      animation: slowConvergence 4.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+      /* 6秒的史詩級慢動作：極端的緩入緩出，製造中間的懸浮感 */
+      animation: duneConvergence 6s cubic-bezier(0.1, 1, 0.2, 1) forwards;
     }
     
-    @keyframes slowConvergence {
+    @keyframes duneConvergence {
         0% { 
             opacity: 0; 
-            letter-spacing: 4em; /* 極度分散 */
-            filter: blur(20px); 
+            letter-spacing: 5em; /* 塵埃散開 */
+            filter: blur(30px); 
+            transform: scale(1.1);
         }
-        20% { opacity: 0.5; } /* 慢慢浮現 */
+        25% { opacity: 0.7; filter: blur(10px); } /* 慢慢顯現 */
+        /* 關鍵：在 80% 到 100% 之間幾乎靜止，製造凝視感 */
+        80% { 
+            opacity: 1; 
+            letter-spacing: 0.55em; 
+            filter: blur(0.5px); 
+            transform: scale(1.005); 
+        }
         100% { 
             opacity: 1; 
-            letter-spacing: 0.5em; /* 完美聚合 */
+            letter-spacing: 0.5em; /* 塵埃落定 */
             filter: blur(0px); 
+            transform: scale(1); 
         }
     }
     
@@ -91,18 +101,16 @@
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; 
-      /* [關鍵] 反相色調：確保 EDEN 在任何背景(包括影片)上都清晰可見 */
-      mix-blend-mode: difference; 
+      mix-blend-mode: difference; /* 反相色調 */
       transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 2s ease 1s; /* 進入後才顯現 */
+      opacity: 0; transition: opacity 3s ease 2s; /* 儀式結束後才緩慢浮現 */
     }
     body.site-active nav { opacity: 1; }
 
     .nav-logo {
       font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 500;
       letter-spacing: 0.1em; text-decoration: none; 
-      color: #fff; /* Difference 模式下，白色會反轉背景色 */
-      cursor: none; flex-shrink: 0;
+      color: #fff; cursor: none; flex-shrink: 0;
     }
     .nav-menu { display: flex; gap: 30px; align-items: center; flex-shrink: 0; }
     .nav-item {
@@ -157,7 +165,6 @@
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
       text-align: center; padding-bottom: 15vh; 
     }
-    /* [修正] 移除 poster 屬性，避免閃爍 */
     .hero-video {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover; z-index: -2;
@@ -174,7 +181,6 @@
       font-weight: 400; letter-spacing: 0.08em; margin: 0; color: #fff;
       text-shadow: 0 0 30px rgba(255,255,255,0.2);
     }
-    /* [修正] 不斜體 */
     .hero h1 span { font-style: normal; font-family: 'Cinzel', serif; }
     
     .hero p {
@@ -310,46 +316,53 @@
     }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 9. Royal (UPDATED: MASTER CLASS ABSTRACT SUITS) --- */
+    /* --- 9. Royal (THE IMPERIAL WEAVE - NOBLE & SLOW) --- */
     .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; position: relative; overflow: hidden; }
     .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; z-index: 2; }
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 80px; }
     
-    /* 大師級局部花色佈局 */
+    /* 大師級意象書法佈局 */
     .royal-suits-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         pointer-events: none; z-index: 1;
     }
     .suit-abstract {
-        position: absolute; width: 40vw; height: 40vw; max-width: 600px; max-height: 600px;
-        fill: none; stroke: #BF953F; stroke-width: 0.5; opacity: 0.15;
-    }
-    /* 黑桃：左上角局部 */
-    .suit-spade { top: -10%; left: -10%; transform: rotate(-15deg); }
-    /* 紅心：右下角局部 */
-    .suit-heart { bottom: -15%; right: -5%; transform: rotate(15deg); }
-    /* 方塊：右上角極簡線條 */
-    .suit-diamond { top: 10%; right: -15%; opacity: 0.1; width: 30vw; height: 30vw; }
-    /* 梅花：左下角隱約 */
-    .suit-club { bottom: 0%; left: -15%; opacity: 0.1; width: 35vw; height: 35vw; }
-
-    /* 描邊動畫 (Stroke Animation) */
-    .suit-abstract path {
-        stroke-dasharray: 1500;
-        stroke-dashoffset: 1500; /* 隱藏狀態 */
-        transition: stroke-dashoffset 3s ease-out, opacity 1s ease;
+        position: absolute; width: 45vw; height: 45vw; max-width: 700px; max-height: 700px;
+        fill: none; 
+        stroke: #BF953F; 
+        stroke-width: 0.25; /* 極細筆觸 */
+        opacity: 0.1;
+        /* 關鍵：加入光澤感濾鏡，讓線條發光 */
+        filter: drop-shadow(0 0 1px rgba(191, 149, 63, 0.8));
+        transition: opacity 4s ease;
     }
     
-    /* Hover 時觸發 */
+    /* 重新設計的意象書法 SVG */
+    /* Spade: 優雅的雙弧線與柄 */
+    .suit-spade { top: -15%; left: -10%; transform: rotate(-10deg); }
+    /* Heart: 開放式的流動心形 */
+    .suit-heart { bottom: -20%; right: -10%; transform: rotate(10deg); }
+    /* Diamond: 極簡的四角暗示 */
+    .suit-diamond { top: 5%; right: -20%; opacity: 0.08; width: 40vw; height: 40vw; transform: rotate(45deg); }
+    /* Club: 三個獨立的旋渦 */
+    .suit-club { bottom: 5%; left: -20%; opacity: 0.08; width: 40vw; height: 40vw; transform: rotate(-20deg); }
+
+    /* 7秒極慢速描邊動畫 */
+    .suit-abstract path {
+        stroke-dasharray: 2000;
+        stroke-dashoffset: 2000;
+        /* 使用極緩的 ease-in-out */
+        transition: stroke-dashoffset 7s cubic-bezier(0.3, 0, 0.2, 1), opacity 4s ease;
+    }
+    
+    /* Hover 觸發 */
     .royal-section:hover .suit-abstract path {
-        stroke-dashoffset: 0; /* 優雅畫出 */
-        opacity: 1;
+        stroke-dashoffset: 0;
     }
     .royal-section:hover .suit-abstract {
-        opacity: 0.3; /* 整體稍微變亮 */
-        transition: opacity 1s ease;
+        opacity: 0.35; /* 緩慢浮現 */
     }
 
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; display: block; }
@@ -558,7 +571,7 @@
       
       /* Mobile Royal Suit Fix */
       .royal-suits-bg { opacity: 0.1; }
-      .suit-abstract { width: 60vw; height: 60vw; }
+      .suit-abstract { width: 70vw; height: 70vw; }
     }
   </style>
 </head>
@@ -595,7 +608,8 @@
   </nav>
 
   <section class="hero">
-    <video muted playsinline class="hero-video" id="heroVideo"> <source src="hero-video.mp4" type="video/mp4">
+    <video muted playsinline class="hero-video" id="heroVideo">
+        <source src="hero-video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -704,16 +718,16 @@
   <section class="royal-section">
     <div class="royal-suits-bg">
         <svg class="suit-abstract suit-spade" viewBox="0 0 100 100">
-            <path d="M50,10 C50,10 20,50 20,65 C20,80 35,90 50,90 C65,90 80,80 80,65 C80,50 50,10 50,10 Z M50,90 L50,100" />
+            <path d="M50,5 C50,5 30,45 30,65 C30,85 45,90 50,90 C55,90 70,85 70,65 C70,45 50,5 50,5 Z M50,90 Q50,100 50,100" />
         </svg>
         <svg class="suit-abstract suit-heart" viewBox="0 0 100 100">
-            <path d="M50,90 C50,90 90,60 90,35 C90,15 70,10 50,30 C30,10 10,15 10,35 C10,60 50,90 50,90 Z" />
+            <path d="M50,85 C50,85 10,55 10,30 C10,10 35,10 50,30 C65,10 90,10 90,30 C90,55 50,85 50,85 Z" />
         </svg>
         <svg class="suit-abstract suit-diamond" viewBox="0 0 100 100">
-            <path d="M50,10 L90,50 L50,90 L10,50 Z" />
+            <path d="M50,5 C50,5 90,50 50,95 C50,95 10,50 50,5 Z" />
         </svg>
         <svg class="suit-abstract suit-club" viewBox="0 0 100 100">
-            <path d="M50,20 C60,20 70,30 70,40 C70,50 60,60 50,60 C40,60 30,50 30,40 C30,30 40,20 50,20 Z M50,60 L50,100 M20,60 C20,40 40,40 50,60 M80,60 C80,40 60,40 50,60" />
+            <path d="M50,30 C65,30 65,50 50,50 C35,50 35,30 50,30 Z M25,65 C40,65 40,85 25,85 C10,85 10,65 25,65 Z M75,65 C90,65 90,85 75,85 C60,85 60,65 75,65 Z M50,50 L50,100" />
         </svg>
     </div>
 
@@ -838,10 +852,10 @@
         window.scrollTo(0, 0); // Reset scroll position
     });
 
-    // 4.2s: Reveal Site & Play Media (Perfect timing after 4s animation)
+    // 6.5s: Reveal Site & Play Media (Perfect timing after 6s animation)
     setTimeout(() => {
         enterSite();
-    }, 4200);
+    }, 6500);
 
     function enterSite() {
         document.body.classList.add('site-active');
