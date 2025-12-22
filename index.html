@@ -41,7 +41,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader --- */
+    /* --- 2. Grain & Preloader (THE DUNE WARP FIX) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -52,28 +52,34 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 2s ease, visibility 2s ease; 
+      /* 確保淡出時不會擋住滑鼠 */
+      transition: opacity 1.5s ease, visibility 1.5s ease;
+      opacity: 1; visibility: visible;
     }
     
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 2rem; color: #e0e0e0; 
-      letter-spacing: 0.8em; text-transform: uppercase;
-      opacity: 0; transform: scale(1);
-      animation: fadeInStatic 2s ease-out forwards;
+      font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; 
+      letter-spacing: 0.5em; text-transform: uppercase;
+      opacity: 1; transform: scale(1) translateZ(0); /* 硬體加速 */
+      transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1); /* 加速曲線 */
       will-change: transform, opacity, filter;
+      text-align: center;
     }
     
-    @keyframes fadeInStatic {
-        0% { opacity: 0; letter-spacing: 1.2em; filter: blur(5px); }
-        100% { opacity: 1; letter-spacing: 0.8em; filter: blur(0px); }
-    }
-
+    /* [關鍵] 穿梭狀態 */
     body.warping .loader-text {
-        transition: all 1.5s cubic-bezier(0.7, 0, 0.2, 1);
-        transform: scale(30); opacity: 0; filter: blur(20px); letter-spacing: 5em;
+        transform: scale(100); /* 放大 100 倍，衝向螢幕 */
+        opacity: 0; 
+        filter: blur(20px); /* 動態模糊 */
+        letter-spacing: 2em; /* 字距拉開 */
     }
     
-    body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
+    /* [關鍵] 網站啟用狀態 */
+    body.site-active #preloader { 
+        opacity: 0; 
+        visibility: hidden; 
+        pointer-events: none; /* 絕對確保不擋路 */
+    }
     body.site-active { overflow-y: auto; }
 
     /* --- 3. UI: Nav & Cursor --- */
@@ -81,7 +87,7 @@
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 2s ease 1s;
+      opacity: 0; transition: opacity 2s ease 1.5s; /* 慢一點出來，讓封面先震撼 */
     }
     body.site-active nav { opacity: 1; }
 
@@ -158,7 +164,8 @@
       font-weight: 400; letter-spacing: 0.08em; margin: 0; color: #fff;
       text-shadow: 0 0 30px rgba(255,255,255,0.2);
     }
-    .hero h1 span { font-style: italic; font-family: 'Cinzel', serif; }
+    /* [修正] 不斜體 */
+    .hero h1 span { font-style: normal; font-family: 'Cinzel', serif; }
     .hero p {
       margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
       letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.7);
@@ -232,7 +239,7 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s ease; }
     .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
-    /* --- 8. Pricing (UPDATED WITH HEALING HOVER) --- */
+    /* --- 8. Pricing --- */
     .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -266,7 +273,6 @@
     
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); }
     .price-card.featured .card-bg { opacity: 0; } 
-    /* featured hover 時才顯示背景 */
     .price-card.featured:hover .card-bg, .price-card.featured.active .card-bg { opacity: 1; }
     
     .card-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #000; border: 1px solid #BF953F; color: #BF953F; font-size: 0.6rem; padding: 6px 15px; letter-spacing: 0.2em; text-transform: uppercase; }
@@ -283,7 +289,6 @@
     .price-specs li::before { content: '•'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 500; }
 
-    /* Jump Button */
     .jump-btn {
         margin-top: 20px; padding: 10px 0;
         background: transparent; border: 1px solid rgba(255,255,255,0.2);
@@ -293,33 +298,26 @@
     }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 9. Royal (UPDATED: SUIT STROKE ANIMATION) --- */
+    /* --- 9. Royal --- */
     .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; position: relative; overflow: hidden; }
     .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; z-index: 2; }
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 80px; }
     
-    /* [新增] Royal Suits Background (SVG Layers) */
     .royal-suits-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         pointer-events: none; z-index: 1;
         display: flex; justify-content: space-between; align-items: center;
-        padding: 0 5vw; opacity: 0.15; /* 極低透明度，隱約可見 */
+        padding: 0 5vw; opacity: 0.15;
     }
     .suit-icon { width: 15vw; height: 15vw; max-width: 200px; max-height: 200px; fill: none; stroke: #BF953F; stroke-width: 1; }
-    
-    /* 描邊動畫：利用 stroke-dasharray 和 stroke-dashoffset */
     .suit-icon path {
         stroke-dasharray: 1000;
-        stroke-dashoffset: 1000; /* 初始隱藏線條 */
+        stroke-dashoffset: 1000;
         transition: stroke-dashoffset 2s ease-in-out;
     }
-    
-    /* 滑鼠移入 Section 時觸發描邊 */
-    .royal-section:hover .suit-icon path {
-        stroke-dashoffset: 0; /* 線條畫出 */
-    }
+    .royal-section:hover .suit-icon path { stroke-dashoffset: 0; }
 
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; display: block; }
     .royal-title { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff; margin: 0 0 30px 0; background: -webkit-linear-gradient(#eee, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -790,50 +788,45 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- Force Reset Scroll on Load --- */
+    /* --- Force Reset Scroll on Load (Timer-based) --- */
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
-    } else {
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-        }
     }
-
-    let isLoaded = false;
     
-    // [Dune Effect] Auto Enter after 5s
+    // Timer-based loading sequence (absolute force)
+    window.addEventListener('load', () => {
+        window.scrollTo(0, 0); // Reset scroll position
+    });
+
+    // 4.0s: Start Warp Animation
+    setTimeout(() => {
+        document.body.classList.add('warping');
+    }, 4000);
+
+    // 5.2s: Reveal Site & Play Media
     setTimeout(() => {
         enterSite();
-    }, 5000);
+    }, 5200);
 
     function enterSite() {
-        // Trigger Warp Animation
-        const preloader = document.getElementById('preloader');
-        preloader.classList.add('warping');
+        document.body.classList.add('site-active');
         
-        // Wait for warp animation (1s) then reveal site
+        const video = document.getElementById('heroVideo');
+        if(video) video.play().catch(e => console.log("Video play failed:", e));
+        
+        // Try audio (might be blocked)
+        const audio = document.getElementById('bgMusic');
+        if(audio) {
+            audio.volume = 0.3;
+            audio.play().then(() => {
+                document.getElementById('soundWave').classList.remove('paused');
+            }).catch(e => {});
+        }
+        
+        // Enable scroll
         setTimeout(() => {
-            document.body.classList.add('site-active');
-            // Try playing video
-            const video = document.getElementById('heroVideo');
-            if(video) video.play().catch(e=>{});
-            
-            // Try playing audio (Browser might block this without click)
-            const audio = document.getElementById('bgMusic');
-            if(audio) {
-                audio.volume = 0.3;
-                audio.play().then(() => {
-                    document.getElementById('soundWave').classList.remove('paused');
-                }).catch(e => {
-                    console.log("Auto-play blocked by browser policy. User must toggle manually.");
-                });
-            }
-            
-            // Enable smooth scroll after entry
-            setTimeout(() => {
-                document.documentElement.style.scrollBehavior = 'smooth';
-            }, 1000);
-        }, 800); // Sync with css transition
+            document.documentElement.style.scrollBehavior = 'smooth';
+        }, 500);
     }
 
     /* --- Gallery Logic --- */
@@ -1024,4 +1017,36 @@
     
     document.addEventListener('mouseout', (e) => { 
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { 
-        document.body.classList.remove('
+        document.body.classList.remove('hover-active'); 
+      }
+      if (e.target.classList.contains('image-hover-target')) {
+        document.body.classList.remove('image-hover-active');
+      }
+    });
+
+    const auroraContainer = document.getElementById('aurora-container');
+    const auroras = [];
+    function spawnAurora() {
+      const el = document.createElement('div'); el.classList.add('aurora-ribbon');
+      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.8);
+      let angle = (Math.random() - 0.5) * 40; const driftSpeed = 0.1 + Math.random() * 0.2; 
+      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed; const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
+      el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
+      auroraContainer.appendChild(el);
+      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
+    }
+    function animateAuroras() {
+      for (let i = auroras.length - 1; i >= 0; i--) {
+        let p = auroras[i]; p.life++; p.x += p.vx; p.y += p.vy;
+        let opacity = 0; let fadeDuration = 300;
+        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; } else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; } else { opacity = 1; }
+        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.2})`;
+        p.el.style.opacity = opacity * 0.35; 
+        if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
+      }
+      requestAnimationFrame(animateAuroras);
+    }
+    setInterval(spawnAurora, 3500); spawnAurora(); spawnAurora(); animateAuroras();
+  </script>
+</body>
+</html>
