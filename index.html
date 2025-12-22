@@ -56,46 +56,31 @@
       transition: opacity 2.5s ease-in-out, visibility 2.5s ease-in-out;
     }
     
-    /* [修正] 光學顯影動畫 */
+    /* 光學顯影動畫 */
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       text-transform: uppercase;
       text-align: center;
-      width: 100%; /* 確保容器寬度固定，避免抖動 */
+      width: 100%; 
       
-      /* 初始狀態 */
       opacity: 0;
       letter-spacing: 3em;
-      transform: scale(1.1) translateZ(0); /* 硬體加速防抖動 */
+      transform: scale(1.1) translateZ(0); 
       
       /* 6秒的極致慢動作：光學聚攏 */
       animation: opticalEmerge 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       
-      /* 確保渲染平滑 */
       backface-visibility: hidden;
       -webkit-font-smoothing: antialiased;
     }
     
     @keyframes opticalEmerge {
-        0% { 
-            opacity: 0; 
-            letter-spacing: 3em; /* 極寬 */
-            transform: scale(1.1); /* 微大 */
-        }
-        20% { 
-            opacity: 0; /* 保持黑畫面一下下 */
-        }
-        40% {
-            opacity: 0.4; /* 慢慢浮現 */
-        }
-        100% { 
-            opacity: 1; 
-            letter-spacing: 0.5em; /* 落定 */
-            transform: scale(1); 
-        }
+        0% { opacity: 0; letter-spacing: 3em; transform: scale(1.1); }
+        20% { opacity: 0; }
+        40% { opacity: 0.4; }
+        100% { opacity: 1; letter-spacing: 0.5em; transform: scale(1); }
     }
     
-    /* 網站啟用後 */
     body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
     body.site-active { overflow-y: auto; height: auto; }
 
@@ -106,7 +91,7 @@
       z-index: 10000; 
       mix-blend-mode: difference; 
       transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 3s ease 2s; /* 慢速浮現 */
+      opacity: 0; transition: opacity 3s ease 2s; 
     }
     body.site-active nav { opacity: 1; }
 
@@ -319,30 +304,45 @@
     }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 9. Royal (THE IMPERIAL OUTLINE - REFINED) --- */
+    /* --- 9. Royal (THE IMPERIAL FOIL STAMPING) --- */
     .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; position: relative; overflow: hidden; }
-    .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; z-index: 2; }
+    
+    /* 燙金邊框特效 (使用 background-clip 實現金屬漸層邊框) */
+    .royal-border {
+        border: 2px solid transparent; /* 透明邊框佔位 */
+        /* 雙重背景：內層純黑，外層金屬漸層 */
+        background-image: linear-gradient(#050505, #050505), 
+                          linear-gradient(135deg, #8a6e2f 0%, #d4af37 25%, #fcf6ba 50%, #d4af37 75%, #8a6e2f 100%);
+        background-origin: border-box;
+        background-clip: content-box, border-box; /* 關鍵：讓漸層只顯示在邊框區域 */
+        padding: 80px; position: relative; z-index: 2;
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.8); /* 增加內部深度感 */
+    }
+
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 80px; }
     
-    /* 大師級輪廓背景 */
+    /* 燙金輪廓背景 */
     .royal-suits-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         pointer-events: none; z-index: 1;
     }
+    
+    /* 定義 SVG 燙金漸層 (在 HTML 中) */
+    
     .suit-outline {
         position: absolute; width: 50vw; height: 50vw; max-width: 800px; max-height: 800px;
         fill: none; 
-        stroke: #BF953F; 
-        stroke-width: 0.25; /* 極細筆觸 */
-        opacity: 0.08;
-        /* 光澤感濾鏡 */
-        filter: drop-shadow(0 0 1px rgba(191, 149, 63, 0.8));
+        stroke: url(#gold-foil-gradient); /* 應用燙金漸層 */
+        stroke-width: 0.5; /* 稍微加粗以顯示質感 */
+        opacity: 0.15; /* 基礎可見度 */
+        /* 物理陰影，製造浮起感，而非發光 */
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
         transition: opacity 4s ease;
     }
     
-    /* Spade Outline */
+    /* Spade Outline (Corrected Shape) */
     .suit-spade-outline { top: -20%; left: -15%; transform: rotate(-15deg); }
     /* Heart Outline */
     .suit-heart-outline { bottom: -25%; right: -15%; transform: rotate(15deg); }
@@ -354,12 +354,12 @@
         transition: stroke-dashoffset 7s cubic-bezier(0.3, 0, 0.2, 1), opacity 4s ease;
     }
     
-    /* Hover 觸發 */
+    /* Hover 觸發 - 變亮並浮現 */
     .royal-section:hover .suit-outline path {
         stroke-dashoffset: 0;
     }
     .royal-section:hover .suit-outline {
-        opacity: 0.3; /* 緩慢浮現 */
+        opacity: 0.5; /* 提高亮度，讓金屬反光更明顯 */
     }
 
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; display: block; }
@@ -714,8 +714,15 @@
 
   <section class="royal-section">
     <div class="royal-suits-bg">
+        <svg width="0" height="0">
+          <defs>
+            <linearGradient id="gold-foil-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8a6e2f;stop-opacity:1" /> <stop offset="25%" style="stop-color:#d4af37;stop-opacity:1" /> <stop offset="50%" style="stop-color:#fcf6ba;stop-opacity:1" /> <stop offset="75%" style="stop-color:#d4af37;stop-opacity:1" /> <stop offset="100%" style="stop-color:#8a6e2f;stop-opacity:1" /> </linearGradient>
+          </defs>
+        </svg>
+
         <svg class="suit-outline suit-spade-outline" viewBox="0 0 100 100">
-            <path d="M50,5 C50,5 25,55 25,70 C25,85 35,92 50,92 C65,92 75,85 75,70 C75,55 50,5 50,5 Z M50,92 L50,100" />
+            <path d="M50,0 C50,0 20,30 15,55 C10,80 40,85 50,70 C60,85 90,80 85,55 C80,30 50,0 50,0 Z M50,70 L50,100 M40,100 L60,100" />
         </svg>
         <svg class="suit-outline suit-heart-outline" viewBox="0 0 100 100">
             <path d="M50,95 C50,95 95,55 95,30 C95,10 75,5 50,25 C25,5 5,10 5,30 C5,55 50,95 50,95 Z" />
