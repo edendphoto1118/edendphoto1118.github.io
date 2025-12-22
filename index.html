@@ -23,7 +23,7 @@
   <style>
     /* --- 1. Base & Reset --- */
     * { box-sizing: border-box; }
-    html { scroll-behavior: auto; /* [修正] 暫時關閉平滑滾動，以免干擾強制歸零 */ width: 100%; overflow-x: hidden; }
+    html { scroll-behavior: auto; width: 100%; overflow-x: hidden; }
     
     /* Custom Scrollbar - The Hidden Gold Thread */
     ::-webkit-scrollbar { width: 5px; }
@@ -34,45 +34,47 @@
     body {
       margin: 0; padding: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: none; /* 全站隱藏系統鼠標 */
-      user-select: none; -webkit-user-select: none;
-      /* 初始禁止捲動，直到進入網站 */
-      overflow: hidden; 
+      cursor: none; user-select: none; -webkit-user-select: none;
+      overflow: hidden; /* Initial lock */
     }
     
-    /* 確保圖片可以接收點擊事件 */
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (UPDATED LOGIC) --- */
+    /* --- 2. Grain & Preloader (Fix Stuck Issue) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
+    
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       transition: opacity 1.5s ease, visibility 1.5s ease;
     }
+    
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff; 
-      animation: duneBreathe 4s infinite ease-in-out; opacity: 0;
-      letter-spacing: 0.2em;
+      animation: duneBreathe 4s infinite ease-in-out; 
+      letter-spacing: 0.2em; margin-bottom: 30px;
     }
-    /* 進入按鈕 (初始隱藏) */
+    
+    /* 確保按鈕樣式正確且預設不可點擊 */
     #enter-site-btn {
-        margin-top: 40px; opacity: 0; pointer-events: none;
+        opacity: 0; pointer-events: none; transform: translateY(20px);
         background: transparent; border: 1px solid #BF953F; color: #BF953F;
-        padding: 15px 40px; font-family: 'Montserrat', sans-serif; 
-        font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
-        transition: all 0.5s ease; cursor: none;
+        padding: 15px 50px; font-family: 'Montserrat', sans-serif; 
+        font-size: 0.9rem; letter-spacing: 0.3em; text-transform: uppercase;
+        transition: all 0.8s ease; cursor: none;
         display: flex; flex-direction: column; align-items: center; gap: 5px;
     }
     #enter-site-btn span { font-size: 0.6rem; letter-spacing: 0.1em; opacity: 0.7; }
-    #enter-site-btn.show { opacity: 1; pointer-events: auto; }
-    #enter-site-btn:hover { background: #BF953F; color: #000; box-shadow: 0 0 30px rgba(191, 149, 63, 0.6); }
+    
+    /* 當 JS 加入 .show 時顯示 */
+    #enter-site-btn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #enter-site-btn:hover { background: #BF953F; color: #000; box-shadow: 0 0 40px rgba(191, 149, 63, 0.6); }
 
     @keyframes duneBreathe {
       0% { opacity: 0.2; letter-spacing: 0.2em; filter: blur(2px); }
@@ -80,16 +82,15 @@
       100% { opacity: 0.2; letter-spacing: 0.2em; filter: blur(2px); }
     }
     
-    /* 當 body 加上 loaded class 後，preloader 才會消失 */
     body.site-active #preloader { opacity: 0; visibility: hidden; }
-    body.site-active { overflow-y: auto; } /* 進入後才允許捲動 */
+    body.site-active { overflow-y: auto; }
 
     /* --- 3. UI: Nav & Cursor --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 1s 0.5s; /* 初始隱藏，進入後顯示 */
+      opacity: 0; transition: opacity 1s 0.5s;
     }
     body.site-active nav { opacity: 1; }
 
@@ -130,7 +131,6 @@
         border: 1px solid #fff; background-color: transparent; 
         animation: rotateCursor 4s infinite linear; 
     }
-    /* 圖片互動 (呼吸閃爍) */
     body.image-hover-active .cursor-dot {
         width: 30px; height: 30px;
         background-color: rgba(255, 255, 255, 0.8);
@@ -241,7 +241,7 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s ease; }
     .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
-    /* --- 8. Pricing (UPDATED WITH HEALING HOVER) --- */
+    /* --- 8. Pricing --- */
     .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -252,7 +252,6 @@
         overflow: hidden; 
     }
     
-    /* 顯影背景圖 (更新為上傳的檔名) */
     .card-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
@@ -437,10 +436,10 @@
     
     footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
-    /* --- 13. Lightbox (Refined for Clickability) --- */
+    /* --- 13. Lightbox (Immersive Pure Black) --- */
     .lightbox { 
         display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,1); /* 純黑沉浸 */
+        background-color: rgba(0,0,0,1); /* Pure Black */
         justify-content: center; align-items: center; 
         opacity: 0; transition: opacity 0.3s ease;
         cursor: zoom-out;
@@ -541,3 +540,465 @@
 
   <section class="hero">
     <video muted playsinline class="hero-video" poster="hero.jpg" id="heroVideo">
+        <source src="hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>EDEN <span>D.</span></h1>
+      <p>Visual Director / Photographer</p>
+    </div>
+    <div class="scroll-indicator">
+        <span class="scroll-text">Scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <section class="film-strip">
+    <div class="section-header">
+      <h2 class="section-title">The Narrative</h2>
+      <span class="section-subtitle">Featured Selections</span>
+    </div>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper" id="swiperWrapper"></div>
+    </div>
+  </section>
+
+  <section class="masterpiece-gallery" id="work">
+    <div class="section-header">
+      <h2 class="section-title">Visual Anthology</h2>
+      <span class="section-subtitle">Categorized Archive</span>
+    </div>
+    <div class="filter-tabs">
+        <button class="filter-btn active hover-target" onclick="filterGallery('all', this)">ALL</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Structure', this)">STRUCTURE</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Scale', this)">SCALE</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Dimension', this)">DIMENSION</button>
+    </div>
+    <div class="gallery-container" id="galleryContainer"></div>
+    <div class="load-more-container">
+        <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
+    </div>
+  </section>
+  
+  <section class="pricing-section" id="pricing">
+    <div class="section-header">
+      <h2 class="section-title">EDEN VISUALS</h2>
+      <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
+        <span class="discount-badge">Structure</span>
+        <h3 class="price-title">The Portrait</h3>
+        <span class="price-subtitle">結構・幾何形象</span>
+        <div class="price-wrapper"><span class="price-original">NT$ 8,800</span><span class="price-amount">NT$ 6,800</span></div>
+        <p class="price-desc">
+            「結構」—— 剝離繁複，回歸本質。<br>
+            以建築般的幾何線條，重塑您的專業輪廓。<br>
+            極簡，是為了讓靈魂更清晰。
+        </p>
+        <ul class="price-specs">
+          <li><strong>Session Time:</strong> 1.5 Hours</li>
+          <li><strong>Look:</strong> 1 Outfit</li>
+          <li><strong>Deliverables:</strong> 6 Retouched Images</li>
+          <li><strong>Focus:</strong> Minimalist, High-Contrast, Professional Flash Shaping.</li>
+        </ul>
+      </div>
+      <div class="price-card" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
+        <span class="discount-badge">Scale</span>
+        <h3 class="price-title">The Ambiance</h3>
+        <span class="price-subtitle">尺度・場景氛圍</span>
+        <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
+        <p class="price-desc">
+            「尺度」—— 人與環境的對話。<br>
+            在宏大的城市或自然中，捕捉您與空間共鳴的呼吸感。<br>
+            讓畫面流動，讓故事發生。
+        </p>
+        <ul class="price-specs">
+          <li><strong>Session Time:</strong> 2 Hours</li>
+          <li><strong>Look:</strong> 1 Outfit</li>
+          <li><strong>Deliverables:</strong> 9 Retouched Images</li>
+          <li><strong>Focus:</strong> Space, Mood, Breath.</li>
+        </ul>
+      </div>
+      <div class="price-card featured" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
+        <span class="discount-badge">Dimension</span>
+        <h3 class="price-title">The Cinematic</h3>
+        <span class="price-subtitle">維度・電影敘事</span>
+        <div class="price-wrapper"><span class="price-original">NT$ 16,800</span><span class="price-amount">NT$ 14,800</span></div>
+        <p class="price-desc">
+            「維度」—— 靜止的電影。<br>
+            透過道具與光影的調度，為您的影像注入深層的敘事靈魂。<br>
+            這不只是拍照，這是造夢。
+        </p>
+        <ul class="price-specs">
+          <li><strong>Session Time:</strong> 2.5 Hours</li>
+          <li><strong>Look:</strong> 2 Outfits (w/ Hair & Makeup)</li>
+          <li><strong>Deliverables:</strong> 12 Retouched Images</li>
+          <li><strong>Focus:</strong> Storytelling, Emotion, Cinematic Prop Styling.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="royal-section">
+    <div class="royal-border">
+      <div class="royal-grid">
+        <div class="royal-info">
+          <span class="royal-tag">Limited Edition</span>
+          <h2 class="royal-title">PROJECT: ROYAL DECK</h2>
+          <p class="royal-desc">將您的形象鑄造成可流通的實體王牌。<br>採用德國黑芯紙與燙金工藝，這是屬於您的頂級社交貨幣。</p>
+        </div>
+        <div class="royal-price">
+          <div class="royal-option">
+            <div class="royal-opt-head"><span class="royal-opt-title">Single Seat / 個人席位</span><span class="royal-opt-price">NT$ 22,800</span></div>
+            <div class="royal-opt-list">全套雙風格拍攝 · 精修 18 張 · 訂製撲克牌 5 副 + 藝術海報</div>
+          </div>
+          <div class="royal-option" style="margin-bottom:0;">
+            <div class="royal-opt-head"><span class="royal-opt-title">Double Throne / 雙人聯名</span><span class="royal-opt-price">NT$ 38,800</span></div>
+            <div class="royal-opt-list">雙人互動拍攝 · 精修 24 張 · 訂製撲克牌 10 副 + 轉場 Reels</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking-cta-section">
+      <button class="initiate-btn hover-target" onclick="toggleBooking()">
+          INITIATE BOOKING
+          <span>啟動預約</span>
+      </button>
+  </section>
+
+  <div id="hiddenBooking" class="hidden-booking-container">
+      <div class="booking-interface">
+          <div class="booking-terms">
+              <h3 class="terms-title">BOOKING POLICY</h3>
+              <div class="terms-grid">
+                  <div class="term-item"><h4>費用說明</h4><p>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目。</p></div>
+                  <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p></div>
+                  <div class="term-item"><h4>準時原則</h4><p>遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p></div>
+                  <div class="term-item"><h4>成品交付</h4><p>交付成品為調色/精修後之 JPG 檔。RAW 檔為半成品，恕不提供。</p></div>
+          </div>
+      </div>
+      <div class="calendar-wrapper">
+          <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=0a0a0a&text_color=ffffff&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </div>
+  </div>
+  </div>
+
+  <section class="lead-form-section" id="lead-form">
+    <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
+    <h3 class="lead-title">THE FACE ARCHIVE</h3>
+    <p class="lead-desc">一直在尋找那張能撐起『王牌』的臉。<br>請留下您的 IG，在靈感來襲時，第一個找到您。</p>
+    <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
+      <input type="text" name="name" placeholder="NAME / NICKNAME" class="form-input hover-target" required>
+      <input type="text" name="ig_handle" placeholder="INSTAGRAM ID (@)" class="form-input hover-target" required>
+      <div class="select-wrapper hover-target">
+        <select name="archetype" class="form-select" required>
+          <option value="" disabled selected>SELECT YOUR STYLE (選擇拍攝風格)</option>
+          <option value="Spade">SPADE / 黑桃 - 時尚質感 (Fashion)</option>
+          <option value="Heart">HEART / 紅心 - 魅惑性感 (Glamour)</option>
+          <option value="Diamond">DIAMOND / 方塊 - 俏皮可愛 (Playful)</option>
+          <option value="Club">CLUB / 梅花 - 厭世憂鬱 (Melancholy)</option>
+          <option value="Joker">JOKER / 鬼牌 - 獨特藝術 (Unique)</option>
+        </select>
+      </div>
+      <button type="submit" class="form-submit hover-target">JOIN THE ARCHIVE (加入關注名單)</button>
+    </form>
+    <p class="micro-copy">Membership is by selection only.</p>
+  </section>
+
+  <section class="background" id="about">
+    <div class="editorial-grid">
+        <div class="about-name">
+            EDEN<br>D.
+            <span>VISUAL DIRECTOR</span>
+        </div>
+        <div>
+            <div class="artist-statement">
+                在這個充滿雜訊的世界裡，沉默是頂級的奢華。<br>
+                鏡頭不只是觀察，而是將現實重組為永恆的結構。<br>
+                剝離多餘，只留下形式與光線的絕對關係。
+                <br><br>
+                用影像 策展人生。
+                <br><br>
+                <strong>Curating life through imagery.</strong>
+            </div>
+            <div class="signature">EDEN D.</div>
+        </div>
+        
+        <div class="contact-info">
+          <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
+          <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
+          <button class="email-btn hover-target" onclick="copyEmail()">edendphoto1118@gmail.com</button>
+        </div>
+    </div>
+  </section>
+  
+  <div class="tech-ticker-wrap">
+      <div class="tech-ticker">
+          SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // FISHEYE DISTORTION // 3D PRINTED PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //
+      </div>
+  </div>
+
+  <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="close-btn hover-target" onclick="closeLightbox()"></div>
+    <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation()">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    /* --- Force Reset Scroll on Load (The Ritual) --- */
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    } else {
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+    }
+
+    let isLoaded = false;
+    let minTimePassed = false;
+
+    window.addEventListener('load', () => {
+        window.scrollTo(0, 0); // 雙重保險
+        isLoaded = true;
+        checkReady();
+    });
+
+    // 強制 5 秒
+    setTimeout(() => {
+        minTimePassed = true;
+        checkReady();
+    }, 5000);
+
+    function checkReady() {
+        if (isLoaded || minTimePassed) { // 只要時間到就顯示，不等圖了
+            setTimeout(() => {
+                document.getElementById('enter-site-btn').classList.add('show');
+            }, 100);
+        }
+    }
+
+    function enterSite() {
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0.3;
+        // 嘗試播放音樂，失敗也沒關係
+        audio.play().then(() => {
+            isPlaying = true;
+            document.getElementById('soundWave').classList.remove('paused');
+        }).catch(e => console.log("Audio play failed:", e));
+
+        const video = document.getElementById('heroVideo');
+        video.play().catch(e => console.log("Video play failed:", e));
+
+        document.body.classList.add('site-active');
+        
+        setTimeout(() => {
+            document.documentElement.style.scrollBehavior = 'smooth';
+        }, 1000);
+    }
+
+    /* --- Gallery Logic --- */
+    const totalWorks = 117; 
+    const initialShow = 15; 
+    const galleryContainer = document.getElementById('galleryContainer');
+    const swiperWrapper = document.getElementById('swiperWrapper');
+
+    function generateGallery() {
+      galleryContainer.innerHTML = '';
+      swiperWrapper.innerHTML = '';
+
+      // Masonry
+      for (let i = 1; i <= totalWorks; i++) {
+        const imgPath = `images/works/portfolio0-${i}.jpg`; 
+        const figNum = i.toString().padStart(3, '0');
+        
+        let category = 'Structure'; 
+        if (i <= 40) { category = 'Structure'; } 
+        else if (i <= 80) { category = 'Scale'; } 
+        else { category = 'Dimension'; }
+        
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'gallery-item';
+        itemDiv.setAttribute('data-category', category);
+        if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
+        
+        itemDiv.innerHTML = `
+            <img src="${imgPath}" loading="lazy" class="image-hover-target" onclick="openLightbox(this)" onerror="this.parentElement.style.display='none'">
+            <div class="item-meta"><span class="meta-id">FIG. ${figNum}</span><div class="meta-line"></div><span class="meta-tag">${category.toUpperCase()}</span></div>
+        `;
+        galleryContainer.appendChild(itemDiv);
+      }
+
+      // Swiper
+      for (let i = 1; i <= 10; i++) {
+        const num = i.toString().padStart(2, '0');
+        const imgPath = `images/works/portfolio00-${num}.jpg`;
+        const slideDiv = document.createElement('div');
+        slideDiv.className = 'swiper-slide';
+        slideDiv.innerHTML = `<img src="${imgPath}" class="image-hover-target" onclick="openLightbox(this)" onerror="this.parentElement.style.display='none'">`;
+        swiperWrapper.appendChild(slideDiv);
+      }
+    }
+    generateGallery();
+    
+    /* --- Audio Toggle --- */
+    let isPlaying = true; 
+    function toggleAudio() {
+        const audio = document.getElementById('bgMusic');
+        const wave = document.getElementById('soundWave');
+        if (isPlaying) {
+            audio.pause();
+            wave.classList.add('paused');
+        } else {
+            audio.play();
+            wave.classList.remove('paused');
+        }
+        isPlaying = !isPlaying;
+    }
+
+    /* --- Filter & Load More --- */
+    function filterGallery(category, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const items = document.querySelectorAll('.gallery-item');
+        items.forEach(item => {
+            item.classList.remove('hidden-loadmore'); 
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.classList.remove('filtered-out');
+                item.classList.remove('reveal');
+                setTimeout(() => item.classList.add('reveal'), 50);
+            } else { item.classList.add('filtered-out'); }
+        });
+        document.getElementById('loadMoreBtn').style.display = 'none';
+        setTimeout(initScrollReveal, 100);
+    }
+
+    function loadAllWorks() {
+        const hiddenItems = document.querySelectorAll('.hidden-loadmore');
+        hiddenItems.forEach(item => item.classList.remove('hidden-loadmore'));
+        document.getElementById('loadMoreBtn').style.display = 'none';
+        setTimeout(initScrollReveal, 100);
+    }
+    
+    function toggleBooking() {
+        const bookingSection = document.getElementById('hiddenBooking');
+        bookingSection.classList.toggle('open');
+        if(bookingSection.classList.contains('open')) {
+            setTimeout(() => { bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
+        }
+    }
+
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+      const items = document.querySelectorAll('.gallery-item:not(.filtered-out)');
+      items.forEach(item => observer.observe(item));
+    }
+    setTimeout(initScrollReveal, 500); 
+
+    setTimeout(() => {
+        const realClickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-mechanical-typewriter-single-hit-1386.mp3");
+        realClickSound.volume = 0.2;
+        let lastPlay = 0;
+        var swiper = new Swiper(".mySwiper", {
+          effect: 'slide', allowTouchMove: true, threshold: 10, centeredSlides: true,
+          slidesPerView: 'auto', spaceBetween: 40, loop: false, grabCursor: true, 
+          mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
+          speed: 800, slideToClickedSlide: true, 
+          on: { slideChange: function () { const now = Date.now(); if(now - lastPlay > 200) { const sound = realClickSound.cloneNode(); sound.volume = 0.15; sound.play().catch(()=>{}); lastPlay = now; } } }
+        });
+    }, 500);
+
+    /* --- Lightbox Logic --- */
+    function openLightbox(element) {
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      lightboxImg.src = element.src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById("lightbox");
+      lightbox.classList.remove('active');
+      setTimeout(() => {
+          document.body.style.overflow = "auto";
+          // 保持水平不捲動
+          document.body.style.overflowX = "hidden"; 
+      }, 300);
+    }
+    
+    document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
+
+    function copyEmail() {
+      const email = "edendphoto1118@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => { toast.classList.remove("show"); }, 2000);
+      });
+    }
+
+    /* --- Cursor Logic --- */
+    const cursorDot = document.querySelector('.cursor-dot');
+    document.addEventListener('mousemove', (e) => { cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`; });
+    
+    document.addEventListener('mouseover', (e) => { 
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { 
+        document.body.classList.add('hover-active'); 
+      }
+      if (e.target.classList.contains('image-hover-target')) {
+        document.body.classList.add('image-hover-active');
+      }
+    });
+    
+    document.addEventListener('mouseout', (e) => { 
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { 
+        document.body.classList.remove('hover-active'); 
+      }
+      if (e.target.classList.contains('image-hover-target')) {
+        document.body.classList.remove('image-hover-active');
+      }
+    });
+
+    const auroraContainer = document.getElementById('aurora-container');
+    const auroras = [];
+    function spawnAurora() {
+      const el = document.createElement('div'); el.classList.add('aurora-ribbon');
+      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.8);
+      let angle = (Math.random() - 0.5) * 40; const driftSpeed = 0.1 + Math.random() * 0.2; 
+      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed; const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
+      el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
+      auroraContainer.appendChild(el);
+      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
+    }
+    function animateAuroras() {
+      for (let i = auroras.length - 1; i >= 0; i--) {
+        let p = auroras[i]; p.life++; p.x += p.vx; p.y += p.vy;
+        let opacity = 0; let fadeDuration = 300;
+        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; } else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; } else { opacity = 1; }
+        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.2})`;
+        p.el.style.opacity = opacity * 0.35; 
+        if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
+      }
+      requestAnimationFrame(animateAuroras);
+    }
+    setInterval(spawnAurora, 3500); spawnAurora(); spawnAurora(); animateAuroras();
+  </script>
+</body>
+</html>
