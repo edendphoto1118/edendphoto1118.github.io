@@ -316,53 +316,49 @@
     }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 9. Royal (THE IMPERIAL WEAVE - NOBLE & SLOW) --- */
+    /* --- 9. Royal (THE IMPERIAL OUTLINE - SPADE & HEART DUET) --- */
     .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; position: relative; overflow: hidden; }
     .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; z-index: 2; }
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 80px; }
     
-    /* 大師級意象書法佈局 */
+    /* 大師級輪廓背景 */
     .royal-suits-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         pointer-events: none; z-index: 1;
     }
-    .suit-abstract {
-        position: absolute; width: 45vw; height: 45vw; max-width: 700px; max-height: 700px;
+    .suit-outline {
+        position: absolute; width: 50vw; height: 50vw; max-width: 800px; max-height: 800px;
         fill: none; 
         stroke: #BF953F; 
         stroke-width: 0.25; /* 極細筆觸 */
-        opacity: 0.1;
+        opacity: 0.08;
         /* 關鍵：加入光澤感濾鏡，讓線條發光 */
         filter: drop-shadow(0 0 1px rgba(191, 149, 63, 0.8));
         transition: opacity 4s ease;
     }
     
-    /* 重新設計的意象書法 SVG */
-    /* Spade: 優雅的雙弧線與柄 */
-    .suit-spade { top: -15%; left: -10%; transform: rotate(-10deg); }
-    /* Heart: 開放式的流動心形 */
-    .suit-heart { bottom: -20%; right: -10%; transform: rotate(10deg); }
-    /* Diamond: 極簡的四角暗示 */
-    .suit-diamond { top: 5%; right: -20%; opacity: 0.08; width: 40vw; height: 40vw; transform: rotate(45deg); }
-    /* Club: 三個獨立的旋渦 */
-    .suit-club { bottom: 5%; left: -20%; opacity: 0.08; width: 40vw; height: 40vw; transform: rotate(-20deg); }
+    /* 重新設計的輪廓 SVG */
+    /* Spade Outline: 左側巨大的黑桃輪廓 */
+    .suit-spade-outline { top: -20%; left: -15%; transform: rotate(-15deg); }
+    /* Heart Outline: 右側巨大的紅心輪廓 */
+    .suit-heart-outline { bottom: -25%; right: -15%; transform: rotate(15deg); }
 
     /* 7秒極慢速描邊動畫 */
-    .suit-abstract path {
-        stroke-dasharray: 2000;
-        stroke-dashoffset: 2000;
+    .suit-outline path {
+        stroke-dasharray: 3000;
+        stroke-dashoffset: 3000;
         /* 使用極緩的 ease-in-out */
         transition: stroke-dashoffset 7s cubic-bezier(0.3, 0, 0.2, 1), opacity 4s ease;
     }
     
     /* Hover 觸發 */
-    .royal-section:hover .suit-abstract path {
+    .royal-section:hover .suit-outline path {
         stroke-dashoffset: 0;
     }
-    .royal-section:hover .suit-abstract {
-        opacity: 0.35; /* 緩慢浮現 */
+    .royal-section:hover .suit-outline {
+        opacity: 0.3; /* 緩慢浮現 */
     }
 
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; display: block; }
@@ -571,7 +567,7 @@
       
       /* Mobile Royal Suit Fix */
       .royal-suits-bg { opacity: 0.1; }
-      .suit-abstract { width: 70vw; height: 70vw; }
+      .suit-outline { width: 80vw; height: 80vw; }
     }
   </style>
 </head>
@@ -717,17 +713,11 @@
 
   <section class="royal-section">
     <div class="royal-suits-bg">
-        <svg class="suit-abstract suit-spade" viewBox="0 0 100 100">
-            <path d="M50,5 C50,5 30,45 30,65 C30,85 45,90 50,90 C55,90 70,85 70,65 C70,45 50,5 50,5 Z M50,90 Q50,100 50,100" />
+        <svg class="suit-outline suit-spade-outline" viewBox="0 0 100 100">
+            <path d="M50,5 C50,5 25,55 25,70 C25,85 35,92 50,92 C65,92 75,85 75,70 C75,55 50,5 50,5 Z M50,92 L50,100" />
         </svg>
-        <svg class="suit-abstract suit-heart" viewBox="0 0 100 100">
-            <path d="M50,85 C50,85 10,55 10,30 C10,10 35,10 50,30 C65,10 90,10 90,30 C90,55 50,85 50,85 Z" />
-        </svg>
-        <svg class="suit-abstract suit-diamond" viewBox="0 0 100 100">
-            <path d="M50,5 C50,5 90,50 50,95 C50,95 10,50 50,5 Z" />
-        </svg>
-        <svg class="suit-abstract suit-club" viewBox="0 0 100 100">
-            <path d="M50,30 C65,30 65,50 50,50 C35,50 35,30 50,30 Z M25,65 C40,65 40,85 25,85 C10,85 10,65 25,65 Z M75,65 C90,65 90,85 75,85 C60,85 60,65 75,65 Z M50,50 L50,100" />
+        <svg class="suit-outline suit-heart-outline" viewBox="0 0 100 100">
+            <path d="M50,95 C50,95 95,55 95,30 C95,10 75,5 50,25 C25,5 5,10 5,30 C5,55 50,95 50,95 Z" />
         </svg>
     </div>
 
