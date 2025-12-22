@@ -25,7 +25,7 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: auto; width: 100%; overflow-x: hidden; }
     
-    /* Custom Scrollbar - The Hidden Gold Thread */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #050505; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; transition: background 0.3s ease; }
@@ -41,7 +41,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (Fix Stuck Issue) --- */
+    /* --- 2. Grain & Preloader (THE DUNE EFFECT) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -52,37 +52,38 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 1.5s ease, visibility 1.5s ease;
+      /* 轉場時背景淡出 */
+      transition: opacity 2s ease, visibility 2s ease; 
     }
     
+    /* 史詩感字體設計 */
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff; 
-      animation: duneBreathe 4s infinite ease-in-out; 
-      letter-spacing: 0.2em; margin-bottom: 30px;
+      font-family: 'Cinzel', serif; font-size: 2rem; color: #e0e0e0; 
+      letter-spacing: 0.8em; /* 極寬字距 */
+      text-transform: uppercase;
+      opacity: 0; 
+      transform: scale(1);
+      /* 初始顯現 */
+      animation: fadeInStatic 2s ease-out forwards;
+      will-change: transform, opacity, filter;
     }
     
-    /* 確保按鈕樣式正確且預設不可點擊 */
-    #enter-site-btn {
-        opacity: 0; pointer-events: none; transform: translateY(20px);
-        background: transparent; border: 1px solid #BF953F; color: #BF953F;
-        padding: 15px 50px; font-family: 'Montserrat', sans-serif; 
-        font-size: 0.9rem; letter-spacing: 0.3em; text-transform: uppercase;
-        transition: all 0.8s ease; cursor: none;
-        display: flex; flex-direction: column; align-items: center; gap: 5px;
+    /* 靜止狀態，無呼吸，純粹的莊嚴 */
+    @keyframes fadeInStatic {
+        0% { opacity: 0; letter-spacing: 1.2em; filter: blur(5px); }
+        100% { opacity: 1; letter-spacing: 0.8em; filter: blur(0px); }
     }
-    #enter-site-btn span { font-size: 0.6rem; letter-spacing: 0.1em; opacity: 0.7; }
-    
-    /* 當 JS 加入 .show 時顯示 */
-    #enter-site-btn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    #enter-site-btn:hover { background: #BF953F; color: #000; box-shadow: 0 0 40px rgba(191, 149, 63, 0.6); }
 
-    @keyframes duneBreathe {
-      0% { opacity: 0.2; letter-spacing: 0.2em; filter: blur(2px); }
-      50% { opacity: 1; letter-spacing: 0.5em; filter: blur(0px); }
-      100% { opacity: 0.2; letter-spacing: 0.2em; filter: blur(2px); }
+    /* 穿梭特效 (Warp Effect) */
+    body.warping .loader-text {
+        transition: all 1.5s cubic-bezier(0.7, 0, 0.2, 1); /* 加速曲線 */
+        transform: scale(30); /* 巨大放大 */
+        opacity: 0;
+        filter: blur(20px); /* 動態模糊 */
+        letter-spacing: 5em;
     }
     
-    body.site-active #preloader { opacity: 0; visibility: hidden; }
+    body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
     body.site-active { overflow-y: auto; }
 
     /* --- 3. UI: Nav & Cursor --- */
@@ -90,7 +91,7 @@
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 1s 0.5s;
+      opacity: 0; transition: opacity 2s ease 1s; /* 進入後緩慢顯現 */
     }
     body.site-active nav { opacity: 1; }
 
@@ -252,6 +253,7 @@
         overflow: hidden; 
     }
     
+    /* [修正] 背景圖樣式 */
     .card-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
@@ -263,7 +265,7 @@
         background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
     }
 
-    .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs {
+    .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs, .jump-btn {
         position: relative; z-index: 2;
     }
 
@@ -275,6 +277,8 @@
     
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); }
     .price-card.featured .card-bg { opacity: 0; } 
+    /* featured hover 時才顯示背景 */
+    .price-card.featured:hover .card-bg, .price-card.featured.active .card-bg { opacity: 1; }
     
     .card-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #000; border: 1px solid #BF953F; color: #BF953F; font-size: 0.6rem; padding: 6px 15px; letter-spacing: 0.2em; text-transform: uppercase; }
     .discount-badge { position: absolute; top: 20px; right: 20px; background: #FF2A2A; color: #fff; font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; border-radius: 2px; }
@@ -289,6 +293,16 @@
     .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #ccc; margin-bottom: 15px; padding-left: 15px; position: relative; line-height: 1.6; font-weight: 300; }
     .price-specs li::before { content: '•'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 500; }
+
+    /* [新增] Jump Button (防呆按鈕) */
+    .jump-btn {
+        margin-top: 20px; padding: 10px 0;
+        background: transparent; border: 1px solid rgba(255,255,255,0.2);
+        color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em;
+        text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center;
+        width: 100%; display: block;
+    }
+    .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
     /* --- 9. Royal --- */
     .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; }
@@ -436,10 +450,10 @@
     
     footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
-    /* --- 13. Lightbox (Immersive Pure Black) --- */
+    /* --- 13. Lightbox (Refined for Clickability) --- */
     .lightbox { 
         display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,1); /* Pure Black */
+        background-color: rgba(0,0,0,1); /* 純黑沉浸 */
         justify-content: center; align-items: center; 
         opacity: 0; transition: opacity 0.3s ease;
         cursor: zoom-out;
@@ -513,10 +527,6 @@
 
   <div id="preloader">
     <div class="loader-text">EDEN D</div>
-    <button id="enter-site-btn" onclick="enterSite()">
-        ENTER ARCHIVE
-        <span>進入</span>
-    </button>
   </div>
 
   <div id="toast" class="toast">Email Copied</div>
@@ -531,7 +541,7 @@
       <a href="#pricing" class="nav-item hover-target">Pricing</a>
       <button class="audio-btn hover-target" onclick="toggleAudio()">
           SOUND
-          <div class="sound-wave" id="soundWave">
+          <div class="sound-wave paused" id="soundWave">
               <div class="bar"></div><div class="bar"></div><div class="bar"></div>
           </div>
       </button>
@@ -603,6 +613,7 @@
           <li><strong>Deliverables:</strong> 6 Retouched Images</li>
           <li><strong>Focus:</strong> Minimalist, High-Contrast, Professional Flash Shaping.</li>
         </ul>
+        <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
       </div>
       <div class="price-card" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
@@ -621,6 +632,7 @@
           <li><strong>Deliverables:</strong> 9 Retouched Images</li>
           <li><strong>Focus:</strong> Space, Mood, Breath.</li>
         </ul>
+        <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
       </div>
       <div class="price-card featured" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
@@ -639,6 +651,7 @@
           <li><strong>Deliverables:</strong> 12 Retouched Images</li>
           <li><strong>Focus:</strong> Storytelling, Emotion, Cinematic Prop Styling.</li>
         </ul>
+        <button class="jump-btn hover-target" onclick="jumpToCategory('Dimension', event)">VIEW SAMPLES ↗</button>
       </div>
     </div>
   </section>
@@ -755,7 +768,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- Force Reset Scroll on Load (The Ritual) --- */
+    /* --- Force Reset Scroll on Load --- */
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
     } else {
@@ -765,45 +778,40 @@
     }
 
     let isLoaded = false;
-    let minTimePassed = false;
-
-    window.addEventListener('load', () => {
-        window.scrollTo(0, 0); // 雙重保險
-        isLoaded = true;
-        checkReady();
-    });
-
-    // 強制 5 秒
+    
+    // [Dune Effect] Auto Enter after 5s
     setTimeout(() => {
-        minTimePassed = true;
-        checkReady();
+        enterSite();
     }, 5000);
 
-    function checkReady() {
-        if (isLoaded || minTimePassed) { // 只要時間到就顯示，不等圖了
-            setTimeout(() => {
-                document.getElementById('enter-site-btn').classList.add('show');
-            }, 100);
-        }
-    }
-
     function enterSite() {
-        const audio = document.getElementById('bgMusic');
-        audio.volume = 0.3;
-        // 嘗試播放音樂，失敗也沒關係
-        audio.play().then(() => {
-            isPlaying = true;
-            document.getElementById('soundWave').classList.remove('paused');
-        }).catch(e => console.log("Audio play failed:", e));
-
-        const video = document.getElementById('heroVideo');
-        video.play().catch(e => console.log("Video play failed:", e));
-
-        document.body.classList.add('site-active');
+        // Trigger Warp Animation
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('warping');
         
+        // Wait for warp animation (1s) then reveal site
         setTimeout(() => {
-            document.documentElement.style.scrollBehavior = 'smooth';
-        }, 1000);
+            document.body.classList.add('site-active');
+            // Try playing video
+            const video = document.getElementById('heroVideo');
+            if(video) video.play().catch(e=>{});
+            
+            // Try playing audio (Browser might block this without click)
+            const audio = document.getElementById('bgMusic');
+            if(audio) {
+                audio.volume = 0.3;
+                audio.play().then(() => {
+                    document.getElementById('soundWave').classList.remove('paused');
+                }).catch(e => {
+                    console.log("Auto-play blocked by browser policy. User must toggle manually.");
+                });
+            }
+            
+            // Enable smooth scroll after entry
+            setTimeout(() => {
+                document.documentElement.style.scrollBehavior = 'smooth';
+            }, 1000);
+        }, 800); // Sync with css transition
     }
 
     /* --- Gallery Logic --- */
@@ -851,18 +859,43 @@
     generateGallery();
     
     /* --- Audio Toggle --- */
-    let isPlaying = true; 
+    let isPlaying = false; 
     function toggleAudio() {
         const audio = document.getElementById('bgMusic');
         const wave = document.getElementById('soundWave');
-        if (isPlaying) {
-            audio.pause();
-            wave.classList.add('paused');
-        } else {
+        if (audio.paused) {
             audio.play();
             wave.classList.remove('paused');
+        } else {
+            audio.pause();
+            wave.classList.add('paused');
         }
-        isPlaying = !isPlaying;
+    }
+
+    /* --- Navigation / Jump Logic --- */
+    function jumpToCategory(category, event) {
+        event.stopPropagation(); // Stop card flip/hover
+        
+        // 1. Scroll to gallery
+        const gallerySection = document.getElementById('work');
+        gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // 2. Trigger filter
+        // Find the button corresponding to this category
+        const buttons = document.querySelectorAll('.filter-btn');
+        let targetBtn;
+        buttons.forEach(btn => {
+            if(btn.textContent.trim().toUpperCase() === category.toUpperCase()) {
+                targetBtn = btn;
+            }
+        });
+        
+        if(targetBtn) {
+            // Slight delay to allow scroll to start
+            setTimeout(() => {
+                filterGallery(category, targetBtn);
+            }, 500);
+        }
     }
 
     /* --- Filter & Load More --- */
