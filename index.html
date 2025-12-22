@@ -9,8 +9,7 @@
   
   <meta property="og:title" content="EDEN — VISUAL ARCHIVE">
   <meta property="og:description" content="Curating life through imagery.">
-  <meta property="og:image" content="hero.jpg">
-  <meta property="og:url" content="https://yourwebsite.com">
+  <meta property="og:image" content="images/works/portfolio0-1.jpg"> <meta property="og:url" content="https://yourwebsite.com">
   <meta name="theme-color" content="#000000">
 
   <link rel="icon" type="image/png" href="images/favicon.png"> 
@@ -43,7 +42,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (THE DRONE SHOT) --- */
+    /* --- 2. Grain & Preloader (THE CINEMATIC CONVERGENCE) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -54,51 +53,36 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 1.5s ease; /* 緩慢淡出 */
+      /* 網站進入時，遮罩緩慢消失 */
+      transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
     }
     
-    /* Loading Animation: Dune Convergence -> Drone Fly-through 
-       Total duration: 3.5s - 4s
-    */
+    /* 聚攏動畫：從極寬、模糊 -> 緩慢聚焦 */
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       text-transform: uppercase;
-      will-change: transform, opacity, letter-spacing, filter;
+      will-change: opacity, letter-spacing, filter;
       text-align: center;
-      animation: droneSequence 3.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+      opacity: 0;
+      /* 4.5秒的極致慢動作 */
+      animation: slowConvergence 4.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
     }
     
-    @keyframes droneSequence {
-        /* Phase 1: Dune Convergence (0% - 50%) */
+    @keyframes slowConvergence {
         0% { 
             opacity: 0; 
-            letter-spacing: 2em; /* 散開 */
-            filter: blur(10px); 
-            transform: scale(0.9);
+            letter-spacing: 4em; /* 極度分散 */
+            filter: blur(20px); 
         }
-        40% { 
-            opacity: 1; 
-            letter-spacing: 0.5em; /* 聚合 */
-            filter: blur(0px); 
-            transform: scale(1);
-        }
-        /* Phase 2: The Hover (50% - 70%) - 懸停感 */
-        60% {
-            opacity: 1;
-            letter-spacing: 0.5em;
-            transform: scale(1.05); /* 微微前進 */
-            filter: blur(0px);
-        }
-        /* Phase 3: The Warp / Fly-through (70% - 100%) - 穿越 */
+        20% { opacity: 0.5; } /* 慢慢浮現 */
         100% { 
-            opacity: 0; 
-            letter-spacing: 1em;
-            transform: scale(30); /* 穿過文字 */
-            filter: blur(20px); /* 速度感模糊 */
+            opacity: 1; 
+            letter-spacing: 0.5em; /* 完美聚合 */
+            filter: blur(0px); 
         }
     }
     
-    /* 網站啟用後完全隱藏 */
+    /* 網站啟用後 */
     body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
     body.site-active { overflow-y: auto; height: auto; }
 
@@ -106,14 +90,19 @@
     nav {
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
-      z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 2s ease 2s; /* 穿越後，導航欄才慢慢浮現 */
+      z-index: 10000; 
+      /* [關鍵] 反相色調：確保 EDEN 在任何背景(包括影片)上都清晰可見 */
+      mix-blend-mode: difference; 
+      transition: all 0.3s ease; box-sizing: border-box;
+      opacity: 0; transition: opacity 2s ease 1s; /* 進入後才顯現 */
     }
     body.site-active nav { opacity: 1; }
 
     .nav-logo {
       font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 500;
-      letter-spacing: 0.1em; text-decoration: none; color: #fff; cursor: none; flex-shrink: 0;
+      letter-spacing: 0.1em; text-decoration: none; 
+      color: #fff; /* Difference 模式下，白色會反轉背景色 */
+      cursor: none; flex-shrink: 0;
     }
     .nav-menu { display: flex; gap: 30px; align-items: center; flex-shrink: 0; }
     .nav-item {
@@ -168,6 +157,7 @@
       display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
       text-align: center; padding-bottom: 15vh; 
     }
+    /* [修正] 移除 poster 屬性，避免閃爍 */
     .hero-video {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover; z-index: -2;
@@ -260,7 +250,7 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s ease; }
     .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
-    /* --- 8. Pricing (Fixed Image Logic) --- */
+    /* --- 8. Pricing --- */
     .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -283,7 +273,6 @@
         background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.6));
     }
 
-    /* 內容層級 z-index: 2 (浮在圖上) */
     .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs, .jump-btn {
         position: relative; z-index: 2;
     }
@@ -293,7 +282,6 @@
     }
     .price-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-10px); }
     
-    /* 特色卡片處理 */
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); }
     .price-card.featured .card-bg { opacity: 0; } 
     .price-card.featured:hover .card-bg, .price-card.featured.active .card-bg { opacity: 1; }
@@ -607,8 +595,7 @@
   </nav>
 
   <section class="hero">
-    <video muted playsinline class="hero-video" poster="hero.jpg" id="heroVideo">
-        <source src="hero-video.mp4" type="video/mp4">
+    <video muted playsinline class="hero-video" id="heroVideo"> <source src="hero-video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -841,7 +828,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- Force Reset Scroll on Load --- */
+    /* --- Force Reset Scroll on Load (Timer-based) --- */
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
     }
@@ -851,17 +838,16 @@
         window.scrollTo(0, 0); // Reset scroll position
     });
 
-    // 2s: Start Hover
-    // 3.8s: Reveal Site
+    // 4.2s: Reveal Site & Play Media (Perfect timing after 4s animation)
     setTimeout(() => {
         enterSite();
-    }, 3800);
+    }, 4200);
 
     function enterSite() {
         document.body.classList.add('site-active');
         
         const video = document.getElementById('heroVideo');
-        if(video) video.play().catch(e => console.log("Video play failed:", e));
+        if(video) video.play().catch(e => {});
         
         // Try audio (might be blocked)
         const audio = document.getElementById('bgMusic');
@@ -869,6 +855,7 @@
             audio.volume = 0.3;
             audio.play().then(() => {
                 document.getElementById('soundWave').classList.remove('paused');
+                isPlaying = true;
             }).catch(e => {});
         }
         
@@ -945,7 +932,6 @@
         gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         
         // 2. Trigger filter
-        // Find the button corresponding to this category
         const buttons = document.querySelectorAll('.filter-btn');
         let targetBtn;
         buttons.forEach(btn => {
@@ -955,7 +941,6 @@
         });
         
         if(targetBtn) {
-            // Slight delay to allow scroll to start
             setTimeout(() => {
                 filterGallery(category, targetBtn);
             }, 500);
