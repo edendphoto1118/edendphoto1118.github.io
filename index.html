@@ -25,7 +25,7 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: auto; width: 100%; overflow-x: hidden; height: 100%; }
     
-    /* Custom Scrollbar - The Hidden Gold Thread */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; transition: background 0.3s ease; }
@@ -34,16 +34,14 @@
     body {
       margin: 0; padding: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: none; /* 全站隱藏系統鼠標 */
-      user-select: none; -webkit-user-select: none;
-      overflow: hidden; /* Initial lock */
-      height: 100%;
+      cursor: none; user-select: none; -webkit-user-select: none;
+      overflow: hidden; height: 100%;
     }
     
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (THE DUNE RITUAL) --- */
+    /* --- 2. Grain & Preloader (THE OPTICAL EMERGENCE) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -54,40 +52,45 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      /* 黑幕退場：極慢速的消散，像巨大的門緩緩開啟 */
-      transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1), visibility 3s linear;
+      /* 背景退場：極慢速消散 */
+      transition: opacity 2.5s ease-in-out, visibility 2.5s ease-in-out;
     }
     
-    /* 沙丘聚攏儀式 */
+    /* [修正] 光學顯影動畫 */
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       text-transform: uppercase;
-      will-change: opacity, letter-spacing, filter, transform;
       text-align: center;
+      width: 100%; /* 確保容器寬度固定，避免抖動 */
+      
+      /* 初始狀態 */
       opacity: 0;
-      /* 6秒的史詩級慢動作：極端的緩入緩出，製造中間的懸浮感 */
-      animation: duneConvergence 6s cubic-bezier(0.1, 1, 0.2, 1) forwards;
+      letter-spacing: 3em;
+      transform: scale(1.1) translateZ(0); /* 硬體加速防抖動 */
+      
+      /* 6秒的極致慢動作：光學聚攏 */
+      animation: opticalEmerge 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      
+      /* 確保渲染平滑 */
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     
-    @keyframes duneConvergence {
+    @keyframes opticalEmerge {
         0% { 
             opacity: 0; 
-            letter-spacing: 5em; /* 塵埃散開 */
-            filter: blur(30px); 
-            transform: scale(1.1);
+            letter-spacing: 3em; /* 極寬 */
+            transform: scale(1.1); /* 微大 */
         }
-        25% { opacity: 0.7; filter: blur(10px); } /* 慢慢顯現 */
-        /* 關鍵：在 80% 到 100% 之間幾乎靜止，製造凝視感 */
-        80% { 
-            opacity: 1; 
-            letter-spacing: 0.55em; 
-            filter: blur(0.5px); 
-            transform: scale(1.005); 
+        20% { 
+            opacity: 0; /* 保持黑畫面一下下 */
+        }
+        40% {
+            opacity: 0.4; /* 慢慢浮現 */
         }
         100% { 
             opacity: 1; 
-            letter-spacing: 0.5em; /* 塵埃落定 */
-            filter: blur(0px); 
+            letter-spacing: 0.5em; /* 落定 */
             transform: scale(1); 
         }
     }
@@ -101,9 +104,9 @@
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; 
-      mix-blend-mode: difference; /* 反相色調 */
+      mix-blend-mode: difference; 
       transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 3s ease 2s; /* 儀式結束後才緩慢浮現 */
+      opacity: 0; transition: opacity 3s ease 2s; /* 慢速浮現 */
     }
     body.site-active nav { opacity: 1; }
 
@@ -316,7 +319,7 @@
     }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- 9. Royal (THE IMPERIAL OUTLINE - SPADE & HEART DUET) --- */
+    /* --- 9. Royal (THE IMPERIAL OUTLINE - REFINED) --- */
     .royal-section { padding: 120px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #222; border-bottom: 1px solid #222; width: 100%; position: relative; overflow: hidden; }
     .royal-border { border: 1px solid rgba(191, 149, 63, 0.3); padding: 80px; position: relative; z-index: 2; }
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; }
@@ -334,22 +337,20 @@
         stroke: #BF953F; 
         stroke-width: 0.25; /* 極細筆觸 */
         opacity: 0.08;
-        /* 關鍵：加入光澤感濾鏡，讓線條發光 */
+        /* 光澤感濾鏡 */
         filter: drop-shadow(0 0 1px rgba(191, 149, 63, 0.8));
         transition: opacity 4s ease;
     }
     
-    /* 重新設計的輪廓 SVG */
-    /* Spade Outline: 左側巨大的黑桃輪廓 */
+    /* Spade Outline */
     .suit-spade-outline { top: -20%; left: -15%; transform: rotate(-15deg); }
-    /* Heart Outline: 右側巨大的紅心輪廓 */
+    /* Heart Outline */
     .suit-heart-outline { bottom: -25%; right: -15%; transform: rotate(15deg); }
 
     /* 7秒極慢速描邊動畫 */
     .suit-outline path {
         stroke-dasharray: 3000;
         stroke-dashoffset: 3000;
-        /* 使用極緩的 ease-in-out */
         transition: stroke-dashoffset 7s cubic-bezier(0.3, 0, 0.2, 1), opacity 4s ease;
     }
     
