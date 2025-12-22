@@ -25,26 +25,17 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
     
-    /* [大師級修正] Custom Scrollbar - The Hidden Gold Thread */
-    ::-webkit-scrollbar {
-        width: 5px; /* 極細 */
-    }
-    ::-webkit-scrollbar-track {
-        background: #050505; /* 軌道融入背景 */
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #333; /* 平常是低調深灰 */
-        border-radius: 2px;
-        transition: background 0.3s ease;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #BF953F; /* Hover 時變成品牌金 */
-    }
+    /* Custom Scrollbar - The Hidden Gold Thread */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; transition: background 0.3s ease; }
+    ::-webkit-scrollbar-thumb:hover { background: #BF953F; }
 
     body {
       margin: 0; padding: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: none; user-select: none; -webkit-user-select: none;
+      cursor: none; /* 全站隱藏系統鼠標 */
+      user-select: none; -webkit-user-select: none;
     }
     img { pointer-events: none; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
@@ -71,7 +62,7 @@
     }
     body.loaded #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 3. UI: Nav & Cursor --- */
+    /* --- 3. UI: Nav & Cursor (UPDATED) --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
@@ -102,14 +93,34 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
+    /* [關鍵修正] Cursor Styling */
     .cursor-dot {
       width: 8px; height: 8px; background-color: #fff; border-radius: 50%;
       position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
       pointer-events: none; z-index: 99999; mix-blend-mode: difference;
-      transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear;
+      transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear, background-color 0.3s;
     }
-    body.hover-active .cursor-dot { width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent; animation: rotateCursor 4s infinite linear; }
+    /* 一般 Hover (連結/按鈕) */
+    body.hover-active .cursor-dot { 
+        width: 50px; height: 50px; 
+        border: 1px solid #fff; background-color: transparent; 
+        animation: rotateCursor 4s infinite linear; 
+    }
+    /* [新增] 圖片專用 Hover (呼吸閃爍) */
+    body.image-hover-active .cursor-dot {
+        width: 30px; height: 30px;
+        background-color: rgba(255, 255, 255, 0.8); /* 半透明實心 */
+        border: none;
+        animation: pulseCursor 1.5s infinite ease-in-out; /* 呼吸效果 */
+        mix-blend-mode: normal; /* 讓白色更明顯 */
+    }
+    
     @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes pulseCursor {
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.4; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    }
 
     /* --- 4. Hero Video --- */
     .hero {
@@ -166,7 +177,7 @@
     .swiper-slide img { 
         width: auto; height: 100%; object-fit: contain; display: block; 
         box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        cursor: zoom-in; /* [修正] 輪播圖也可點擊放大 */
+        cursor: none; /* 隱藏系統鼠標，使用自訂 */
     }
     .swiper-slide-active { filter: grayscale(0%) brightness(1.0) !important; transform: scale(1.05) !important; opacity: 1 !important; z-index: 100; }
     .swiper-slide-active img { box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
@@ -192,7 +203,7 @@
         filter: grayscale(100%) brightness(0.9) contrast(1.05); 
         transition: filter 0.6s ease, transform 0.6s ease; 
         background: #111; min-height: 100px; 
-        cursor: zoom-in; /* [關鍵] 提示可以點擊放大 */
+        cursor: none; /* 隱藏系統鼠標 */
     }
     
     .item-meta { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; opacity: 0.3; transition: opacity 0.4s ease; }
@@ -364,15 +375,37 @@
     
     footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
-    /* --- 13. Lightbox & Toast --- */
+    /* --- 13. Lightbox (UPDATED: Immersive & Clean) --- */
     .lightbox { 
         display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; backdrop-filter: blur(10px); 
-        cursor: zoom-out; /* [關鍵] 縮小鏡頭游標 */
+        background-color: rgba(0,0,0,1); /* [修正] 純黑背景，更沉浸 */
+        justify-content: center; align-items: center; 
+        /* [關鍵] 整個燈箱區域點擊即可關閉 */
+        cursor: pointer; 
     }
-    .lightbox-content { max-width: 90%; max-height: 90vh; box-shadow: 0 0 50px rgba(0,0,0,0.5); object-fit: contain; }
-    .close-btn { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 40px; font-weight: 100; cursor: pointer; transition: 0.3s; z-index: 100000; }
-    .close-btn:hover { color: #aaa; transform: rotate(90deg); }
+    .lightbox-content { 
+        max-width: 100%; max-height: 100vh; 
+        object-fit: contain; 
+        box-shadow: none; /* 全螢幕模式不需要陰影 */
+        cursor: default; /* 圖片本身不顯示手指，防止誤以為可再點 */
+    }
+    
+    /* [修正] 極簡返回鍵 (右上角) */
+    .close-btn { 
+        position: absolute; top: 30px; right: 40px; 
+        width: 40px; height: 40px;
+        display: flex; justify-content: center; align-items: center;
+        z-index: 100000; transition: transform 0.3s ease;
+    }
+    .close-btn::before, .close-btn::after {
+        content: ''; position: absolute; width: 100%; height: 1px; background: #fff; transition: background 0.3s;
+    }
+    .close-btn::before { transform: rotate(45deg); }
+    .close-btn::after { transform: rotate(-45deg); }
+    
+    .close-btn:hover { transform: rotate(90deg); }
+    .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
+
     .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 500; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -632,9 +665,8 @@
   <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close-btn hover-target" onclick="closeLightbox()">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
-  </div>
+    <div class="close-btn hover-target" onclick="closeLightbox()"></div>
+    <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation()"> </div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -666,8 +698,9 @@
         itemDiv.setAttribute('data-category', category);
         if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
+        // [更新] 加入特殊的 hover class 觸發器
         itemDiv.innerHTML = `
-            <img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">
+            <img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" class="image-hover-target" onerror="this.parentElement.style.display='none'">
             <div class="item-meta"><span class="meta-id">FIG. ${figNum}</span><div class="meta-line"></div><span class="meta-tag">${category.toUpperCase()}</span></div>
         `;
         galleryContainer.appendChild(itemDiv);
@@ -679,7 +712,8 @@
         const imgPath = `images/works/portfolio00-${num}.jpg`;
         const slideDiv = document.createElement('div');
         slideDiv.className = 'swiper-slide';
-        slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="hover-target" onerror="this.parentElement.style.display='none'">`;
+        // [更新] 加入特殊的 hover class 觸發器
+        slideDiv.innerHTML = `<img src="${imgPath}" onclick="openLightbox(this)" class="image-hover-target" onerror="this.parentElement.style.display='none'">`;
         swiperWrapper.appendChild(slideDiv);
       }
     }
@@ -760,15 +794,18 @@
         });
     }, 500);
 
+    /* --- [修正] Lightbox Logic --- */
     function openLightbox(element) {
       document.getElementById("lightbox").style.display = "flex";
       document.getElementById("lightbox-img").src = element.src;
-      document.body.classList.add('lightbox-open'); 
+      // 鎖定背景捲動
+      document.body.style.overflow = "hidden";
     }
     function closeLightbox() {
       document.getElementById("lightbox").style.display = "none";
-      document.body.classList.remove('lightbox-open'); 
-      document.body.classList.remove('hover-active');
+      // 恢復背景捲動
+      document.body.style.overflow = "auto";
+      document.body.style.overflowX = "hidden"; // 保持橫向鎖定
     }
     document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
     document.onkeydown = function(e) { if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'S'.charCodeAt(0)))) return false; }
@@ -782,10 +819,29 @@
       });
     }
 
+    /* --- [修正] Cursor Logic --- */
     const cursorDot = document.querySelector('.cursor-dot');
     document.addEventListener('mousemove', (e) => { cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`; });
-    document.addEventListener('mouseover', (e) => { if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { document.body.classList.add('hover-active'); } });
-    document.addEventListener('mouseout', (e) => { if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { document.body.classList.remove('hover-active'); } });
+    
+    document.addEventListener('mouseover', (e) => { 
+      // 1. 一般互動 (變大旋轉圈圈)
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { 
+        document.body.classList.add('hover-active'); 
+      }
+      // 2. 圖片互動 (呼吸閃爍)
+      if (e.target.classList.contains('image-hover-target')) {
+        document.body.classList.add('image-hover-active');
+      }
+    });
+    
+    document.addEventListener('mouseout', (e) => { 
+      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') { 
+        document.body.classList.remove('hover-active'); 
+      }
+      if (e.target.classList.contains('image-hover-target')) {
+        document.body.classList.remove('image-hover-active');
+      }
+    });
 
     const auroraContainer = document.getElementById('aurora-container');
     const auroras = [];
