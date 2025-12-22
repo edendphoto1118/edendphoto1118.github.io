@@ -23,25 +23,28 @@
   <style>
     /* --- 1. Base & Reset --- */
     * { box-sizing: border-box; }
-    html { scroll-behavior: auto; width: 100%; overflow-x: hidden; }
+    /* 強制初始無滾動，由JS控制開啟 */
+    html { scroll-behavior: auto; width: 100%; overflow-x: hidden; height: 100%; }
     
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #050505; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; transition: background 0.3s ease; }
+    /* Custom Scrollbar - The Hidden Gold Thread */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; transition: background 0.3s ease; }
     ::-webkit-scrollbar-thumb:hover { background: #BF953F; }
 
     body {
       margin: 0; padding: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: none; user-select: none; -webkit-user-select: none;
+      cursor: none; /* 全站隱藏系統鼠標 */
+      user-select: none; -webkit-user-select: none;
       overflow: hidden; /* Initial lock */
+      height: 100%;
     }
     
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Grain & Preloader (THE DUNE WARP FIX) --- */
+    /* --- 2. Grain & Preloader (THE DUNE WARP) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -52,42 +55,36 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      /* 確保淡出時不會擋住滑鼠 */
-      transition: opacity 1.5s ease, visibility 1.5s ease;
-      opacity: 1; visibility: visible;
+      transition: opacity 1s ease 0.5s, visibility 1s ease 0.5s; /* 稍微延遲淡出，讓穿梭感更完整 */
     }
     
+    /* 靜止的史詩感，無呼吸 */
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; 
+      font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       letter-spacing: 0.5em; text-transform: uppercase;
-      opacity: 1; transform: scale(1) translateZ(0); /* 硬體加速 */
-      transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1); /* 加速曲線 */
+      opacity: 1; transform: scale(1) translateZ(0);
       will-change: transform, opacity, filter;
       text-align: center;
+      transition: transform 1.5s cubic-bezier(0.7, 0, 0.2, 1), opacity 1s ease, filter 1.5s ease;
     }
     
-    /* [關鍵] 穿梭狀態 */
+    /* 穿梭狀態 (Warp Speed) */
     body.warping .loader-text {
-        transform: scale(100); /* 放大 100 倍，衝向螢幕 */
-        opacity: 0; 
+        transform: scale(80); /* 巨大放大，衝向鏡頭 */
+        opacity: 0;
         filter: blur(20px); /* 動態模糊 */
-        letter-spacing: 2em; /* 字距拉開 */
     }
     
-    /* [關鍵] 網站啟用狀態 */
-    body.site-active #preloader { 
-        opacity: 0; 
-        visibility: hidden; 
-        pointer-events: none; /* 絕對確保不擋路 */
-    }
-    body.site-active { overflow-y: auto; }
+    /* 網站啟用後 */
+    body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
+    body.site-active { overflow-y: auto; height: auto; }
 
     /* --- 3. UI: Nav & Cursor --- */
     nav {
       position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10000; mix-blend-mode: difference; transition: all 0.3s ease; box-sizing: border-box;
-      opacity: 0; transition: opacity 2s ease 1.5s; /* 慢一點出來，讓封面先震撼 */
+      opacity: 0; transition: opacity 2s ease 1s; /* 進入後才顯現 */
     }
     body.site-active nav { opacity: 1; }
 
@@ -166,6 +163,7 @@
     }
     /* [修正] 不斜體 */
     .hero h1 span { font-style: normal; font-family: 'Cinzel', serif; }
+    
     .hero p {
       margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
       letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.7);
@@ -239,7 +237,7 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s ease; }
     .load-more-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(255,255,255,0.2); }
 
-    /* --- 8. Pricing --- */
+    /* --- 8. Pricing (Fixed Image Logic) --- */
     .pricing-section { padding: 150px 8vw 80px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -250,6 +248,7 @@
         overflow: hidden; 
     }
     
+    /* 顯影背景圖：確保 z-index 為 0，在內容之下 */
     .card-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
@@ -258,19 +257,20 @@
     }
     .card-bg::after {
         content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+        background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.6));
     }
 
+    /* 內容層級 z-index: 2 (浮在圖上) */
     .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs, .jump-btn {
         position: relative; z-index: 2;
     }
 
     .price-card:hover .card-bg, .price-card.active .card-bg {
-        opacity: 1;
-        transform: scale(1.1); 
+        opacity: 1; transform: scale(1.1); 
     }
     .price-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-10px); }
     
+    /* 特色卡片處理 */
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); }
     .price-card.featured .card-bg { opacity: 0; } 
     .price-card.featured:hover .card-bg, .price-card.featured.active .card-bg { opacity: 1; }
@@ -289,6 +289,7 @@
     .price-specs li::before { content: '•'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 500; }
 
+    /* Jump Button */
     .jump-btn {
         margin-top: 20px; padding: 10px 0;
         background: transparent; border: 1px solid rgba(255,255,255,0.2);
@@ -788,45 +789,45 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    /* --- Force Reset Scroll on Load (Timer-based) --- */
+    /* --- Absolute Timeline Logic (No Sticking) --- */
+    
+    // 1. Force Manual Scroll Restoration
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
     }
-    
-    // Timer-based loading sequence (absolute force)
-    window.addEventListener('load', () => {
-        window.scrollTo(0, 0); // Reset scroll position
-    });
+    window.addEventListener('load', () => window.scrollTo(0, 0));
 
-    // 4.0s: Start Warp Animation
+    // 2. Timeline Trigger
+    // T+4.0s: Start Warp
     setTimeout(() => {
         document.body.classList.add('warping');
     }, 4000);
 
-    // 5.2s: Reveal Site & Play Media
+    // T+5.5s: Reveal Site (Absolute force)
     setTimeout(() => {
         enterSite();
-    }, 5200);
+    }, 5500);
 
     function enterSite() {
         document.body.classList.add('site-active');
         
+        // Try playing media (with catch)
         const video = document.getElementById('heroVideo');
-        if(video) video.play().catch(e => console.log("Video play failed:", e));
+        if(video) video.play().catch(e => {});
         
-        // Try audio (might be blocked)
         const audio = document.getElementById('bgMusic');
         if(audio) {
             audio.volume = 0.3;
             audio.play().then(() => {
                 document.getElementById('soundWave').classList.remove('paused');
+                isPlaying = true;
             }).catch(e => {});
         }
         
-        // Enable scroll
+        // Unlock scroll after intro
         setTimeout(() => {
             document.documentElement.style.scrollBehavior = 'smooth';
-        }, 500);
+        }, 1000);
     }
 
     /* --- Gallery Logic --- */
@@ -896,7 +897,6 @@
         gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         
         // 2. Trigger filter
-        // Find the button corresponding to this category
         const buttons = document.querySelectorAll('.filter-btn');
         let targetBtn;
         buttons.forEach(btn => {
@@ -906,7 +906,6 @@
         });
         
         if(targetBtn) {
-            // Slight delay to allow scroll to start
             setTimeout(() => {
                 filterGallery(category, targetBtn);
             }, 500);
@@ -986,7 +985,6 @@
       lightbox.classList.remove('active');
       setTimeout(() => {
           document.body.style.overflow = "auto";
-          // 保持水平不捲動
           document.body.style.overflowX = "hidden"; 
       }, 300);
     }
