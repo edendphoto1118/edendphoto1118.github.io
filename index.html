@@ -4,10 +4,11 @@
   <meta charset="UTF-8" />
   <title>EDEN — VISUAL ARCHIVE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="EDEN D. — Visual Director & Photographer. A curated archive of structure, scale, and dimension.">
+  <meta name="description" content="EDEN D. — Visual Director. Curating life through imagery.">
+  <meta name="keywords" content="Visual Director, Photography, Sony A7C2, Portrait, Cinematic, Taipei">
   
   <meta property="og:title" content="EDEN — VISUAL ARCHIVE">
-  <meta property="og:description" content="Visual Director / Photographer. Exploring the dimensions of light and structure.">
+  <meta property="og:description" content="Curating life through imagery.">
   <meta property="og:image" content="hero.jpg">
   <meta property="og:url" content="https://yourwebsite.com">
   <meta name="theme-color" content="#000000">
@@ -16,7 +17,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
@@ -268,7 +269,7 @@
     }
     .form-submit:hover { background: #fff; box-shadow: 0 0 30px rgba(191, 149, 63, 0.5); }
 
-    /* --- [大師級重塑] 12. About Section (The Singular Vision) --- */
+    /* --- 12. About Section (Final Polish) --- */
     .background { 
         padding: 180px 8vw; background: #000; 
         border-top: 1px solid rgba(255,255,255,0.05); width: 100%; 
@@ -290,13 +291,13 @@
     }
     
     .artist-statement {
-        font-family: 'Playfair Display', serif; /* 雜誌襯線體 */
+        font-family: 'Playfair Display', serif; 
         font-size: 1.15rem; line-height: 2.2; color: #ccc; 
         font-weight: 400; text-align: justify;
         position: relative; max-width: 650px;
     }
-    /* [修正] 移除Drop Cap，改為純粹排版 */
-    .artist-statement strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; display: block; margin-top: 20px; }
+    /* [修正] 移除Drop Cap, 純文字排版 */
+    .artist-statement strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; display: block; margin-top: 30px; font-size: 1.3rem; font-family: 'Cinzel', serif; }
     
     .signature {
         margin-top: 60px; text-align: right;
@@ -318,7 +319,22 @@
         background: none; border: none; cursor: none; transition: color 0.3s; 
     }
     .contact-link:hover, .email-btn:hover { color: #BF953F; }
-    footer { padding: 50px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
+    
+    /* --- Tech Ticker --- */
+    .tech-ticker-wrap {
+        position: fixed; bottom: 0; left: 0; width: 100%; height: 30px;
+        background: #000; border-top: 1px solid #111;
+        overflow: hidden; white-space: nowrap; z-index: 9000;
+        display: flex; align-items: center;
+    }
+    .tech-ticker {
+        display: inline-block; padding-left: 100%;
+        animation: ticker 40s linear infinite;
+        font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #444; letter-spacing: 0.1em;
+    }
+    @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    
+    footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
     /* --- 13. Lightbox & Toast --- */
     .lightbox { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; backdrop-filter: blur(10px); }
@@ -332,7 +348,6 @@
     @media (max-width: 1200px) {
         nav { padding: 20px 30px; }
         .nav-menu { gap: 20px; }
-        
         .editorial-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; }
         .about-name { text-align: center; font-size: 5rem; }
         .artist-statement { text-align: left; margin: 0 auto; }
@@ -342,27 +357,20 @@
     @media (max-width: 768px) {
       .cursor-dot { display: none !important; }
       body { cursor: auto !important; }
-      
       .nav { padding: 20px 30px; }
       .nav-menu { display: none; }
-      
       .hero h1 { font-size: 15vw; }
       .hero-video { object-position: center 20%; } 
-      
       .gallery-container { column-count: 1; }
-      
       .pricing-grid { grid-template-columns: 1fr; gap: 60px; }
       .royal-grid { flex-direction: column; gap: 50px; }
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-top: 50px; width: 100%; }
       .royal-border { padding: 30px; }
-      
       .hidden-booking-container.open { padding: 60px 4vw; }
       .booking-interface { padding: 30px 20px; }
       .terms-grid { grid-template-columns: 1fr; gap: 30px; }
-      
       .filter-tabs { gap: 20px; }
       .filter-btn { font-size: 0.65rem; }
-      
       .artist-statement { padding: 0 20px; }
       .about-name { font-size: 4rem; }
     }
@@ -445,7 +453,7 @@
   <section class="pricing-section" id="pricing">
     <div class="section-header">
       <h2 class="section-title">EDEN VISUALS</h2>
-      <span class="section-subtitle">Beyond Photography. We Curate Identity.</span>
+      <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
     </div>
     <div class="pricing-grid">
       <div class="price-card">
@@ -458,7 +466,7 @@
           <li><strong>Session Time:</strong> 1.5 Hours</li>
           <li><strong>Look:</strong> 1 Outfit</li>
           <li><strong>Deliverables:</strong> 6 Retouched Images</li>
-          <li><strong>Focus:</strong> Minimalist, High-Contrast, Form.</li>
+          <li><strong>Focus:</strong> Minimalist, High-Contrast, Professional Flash Shaping.</li>
         </ul>
       </div>
       <div class="price-card">
@@ -484,7 +492,7 @@
           <li><strong>Session Time:</strong> 2.5 Hours</li>
           <li><strong>Look:</strong> 2 Outfits (w/ Hair & Makeup)</li>
           <li><strong>Deliverables:</strong> 12 Retouched Images</li>
-          <li><strong>Focus:</strong> Storytelling, Emotion, Color.</li>
+          <li><strong>Focus:</strong> Storytelling, Emotion, Cinematic Prop Styling.</li>
         </ul>
       </div>
     </div>
@@ -582,6 +590,12 @@
         </div>
     </div>
   </section>
+  
+  <div class="tech-ticker-wrap">
+      <div class="tech-ticker">
+          SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // FISHEYE DISTORTION // 3D PRINTED PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //
+      </div>
+  </div>
 
   <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
 
