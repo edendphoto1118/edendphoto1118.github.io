@@ -41,7 +41,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Preloader (Cinematic Convergence) --- */
+    /* --- 2. Preloader (The Butter-Smooth Transition) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -53,6 +53,7 @@
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       transition: opacity 2.5s ease-in-out, visibility 2.5s ease-in-out;
+      will-change: opacity;
     }
     
     .loader-text {
@@ -105,7 +106,7 @@
 
     /* --- 4. Hero Video --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding-bottom: 15vh; }
-    .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: grayscale(100%) brightness(0.6) contrast(1.1); }
+    .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: grayscale(100%) brightness(0.6) contrast(1.1); will-change: transform; }
     .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9) 5%, transparent 60%); z-index: -1; }
     .hero-content { z-index: 1; animation: fadeInUp 2s ease-out forwards; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
@@ -197,7 +198,7 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #fff; margin-bottom: 15px; letter-spacing: 0.05em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #999; line-height: 1.8; font-weight: 300; }
 
-    /* --- 9. Royal (THE JEWEL CREST) --- */
+    /* --- 9. Royal (THE CONSTELLATION SPADE - RESTORED) --- */
     .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
     
     .royal-border { 
@@ -209,45 +210,46 @@
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.2); padding-left: 80px; }
     
-    /* 珠寶級飾角 */
-    .royal-corner { position: absolute; width: 140px; height: 140px; pointer-events: none; z-index: 3; }
+    /* 飾角定位 - 星宿版 */
+    .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; }
     .corner-tl { top: 0; left: 0; }
     .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
     .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
     .corner-br { bottom: 0; right: 0; transform: scale(-1); }
 
-    .filigree-path {
+    /* 星宿線條 (Densified Web) */
+    .constellation-line {
         fill: none; 
-        stroke: url(#gold-foil-gradient); 
-        stroke-width: 0.6;
+        stroke: url(#star-gold-gradient); 
+        stroke-width: 0.5;
         stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 800; 
-        stroke-dashoffset: 800;
-        transition: stroke-dashoffset 3s cubic-bezier(0.25, 1, 0.5, 1);
-        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+        stroke-dasharray: 600; 
+        stroke-dashoffset: 600;
+        transition: stroke-dashoffset 4s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: drop-shadow(0 0 2px rgba(191, 149, 63, 0.6));
     }
-    .royal-section:hover .filigree-path { stroke-dashoffset: 0; }
     
-    .filigree-accent {
-        fill: url(#gold-foil-gradient);
-        opacity: 0; transition: opacity 2s ease 1s;
+    /* 星星節點 (Star Nodes) */
+    .constellation-node {
+        fill: #FFF;
+        opacity: 0;
+        transition: opacity 0.6s ease;
     }
-    .royal-section:hover .filigree-accent { opacity: 1; }
 
-    /* 背景黑桃 */
-    .royal-suits-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-    .suit-outline {
-        position: absolute; width: 50vw; height: 50vw; max-width: 800px; max-height: 800px;
-        fill: none; stroke: url(#gold-foil-gradient); stroke-width: 0.3; opacity: 0.1;
-        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
-        transition: opacity 4s ease;
+    /* 互動：滑鼠移入時，星星隨機逐個亮起 (更密集的序列，從左到右) */
+    .royal-section:hover .node-1 { transition-delay: 0.1s; opacity: 1; }
+    .royal-section:hover .node-2 { transition-delay: 0.25s; opacity: 1; }
+    .royal-section:hover .node-3 { transition-delay: 0.4s; opacity: 1; }
+    .royal-section:hover .node-4 { transition-delay: 0.55s; opacity: 1; }
+    .royal-section:hover .node-5 { transition-delay: 0.7s; opacity: 1; }
+    .royal-section:hover .node-6 { transition-delay: 0.85s; opacity: 1; }
+    .royal-section:hover .node-7 { transition-delay: 1.0s; opacity: 1; }
+
+    /* 互動：線條連接 */
+    .royal-section:hover .constellation-line { 
+        stroke-dashoffset: 0; 
+        transition-delay: 0.9s; /* 等大部分星星亮起後才連線 */
     }
-    .suit-spade-outline { top: -20%; left: -15%; transform: rotate(-15deg); }
-    .suit-heart-outline { bottom: -25%; right: -15%; transform: rotate(15deg); }
-    .suit-outline path { stroke-dasharray: 3000; stroke-dashoffset: 3000; transition: stroke-dashoffset 7s cubic-bezier(0.3, 0, 0.2, 1), opacity 4s ease; }
-    .royal-section:hover .suit-outline path { stroke-dashoffset: 0; }
-    .royal-section:hover .suit-outline { opacity: 0.4; }
 
     /* 單一報價與心理學定價 */
     .royal-single-price { text-align: left; }
@@ -544,32 +546,66 @@
   <section class="royal-section">
     <svg width="0" height="0">
       <defs>
-        <linearGradient id="gold-foil-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#8a6e2f;stop-opacity:1" />
-          <stop offset="25%" style="stop-color:#d4af37;stop-opacity:1" />
+        <linearGradient id="star-gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8a6e2f;stop-opacity:0.8" />
           <stop offset="50%" style="stop-color:#fcf6ba;stop-opacity:1" />
-          <stop offset="75%" style="stop-color:#d4af37;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#8a6e2f;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#d4af37;stop-opacity:0.8" />
         </linearGradient>
       </defs>
     </svg>
 
     <div class="royal-border">
-      <svg class="royal-corner corner-tl" viewBox="0 0 140 140">
-        <path class="filigree-path" d="M10,130 L10,30 Q10,10 30,10 L130,10 M25,35 Q25,25 35,25 L110,25 M25,35 L25,110 M40,40 Q60,10 90,40 Q120,70 90,100 Q60,130 40,100 Z" />
-        <path class="filigree-accent" d="M70,50 C70,50 50,70 45,85 C40,100 55,105 65,95 C75,105 90,100 85,85 C80,70 70,50 70,50 Z M70,95 L70,115 M60,115 L80,115" />
+      <svg class="royal-corner corner-tl" viewBox="0 0 180 180">
+        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
+        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
+        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
+        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
+        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
+        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
+        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
+        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
+        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
       </svg>
-      <svg class="royal-corner corner-tr" viewBox="0 0 140 140">
-         <path class="filigree-path" d="M10,130 L10,30 Q10,10 30,10 L130,10 M25,35 Q25,25 35,25 L110,25 M25,35 L25,110 M40,40 Q60,10 90,40 Q120,70 90,100 Q60,130 40,100 Z" />
-         <path class="filigree-accent" d="M70,50 C70,50 50,70 45,85 C40,100 55,105 65,95 C75,105 90,100 85,85 C80,70 70,50 70,50 Z M70,95 L70,115 M60,115 L80,115" />
+      <svg class="royal-corner corner-tr" viewBox="0 0 180 180">
+        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
+        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
+        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
+        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
+        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
+        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
+        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
+        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
+        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
       </svg>
-      <svg class="royal-corner corner-bl" viewBox="0 0 140 140">
-         <path class="filigree-path" d="M10,130 L10,30 Q10,10 30,10 L130,10 M25,35 Q25,25 35,25 L110,25 M25,35 L25,110 M40,40 Q60,10 90,40 Q120,70 90,100 Q60,130 40,100 Z" />
-         <path class="filigree-accent" d="M70,50 C70,50 50,70 45,85 C40,100 55,105 65,95 C75,105 90,100 85,85 C80,70 70,50 70,50 Z M70,95 L70,115 M60,115 L80,115" />
+      <svg class="royal-corner corner-bl" viewBox="0 0 180 180">
+        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
+        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
+        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
+        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
+        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
+        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
+        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
+        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
+        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
       </svg>
-      <svg class="royal-corner corner-br" viewBox="0 0 140 140">
-         <path class="filigree-path" d="M10,130 L10,30 Q10,10 30,10 L130,10 M25,35 Q25,25 35,25 L110,25 M25,35 L25,110 M40,40 Q60,10 90,40 Q120,70 90,100 Q60,130 40,100 Z" />
-         <path class="filigree-accent" d="M70,50 C70,50 50,70 45,85 C40,100 55,105 65,95 C75,105 90,100 85,85 C80,70 70,50 70,50 Z M70,95 L70,115 M60,115 L80,115" />
+      <svg class="royal-corner corner-br" viewBox="0 0 180 180">
+        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
+        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
+        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
+        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
+        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
+        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
+        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
+        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
+        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
+        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
       </svg>
 
       <div class="royal-grid">
@@ -595,15 +631,6 @@
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="royal-suits-bg">
-        <svg class="suit-outline suit-spade-outline" viewBox="0 0 100 100">
-            <path d="M50,0 C50,0 15,40 15,65 C15,90 35,95 50,80 C65,95 85,90 85,65 C85,40 50,0 50,0 Z M50,80 L50,100 M40,100 L60,100" />
-        </svg>
-        <svg class="suit-outline suit-heart-outline" viewBox="0 0 100 100">
-            <path d="M50,95 C50,95 95,55 95,30 C95,10 75,5 50,25 C25,5 5,10 5,30 C5,55 50,95 50,95 Z" />
-        </svg>
     </div>
   </section>
 
@@ -703,17 +730,19 @@
     }
     window.addEventListener('load', () => window.scrollTo(0, 0));
 
-    // 4.5s: Reveal Site (Stable Timeline)
+    // 5.0s: Reveal Site (Extended Timeline for Smoother Entry)
     setTimeout(() => {
         enterSite();
-    }, 4500);
+    }, 5000);
 
     /* --- Global Swiper Instance --- */
     let swiper;
 
     function enterSite() {
+        // 1. Start Fade Out
         document.getElementById('preloader').style.opacity = 0;
 
+        // 2. Try Media
         const video = document.getElementById('heroVideo');
         if(video) video.play().catch(e => {});
         
@@ -737,16 +766,19 @@
             }
         }
         
+        // 3. Force Gallery Reset
         if(swiper) {
             swiper.slideTo(0, 0);
         }
 
+        // 4. Unlock Scroll AFTER fade animation finishes (Crucial Delay for Smoothness)
+        // Fade is 2.5s, we wait 2.6s to ensure no overlap in heavy tasks.
         setTimeout(() => {
             document.body.classList.add('site-active');
             document.body.classList.add('nav-active');
             document.documentElement.style.scrollBehavior = 'smooth';
             document.getElementById('preloader').style.display = 'none';
-        }, 1500);
+        }, 2600);
     }
 
     /* --- Gallery Logic --- */
