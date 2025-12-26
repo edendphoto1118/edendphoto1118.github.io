@@ -41,7 +41,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Preloader (The Butter-Smooth Transition) --- */
+    /* --- 2. Preloader (Stable Cinematic Convergence) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -198,7 +198,7 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #fff; margin-bottom: 15px; letter-spacing: 0.05em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #999; line-height: 1.8; font-weight: 300; }
 
-    /* --- 9. Royal (THE CONSTELLATION SPADE - RESTORED) --- */
+    /* --- 9. Royal (THE REAL CONSTELLATION - WIREFRAME) --- */
     .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
     
     .royal-border { 
@@ -210,16 +210,16 @@
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.2); padding-left: 80px; }
     
-    /* 飾角定位 - 星宿版 */
+    /* 飾角定位 */
     .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; }
     .corner-tl { top: 0; left: 0; }
     .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
     .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
     .corner-br { bottom: 0; right: 0; transform: scale(-1); }
 
-    /* 星宿線條 (Densified Web) */
+    /* 星宿線條 (Wireframe only, fill=none) */
     .constellation-line {
-        fill: none; 
+        fill: none; /* 關鍵：確保無填充 */
         stroke: url(#star-gold-gradient); 
         stroke-width: 0.5;
         stroke-linecap: round;
@@ -229,14 +229,14 @@
         filter: drop-shadow(0 0 2px rgba(191, 149, 63, 0.6));
     }
     
-    /* 星星節點 (Star Nodes) */
+    /* 星星節點 */
     .constellation-node {
         fill: #FFF;
         opacity: 0;
         transition: opacity 0.6s ease;
     }
 
-    /* 互動：滑鼠移入時，星星隨機逐個亮起 (更密集的序列，從左到右) */
+    /* 互動：星星逐個亮起 (從左到右) */
     .royal-section:hover .node-1 { transition-delay: 0.1s; opacity: 1; }
     .royal-section:hover .node-2 { transition-delay: 0.25s; opacity: 1; }
     .royal-section:hover .node-3 { transition-delay: 0.4s; opacity: 1; }
@@ -248,7 +248,7 @@
     /* 互動：線條連接 */
     .royal-section:hover .constellation-line { 
         stroke-dashoffset: 0; 
-        transition-delay: 0.9s; /* 等大部分星星亮起後才連線 */
+        transition-delay: 0.8s; /* 星星亮起後連線 */
     }
 
     /* 單一報價與心理學定價 */
@@ -326,10 +326,24 @@
     .contact-link, .email-btn { color: #555; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; }
     .contact-link:hover, .email-btn:hover { color: #BF953F; }
     
-    /* --- Tech Ticker --- */
-    .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 30px; background: #000; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; }
+    /* --- Tech Ticker & Flip Counter --- */
+    .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 30px; background: #000; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 20px; }
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #444; letter-spacing: 0.1em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    
+    /* Vintage Flip Counter */
+    .flip-counter-container { display: flex; align-items: center; gap: 5px; z-index: 9001; background: #000; padding-left: 15px; }
+    .flip-label { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.1em; margin-right: 5px; text-transform: uppercase; }
+    .flip-digit {
+        display: inline-block; width: 14px; height: 20px; background: #111;
+        border: 1px solid #333; border-radius: 2px;
+        font-family: 'Space Mono', monospace; font-size: 0.65rem; line-height: 20px;
+        text-align: center; color: #BF953F; position: relative; overflow: hidden;
+    }
+    .flip-digit::after {
+        content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
+        background: rgba(0,0,0,0.8); box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+    }
     
     footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
@@ -636,8 +650,8 @@
 
   <section class="booking-cta-section">
       <button class="initiate-btn hover-target" onclick="toggleBooking()">
-          INITIATE BOOKING
-          <span>啟動預約</span>
+          SECURE YOUR SESSION
+          <span>預約席次</span>
       </button>
   </section>
 
@@ -712,6 +726,15 @@
       <div class="tech-ticker">
           SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // FISHEYE DISTORTION // 3D PRINTED PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //
       </div>
+      
+      <div class="flip-counter-container">
+          <span class="flip-label">LIVE VIEWERS</span>
+          <div class="flip-digit" id="digit1">0</div>
+          <div class="flip-digit" id="digit2">0</div>
+          <div class="flip-digit" id="digit3">2</div>
+          <div class="flip-digit" id="digit4">8</div>
+          <div class="flip-digit" id="digit5">4</div>
+      </div>
   </div>
 
   <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
@@ -730,7 +753,7 @@
     }
     window.addEventListener('load', () => window.scrollTo(0, 0));
 
-    // 5.0s: Reveal Site (Extended Timeline for Smoother Entry)
+    // 5.0s: Reveal Site (Stable Timeline)
     setTimeout(() => {
         enterSite();
     }, 5000);
@@ -780,6 +803,39 @@
             document.getElementById('preloader').style.display = 'none';
         }, 2600);
     }
+
+    /* --- Vintage Flip Counter Logic --- */
+    // Initialize base count or get from local storage for persistency
+    let visitorCount = localStorage.getItem('edenVisitorCount') 
+        ? parseInt(localStorage.getItem('edenVisitorCount')) 
+        : 12840; // Start base
+
+    // Increment slightly on each load to simulate activity
+    visitorCount += Math.floor(Math.random() * 5) + 1;
+    localStorage.setItem('edenVisitorCount', visitorCount);
+
+    function updateCounterDisplay(num) {
+        const str = num.toString().padStart(5, '0');
+        for(let i=0; i<5; i++) {
+            const digitEl = document.getElementById(`digit${i+1}`);
+            if(digitEl.innerText !== str[i]) {
+                digitEl.innerText = str[i];
+                // Add a small flip animation class here if desired
+            }
+        }
+    }
+    
+    // Initial display
+    updateCounterDisplay(visitorCount);
+
+    // Simulate random incoming visitors
+    setInterval(() => {
+        if(Math.random() > 0.6) { // 40% chance to increment
+            visitorCount++;
+            localStorage.setItem('edenVisitorCount', visitorCount);
+            updateCounterDisplay(visitorCount);
+        }
+    }, 4000); // Check every 4 seconds
 
     /* --- Gallery Logic --- */
     const totalWorks = 117; 
