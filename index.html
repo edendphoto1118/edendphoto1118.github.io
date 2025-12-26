@@ -23,7 +23,8 @@
   <style>
     /* --- 1. Base & Reset --- */
     * { box-sizing: border-box; }
-    html { scroll-behavior: auto; width: 100%; overflow-x: hidden; height: 100%; }
+    /* scrollbar-gutter: stable 解決 Loading 結束時捲軸出現導致的畫面跳動 */
+    html { scroll-behavior: auto; width: 100%; overflow-x: hidden; height: 100%; scrollbar-gutter: stable; }
     
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
@@ -41,7 +42,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Preloader (Stable Cinematic Convergence) --- */
+    /* --- 2. Preloader (The Butter-Smooth Transition) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9000; opacity: 0.04; 
@@ -198,7 +199,7 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #fff; margin-bottom: 15px; letter-spacing: 0.05em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #999; line-height: 1.8; font-weight: 300; }
 
-    /* --- 9. Royal (THE REAL CONSTELLATION - WIREFRAME) --- */
+    /* --- 9. Royal (THE TRUE CONSTELLATION - WIREFRAME) --- */
     .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #000 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
     
     .royal-border { 
@@ -210,18 +211,18 @@
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.2); padding-left: 80px; }
     
-    /* 飾角定位 */
+    /* 飾角定位 - 放大尺寸以容納複雜線稿 */
     .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; }
     .corner-tl { top: 0; left: 0; }
     .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
     .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
     .corner-br { bottom: 0; right: 0; transform: scale(-1); }
 
-    /* 星宿線條 (Wireframe only, fill=none) */
+    /* 星宿線條 (Wireframe only, fill=none is critical) */
     .constellation-line {
-        fill: none; /* 關鍵：確保無填充 */
+        fill: none; /* 絕對無填充 */
         stroke: url(#star-gold-gradient); 
-        stroke-width: 0.5;
+        stroke-width: 0.5; /* 極細 */
         stroke-linecap: round;
         stroke-dasharray: 600; 
         stroke-dashoffset: 600;
@@ -296,23 +297,6 @@
     .calendar-wrapper { width: 100%; display: flex; justify-content: center; }
     .calendly-inline-widget { width: 100%; height: 700px; border: none; }
 
-    /* --- 11. Lead Form --- */
-    .lead-form-section { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; position: relative; }
-    .archive-meta { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.3em; color: #BF953F; text-transform: uppercase; display: block; margin-bottom: 20px; }
-    .archive-meta span { color: #fff; font-weight: 500; }
-    .lead-title { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin: 0 0 30px 0; letter-spacing: 0.1em; font-weight: 400; }
-    .lead-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; line-height: 1.8; max-width: 500px; margin: 0 auto 60px; font-weight: 300; }
-    .form-group { display: flex; flex-direction: column; gap: 25px; max-width: 500px; margin: 0 auto; }
-    .form-input, .form-select { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding: 15px 0; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #fff; letter-spacing: 0.1em; border-radius: 0; outline: none; transition: all 0.3s ease; text-align: center; }
-    .form-input::placeholder, .form-select { color: rgba(255,255,255,0.4); text-align: center; }
-    .form-input:focus, .form-select:focus { border-bottom-color: #BF953F; }
-    .select-wrapper { position: relative; }
-    .select-wrapper::after { content: '↓'; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #BF953F; font-size: 0.8rem; pointer-events: none; }
-    .form-select { appearance: none; -webkit-appearance: none; cursor: none; }
-    .form-select option { background: #111; color: #fff; padding: 15px; font-family: 'Montserrat', sans-serif;}
-    .form-submit { margin-top: 40px; padding: 20px 0; width: 100%; background: #BF953F; border: none; color: #000; font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: none; transition: all 0.5s ease; }
-    .form-submit:hover { background: #fff; box-shadow: 0 0 30px rgba(191, 149, 63, 0.5); }
-
     /* --- 12. About Section --- */
     .background { padding: 180px 8vw; background: #000; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; position: relative; overflow: hidden; }
     .editorial-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; max-width: 1200px; margin: 0 auto; align-items: flex-start; }
@@ -331,19 +315,14 @@
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #444; letter-spacing: 0.1em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
     
-    /* Vintage Flip Counter */
-    .flip-counter-container { display: flex; align-items: center; gap: 5px; z-index: 9001; background: #000; padding-left: 15px; }
-    .flip-label { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.1em; margin-right: 5px; text-transform: uppercase; }
-    .flip-digit {
-        display: inline-block; width: 14px; height: 20px; background: #111;
-        border: 1px solid #333; border-radius: 2px;
-        font-family: 'Space Mono', monospace; font-size: 0.65rem; line-height: 20px;
-        text-align: center; color: #BF953F; position: relative; overflow: hidden;
+    /* Visitor Counter */
+    .visitor-counter { display: flex; align-items: center; gap: 10px; z-index: 9001; background: #000; padding-left: 15px; }
+    .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
+    .visitor-number {
+        font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #BF953F; letter-spacing: 0.1em;
+        text-shadow: 0 0 5px rgba(191, 149, 63, 0.3); animation: pulseText 3s infinite ease-in-out;
     }
-    .flip-digit::after {
-        content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
-        background: rgba(0,0,0,0.8); box-shadow: 0 1px 0 rgba(255,255,255,0.1);
-    }
+    @keyframes pulseText { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); } 100% { opacity: 0.8; } }
     
     footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
 
@@ -673,28 +652,6 @@
   </div>
   </div>
 
-  <section class="lead-form-section" id="lead-form">
-    <span class="archive-meta">SCOUT LIST: <span>356+ MEMBERS</span></span>
-    <h3 class="lead-title">THE FACE ARCHIVE</h3>
-    <p class="lead-desc">一直在尋找那張能撐起『王牌』的臉。<br>請留下您的 IG，在靈感來襲時，第一個找到您。</p>
-    <form class="form-group" action="https://formspree.io/f/mnjaalqd" method="POST">
-      <input type="text" name="name" placeholder="NAME / NICKNAME" class="form-input hover-target" required>
-      <input type="text" name="ig_handle" placeholder="INSTAGRAM ID (@)" class="form-input hover-target" required>
-      <div class="select-wrapper hover-target">
-        <select name="archetype" class="form-select" required>
-          <option value="" disabled selected>SELECT YOUR STYLE (選擇拍攝風格)</option>
-          <option value="Spade">SPADE / 黑桃 - 時尚質感 (Fashion)</option>
-          <option value="Heart">HEART / 紅心 - 魅惑性感 (Glamour)</option>
-          <option value="Diamond">DIAMOND / 方塊 - 俏皮可愛 (Playful)</option>
-          <option value="Club">CLUB / 梅花 - 厭世憂鬱 (Melancholy)</option>
-          <option value="Joker">JOKER / 鬼牌 - 獨特藝術 (Unique)</option>
-        </select>
-      </div>
-      <button type="submit" class="form-submit hover-target">JOIN THE ARCHIVE (加入關注名單)</button>
-    </form>
-    <p class="micro-copy">Membership is by selection only.</p>
-  </section>
-
   <section class="background" id="about">
     <div class="editorial-grid">
         <div class="about-name">
@@ -727,13 +684,9 @@
           SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // FISHEYE DISTORTION // 3D PRINTED PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //
       </div>
       
-      <div class="flip-counter-container">
-          <span class="flip-label">LIVE VIEWERS</span>
-          <div class="flip-digit" id="digit1">0</div>
-          <div class="flip-digit" id="digit2">0</div>
-          <div class="flip-digit" id="digit3">2</div>
-          <div class="flip-digit" id="digit4">8</div>
-          <div class="flip-digit" id="digit5">4</div>
+      <div class="visitor-counter">
+          <span class="visitor-label">ARCHIVE VISITOR:</span>
+          <span class="visitor-number" id="visitorCount">NO. 012,840</span>
       </div>
   </div>
 
@@ -804,38 +757,22 @@
         }, 2600);
     }
 
-    /* --- Vintage Flip Counter Logic --- */
-    // Initialize base count or get from local storage for persistency
-    let visitorCount = localStorage.getItem('edenVisitorCount') 
-        ? parseInt(localStorage.getItem('edenVisitorCount')) 
-        : 12840; // Start base
-
-    // Increment slightly on each load to simulate activity
-    visitorCount += Math.floor(Math.random() * 5) + 1;
-    localStorage.setItem('edenVisitorCount', visitorCount);
-
-    function updateCounterDisplay(num) {
-        const str = num.toString().padStart(5, '0');
-        for(let i=0; i<5; i++) {
-            const digitEl = document.getElementById(`digit${i+1}`);
-            if(digitEl.innerText !== str[i]) {
-                digitEl.innerText = str[i];
-                // Add a small flip animation class here if desired
-            }
-        }
+    /* --- Visitor Counter Logic (LocalStorage Persistence) --- */
+    let count = localStorage.getItem('eden_visitor_count');
+    if (!count) {
+        count = 12840; // Base count
+    } else {
+        count = parseInt(count);
     }
     
-    // Initial display
-    updateCounterDisplay(visitorCount);
-
-    // Simulate random incoming visitors
-    setInterval(() => {
-        if(Math.random() > 0.6) { // 40% chance to increment
-            visitorCount++;
-            localStorage.setItem('edenVisitorCount', visitorCount);
-            updateCounterDisplay(visitorCount);
-        }
-    }, 4000); // Check every 4 seconds
+    // Simulate increment on new session
+    if(!sessionStorage.getItem('session_counted')) {
+        count += Math.floor(Math.random() * 3) + 1;
+        localStorage.setItem('eden_visitor_count', count);
+        sessionStorage.setItem('session_counted', 'true');
+    }
+    
+    document.getElementById('visitorCount').innerText = "NO. " + count.toLocaleString('en-US', {minimumIntegerDigits: 6, useGrouping:true});
 
     /* --- Gallery Logic --- */
     const totalWorks = 117; 
