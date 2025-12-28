@@ -42,12 +42,8 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
     a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
 
-    /* --- 2. Preloader (The Butter-Smooth Transition) --- */
-    .noise-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 9000; opacity: 0.04; 
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    }
+    /* --- 2. Preloader (Stable Cinematic Convergence) --- */
+    /* Noise Overlay Removed for Pure Clarity */
     
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -211,14 +207,14 @@
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.2); padding-left: 80px; }
     
-    /* 飾角定位 - 放大尺寸以容納複雜線稿 */
+    /* 飾角定位 */
     .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; }
     .corner-tl { top: 0; left: 0; }
     .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
     .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
     .corner-br { bottom: 0; right: 0; transform: scale(-1); }
 
-    /* 星宿線條 (Wireframe only, fill=none is critical) */
+    /* 星宿線條 (Wireframe only, fill=none) */
     .constellation-line {
         fill: none; /* 絕對無填充 */
         stroke: url(#star-gold-gradient); 
