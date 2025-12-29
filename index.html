@@ -5,7 +5,7 @@
   <title>EDEN — VISUAL ARCHIVE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="EDEN D. — Visual Director & Photographer. A curated archive of structure, scale, and dimension.">
-  <meta name="keywords" content="Visual Director, Photography, Sony A7C2, Portrait, Cinematic, Taipei">
+  <meta name="keywords" content="Visual Director, Photography, Sony A7C2, Portrait, Cinematic, Taipei, JavaScript Portfolio, WebGL, Frontend Design, Creative Coding, Vanilla JS">
   
   <meta property="og:title" content="EDEN — VISUAL ARCHIVE">
   <meta property="og:description" content="Curating life through imagery.">
@@ -320,7 +320,10 @@
     }
     @keyframes pulseText { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); } 100% { opacity: 0.8; } }
     
-    footer { padding: 50px 0 80px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; width: 100%; }
+    /* 修改重點 2: Footer 技術宣告 (低調、專業) */
+    footer { padding: 50px 0 80px; text-align: center; width: 100%; }
+    footer p { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; }
+    footer .tech-stack { font-size: 0.45rem; opacity: 0.4; margin-top: 5px; letter-spacing: 0.1em; color: #444; }
 
     /* --- 13. Lightbox --- */
     .lightbox { display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,1); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; cursor: zoom-out; }
@@ -686,7 +689,12 @@
       </div>
   </div>
 
-  <footer><p>&copy; 2025 EDEN. All Rights Reserved.</p></footer>
+  <footer>
+      <p>&copy; 2025 EDEN. All Rights Reserved.</p>
+      <p style="font-size: 0.45rem; opacity: 0.4; margin-top: 5px; letter-spacing: 0.1em; color: #444;">
+          POWERED BY VANILLA JS & CUSTOM CSS RENDERER
+      </p>
+  </footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <div class="close-btn hover-target" onclick="closeLightbox()"></div>
