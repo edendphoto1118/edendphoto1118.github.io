@@ -18,14 +18,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
   <style>
     /* --- 1. Base & Reset --- */
     * { box-sizing: border-box; }
     
     html { 
-        scroll-behavior: auto; /* JS will handle smooth scroll */
+        scroll-behavior: auto; 
         width: 100%; 
         overflow-x: hidden; 
         height: 100%; 
@@ -33,7 +31,7 @@
         background-color: #050505;
     }
     
-    /* Custom Scrollbar - Minimalist */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; transition: background 0.3s ease; }
@@ -42,24 +40,22 @@
     body {
       margin: 0; padding: 0; background: #050505; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: none; /* Hide default cursor */
+      cursor: none; 
       user-select: none; -webkit-user-select: none;
       overflow: hidden; height: 100%;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
     
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
-    a, button, input, select, textarea, .swiper-wrapper, .gallery-item { pointer-events: auto; }
+    a, button, input, select, textarea { pointer-events: auto; }
 
     /* --- 2. Texture & Atmosphere (Noise Overlay) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      /* 使用 data URI 生成輕微噪點，無需外部資源 */
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
       z-index: 9000; 
       pointer-events: none;
-      opacity: 0.4;
+      opacity: 0.35;
       mix-blend-mode: overlay;
     }
 
@@ -129,28 +125,25 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* Glow Cursor (The Flashlight Effect) */
+    /* Glow Cursor */
     .cursor-glow { 
-        width: 400px; height: 400px; 
-        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+        width: 450px; height: 450px; 
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 65%);
         position: fixed; top: 0; left: 0; 
         transform: translate(-50%, -50%); 
         pointer-events: none; z-index: 9999; 
         mix-blend-mode: screen; 
-        transition: transform 0.1s linear, opacity 0.3s ease;
+        transition: transform 0.08s linear, opacity 0.3s ease;
         will-change: transform;
     }
-    
-    /* Small precise dot for interaction */
     .cursor-dot {
         width: 6px; height: 6px; background: #fff; border-radius: 50%;
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
         pointer-events: none; z-index: 10001; mix-blend-mode: difference;
         transition: width 0.3s, height 0.3s, transform 0.1s linear;
     }
-    
     body.hover-active .cursor-dot { width: 20px; height: 20px; background: transparent; border: 1px solid #fff; mix-blend-mode: normal; }
-    body.hover-active .cursor-glow { opacity: 0.5; transform: translate(-50%, -50%) scale(1.2); }
+    body.hover-active .cursor-glow { opacity: 0.6; transform: translate(-50%, -50%) scale(1.3); }
 
     /* --- 5. Hero Video --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding-bottom: 12vh; }
@@ -174,31 +167,13 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     /* --- 6. Sections --- */
-    .section-header { text-align: center; margin-bottom: 120px; position: relative; padding: 0 20px; width: 100%; }
+    .section-header { text-align: center; margin-bottom: 120px; position: relative; padding: 0 20px; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.12em; color: #fff; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #666; text-transform: uppercase; margin-top: 25px; display: block; }
 
-    /* --- 7. Swiper --- */
-    .film-strip { padding: 120px 0; background: #050505; min-height: 800px; width: 100%; overflow: hidden; }
-    .swiper { width: 100%; padding: 80px 0; overflow: visible; }
-    .swiper-wrapper { align-items: center; }
-    
-    /* Swiper slide styling with Developing Effect */
-    .swiper-slide { 
-        width: auto; height: 60vh; max-height: 600px; flex-shrink: 0; 
-        filter: grayscale(100%) brightness(0.4) blur(1px); 
-        transform: scale(0.9); opacity: 0.3; 
-        transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); 
-        pointer-events: auto; display: flex; justify-content: center; align-items: center; 
-    }
-    .swiper-slide img { width: auto; height: 100%; object-fit: contain; display: block; cursor: none; pointer-events: auto; }
-    
-    .swiper-slide-active { filter: grayscale(0%) brightness(1.0) blur(0) !important; transform: scale(1.05) !important; opacity: 1 !important; z-index: 100; }
-    .swiper-slide-active img { box-shadow: 0 30px 80px rgba(0,0,0,0.8); }
-
-    /* --- 8. Gallery & Filter --- */
+    /* --- 7. Gallery (Integrated Mosaic Magazine Layout) --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
-    .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 120px; flex-wrap: wrap; width: 100%; }
+    .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 100px; flex-wrap: wrap; width: 100%; }
     .filter-btn { 
         background: transparent; border: none; color: #444; 
         font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; 
@@ -209,28 +184,43 @@
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
 
-    .gallery-container { column-count: 3; column-gap: 40px; width: 100%; }
+    /* Magazine Column Layout */
+    .gallery-container { 
+        column-count: 3; 
+        column-gap: 40px; 
+        width: 100%; 
+        max-width: 1600px;
+        margin: 0 auto;
+    }
     
-    /* The "Developing" Effect for Gallery Items */
     .gallery-item { 
-        break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: none; 
+        break-inside: avoid; 
+        margin-bottom: 60px; /* Spacing between vertical items */
+        position: relative; 
+        z-index: 1; 
+        cursor: none; 
         opacity: 0; 
         transform: translateY(40px) scale(0.98); 
-        filter: blur(10px) grayscale(100%) contrast(150%); /* Darkroom start state */
+        filter: blur(10px) grayscale(100%) contrast(150%); /* Start State */
         transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.5s ease;
     }
+    
     .gallery-item.reveal { 
         opacity: 1; 
         transform: translateY(0) scale(1); 
-        filter: blur(0) grayscale(0%) contrast(100%); /* Developed state */
+        filter: blur(0) grayscale(100%) contrast(110%); /* Resting State: B/W */
     }
+
     .gallery-item.filtered-out, .gallery-item.hidden-loadmore { display: none; }
     
     .gallery-item img { 
         width: 100%; height: auto; display: block; 
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        /* The transition for B/W to Color on hover */
+        transition: filter 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); 
         background: #0a0a0a; min-height: 100px; cursor: none; pointer-events: auto; 
         outline: 1px solid rgba(255,255,255,0); outline-offset: 0px;
+        /* Ensure resting state on img level inherits from parent or enforces B/W */
+        filter: inherit; 
     }
     
     .item-meta { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; opacity: 0; transition: opacity 0.6s ease; }
@@ -238,11 +228,15 @@
     .meta-line { height: 1px; background: #222; flex-grow: 1; margin: 0 15px; }
     .meta-tag { font-family: 'Cinzel', serif; font-size: 0.55rem; color: #888; letter-spacing: 0.1em; }
     
+    /* Interaction: Color Reveal */
     .gallery-item:hover { z-index: 100; }
-    .gallery-item:hover img { 
+    .gallery-item:hover img, .gallery-item:hover { 
+        filter: grayscale(0%) contrast(100%) blur(0); /* Reveal Color */
+    }
+    .gallery-item:hover img {
         transform: scale(1.02); 
         box-shadow: 0 30px 70px rgba(0,0,0,0.6); 
-        outline: 1px solid rgba(191, 149, 63, 0.3); outline-offset: 15px; /* Architectural boundary */
+        outline: 1px solid rgba(191, 149, 63, 0.3); outline-offset: 15px;
     }
     .gallery-item:hover .item-meta { opacity: 1; }
     
@@ -256,39 +250,43 @@
     }
     .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
-    /* --- 9. Pricing --- */
+    /* --- 8. Pricing (Refined & Localized) --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
+    
     .price-card { 
-        border: 1px solid rgba(255,255,255,0.05); padding: 50px 40px; position: relative; 
-        transition: all 0.6s ease; display: flex; flex-direction: column; 
+        border: 1px solid rgba(255,255,255,0.08); padding: 60px 40px; position: relative; 
+        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        display: flex; flex-direction: column; 
         background: rgba(10,10,10,0.4); backdrop-filter: blur(5px);
-        min-height: 550px; overflow: hidden; 
+        min-height: 600px; overflow: hidden; 
     }
     
-    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); z-index: 0; filter: grayscale(100%) brightness(0.6); transform: scale(1); }
-    .card-bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,5,0.9), rgba(5,5,5,0.7)); }
-    .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs, .jump-btn { position: relative; z-index: 2; }
+    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); z-index: 0; filter: grayscale(100%) brightness(0.5); transform: scale(1); }
+    .card-bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,5,0.95) 10%, rgba(5,5,5,0.7) 100%); }
+    .card-content-wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
     
-    .price-card:hover .card-bg, .price-card.active .card-bg { opacity: 1; transform: scale(1.05); }
-    .price-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
-    .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.2); }
-    .price-card.featured .card-bg { opacity: 0; } 
-    .price-card.featured:hover .card-bg, .price-card.featured.active .card-bg { opacity: 1; }
+    /* Hover Interaction: Float & Scale (No Magnet) */
+    .price-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-12px) scale(1.01); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .price-card:hover .card-bg { opacity: 1; transform: scale(1.1); }
     
-    .discount-badge { position: absolute; top: 20px; right: 20px; background: #8a1a1a; color: #fff; font-size: 0.55rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; border-radius: 2px; }
-    .price-title { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #fff; margin-bottom: 15px; font-weight: 400; letter-spacing: 0.05em; }
-    .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #666; text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 40px; display: block; }
-    .price-wrapper { margin-bottom: 30px; display: flex; flex-direction: column; }
-    .price-original { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #444; text-decoration: line-through; margin-bottom: 8px; }
-    .price-amount { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #e0e0e0; font-weight: 400; display: block; }
-    .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #bbb; line-height: 1.8; margin-bottom: 40px; min-height: 60px; font-weight: 300; }
+    .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); background: radial-gradient(circle at top right, rgba(191,149,63,0.05), transparent 60%); }
+    
+    .plan-eng-title { font-family: 'Cinzel', serif; font-size: 0.8rem; color: #666; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 15px; display: block; }
+    .price-title { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 30px; font-weight: 500; letter-spacing: 0.1em; line-height: 1.4; }
+    
+    .price-wrapper { margin-bottom: 35px; display: flex; align-items: baseline; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+    .price-amount { font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; font-weight: 400; }
+    .price-original { font-family: 'Cinzel', serif; font-size: 1rem; color: #444; text-decoration: line-through; }
+    
+    .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #ccc; line-height: 2; margin-bottom: 40px; font-weight: 300; text-align: justify; }
+    
     .price-specs { list-style: none; padding: 0; margin: 0 0 30px 0; flex-grow: 1; }
-    .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #aaa; margin-bottom: 15px; padding-left: 15px; position: relative; line-height: 1.6; font-weight: 300; }
-    .price-specs li::before { content: '•'; position: absolute; left: 0; color: #444; }
-    .price-specs li strong { color: #ddd; font-weight: 400; }
+    .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #999; margin-bottom: 18px; padding-left: 15px; position: relative; line-height: 1.6; font-weight: 300; }
+    .price-specs li::before { content: '◈'; position: absolute; left: 0; color: #444; font-size: 0.6rem; top: 4px; }
+    .price-specs li strong { color: #fff; font-weight: 400; padding-right: 5px; }
     
-    .jump-btn { margin-top: 20px; padding: 15px 0; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; }
+    .jump-btn { margin-top: auto; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
     /* --- New: Prestige Delivery Section --- */
@@ -301,7 +299,7 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: #ddd; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 2; font-weight: 300; }
 
-    /* --- 10. Royal (THE TRUE CONSTELLATION) --- */
+    /* --- 9. Royal (THE SPADE CONSTELLATION) --- */
     .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #030303 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
     
     .royal-border { 
@@ -314,7 +312,9 @@
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.1); padding-left: 80px; }
     
     .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; opacity: 0.3; transition: opacity 0.5s ease; }
-    .royal-section:hover .royal-corner { opacity: 0.8; }
+    .royal-section:hover .royal-corner { opacity: 0.9; }
+    
+    /* Rotate corners for framing */
     .corner-tl { top: 0; left: 0; }
     .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
     .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
@@ -323,25 +323,28 @@
     .constellation-line {
         fill: none; 
         stroke: url(#star-gold-gradient); 
-        stroke-width: 0.5; 
+        stroke-width: 0.6; 
         stroke-linecap: round;
+        stroke-linejoin: round;
         stroke-dasharray: 600; 
         stroke-dashoffset: 600;
-        transition: stroke-dashoffset 4s cubic-bezier(0.4, 0, 0.2, 1);
-        filter: drop-shadow(0 0 2px rgba(191, 149, 63, 0.6));
+        transition: stroke-dashoffset 3.5s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: drop-shadow(0 0 3px rgba(191, 149, 63, 0.5));
     }
     
     .constellation-node { fill: #FFF; opacity: 0; transition: opacity 0.6s ease; }
 
+    /* Node Reveal Sequence */
     .royal-section:hover .node-1 { transition-delay: 0.1s; opacity: 1; }
-    .royal-section:hover .node-2 { transition-delay: 0.25s; opacity: 1; }
-    .royal-section:hover .node-3 { transition-delay: 0.4s; opacity: 1; }
-    .royal-section:hover .node-4 { transition-delay: 0.55s; opacity: 1; }
-    .royal-section:hover .node-5 { transition-delay: 0.7s; opacity: 1; }
-    .royal-section:hover .node-6 { transition-delay: 0.85s; opacity: 1; }
-    .royal-section:hover .node-7 { transition-delay: 1.0s; opacity: 1; }
+    .royal-section:hover .node-2 { transition-delay: 0.2s; opacity: 1; }
+    .royal-section:hover .node-3 { transition-delay: 0.3s; opacity: 1; }
+    .royal-section:hover .node-4 { transition-delay: 0.4s; opacity: 1; }
+    .royal-section:hover .node-5 { transition-delay: 0.5s; opacity: 1; }
+    .royal-section:hover .node-6 { transition-delay: 0.6s; opacity: 1; }
+    .royal-section:hover .node-7 { transition-delay: 0.7s; opacity: 1; }
 
-    .royal-section:hover .constellation-line { stroke-dashoffset: 0; transition-delay: 0.8s; }
+    /* Line Reveal */
+    .royal-section:hover .constellation-line { stroke-dashoffset: 0; transition-delay: 0.6s; }
 
     .royal-single-price { text-align: left; }
     .royal-discount-tag {
@@ -357,14 +360,14 @@
         font-family: 'Cinzel', serif; font-size: 3.5rem; color: #BF953F; display: block; font-weight: 400; 
         background: linear-gradient(to bottom right, #BF953F, #FCF6BA, #8a6e2f); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .royal-sp-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #999; line-height: 2.2; border-top: 1px solid rgba(191,149,63,0.1); padding-top: 30px; letter-spacing: 0.05em; font-weight: 300; }
+    .royal-sp-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #bbb; line-height: 2.2; border-top: 1px solid rgba(191,149,63,0.1); padding-top: 30px; letter-spacing: 0.05em; font-weight: 300; }
     .royal-sp-desc strong { color: #BF953F; font-weight: 500; }
 
     .royal-tag { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 25px; display: block; opacity: 0.8; }
     .royal-title { font-family: 'Cinzel', serif; font-size: 3.8rem; color: #fff; margin: 0 0 30px 0; letter-spacing: 0.05em; }
-    .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #888; line-height: 2; max-width: 500px; font-weight: 300; }
+    .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #999; line-height: 2; max-width: 500px; font-weight: 300; }
 
-    /* --- 11. Booking --- */
+    /* --- 10. Booking --- */
     .booking-cta-section { padding: 120px 0; text-align: center; background: #050505; width: 100%; }
     .initiate-btn { 
         display: inline-flex; flex-direction: column; align-items: center; gap: 8px; padding: 35px 100px; 
@@ -389,7 +392,7 @@
     .calendar-wrapper { width: 100%; display: flex; justify-content: center; }
     .calendly-inline-widget { width: 100%; height: 700px; border: none; }
 
-    /* --- 12. About Section --- */
+    /* --- 11. About Section --- */
     .background { padding: 200px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; position: relative; overflow: hidden; }
     .editorial-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 100px; max-width: 1300px; margin: 0 auto; align-items: flex-start; }
     .about-name { font-family: 'Cinzel', serif; font-size: 7.5rem; line-height: 0.85; color: rgba(255,255,255,0.08); letter-spacing: -0.04em; font-weight: 600; text-align: right; position: relative; }
@@ -403,7 +406,7 @@
     .contact-link, .email-btn { color: #555; text-decoration: none; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; font-family: 'Montserrat', sans-serif; display: inline-block; }
     .contact-link:hover, .email-btn:hover { color: #BF953F; }
     
-    /* --- Tech Ticker & Flip Counter --- */
+    /* --- Tech Ticker --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; }
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.15em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
@@ -424,7 +427,7 @@
         font-size: 0.4rem; opacity: 0.3; letter-spacing: 0.15em; color: #444; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
     }
 
-    /* --- 13. Lightbox --- */
+    /* --- Lightbox --- */
     .lightbox { display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5,5,5,0.98); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; cursor: zoom-out; backdrop-filter: blur(10px); }
     .lightbox.active { display: flex; opacity: 1; }
     .lightbox-content { max-width: 95%; max-height: 95vh; object-fit: contain; cursor: default; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
@@ -442,6 +445,7 @@
     @media (max-width: 1200px) {
         nav { padding: 30px; }
         .nav-menu { gap: 25px; }
+        .gallery-container { column-count: 2; column-gap: 30px; }
         .editorial-grid { grid-template-columns: 1fr; gap: 80px; text-align: center; }
         .about-name { text-align: center; font-size: 5.5rem; }
         .artist-statement { text-align: left; margin: 0 auto; padding: 0 20px; }
@@ -451,6 +455,7 @@
         footer { text-align: center; padding-right: 0; }
     }
     @media (max-width: 900px) {
+         .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; }
          .delivery-grid { flex-direction: column; gap: 50px; }
          .royal-corner { width: 120px; height: 120px; }
     }
@@ -462,7 +467,8 @@
       .hero h1 { font-size: 14vw; }
       .hero-video { object-position: center 20%; } 
       .gallery-container { column-count: 1; }
-      .pricing-grid { grid-template-columns: 1fr; gap: 80px; }
+      .gallery-item img { filter: grayscale(0%) contrast(100%); } /* Mobile: show color always */
+      
       .royal-grid { flex-direction: column; gap: 60px; }
       .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.05); padding-left: 0; padding-top: 60px; width: 100%; }
       .royal-border { padding: 50px 25px; }
@@ -526,16 +532,6 @@
     </div>
   </section>
 
-  <section class="film-strip">
-    <div class="section-header">
-      <h2 class="section-title">The Narrative</h2>
-      <span class="section-subtitle">Featured Selections</span>
-    </div>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper" id="swiperWrapper"></div>
-    </div>
-  </section>
-
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
       <h2 class="section-title">Visual Anthology</h2>
@@ -561,60 +557,62 @@
     <div class="pricing-grid">
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
-        <span class="discount-badge">Structure</span>
-        <h3 class="price-title">The Portrait</h3>
-        <span class="price-subtitle">結構・幾何形象</span>
-        <div class="price-wrapper"><span class="price-original">NT$ 8,800</span><span class="price-amount">NT$ 6,800</span></div>
-        <p class="price-desc">
-            「結構」—— 剝離繁複，回歸本質。<br>
-            以建築般的幾何線條，重塑您的專業輪廓。<br>
-            極簡，是為了讓靈魂更清晰。
-        </p>
-        <ul class="price-specs">
-          <li><strong>Session Time:</strong> 1.5 Hours</li>
-          <li><strong>Look:</strong> 1 Outfit</li>
-          <li><strong>Deliverables:</strong> 6 Retouched Images</li>
-          <li><strong>Final Product:</strong> Premium Physical Delivery (Walnut USB + Wax Seal Card).</li>
-        </ul>
-        <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
+        <div class="card-content-wrapper">
+            <span class="plan-eng-title">The Portrait</span>
+            <h3 class="price-title">肖像・結構</h3>
+            <div class="price-wrapper"><span class="price-original">NT$ 8,800</span><span class="price-amount">NT$ 6,800</span></div>
+            <p class="price-desc">
+                專為個人品牌打造的視覺基石。<br>
+                剝離多餘的裝飾，透過建築般的幾何光影，精準重塑您的專業輪廓。這不只是一張照片，而是您的資產。
+            </p>
+            <ul class="price-specs">
+              <li><strong>Session:</strong> 1.5 hr 拍攝時程</li>
+              <li><strong>Look:</strong> 1 套服裝造型</li>
+              <li><strong>Retouch:</strong> 6 張精修作品</li>
+              <li><strong>Final:</strong> 實體胡桃木 USB + 封蠟認證卡</li>
+            </ul>
+            <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
+        </div>
       </div>
+      
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
-        <span class="discount-badge">Scale</span>
-        <h3 class="price-title">The Ambiance</h3>
-        <span class="price-subtitle">尺度・場景氛圍</span>
-        <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
-        <p class="price-desc">
-            「尺度」—— 人與環境的對話。<br>
-            在宏大的城市或自然中，捕捉您與空間共鳴的呼吸感。<br>
-            讓畫面流動，讓故事發生。
-        </p>
-        <ul class="price-specs">
-          <li><strong>Session Time:</strong> 2 Hours</li>
-          <li><strong>Look:</strong> 1 Outfit</li>
-          <li><strong>Deliverables:</strong> 9 Retouched Images</li>
-          <li><strong>Final Product:</strong> Premium Physical Delivery (Walnut USB + Wax Seal Card).</li>
-        </ul>
-        <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
+        <div class="card-content-wrapper">
+            <span class="plan-eng-title">The Ambiance</span>
+            <h3 class="price-title">氛圍・尺度</h3>
+            <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
+            <p class="price-desc">
+                人與空間的深度對話。<br>
+                在宏大的城市地景或自然荒野中，捕捉您與環境共鳴的呼吸感。讓畫面流動，讓故事在留白中發生。
+            </p>
+            <ul class="price-specs">
+              <li><strong>Session:</strong> 2 hr 拍攝時程</li>
+              <li><strong>Look:</strong> 1 套服裝造型</li>
+              <li><strong>Retouch:</strong> 9 張精修作品</li>
+              <li><strong>Final:</strong> 實體胡桃木 USB + 封蠟認證卡</li>
+            </ul>
+            <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
+        </div>
       </div>
+      
       <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
-        <span class="discount-badge">Dimension</span>
-        <h3 class="price-title">The Cinematic</h3>
-        <span class="price-subtitle">維度・電影敘事</span>
-        <div class="price-wrapper"><span class="price-original">NT$ 16,800</span><span class="price-amount">NT$ 14,800</span></div>
-        <p class="price-desc">
-            「維度」—— 靜止的電影。<br>
-            透過道具與光影的調度，為您的影像注入深層的敘事靈魂。<br>
-            這不只是拍照，這是造夢。
-        </p>
-        <ul class="price-specs">
-          <li><strong>Session Time:</strong> 2.5 Hours</li>
-          <li><strong>Look:</strong> 2 Outfits (w/ Hair & Makeup)</li>
-          <li><strong>Deliverables:</strong> 12 Retouched Images</li>
-          <li><strong>Final Product:</strong> Premium Physical Delivery (Walnut USB + Wax Seal Card).</li>
-        </ul>
-        <button class="jump-btn hover-target" onclick="jumpToCategory('Dimension', event)">VIEW SAMPLES ↗</button>
+        <div class="card-content-wrapper">
+            <span class="plan-eng-title">The Cinematic</span>
+            <h3 class="price-title">電影・維度</h3>
+            <div class="price-wrapper"><span class="price-original">NT$ 16,800</span><span class="price-amount">NT$ 14,800</span></div>
+            <p class="price-desc">
+                一場靜止的電影演出。<br>
+                運用電影美術道具與戲劇光法，為您的影像注入深層敘事。這不是單純的紀錄，而是為您量身定做的造夢工程。
+            </p>
+            <ul class="price-specs">
+              <li><strong>Session:</strong> 2.5 hr 拍攝時程</li>
+              <li><strong>Look:</strong> 2 套服裝 (含妝髮造型)</li>
+              <li><strong>Retouch:</strong> 12 張精修作品</li>
+              <li><strong>Final:</strong> 實體胡桃木 USB + 封蠟認證卡</li>
+            </ul>
+            <button class="jump-btn hover-target" onclick="jumpToCategory('Dimension', event)">VIEW SAMPLES ↗</button>
+        </div>
       </div>
     </div>
   </section>
@@ -649,56 +647,41 @@
 
     <div class="royal-border">
       <svg class="royal-corner corner-tl" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
-        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
-        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
-        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
-        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
-        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
-        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
-        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
-        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
-      </svg>
+        <path class="constellation-line" 
+              d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 
+                 M90,110 L90,160 M70,160 L110,160" />
+        
+        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />  <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" /> <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" /> <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" /> <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />  <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />  <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" /> </svg>
+      
       <svg class="royal-corner corner-tr" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
-        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
-        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
-        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
-        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
-        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
-        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
-        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
-        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
+        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
+        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
+        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
+        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
+        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
+        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
+        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
+        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
       </svg>
       <svg class="royal-corner corner-bl" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
-        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
-        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
-        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
-        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
-        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
-        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
-        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
-        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
+        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
+        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
+        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
+        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
+        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
+        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
+        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
+        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
       </svg>
       <svg class="royal-corner corner-br" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M20,160 L20,40 L70,20 L140,20 L160,60 L120,100 L70,80 L20,40 M70,20 L120,60 L70,80 L70,140 M20,160 L70,120 L120,100 M140,20 L120,60" />
-        <circle class="constellation-node node-1" cx="20" cy="160" r="1.5" />
-        <circle class="constellation-node node-2" cx="70" cy="120" r="1.5" />
-        <circle class="constellation-node node-3" cx="20" cy="40" r="1.5" />
-        <circle class="constellation-node node-4" cx="70" cy="80" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="20" r="1.5" />
-        <circle class="constellation-node node-6" cx="140" cy="20" r="1.5" />
-        <circle class="constellation-node node-7" cx="120" cy="60" r="1.5" />
-        <circle class="constellation-node node-1" cx="160" cy="60" r="1.5" />
-        <circle class="constellation-node node-3" cx="120" cy="100" r="1.5" />
-        <circle class="constellation-node node-5" cx="70" cy="140" r="1.5" />
+        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
+        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
+        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
+        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
+        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
+        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
+        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
+        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
       </svg>
 
       <div class="royal-grid">
@@ -802,8 +785,6 @@
     <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation()">
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
   <script>
     /* --- Force Reset Scroll on Load (The Absolute Reset) --- */
     if (history.scrollRestoration) {
@@ -811,13 +792,10 @@
     }
     window.addEventListener('load', () => window.scrollTo(0, 0));
 
-    // 2.5s: Reveal Site (Slightly faster for better UX)
+    // 2.5s: Reveal Site
     setTimeout(() => {
         enterSite();
     }, 2500);
-
-    /* --- Global Swiper Instance --- */
-    let swiper;
 
     function enterSite() {
         // 1. Start Fade Out
@@ -827,14 +805,6 @@
         const video = document.getElementById('heroVideo');
         if(video) video.play().catch(e => {});
         
-        const audio = document.getElementById('bgMusic');
-        // Auto-play is often blocked, handled silently
-        
-        // 3. Force Gallery Reset
-        if(swiper) {
-            swiper.slideTo(0, 0);
-        }
-
         // 4. Unlock Scroll
         setTimeout(() => {
             document.body.classList.add('site-active');
@@ -863,11 +833,9 @@
     const totalWorks = 117; 
     const initialShow = 15; 
     const galleryContainer = document.getElementById('galleryContainer');
-    const swiperWrapper = document.getElementById('swiperWrapper');
 
     function generateGallery() {
       galleryContainer.innerHTML = '';
-      swiperWrapper.innerHTML = '';
 
       for (let i = 1; i <= totalWorks; i++) {
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
@@ -888,15 +856,6 @@
             <div class="item-meta"><span class="meta-id">FIG. ${figNum}</span><div class="meta-line"></div><span class="meta-tag">${category.toUpperCase()}</span></div>
         `;
         galleryContainer.appendChild(itemDiv);
-      }
-
-      for (let i = 1; i <= 10; i++) {
-        const num = i.toString().padStart(2, '0');
-        const imgPath = `images/works/portfolio00-${num}.jpg`;
-        const slideDiv = document.createElement('div');
-        slideDiv.className = 'swiper-slide';
-        slideDiv.innerHTML = `<img src="${imgPath}" class="image-hover-target" onclick="openLightbox(this)" onerror="this.parentElement.style.display='none'">`;
-        swiperWrapper.appendChild(slideDiv);
       }
     }
     generateGallery();
@@ -981,15 +940,6 @@
     }
     setTimeout(initScrollReveal, 500); 
 
-    setTimeout(() => {
-        swiper = new Swiper(".mySwiper", {
-          effect: 'slide', allowTouchMove: true, threshold: 10, centeredSlides: true,
-          slidesPerView: 'auto', spaceBetween: 50, loop: false, grabCursor: true, 
-          mousewheel: { enabled: true, sensitivity: 1.5, forceToAxis: true },
-          speed: 800, slideToClickedSlide: true
-        });
-    }, 500);
-
     /* --- Lightbox Logic --- */
     function openLightbox(element) {
       const lightbox = document.getElementById("lightbox");
@@ -1030,7 +980,6 @@
         cursorDot.style.left = `${x}px`; 
         cursorDot.style.top = `${y}px`; 
         
-        // Small delay for the glow to create a fluid feel
         setTimeout(() => {
             cursorGlow.style.left = `${x}px`; 
             cursorGlow.style.top = `${y}px`;
@@ -1047,23 +996,6 @@
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') { 
         document.body.classList.remove('hover-active'); 
       }
-    });
-
-    /* --- Magnetic Buttons Implementation --- */
-    const magnets = document.querySelectorAll('.hover-target');
-    magnets.forEach((magnet) => {
-        magnet.addEventListener('mousemove', (e) => {
-            const position = magnet.getBoundingClientRect();
-            const x = e.clientX - position.left - position.width / 2;
-            const y = e.clientY - position.top - position.height / 2;
-            
-            // Adjust the 0.3 factor to control magnetic strength
-            magnet.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-        });
-
-        magnet.addEventListener('mouseout', () => {
-            magnet.style.transform = 'translate(0px, 0px)';
-        });
     });
 
   </script>
