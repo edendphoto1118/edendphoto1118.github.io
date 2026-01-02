@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>EDEN — VISUAL ARCHIVE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="EDEN D. — Visual Director & Photographer. A curated archive of structure, scale, and dimension.">
+  <meta name="description" content="EDEN D. — Visual Director & Photographer.">
   
   <meta property="og:url" content="https://your-github-username.github.io">
   <meta name="theme-color" content="#000000">
@@ -20,7 +20,6 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; height: 100%; scrollbar-gutter: stable; }
     
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; transition: background 0.3s ease; }
@@ -29,49 +28,121 @@
     body {
       margin: 0; padding: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      /* 🌟 隱藏系統滑鼠，使用自訂游標 */
-      cursor: none; 
+      cursor: none; /* 隱藏系統滑鼠 */
       user-select: none; -webkit-user-select: none;
       overflow-y: auto; height: auto;
     }
     
     img { pointer-events: none; -webkit-user-drag: none; max-width: 100%; }
-    /* 連結與按鈕也隱藏系統鼠標，改用自訂游標指示 */
     a, button, input, select, textarea { cursor: none; }
 
-    /* --- 🌟 CUSTOM CURSOR (已修復不可見問題) --- */
-    .cursor-dot, .cursor-outline {
+    /* --- 🌟 粒子軌道游標系統 (Particle Orbit Cursor) --- */
+    
+    /* 1. 游標容器：負責跟隨滑鼠座標 */
+    #cursor-kit {
         position: fixed; top: 0; left: 0;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
         z-index: 99999;
         pointer-events: none; /* 讓點擊穿透 */
-        opacity: 0; /* 預設隱藏，靠 JS 顯示 */
-        transition: opacity 0.3s ease, transform 0.1s, width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+        opacity: 0; /* 預設隱藏，動了才出現 */
+        transition: opacity 0.3s ease;
+        /* 混合模式讓白色點在白色背景上變黑，但保留金色的色彩 */
+        mix-blend-mode: normal; 
     }
 
-    .cursor-dot { width: 6px; height: 6px; background-color: #fff; }
-    .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.5); }
+    /* 2. 中心實心點 (一般狀態) */
+    .cursor-dot {
+        position: absolute; top: 50%; left: 50%;
+        width: 6px; height: 6px;
+        background-color: #fff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        mix-blend-mode: difference; /* 讓點在白底可見 */
+    }
 
-    /* Hover 互動 */
-    body.hover-active .cursor-outline {
-        width: 60px; height: 60px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-color: transparent;
+    /* 3. 軌道圈 (Hover 狀態) */
+    .cursor-orbit {
+        position: absolute; top: 50%; left: 50%;
+        width: 50px; height: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.2); /* 淡淡的軌跡 */
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg); /* 預設縮小 */
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+        display: flex; justify-content: center; align-items: center;
+    }
+
+    /* 4. 繞圈的粒子 (Particle) */
+    .cursor-orbit::after {
+        content: '';
+        position: absolute;
+        top: -3px; left: 50%; /* 定位在圓環頂部 */
+        width: 6px; height: 6px;
+        background-color: #BF953F; /* 金色粒子 */
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 8px rgba(191, 149, 63, 0.8); /* 發光效果 */
+        opacity: 0; /* 預設隱藏 */
+        transition: opacity 0.3s;
+    }
+
+    /* --- 互動狀態邏輯 --- */
+
+    /* A. 當滑鼠移到可點擊物體 (Hover Active) */
+    body.hover-active .cursor-dot {
+        transform: translate(-50%, -50%) scale(0); /* 中心點縮小消失 */
+        opacity: 0;
+    }
+
+    body.hover-active .cursor-orbit {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg); /* 圓環放大 */
+        border-color: rgba(255, 255, 255, 0.4);
+        /* 啟動旋轉動畫 */
+        animation: orbitSpin 2s linear infinite;
+    }
+
+    body.hover-active .cursor-orbit::after {
+        opacity: 1; /* 粒子顯現 */
+    }
+
+    /* B. 當滑鼠移到圖片 (Image Hover - 更強烈的金色) */
+    body.image-hover-active .cursor-orbit {
+        width: 70px; height: 70px; /* 變更大 */
+        border-color: rgba(191, 149, 63, 0.3);
+        animation: orbitSpin 1.5s linear infinite; /* 轉更快 */
+        background: rgba(0, 0, 0, 0.2); /* 稍微加深背景增加對比 */
+        backdrop-filter: blur(2px);
     }
     
-    body.image-hover-active .cursor-dot { opacity: 0; }
-    body.image-hover-active .cursor-outline {
-        width: 80px; height: 80px;
-        background-color: rgba(191, 149, 63, 0.9);
-        border-color: transparent;
-        display: flex; justify-content: center; align-items: center;
-        mix-blend-mode: normal;
+    /* 圖片上顯示 VIEW 文字 */
+    body.image-hover-active .cursor-orbit::before {
+        content: 'VIEW';
+        position: absolute;
+        color: #BF953F;
+        font-size: 10px;
+        letter-spacing: 2px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        animation: none; /* 文字不跟著轉 */
+        transform: rotate(0); 
     }
-    body.image-hover-active .cursor-outline::after {
-        content: 'VIEW'; color: #000; font-family: 'Montserrat', sans-serif;
-        font-weight: 600; font-size: 10px; letter-spacing: 2px;
+    /* 抵銷父層旋轉對文字的影響 (這是進階技巧) */
+    /* 因為 orbit 在轉，文字若在裡面也會轉，所以我們需要一個反向動畫或者結構分離 */
+    /* 為了簡單且效能好，我們讓 VIEW 文字另外獨立出來，不放在 orbit 裡面轉 */
+
+    @keyframes orbitSpin {
+        0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
     }
+    
+    /* 特別修正：圖片 Hover 時的旋轉動畫要包含 scale */
+    body.image-hover-active .cursor-orbit {
+        animation: orbitSpinImage 1.5s linear infinite;
+    }
+    @keyframes orbitSpinImage {
+        0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+    }
+
 
     /* --- 2. Preloader --- */
     #preloader {
@@ -81,8 +152,7 @@
       transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
     }
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 2rem; 
-      color: #fff; /* 白色 */
+      font-family: 'Cinzel', serif; font-size: 2rem; color: #fff;
       letter-spacing: 0.5em; animation: pulse 2s infinite;
     }
     @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
@@ -143,19 +213,13 @@
     .project-card.reveal { opacity: 1; transform: translateY(0); }
     .project-card.hidden-project { display: none; opacity: 0; }
 
-    /* 交錯排列 */
     .project-card:nth-child(even) { flex-direction: row-reverse; }
     .project-card:nth-child(even) .project-info { text-align: right; align-items: flex-end; }
     
-    /* 直式照片容器 */
     .project-cover-wrapper { 
-        flex: 1; 
-        max-width: 500px; 
-        position: relative; overflow: hidden; cursor: none;
-        aspect-ratio: 3/4; /* 直式 */
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
-        /* 🌟 確保圖片可點擊 */
-        pointer-events: auto;
+        flex: 1; max-width: 500px; position: relative; overflow: hidden; cursor: none;
+        aspect-ratio: 3/4; box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
+        pointer-events: auto; /* 確保可點擊 */
     }
     
     .project-cover { 
@@ -182,7 +246,6 @@
     .project-title { font-family: 'Cinzel', serif; font-size: 3rem; color: #fff; margin: 0 0 20px 0; letter-spacing: 0.05em; font-weight: 400; line-height: 1.1; }
     .project-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #888; line-height: 1.8; margin-bottom: 40px; max-width: 380px; font-weight: 300; }
     
-    /* 🌟 按鈕設定：pointer-events: auto 確保可點 */
     .view-project-btn { 
         font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #fff; letter-spacing: 0.25em; text-transform: uppercase; 
         border-bottom: 1px solid #BF953F; padding-bottom: 5px; width: fit-content; margin-top: 10px;
@@ -380,8 +443,20 @@
     .contact-link, .email-btn { color: #555; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; pointer-events: auto; }
     .contact-link:hover, .email-btn:hover { color: #BF953F; }
     
-    footer { padding: 50px 0 80px; text-align: center; width: 100%; border-top: 1px solid #111; }
+    /* --- Tech Ticker --- */
+    .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 30px; background: #000; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 20px; }
+    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #444; letter-spacing: 0.1em; }
+    @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    
+    /* Visitor Counter */
+    .visitor-counter { display: flex; align-items: center; gap: 10px; z-index: 9001; background: #000; padding-left: 15px; }
+    .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
+    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.3); animation: pulseText 3s infinite ease-in-out; }
+    @keyframes pulseText { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); } 100% { opacity: 0.8; } }
+    
+    footer { padding: 50px 0 80px; text-align: center; width: 100%; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; }
+    footer .tech-stack { font-size: 0.45rem; opacity: 0.4; margin-top: 5px; letter-spacing: 0.1em; color: #444; }
 
     .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 500; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -412,7 +487,7 @@
          .pricing-grid { grid-template-columns: 1fr; gap: 60px; }
     }
     @media (max-width: 768px) {
-      .cursor-dot, .cursor-outline { display: none !important; }
+      .cursor-dot, .cursor-orbit { display: none !important; }
       body { cursor: auto !important; }
       .nav { padding: 20px 30px; }
       .nav-menu { display: none; }
@@ -430,7 +505,6 @@
       .price-block { flex-direction: column; align-items: flex-start; gap: 5px; }
       .original-price { font-size: 1rem; }
       .royal-sp-amount { font-size: 2.8rem; }
-      /* 手機上所有互動元素恢復正常鼠標 */
       a, button, input, select, textarea { cursor: pointer; }
     }
   </style>
@@ -450,8 +524,10 @@
 
   <div id="toast" class="toast">Email Copied</div>
 
-  <div class="cursor-dot"></div>
-  <div class="cursor-outline"></div>
+  <div id="cursor-kit">
+      <div class="cursor-dot"></div>
+      <div class="cursor-orbit"></div>
+  </div>
 
   <nav>
     <a href="#" class="nav-logo hover-target">EDEN</a>
@@ -741,7 +817,7 @@
             card.dataset.title = title;
             card.dataset.id = projectId;
             
-            // 🌟 修正點：onclick 增加在 project-cover-wrapper 上
+            // 🌟 圖片區域也加上 onclick
             card.innerHTML = `
                 <div class="project-info">
                     <span class="plan-tag">Sample of: ${planName}</span>
@@ -763,14 +839,10 @@
     function revealFullArchive() {
         const hiddenProjects = document.querySelectorAll('.hidden-project');
         const btnContainer = document.getElementById('loadMoreContainer');
-        
         btnContainer.style.display = 'none';
-
         hiddenProjects.forEach((card, index) => {
             card.classList.remove('hidden-project');
-            setTimeout(() => {
-                card.classList.add('reveal');
-            }, index * 100);
+            setTimeout(() => { card.classList.add('reveal'); }, index * 100);
         });
     }
 
@@ -857,76 +929,61 @@
       });
     }
 
-    /* --- 🌟 RESTORED CURSOR LOGIC --- */
+    /* --- 🌟 CURSOR LOGIC (UPDATED WITH PARTICLE ORBIT) --- */
+    const cursorKit = document.getElementById('cursor-kit');
     const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
+    const cursorOrbit = document.querySelector('.cursor-orbit');
 
+    // 1. 滑鼠移動追蹤
     window.addEventListener('mousemove', (e) => {
         const posX = e.clientX;
         const posY = e.clientY;
 
-        // 🌟 修正左上角殘影問題的關鍵：偵測到移動才顯示
-        if (cursorDot.style.opacity === '0' || cursorDot.style.opacity === '') {
-            cursorDot.style.opacity = '1';
-            cursorOutline.style.opacity = '1';
+        // 顯示游標
+        if (cursorKit.style.opacity === '0' || cursorKit.style.opacity === '') {
+            cursorKit.style.opacity = '1';
         }
 
-        // 使用 requestAnimationFrame 讓移動更順暢
+        // 使用 transform 移動整個容器 (效能最好)
         requestAnimationFrame(() => {
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            
-            // 外圈稍微延遲，製造拖曳感
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+            cursorKit.style.transform = `translate(${posX}px, ${posY}px)`;
         });
     });
 
-    // 監聽 Hover 效果 (按鈕變大、圖片變 VIEW)
-    document.addEventListener('mouseover', (e) => { 
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') { 
-        document.body.classList.add('hover-active'); 
-      }
-      if (e.target.closest('.image-hover-target') || e.target.classList.contains('project-cover-wrapper')) {
-        document.body.classList.add('image-hover-active');
-      }
-    });
-    
-    document.addEventListener('mouseout', (e) => { 
-      if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') { 
-        document.body.classList.remove('hover-active'); 
-      }
-      if (e.target.closest('.image-hover-target') || e.target.classList.contains('project-cover-wrapper')) {
-        document.body.classList.remove('image-hover-active');
-      }
+    // 2. Hover 偵測 (放大、變色、顯示 VIEW)
+    document.addEventListener('mouseover', (e) => {
+        const target = e.target;
+        
+        // A. 針對按鈕/連結 (hover-target)
+        if (target.closest('.hover-target') || target.tagName === 'A' || target.tagName === 'BUTTON') {
+            document.body.classList.add('hover-active');
+        }
+        
+        // B. 針對圖片區域 (project-cover-wrapper)
+        if (target.closest('.project-cover-wrapper')) {
+            document.body.classList.add('image-hover-active');
+            // 確保同時觸發 hover-active 以啟動軌道旋轉
+            document.body.classList.add('hover-active');
+        }
     });
 
-    /* --- Aurora Effect --- */
-    const auroraContainer = document.getElementById('aurora-container');
-    const auroras = [];
-    function spawnAurora() {
-      const el = document.createElement('div'); el.classList.add('aurora-ribbon');
-      let posX = Math.random() * window.innerWidth; let posY = Math.random() * (window.innerHeight * 0.8);
-      let angle = (Math.random() - 0.5) * 40; const driftSpeed = 0.1 + Math.random() * 0.2; 
-      const velX = Math.sin(angle * Math.PI / 180) * driftSpeed; const velY = Math.cos(angle * Math.PI / 180) * driftSpeed * 0.3;
-      el.style.transform = `translate(${posX}px, ${posY}px) rotate(${angle}deg)`;
-      auroraContainer.appendChild(el);
-      auroras.push({ el: el, x: posX, y: posY, vx: velX, vy: velY, angle: angle, life: 0, maxLife: 1500 + Math.random() * 1000 });
-    }
-    function animateAuroras() {
-      for (let i = auroras.length - 1; i >= 0; i--) {
-        let p = auroras[i]; p.life++; p.x += p.vx; p.y += p.vy;
-        let opacity = 0; let fadeDuration = 300;
-        if (p.life < fadeDuration) { opacity = p.life / fadeDuration; } else if (p.life > p.maxLife - fadeDuration) { opacity = (p.maxLife - p.life) / fadeDuration; } else { opacity = 1; }
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg) scaleY(${1 + Math.sin(p.life * 0.005)*0.2})`;
-        p.el.style.opacity = opacity * 0.35; 
-        if (p.life > p.maxLife) { p.el.remove(); auroras.splice(i, 1); }
-      }
-      requestAnimationFrame(animateAuroras);
-    }
-    setInterval(spawnAurora, 3500); spawnAurora(); spawnAurora(); animateAuroras();
+    document.addEventListener('mouseout', (e) => {
+        const target = e.target;
+        
+        if (target.closest('.hover-target') || target.tagName === 'A' || target.tagName === 'BUTTON') {
+            document.body.classList.remove('hover-active');
+        }
+        
+        if (target.closest('.project-cover-wrapper')) {
+            document.body.classList.remove('image-hover-active');
+            // 離開圖片時，如果不在其他 hover 目標上，移除 hover-active
+            setTimeout(() => {
+                if (!document.querySelector('.project-cover-wrapper:hover') && !document.querySelector('.hover-target:hover')) {
+                    document.body.classList.remove('hover-active');
+                }
+            }, 10);
+        }
+    });
   </script>
 </body>
 </html>
