@@ -9,8 +9,6 @@
   
   <meta property="og:title" content="EDEN — VISUAL ARCHIVE">
   <meta property="og:description" content="Curating life through imagery.">
-  <meta property="og:image" content="images/works/portfolio0-1.jpg">
-  <meta property="og:url" content="https://yourwebsite.com">
   <meta name="theme-color" content="#050505">
 
   <link rel="icon" type="image/png" href="images/favicon.png"> 
@@ -32,19 +30,26 @@
         background-color: #050505;
     }
     
-    /* Custom Scrollbar */
+    /* Custom Scrollbar - Minimalist Silver */
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; transition: background 0.3s ease; }
-    ::-webkit-scrollbar-thumb:hover { background: #BF953F; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; transition: background 0.3s ease; }
+    ::-webkit-scrollbar-thumb:hover { background: #fff; }
 
     body {
       margin: 0; padding: 0; background: #050505; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: none; /* Custom Cursor Active */
+      cursor: auto; /* Default cursor for loading phase */
       user-select: none; -webkit-user-select: none;
       overflow: hidden; height: 100%;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* Active State: Switch to Custom Cursor */
+    body.site-active { 
+        cursor: none; /* Hide system cursor only after entry */
+        overflow-y: auto; 
+        height: auto; 
     }
     
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
@@ -56,7 +61,7 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
       z-index: 9000; 
       pointer-events: none;
-      opacity: 0.35;
+      opacity: 0.3;
       mix-blend-mode: overlay;
     }
 
@@ -66,9 +71,9 @@
       background: #000; z-index: 20000; 
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       transition: opacity 2s cubic-bezier(0.6, 0.05, 0.01, 0.99), visibility 2s ease;
+      cursor: default; /* Ensure cursor is visible here */
     }
     
-    /* Phase 1: Logo Animation */
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       text-transform: uppercase; text-align: center; width: 100%;
@@ -84,27 +89,25 @@
         100% { opacity: 1; letter-spacing: 0.5em; transform: scale(1); filter: blur(0); }
     }
 
-    /* Phase 2: Enter Button */
     .enter-btn-wrapper {
         position: absolute; bottom: 15vh;
         opacity: 0; 
         transition: opacity 1s ease;
-        pointer-events: none; /* Disabled until animation done */
+        pointer-events: none; 
     }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
 
     .enter-btn {
-        background: transparent; border: none; color: #BF953F;
+        background: transparent; border: none; color: #fff;
         font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.4em;
-        text-transform: uppercase; cursor: none;
+        text-transform: uppercase; cursor: pointer; /* Explicit pointer */
         padding: 20px 40px;
-        transition: letter-spacing 0.5s ease, opacity 0.5s ease;
-        opacity: 0.7;
+        transition: letter-spacing 0.5s ease, opacity 0.5s ease, color 0.3s;
+        opacity: 0.6;
     }
-    .enter-btn:hover { letter-spacing: 0.6em; opacity: 1; }
+    .enter-btn:hover { letter-spacing: 0.6em; opacity: 1; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
 
     body.site-active #preloader { opacity: 0; visibility: hidden; pointer-events: none; }
-    body.site-active { overflow-y: auto; height: auto; }
 
     /* --- 4. UI: Nav & Cursor --- */
     nav {
@@ -122,7 +125,6 @@
     }
     .nav-menu { display: flex; gap: 40px; align-items: center; flex-shrink: 0; }
     
-    /* Tactile Nav Item (Text Scramble/Swap Effect) */
     .nav-item { 
         font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; 
         text-decoration: none; letter-spacing: 0.25em; text-transform: uppercase; 
@@ -134,7 +136,7 @@
     .nav-item::after { 
         content: attr(data-text); 
         display: block; position: absolute; top: 100%; left: 0; 
-        color: #BF953F; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        color: #fff; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-weight: 600;
     }
     .nav-item:hover { opacity: 1; }
     .nav-item:hover span { transform: translateY(-100%); }
@@ -147,35 +149,39 @@
         transition: all 0.3s ease; 
         border-radius: 30px; display: flex; align-items: center; gap: 8px; white-space: nowrap; 
     }
-    .audio-btn:hover { border-color: #BF953F; color: #BF953F; }
+    .audio-btn:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
     .sound-wave { display: flex; gap: 2px; height: 10px; align-items: flex-end; }
     .bar { width: 1px; background: currentColor; height: 100%; animation: wave 1s infinite ease-in-out; }
     .bar:nth-child(1) { animation-delay: 0s; } .bar:nth-child(2) { animation-delay: 0.2s; } .bar:nth-child(3) { animation-delay: 0.4s; }
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* New Liquid Cursor */
+    /* Platinum Cursor Design */
     .cursor-core {
-        width: 6px; height: 6px; background: #fff; border-radius: 50%;
+        width: 4px; height: 4px; background: #fff; border-radius: 50%;
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-        pointer-events: none; z-index: 10002; mix-blend-mode: difference;
+        pointer-events: none; z-index: 10002; mix-blend-mode: normal;
+        display: none; /* Hidden during preloader */
     }
     .cursor-ring {
-        width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%;
+        width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%;
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
         pointer-events: none; z-index: 10001; 
-        transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.1s linear; /* Fast transform for lag via JS */
+        transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.1s linear; 
         will-change: transform;
+        display: none; /* Hidden during preloader */
+        mix-blend-mode: difference; /* Tech/High-fashion feel */
     }
+    
+    body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     
     /* Interaction State */
     body.hover-active .cursor-ring { 
-        width: 20px; height: 20px; 
-        border-color: #BF953F; 
-        border-width: 2px;
-        background: rgba(191,149,63,0.1);
+        width: 50px; height: 50px; 
+        border-color: rgba(255,255,255,0.8); 
+        border-width: 1px;
+        background: transparent;
     }
-    body.hover-active .cursor-core { width: 4px; height: 4px; }
 
     /* --- 5. Hero Video --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding-bottom: 12vh; }
@@ -204,7 +210,7 @@
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.12em; color: #fff; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #666; text-transform: uppercase; margin-top: 25px; display: block; }
 
-    /* --- 7. Gallery (Mosaic Magazine Layout & Slow Focus) --- */
+    /* --- 7. Gallery (Sharp B/W, Magazine Layout) --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 100px; flex-wrap: wrap; width: 100%; }
     .filter-btn { 
@@ -233,15 +239,16 @@
         cursor: none; 
         opacity: 0; 
         transform: translateY(40px) scale(0.98); 
-        /* Resting State: B/W + Blur */
-        filter: grayscale(100%) contrast(120%) blur(4px); 
+        /* Resting State: SHARP B/W (No Blur) */
+        filter: grayscale(100%) contrast(110%) brightness(0.9); 
         transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.4s cubic-bezier(0.2, 0, 0.2, 1);
     }
     
     .gallery-item.reveal { 
         opacity: 1; 
         transform: translateY(0) scale(1); 
-        filter: grayscale(100%) contrast(120%) blur(3px); /* Slightly less blur when revealed, waiting for hover */
+        /* Resting State remains Sharp */
+        filter: grayscale(100%) contrast(110%) brightness(0.9); 
     }
 
     .gallery-item.filtered-out, .gallery-item.hidden-loadmore { display: none; }
@@ -258,15 +265,15 @@
     .meta-line { height: 1px; background: #222; flex-grow: 1; margin: 0 15px; }
     .meta-tag { font-family: 'Cinzel', serif; font-size: 0.55rem; color: #888; letter-spacing: 0.1em; }
     
-    /* INTERACTION: The Slow Focus Reveal */
+    /* INTERACTION: Color Reveal */
     .gallery-item:hover { 
         z-index: 100; 
-        filter: grayscale(0%) contrast(100%) blur(0); /* The magic happens here */
+        filter: grayscale(0%) contrast(100%) brightness(1); 
     }
     .gallery-item:hover img {
         transform: scale(1.03); 
         box-shadow: 0 30px 70px rgba(0,0,0,0.6); 
-        outline: 1px solid rgba(191, 149, 63, 0.3); outline-offset: 15px;
+        outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px;
     }
     .gallery-item:hover .item-meta { opacity: 1; }
     
@@ -280,43 +287,50 @@
     }
     .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
-    /* --- 8. Pricing --- */
+    /* --- 8. Pricing (Magazine Grid Spec-Sheet) --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
     .price-card { 
-        border: 1px solid rgba(255,255,255,0.08); padding: 60px 40px; position: relative; 
-        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; 
+        transition: all 0.5s ease; 
         display: flex; flex-direction: column; 
-        background: rgba(10,10,10,0.4); backdrop-filter: blur(5px);
-        min-height: 600px; overflow: hidden; 
+        background: #080808;
+        min-height: 650px; overflow: hidden; 
     }
     
-    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); z-index: 0; filter: grayscale(100%) brightness(0.5); transform: scale(1); }
-    .card-bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,5,0.95) 10%, rgba(5,5,5,0.7) 100%); }
-    .card-content-wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
+    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 0.8s ease; z-index: 0; filter: grayscale(100%) brightness(0.4); transform: scale(1); }
+    .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
+
+    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 40px; }
     
-    .price-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-12px) scale(1.01); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-    .price-card:hover .card-bg { opacity: 1; transform: scale(1.1); }
-    
-    .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); background: radial-gradient(circle at top right, rgba(191,149,63,0.05), transparent 60%); }
-    
-    .plan-eng-title { font-family: 'Cinzel', serif; font-size: 0.8rem; color: #666; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 15px; display: block; }
-    .price-title { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 30px; font-weight: 500; letter-spacing: 0.1em; line-height: 1.4; }
-    
-    .price-wrapper { margin-bottom: 35px; display: flex; align-items: baseline; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
-    .price-amount { font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; font-weight: 400; }
-    .price-original { font-family: 'Cinzel', serif; font-size: 1rem; color: #444; text-decoration: line-through; }
-    
-    .price-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #ccc; line-height: 2; margin-bottom: 40px; font-weight: 300; text-align: justify; }
-    
-    .price-specs { list-style: none; padding: 0; margin: 0 0 30px 0; flex-grow: 1; }
-    .price-specs li { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #999; margin-bottom: 18px; padding-left: 15px; position: relative; line-height: 1.6; font-weight: 300; }
-    .price-specs li::before { content: '◈'; position: absolute; left: 0; color: #444; font-size: 0.6rem; top: 4px; }
-    .price-specs li strong { color: #fff; font-weight: 400; padding-right: 5px; }
-    
-    .jump-btn { margin-top: auto; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; }
-    .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
+    /* Grid Header */
+    .price-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+    .plan-id { font-family: 'Space Mono', monospace; font-size: 3rem; color: rgba(255,255,255,0.1); line-height: 1; }
+    .plan-title-block { text-align: right; }
+    .plan-zh { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff; display: block; margin-bottom: 5px; }
+    .plan-en { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #666; text-transform: uppercase; }
+
+    /* Price Area */
+    .price-area { margin-bottom: 40px; }
+    .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; display: block; }
+    .old-price { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #444; text-decoration: line-through; display: block; margin-top: 5px; }
+
+    /* Description */
+    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #999; line-height: 1.8; margin-bottom: auto; font-weight: 300; text-align: justify; }
+
+    /* Grid Specs (Bottom) */
+    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; }
+    .spec-item { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .spec-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.05); padding-right: 15px; }
+    .spec-item:nth-child(even) { padding-left: 15px; }
+    .spec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+    .spec-val { display: block; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #ccc; }
+
+    .jump-btn { margin-top: 30px; padding: 15px 0; background: #111; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; }
+    .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
+    .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.4); }
+    .price-card.featured .current-price { color: #BF953F; }
 
     /* --- New: Prestige Delivery Section --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
@@ -328,49 +342,41 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: #ddd; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 2; font-weight: 300; }
 
-    /* --- 9. Royal (THE SPADE CONSTELLATION) --- */
-    .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #030303 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
+    /* --- 9. Royal (THE MACRO SPADE) --- */
+    .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #020202 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
     
-    .royal-border { 
-        position: relative; z-index: 2; padding: 100px; 
-        background: radial-gradient(circle at center, rgba(191,149,63,0.02) 0%, transparent 60%);
+    /* Giant Partial Spade - Cropped Right Side */
+    .royal-bg-svg {
+        position: absolute;
+        top: -10%; right: -20%;
+        width: 120vh; height: 120vh;
+        z-index: 1;
+        opacity: 0.2; /* Subtle background */
+        pointer-events: none;
+        transition: opacity 0.5s ease;
     }
-
-    .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; z-index: 5; position: relative; }
-    .royal-info { flex: 1; }
-    .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.1); padding-left: 80px; }
-    
-    .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; opacity: 0.3; transition: opacity 0.5s ease; }
-    .royal-section:hover .royal-corner { opacity: 0.9; }
-    
-    .corner-tl { top: 0; left: 0; }
-    .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
-    .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
-    .corner-br { bottom: 0; right: 0; transform: scale(-1); }
+    .royal-section:hover .royal-bg-svg { opacity: 0.5; }
 
     .constellation-line {
         fill: none; 
         stroke: url(#star-gold-gradient); 
-        stroke-width: 0.6; 
+        stroke-width: 0.8; 
         stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 600; 
-        stroke-dashoffset: 600;
-        transition: stroke-dashoffset 3.5s cubic-bezier(0.4, 0, 0.2, 1);
-        filter: drop-shadow(0 0 3px rgba(191, 149, 63, 0.5));
+        stroke-dasharray: 2000; 
+        stroke-dashoffset: 2000;
+        transition: stroke-dashoffset 4s cubic-bezier(0.2, 0, 0.2, 1);
+        filter: drop-shadow(0 0 5px rgba(191, 149, 63, 0.3));
     }
     
-    .constellation-node { fill: #FFF; opacity: 0; transition: opacity 0.6s ease; }
+    .constellation-node { fill: #FFF; opacity: 0; transition: opacity 0.8s ease; }
 
-    .royal-section:hover .node-1 { transition-delay: 0.1s; opacity: 1; }
-    .royal-section:hover .node-2 { transition-delay: 0.2s; opacity: 1; }
-    .royal-section:hover .node-3 { transition-delay: 0.3s; opacity: 1; }
-    .royal-section:hover .node-4 { transition-delay: 0.4s; opacity: 1; }
-    .royal-section:hover .node-5 { transition-delay: 0.5s; opacity: 1; }
-    .royal-section:hover .node-6 { transition-delay: 0.6s; opacity: 1; }
-    .royal-section:hover .node-7 { transition-delay: 0.7s; opacity: 1; }
-    .royal-section:hover .constellation-line { stroke-dashoffset: 0; transition-delay: 0.6s; }
+    .royal-section:hover .constellation-line { stroke-dashoffset: 0; }
+    .royal-section:hover .node-group { opacity: 1; } /* Trigger all nodes */
 
+    .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; z-index: 5; position: relative; max-width: 1400px; margin: 0 auto; }
+    .royal-info { flex: 1; }
+    .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.1); padding-left: 80px; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); padding: 40px; border: 1px solid rgba(191,149,63,0.1); }
+    
     .royal-single-price { text-align: left; }
     .royal-discount-tag {
         display: inline-block; background: #BF953F; color: #000; padding: 5px 12px;
@@ -478,11 +484,12 @@
         .signature::before { right: 50%; transform: translateX(50%); }
         footer .tech-stack { display: none; }
         footer { text-align: center; padding-right: 0; }
+        .royal-grid { flex-direction: column; }
+        .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); }
     }
     @media (max-width: 900px) {
          .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; }
          .delivery-grid { flex-direction: column; gap: 50px; }
-         .royal-corner { width: 120px; height: 120px; }
     }
     @media (max-width: 768px) {
       .cursor-core, .cursor-ring { display: none !important; }
@@ -495,8 +502,7 @@
       .gallery-item img { filter: grayscale(0%) contrast(100%); } /* Mobile: show color always */
       
       .royal-grid { flex-direction: column; gap: 60px; }
-      .royal-price { border-left: none; border-top: 1px solid rgba(255,255,255,0.05); padding-left: 0; padding-top: 60px; width: 100%; }
-      .royal-border { padding: 50px 25px; }
+      .royal-price { padding: 20px; }
       .hidden-booking-container.open { padding: 80px 5vw; }
       .booking-interface { padding: 40px 25px; }
       .terms-grid { grid-template-columns: 1fr; gap: 30px; }
@@ -583,62 +589,96 @@
       <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
     </div>
     <div class="pricing-grid">
+      
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
-        <div class="card-content-wrapper">
-            <span class="plan-eng-title">The Portrait</span>
-            <h3 class="price-title">肖像・結構</h3>
-            <div class="price-wrapper"><span class="price-original">NT$ 8,800</span><span class="price-amount">NT$ 6,800</span></div>
-            <p class="price-desc">
-                專為個人品牌打造的視覺基石。<br>
-                剝離多餘的裝飾，透過建築般的幾何光影，精準重塑您的專業輪廓。這不只是一張照片，而是您的資產。
+        <div class="card-content">
+            <div class="price-header">
+                <span class="plan-id">01</span>
+                <div class="plan-title-block">
+                    <span class="plan-zh">肖像・結構</span>
+                    <span class="plan-en">The Portrait</span>
+                </div>
+            </div>
+            
+            <div class="price-area">
+                <span class="current-price">NT$ 6,800</span>
+                <span class="old-price">NT$ 8,800</span>
+            </div>
+            
+            <p class="plan-desc">
+                專為個人品牌打造的視覺基石。剝離多餘的裝飾，透過建築般的幾何光影，精準重塑您的專業輪廓。
             </p>
-            <ul class="price-specs">
-              <li><strong>Session:</strong> 1.5 hr 拍攝時程</li>
-              <li><strong>Look:</strong> 1 套服裝造型</li>
-              <li><strong>Retouch:</strong> 6 張精修作品</li>
-              <li><strong>Final:</strong> 實體胡桃木 USB + 封蠟認證卡</li>
-            </ul>
+            
+            <div class="specs-grid">
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">1.5 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">1 SET</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">6 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">USB + CARD</span></div>
+            </div>
+            
             <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
       
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
-        <div class="card-content-wrapper">
-            <span class="plan-eng-title">The Ambiance</span>
-            <h3 class="price-title">氛圍・尺度</h3>
-            <div class="price-wrapper"><span class="price-original">NT$ 12,800</span><span class="price-amount">NT$ 10,800</span></div>
-            <p class="price-desc">
-                人與空間的深度對話。<br>
-                在宏大的城市地景或自然荒野中，捕捉您與環境共鳴的呼吸感。讓畫面流動，讓故事在留白中發生。
+        <div class="card-content">
+            <div class="price-header">
+                <span class="plan-id">02</span>
+                <div class="plan-title-block">
+                    <span class="plan-zh">氛圍・尺度</span>
+                    <span class="plan-en">The Ambiance</span>
+                </div>
+            </div>
+            
+            <div class="price-area">
+                <span class="current-price">NT$ 10,800</span>
+                <span class="old-price">NT$ 12,800</span>
+            </div>
+            
+            <p class="plan-desc">
+                人與空間的深度對話。在宏大的城市地景或自然荒野中，捕捉您與環境共鳴的呼吸感。
             </p>
-            <ul class="price-specs">
-              <li><strong>Session:</strong> 2 hr 拍攝時程</li>
-              <li><strong>Look:</strong> 1 套服裝造型</li>
-              <li><strong>Retouch:</strong> 9 張精修作品</li>
-              <li><strong>Final:</strong> 實體胡桃木 USB + 封蠟認證卡</li>
-            </ul>
+            
+            <div class="specs-grid">
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">2.0 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">1 SET</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">9 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">USB + CARD</span></div>
+            </div>
+            
             <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
       
       <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
-        <div class="card-content-wrapper">
-            <span class="plan-eng-title">The Cinematic</span>
-            <h3 class="price-title">電影・維度</h3>
-            <div class="price-wrapper"><span class="price-original">NT$ 16,800</span><span class="price-amount">NT$ 14,800</span></div>
-            <p class="price-desc">
-                一場靜止的電影演出。<br>
-                運用電影美術道具與戲劇光法，為您的影像注入深層敘事。這不是單純的紀錄，而是為您量身定做的造夢工程。
+        <div class="card-content">
+            <div class="price-header">
+                <span class="plan-id">03</span>
+                <div class="plan-title-block">
+                    <span class="plan-zh">電影・維度</span>
+                    <span class="plan-en">The Cinematic</span>
+                </div>
+            </div>
+            
+            <div class="price-area">
+                <span class="current-price">NT$ 14,800</span>
+                <span class="old-price">NT$ 16,800</span>
+            </div>
+            
+            <p class="plan-desc">
+                一場靜止的電影演出。運用電影美術道具與戲劇光法，為您的影像注入深層敘事。
             </p>
-            <ul class="price-specs">
-              <li><strong>Session:</strong> 2.5 hr 拍攝時程</li>
-              <li><strong>Look:</strong> 2 套服裝 (含妝髮造型)</li>
-              <li><strong>Retouch:</strong> 12 張精修作品</li>
-              <li><strong>Final:</strong> 實體胡桃木 USB + 封蠟認證卡</li>
-            </ul>
+            
+            <div class="specs-grid">
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">2.5 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">2 SETS</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">12 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">USB + CARD</span></div>
+            </div>
+            
             <button class="jump-btn hover-target" onclick="jumpToCategory('Dimension', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
@@ -674,45 +714,18 @@
     </svg>
 
     <div class="royal-border">
-      <svg class="royal-corner corner-tl" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
-        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
-        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
-        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
-        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
-        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
-        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
-        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
-      </svg>
-      <svg class="royal-corner corner-tr" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
-        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
-        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
-        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
-        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
-        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
-        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
-        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
-      </svg>
-      <svg class="royal-corner corner-bl" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
-        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
-        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
-        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
-        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
-        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
-        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
-        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
-      </svg>
-      <svg class="royal-corner corner-br" viewBox="0 0 180 180">
-        <path class="constellation-line" d="M90,20 L130,50 L130,90 L90,110 L50,90 L50,50 L90,20 M90,110 L90,160 M70,160 L110,160" />
-        <circle class="constellation-node node-1" cx="90" cy="20" r="1.5" />
-        <circle class="constellation-node node-2" cx="130" cy="50" r="1.5" />
-        <circle class="constellation-node node-3" cx="130" cy="90" r="1.5" />
-        <circle class="constellation-node node-4" cx="90" cy="110" r="1.5" />
-        <circle class="constellation-node node-5" cx="50" cy="90" r="1.5" />
-        <circle class="constellation-node node-6" cx="50" cy="50" r="1.5" />
-        <circle class="constellation-node node-7" cx="90" cy="160" r="1.5" />
+      <svg class="royal-bg-svg" viewBox="0 0 500 500">
+        <path class="constellation-line" d="M100,50 Q400,100 400,250 T250,450 L250,600" />
+        
+        <circle class="constellation-node node-1" cx="100" cy="50" r="2.5" />
+        <circle class="constellation-node node-2" cx="220" cy="80" r="2.5" />
+        <circle class="constellation-node node-3" cx="350" cy="150" r="3.5" /> <circle class="constellation-node node-4" cx="400" cy="250" r="2.5" />
+        <circle class="constellation-node node-5" cx="350" cy="350" r="2.5" />
+        <circle class="constellation-node node-6" cx="250" cy="450" r="3.5" />
+        <circle class="constellation-node node-7" cx="250" cy="550" r="2.5" />
+        
+        <circle class="constellation-node node-1" cx="450" cy="100" r="1.5" />
+        <circle class="constellation-node node-3" cx="50" cy="200" r="1.5" />
       </svg>
 
       <div class="royal-grid">
@@ -1022,11 +1035,10 @@
       });
     }
 
-    /* --- Liquid Cursor Logic --- */
+    /* --- Platinum Cursor Logic --- */
     const cursorCore = document.querySelector('.cursor-core');
     const cursorRing = document.querySelector('.cursor-ring');
     
-    // Smooth lag effect variables
     let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
     
@@ -1034,14 +1046,12 @@
         mouseX = e.clientX;
         mouseY = e.clientY;
         
-        // Core moves instantly
         cursorCore.style.left = `${mouseX}px`; 
         cursorCore.style.top = `${mouseY}px`; 
     });
     
-    // Animation loop for smooth ring lag
     function animateCursor() {
-        // Lerp factor (0.1 = slow/heavy, 0.3 = fast/light)
+        // Subtle lag for platinum feel
         const dX = mouseX - ringX;
         const dY = mouseY - ringY;
         
