@@ -29,15 +29,51 @@
     body {
       margin: 0; padding: 0; background: #000; color: #e0e0e0;
       font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      /* 移除 cursor: none，回歸正常滑鼠 */
+      /* 🌟 隱藏系統滑鼠，使用自訂游標 */
+      cursor: none; 
       user-select: none; -webkit-user-select: none;
-      overflow-y: auto; height: auto; /* 確保可以滾動 */
+      overflow-y: auto; height: auto;
     }
     
-    img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; }
-    a, button, input, select, textarea { pointer-events: auto; font-family: inherit; }
+    img { pointer-events: none; -webkit-user-drag: none; max-width: 100%; }
+    /* 連結與按鈕也隱藏系統鼠標，改用自訂游標指示 */
+    a, button, input, select, textarea { cursor: none; }
 
-    /* --- 2. Preloader (已簡化，確保不擋路) --- */
+    /* --- 🌟 CUSTOM CURSOR --- */
+    .cursor-dot, .cursor-outline {
+        position: fixed; top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 99999;
+        pointer-events: none; /* 關鍵：讓點擊穿透 */
+        opacity: 0; 
+        transition: opacity 0.3s ease, transform 0.1s, width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+    }
+
+    .cursor-dot { width: 6px; height: 6px; background-color: #fff; }
+    .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.5); }
+
+    /* Hover 互動 */
+    body.hover-active .cursor-outline {
+        width: 60px; height: 60px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: transparent;
+    }
+    
+    body.image-hover-active .cursor-dot { opacity: 0; }
+    body.image-hover-active .cursor-outline {
+        width: 80px; height: 80px;
+        background-color: rgba(191, 149, 63, 0.9);
+        border-color: transparent;
+        display: flex; justify-content: center; align-items: center;
+        mix-blend-mode: normal;
+    }
+    body.image-hover-active .cursor-outline::after {
+        content: 'VIEW'; color: #000; font-family: 'Montserrat', sans-serif;
+        font-weight: 600; font-size: 10px; letter-spacing: 2px;
+    }
+
+    /* --- 2. Preloader --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
@@ -45,7 +81,8 @@
       transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
     }
     .loader-text {
-      font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; 
+      font-family: 'Cinzel', serif; font-size: 2rem; 
+      color: #fff; /* 🌟 改回白色 */
       letter-spacing: 0.5em; animation: pulse 2s infinite;
     }
     @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
@@ -73,19 +110,7 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* Cursor (保留您原本的設定) */
-    .cursor-dot { width: 8px; height: 8px; background-color: #fff; border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); pointer-events: none; z-index: 99999; mix-blend-mode: difference; transition: width 0.3s ease, height 0.3s ease, transform 0.1s linear, background-color 0.3s; }
-    body.hover-active .cursor-dot { width: 50px; height: 50px; border: 1px solid #fff; background-color: transparent; animation: rotateCursor 4s infinite linear; }
-    body.image-hover-active .cursor-dot { width: 80px; height: 80px; background-color: rgba(191, 149, 63, 0.2); border: 1px solid #BF953F; animation: pulseCursor 1.5s infinite ease-in-out; mix-blend-mode: normal; backdrop-filter: blur(2px); }
-    /* "VIEW" text inside cursor */
-    body.image-hover-active .cursor-dot::after {
-        content: 'VIEW'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        font-family: 'Montserrat', sans-serif; font-size: 10px; color: #fff; letter-spacing: 1px;
-    }
-    @keyframes rotateCursor { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-    @keyframes pulseCursor { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } }
-
-    /* --- 4. Hero Video --- */
+    /* --- 4. Hero Section --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding-bottom: 15vh; }
     .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: grayscale(100%) brightness(0.6) contrast(1.1); will-change: transform; }
     .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9) 5%, transparent 60%); z-index: -1; }
@@ -105,7 +130,7 @@
     .section-title { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.1em; color: #fff; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #666; text-transform: uppercase; margin-top: 20px; display: block; }
 
-    /* --- 7. NEW: THE DARK ARCHIVE (Vertical Editorial Layout) --- */
+    /* --- 7. THE DARK ARCHIVE (Vertical Editorial Layout) --- */
     .archive-section { padding: 100px 8vw; background: #000; min-height: 100vh; position: relative; }
     
     .project-list { display: flex; flex-direction: column; gap: 15vh; width: 100%; max-width: 1200px; margin: 0 auto; }
@@ -116,21 +141,21 @@
         min-height: 80vh; 
     }
     .project-card.reveal { opacity: 1; transform: translateY(0); }
-    
-    /* 🌟 新增：隱藏專案的 Class */
     .project-card.hidden-project { display: none; opacity: 0; }
 
     /* 交錯排列 */
     .project-card:nth-child(even) { flex-direction: row-reverse; }
     .project-card:nth-child(even) .project-info { text-align: right; align-items: flex-end; }
     
-    /* 直式排版 CSS */
+    /* 直式照片容器 */
     .project-cover-wrapper { 
         flex: 1; 
         max-width: 500px; 
-        position: relative; overflow: hidden; cursor: pointer;
+        position: relative; overflow: hidden; cursor: none;
         aspect-ratio: 3/4; /* 直式 */
         box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
+        /* 🌟 確保圖片也能被點擊 */
+        pointer-events: auto;
     }
     
     .project-cover { 
@@ -138,15 +163,15 @@
         filter: grayscale(100%) brightness(0.9); transition: all 0.8s ease; 
         transform: scale(1);
     }
-    
     .project-card:hover .project-cover { filter: grayscale(0%) brightness(1.1); transform: scale(1.03); }
     
-    /* 🌟 修正按鈕點擊問題的關鍵: 移除 pointer-events: none */
+    /* 確保容器不擋按鈕 */
     .project-info { 
         flex: 1; display: flex; flex-direction: column; justify-content: center; 
-        z-index: 2; padding: 20px;
+        z-index: 2; padding: 20px; 
     }
-    
+    .project-id, .plan-tag, .project-desc, .project-title { pointer-events: none; }
+
     .project-id { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: #BF953F; letter-spacing: 0.1em; margin-bottom: 20px; opacity: 0.8; }
     
     .plan-tag {
@@ -158,16 +183,15 @@
     .project-title { font-family: 'Cinzel', serif; font-size: 3rem; color: #fff; margin: 0 0 20px 0; letter-spacing: 0.05em; font-weight: 400; line-height: 1.1; }
     .project-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #888; line-height: 1.8; margin-bottom: 40px; max-width: 380px; font-weight: 300; }
     
-    /* 🌟 確保按鈕有 cursor: pointer */
+    /* 🌟 按鈕設定：pointer-events: auto 確保可點 */
     .view-project-btn { 
         font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #fff; letter-spacing: 0.25em; text-transform: uppercase; 
         border-bottom: 1px solid #BF953F; padding-bottom: 5px; width: fit-content; margin-top: 10px;
         opacity: 0.6; transition: all 0.3s;
-        cursor: pointer; /* 關鍵 */
+        pointer-events: auto; cursor: none; /* 使用自訂游標 */
     }
     .project-card:hover .view-project-btn { opacity: 1; color: #BF953F; }
 
-    /* 🌟 新增：載入更多按鈕容器 */
     .load-more-container { 
         text-align: center; margin-top: 120px; padding-bottom: 20px; 
         animation: fadeIn 1s ease 1s forwards; opacity: 0;
@@ -175,12 +199,12 @@
     .archive-btn {
         background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff;
         padding: 20px 40px; font-family: 'Space Mono', monospace; font-size: 0.8rem;
-        letter-spacing: 0.2em; cursor: pointer; transition: all 0.4s ease;
-        text-transform: uppercase;
+        letter-spacing: 0.2em; transition: all 0.4s ease;
+        text-transform: uppercase; pointer-events: auto; cursor: none;
     }
     .archive-btn:hover { background: #fff; color: #000; letter-spacing: 0.3em; }
 
-    /* --- NEW: IMMERSIVE MODAL (The Hidden Gallery) --- */
+    /* --- IMMERSIVE MODAL --- */
     .project-modal { 
         position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
         background: rgba(0,0,0,0.98); z-index: 20000; 
@@ -201,8 +225,8 @@
     .modal-close-btn { 
         background: transparent; border: none; color: rgba(255, 255, 255, 0.6);
         font-family: 'Space Mono', monospace; font-size: 0.8rem; letter-spacing: 0.2em; 
-        cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;
-        padding: 10px 0; position: relative;
+        cursor: none; transition: all 0.3s ease; text-transform: uppercase;
+        padding: 10px 0; position: relative; pointer-events: auto;
     }
     .modal-close-btn::after {
         content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 1px; background: #BF953F; transition: width 0.3s ease;
@@ -236,7 +260,8 @@
     
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); z-index: 0; filter: grayscale(100%) brightness(0.6); transform: scale(1); }
     .card-bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.6)); }
-    .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs, .jump-btn { position: relative; z-index: 2; }
+    .card-badge, .discount-badge, .price-title, .price-subtitle, .price-wrapper, .price-desc, .price-specs, .jump-btn { position: relative; z-index: 2; pointer-events: none; }
+    
     .price-card:hover .card-bg, .price-card.active .card-bg { opacity: 1; transform: scale(1.1); }
     .price-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-10px); }
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.3); }
@@ -244,7 +269,7 @@
     .price-card.featured:hover .card-bg, .price-card.featured.active .card-bg { opacity: 1; }
     
     .card-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #000; border: 1px solid #BF953F; color: #BF953F; font-size: 0.6rem; padding: 6px 15px; letter-spacing: 0.2em; text-transform: uppercase; }
-    .discount-badge { position: absolute; top: 20px; right: 20px; background: #FF2A2A; color: #fff; font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; border-radius: 2px; }
+    .discount-badge { position: absolute; top: 20px; right: 20px; background: #FF2A2A; color: #000; font-size: 0.6rem; padding: 4px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; border-radius: 2px; }
     .price-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #fff; margin-bottom: 10px; font-weight: 400; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
     .price-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 40px; display: block; }
     .price-wrapper { margin-bottom: 30px; display: flex; flex-direction: column; }
@@ -256,7 +281,7 @@
     .price-specs li::before { content: '•'; position: absolute; left: 0; color: #555; }
     .price-specs li strong { color: #fff; font-weight: 500; }
     
-    .jump-btn { margin-top: 20px; padding: 10px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; text-align: center; width: 100%; display: block; }
+    .jump-btn { margin-top: 20px; padding: 10px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; pointer-events: auto; }
     .jump-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
     /* --- New: Prestige Delivery Section --- */
@@ -281,33 +306,19 @@
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.2); padding-left: 80px; }
     
-    /* 飾角定位 */
     .royal-corner { position: absolute; width: 180px; height: 180px; pointer-events: none; z-index: 3; }
     .corner-tl { top: 0; left: 0; }
     .corner-tr { top: 0; right: 0; transform: scaleX(-1); }
     .corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
     .corner-br { bottom: 0; right: 0; transform: scale(-1); }
 
-    /* 星宿線條 (Wireframe only, fill=none) */
     .constellation-line {
-        fill: none; /* 絕對無填充 */
-        stroke: url(#star-gold-gradient); 
-        stroke-width: 0.5; /* 極細 */
-        stroke-linecap: round;
-        stroke-dasharray: 600; 
-        stroke-dashoffset: 600;
-        transition: stroke-dashoffset 4s cubic-bezier(0.4, 0, 0.2, 1);
+        fill: none; stroke: url(#star-gold-gradient); stroke-width: 0.5; stroke-linecap: round;
+        stroke-dasharray: 600; stroke-dashoffset: 600; transition: stroke-dashoffset 4s cubic-bezier(0.4, 0, 0.2, 1);
         filter: drop-shadow(0 0 2px rgba(191, 149, 63, 0.6));
     }
-    
-    /* 星星節點 */
-    .constellation-node {
-        fill: #FFF;
-        opacity: 0;
-        transition: opacity 0.6s ease;
-    }
+    .constellation-node { fill: #FFF; opacity: 0; transition: opacity 0.6s ease; }
 
-    /* 互動：星星逐個亮起 (從左到右) */
     .royal-section:hover .node-1 { transition-delay: 0.1s; opacity: 1; }
     .royal-section:hover .node-2 { transition-delay: 0.25s; opacity: 1; }
     .royal-section:hover .node-3 { transition-delay: 0.4s; opacity: 1; }
@@ -315,14 +326,8 @@
     .royal-section:hover .node-5 { transition-delay: 0.7s; opacity: 1; }
     .royal-section:hover .node-6 { transition-delay: 0.85s; opacity: 1; }
     .royal-section:hover .node-7 { transition-delay: 1.0s; opacity: 1; }
+    .royal-section:hover .constellation-line { stroke-dashoffset: 0; transition-delay: 0.8s; }
 
-    /* 互動：線條連接 */
-    .royal-section:hover .constellation-line { 
-        stroke-dashoffset: 0; 
-        transition-delay: 0.8s; /* 星星亮起後連線 */
-    }
-
-    /* 單一報價與心理學定價 */
     .royal-single-price { text-align: left; }
     .royal-discount-tag {
         display: inline-block; background: #BF953F; color: #000; padding: 4px 12px;
@@ -332,11 +337,7 @@
     .royal-sp-title { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff; margin-bottom: 20px; display: block; letter-spacing: 0.1em; }
     
     .price-block { display: flex; align-items: baseline; gap: 20px; margin-bottom: 30px; }
-    .original-price {
-        font-family: 'Cinzel', serif; font-size: 1.1rem; color: #666;
-        text-decoration: line-through;
-        opacity: 0.7;
-    }
+    .original-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #666; text-decoration: line-through; opacity: 0.7; }
     .royal-sp-amount { 
         font-family: 'Cinzel', serif; font-size: 3.2rem; color: #BF953F; display: block; font-weight: 400; 
         background: linear-gradient(to bottom right, #BF953F, #FCF6BA, #8a6e2f); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -350,7 +351,7 @@
 
     /* --- 10. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #000; width: 100%; }
-    .initiate-btn { display: inline-flex; flex-direction: column; align-items: center; gap: 5px; padding: 30px 90px; background: transparent; border: 1px solid #fff; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.6s ease; position: relative; overflow: hidden; }
+    .initiate-btn { display: inline-flex; flex-direction: column; align-items: center; gap: 5px; padding: 30px 90px; background: transparent; border: 1px solid #fff; color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.6s ease; position: relative; overflow: hidden; pointer-events: auto; }
     .initiate-btn span { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.5em; opacity: 0.7; }
     .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 60px rgba(255,255,255,0.3); }
     .initiate-btn:hover span { color: #000; }
@@ -377,10 +378,10 @@
     .signature { margin-top: 60px; text-align: right; font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: #BF953F; position: relative; padding-top: 30px; }
     .signature::before { content: ''; position: absolute; top: 0; right: 0; width: 50px; height: 1px; background: rgba(191, 149, 63, 0.5); }
     .contact-info { margin-top: 120px; display: flex; gap: 40px; justify-content: center; grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 50px; }
-    .contact-link, .email-btn { color: #555; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: pointer; transition: color 0.3s; }
+    .contact-link, .email-btn { color: #555; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; pointer-events: auto; }
     .contact-link:hover, .email-btn:hover { color: #BF953F; }
     
-    /* --- Tech Ticker & Flip Counter --- */
+    /* --- Tech Ticker --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 30px; background: #000; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 20px; }
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #444; letter-spacing: 0.1em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
@@ -388,10 +389,7 @@
     /* Visitor Counter */
     .visitor-counter { display: flex; align-items: center; gap: 10px; z-index: 9001; background: #000; padding-left: 15px; }
     .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
-    .visitor-number {
-        font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #BF953F; letter-spacing: 0.1em;
-        text-shadow: 0 0 5px rgba(191, 149, 63, 0.3); animation: pulseText 3s infinite ease-in-out;
-    }
+    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.3); animation: pulseText 3s infinite ease-in-out; }
     @keyframes pulseText { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); } 100% { opacity: 0.8; } }
     
     footer { padding: 50px 0 80px; text-align: center; width: 100%; }
@@ -414,12 +412,10 @@
     @media (max-width: 900px) {
          .hero h1 { font-size: 15vw; }
          .delivery-grid { flex-direction: column; gap: 40px; }
-         /* 手機版直式排版 */
          .project-card, .project-card:nth-child(even) { flex-direction: column; gap: 30px; min-height: auto; margin-bottom: 80px; }
          .project-cover-wrapper { width: 100%; max-width: 100%; aspect-ratio: 3/4; }
          .project-info { text-align: left; align-items: flex-start; padding: 0; }
          .project-card:nth-child(even) .project-info { text-align: left; align-items: flex-start; }
-         
          .project-title { font-size: 2rem; }
          .modal-header { flex-direction: column; align-items: flex-start; gap: 20px; }
          .modal-gallery-track { flex-direction: column; overflow-y: auto; overflow-x: hidden; padding-bottom: 50px; }
@@ -531,7 +527,7 @@
     </div>
     <div class="pricing-grid">
       <div class="price-card" onclick="this.classList.toggle('active')">
-        <div class="card-bg" style="background-image: url('https://placehold.co/600x900/111/BF953F?text=Structure+Plan+Image')"></div>
+        <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
         <span class="discount-badge">Structure</span>
         <h3 class="price-title">The Portrait</h3>
         <span class="price-subtitle">結構・幾何形象</span>
@@ -550,7 +546,7 @@
         <button class="jump-btn hover-target" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">VIEW ARCHIVE ↗</button>
       </div>
       <div class="price-card" onclick="this.classList.toggle('active')">
-        <div class="card-bg" style="background-image: url('https://placehold.co/600x900/111/BF953F?text=Scale+Plan+Image')"></div>
+        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <span class="discount-badge">Scale</span>
         <h3 class="price-title">The Ambiance</h3>
         <span class="price-subtitle">尺度・場景氛圍</span>
@@ -569,7 +565,7 @@
         <button class="jump-btn hover-target" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">VIEW ARCHIVE ↗</button>
       </div>
       <div class="price-card featured" onclick="this.classList.toggle('active')">
-        <div class="card-bg" style="background-image: url('https://placehold.co/600x900/111/BF953F?text=Dimension+Plan+Image')"></div>
+        <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
         <span class="discount-badge">Dimension</span>
         <h3 class="price-title">The Cinematic</h3>
         <span class="price-subtitle">維度・電影敘事</span>
@@ -757,6 +753,7 @@
             card.dataset.title = title;
             card.dataset.id = projectId;
             
+            // 🌟 修正點：onclick 增加在 project-cover-wrapper 上
             card.innerHTML = `
                 <div class="project-info">
                     <span class="plan-tag">Sample of: ${planName}</span>
