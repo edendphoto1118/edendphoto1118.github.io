@@ -39,14 +39,14 @@
     /* 連結與按鈕也隱藏系統鼠標，改用自訂游標指示 */
     a, button, input, select, textarea { cursor: none; }
 
-    /* --- 🌟 CUSTOM CURSOR --- */
+    /* --- 🌟 CUSTOM CURSOR (已修復不可見問題) --- */
     .cursor-dot, .cursor-outline {
         position: fixed; top: 0; left: 0;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         z-index: 99999;
-        pointer-events: none; /* 關鍵：讓點擊穿透 */
-        opacity: 0; 
+        pointer-events: none; /* 讓點擊穿透 */
+        opacity: 0; /* 預設隱藏，靠 JS 顯示 */
         transition: opacity 0.3s ease, transform 0.1s, width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
     }
 
@@ -82,7 +82,7 @@
     }
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2rem; 
-      color: #fff; /* 🌟 改回白色 */
+      color: #fff; /* 白色 */
       letter-spacing: 0.5em; animation: pulse 2s infinite;
     }
     @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
@@ -130,7 +130,7 @@
     .section-title { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.1em; color: #fff; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #666; text-transform: uppercase; margin-top: 20px; display: block; }
 
-    /* --- 7. THE DARK ARCHIVE (Vertical Editorial Layout) --- */
+    /* --- 7. THE DARK ARCHIVE --- */
     .archive-section { padding: 100px 8vw; background: #000; min-height: 100vh; position: relative; }
     
     .project-list { display: flex; flex-direction: column; gap: 15vh; width: 100%; max-width: 1200px; margin: 0 auto; }
@@ -154,7 +154,7 @@
         position: relative; overflow: hidden; cursor: none;
         aspect-ratio: 3/4; /* 直式 */
         box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
-        /* 🌟 確保圖片也能被點擊 */
+        /* 🌟 確保圖片可點擊 */
         pointer-events: auto;
     }
     
@@ -165,7 +165,6 @@
     }
     .project-card:hover .project-cover { filter: grayscale(0%) brightness(1.1); transform: scale(1.03); }
     
-    /* 確保容器不擋按鈕 */
     .project-info { 
         flex: 1; display: flex; flex-direction: column; justify-content: center; 
         z-index: 2; padding: 20px; 
@@ -188,7 +187,7 @@
         font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #fff; letter-spacing: 0.25em; text-transform: uppercase; 
         border-bottom: 1px solid #BF953F; padding-bottom: 5px; width: fit-content; margin-top: 10px;
         opacity: 0.6; transition: all 0.3s;
-        pointer-events: auto; cursor: none; /* 使用自訂游標 */
+        pointer-events: auto; cursor: none;
     }
     .project-card:hover .view-project-btn { opacity: 1; color: #BF953F; }
 
@@ -381,20 +380,8 @@
     .contact-link, .email-btn { color: #555; text-decoration: none; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; pointer-events: auto; }
     .contact-link:hover, .email-btn:hover { color: #BF953F; }
     
-    /* --- Tech Ticker --- */
-    .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 30px; background: #000; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 20px; }
-    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #444; letter-spacing: 0.1em; }
-    @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
-    
-    /* Visitor Counter */
-    .visitor-counter { display: flex; align-items: center; gap: 10px; z-index: 9001; background: #000; padding-left: 15px; }
-    .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
-    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.3); animation: pulseText 3s infinite ease-in-out; }
-    @keyframes pulseText { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); } 100% { opacity: 0.8; } }
-    
-    footer { padding: 50px 0 80px; text-align: center; width: 100%; }
+    footer { padding: 50px 0 80px; text-align: center; width: 100%; border-top: 1px solid #111; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; }
-    footer .tech-stack { font-size: 0.45rem; opacity: 0.4; margin-top: 5px; letter-spacing: 0.1em; color: #444; }
 
     .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; opacity: 0; pointer-events: none; transition: all 0.4s ease; z-index: 20000; font-weight: 500; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -425,7 +412,7 @@
          .pricing-grid { grid-template-columns: 1fr; gap: 60px; }
     }
     @media (max-width: 768px) {
-      .cursor-dot { display: none !important; }
+      .cursor-dot, .cursor-outline { display: none !important; }
       body { cursor: auto !important; }
       .nav { padding: 20px 30px; }
       .nav-menu { display: none; }
@@ -443,6 +430,8 @@
       .price-block { flex-direction: column; align-items: flex-start; gap: 5px; }
       .original-price { font-size: 1rem; }
       .royal-sp-amount { font-size: 2.8rem; }
+      /* 手機上所有互動元素恢復正常鼠標 */
+      a, button, input, select, textarea { cursor: pointer; }
     }
   </style>
 </head>
@@ -462,7 +451,7 @@
   <div id="toast" class="toast">Email Copied</div>
 
   <div class="cursor-dot"></div>
-  <div id="aurora-container"></div>
+  <div class="cursor-outline"></div>
 
   <nav>
     <a href="#" class="nav-logo hover-target">EDEN</a>
@@ -516,8 +505,7 @@
         </div>
         <button class="modal-close-btn hover-target" onclick="closeProject()">CLOSE ARCHIVE [X]</button>
     </div>
-    <div class="modal-gallery-track" id="modalGalleryTrack">
-        </div>
+    <div class="modal-gallery-track" id="modalGalleryTrack"></div>
   </div>
   
   <section class="pricing-section" id="pricing">
@@ -526,8 +514,8 @@
       <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
     </div>
     <div class="pricing-grid">
-      <div class="price-card" onclick="this.classList.toggle('active')">
-        <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
+      <div class="price-card hover-target" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('https://placehold.co/600x900/111/BF953F?text=Structure+Plan+Image')"></div>
         <span class="discount-badge">Structure</span>
         <h3 class="price-title">The Portrait</h3>
         <span class="price-subtitle">結構・幾何形象</span>
@@ -545,8 +533,8 @@
         </ul>
         <button class="jump-btn hover-target" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">VIEW ARCHIVE ↗</button>
       </div>
-      <div class="price-card" onclick="this.classList.toggle('active')">
-        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
+      <div class="price-card hover-target" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('https://placehold.co/600x900/111/BF953F?text=Scale+Plan+Image')"></div>
         <span class="discount-badge">Scale</span>
         <h3 class="price-title">The Ambiance</h3>
         <span class="price-subtitle">尺度・場景氛圍</span>
@@ -564,8 +552,8 @@
         </ul>
         <button class="jump-btn hover-target" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">VIEW ARCHIVE ↗</button>
       </div>
-      <div class="price-card featured" onclick="this.classList.toggle('active')">
-        <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
+      <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('https://placehold.co/600x900/111/BF953F?text=Dimension+Plan+Image')"></div>
         <span class="discount-badge">Dimension</span>
         <h3 class="price-title">The Cinematic</h3>
         <span class="price-subtitle">維度・電影敘事</span>
@@ -702,7 +690,7 @@
     }
     document.getElementById('visitorCount').innerText = "NO. " + count.toLocaleString('en-US', {minimumIntegerDigits: 6, useGrouping:true});
 
-    /* --- ARCHIVE GENERATOR (The Zig-Zag Logic) --- */
+    /* --- ARCHIVE GENERATOR --- */
     const totalImages = 117;
     const imagesPerProject = 5; 
     const totalProjects = Math.ceil(totalImages / imagesPerProject);
@@ -869,10 +857,34 @@
       });
     }
 
-    /* --- Cursor Logic --- */
+    /* --- 🌟 RESTORED CURSOR LOGIC --- */
     const cursorDot = document.querySelector('.cursor-dot');
-    document.addEventListener('mousemove', (e) => { cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`; });
-    
+    const cursorOutline = document.querySelector('.cursor-outline');
+
+    window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // 🌟 修正左上角殘影問題的關鍵：偵測到移動才顯示
+        if (cursorDot.style.opacity === '0' || cursorDot.style.opacity === '') {
+            cursorDot.style.opacity = '1';
+            cursorOutline.style.opacity = '1';
+        }
+
+        // 使用 requestAnimationFrame 讓移動更順暢
+        requestAnimationFrame(() => {
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            // 外圈稍微延遲，製造拖曳感
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+    });
+
+    // 監聽 Hover 效果 (按鈕變大、圖片變 VIEW)
     document.addEventListener('mouseover', (e) => { 
       if (e.target.closest('.hover-target') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') { 
         document.body.classList.add('hover-active'); 
