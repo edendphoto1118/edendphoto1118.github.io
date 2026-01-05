@@ -47,7 +47,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- 2. Texture (Noise) - 保留顆粒質感 --- */
+    /* --- 2. Texture (Noise) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
@@ -127,21 +127,44 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* Cursor */
+    /* --- 5. Platinum Cursor Design (FIXED ALIGNMENT & LOGIC) --- */
+    /* 中心點：永遠顯示 */
     .cursor-core {
         width: 4px; height: 4px; background: #fff; border-radius: 50%;
-        position: fixed; pointer-events: none; z-index: 10002; display: none; 
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+        pointer-events: none; z-index: 10002; mix-blend-mode: normal;
+        display: none; 
     }
+    
+    /* 外圈：預設隱藏 (縮小+透明)，懸停時才顯示 */
     .cursor-ring {
-        width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%;
-        position: fixed; pointer-events: none; z-index: 10001; 
-        transition: width 0.3s, height 0.3s, transform 0.1s linear; 
-        display: none; mix-blend-mode: difference; 
+        /* 固定為最大尺寸，確保圓心對齊 */
+        width: 50px; height: 50px; 
+        border: 1px solid rgba(255,255,255,0.8); border-radius: 50%;
+        position: fixed; top: 0; left: 0; 
+        /* 關鍵修改：預設狀態是縮小到0且透明，但位置已經置中 */
+        transform: translate(-50%, -50%) scale(0); 
+        opacity: 0;
+        pointer-events: none; z-index: 10001; 
+        /* 改用 transform 和 opacity 過渡，效能更好且不會歪斜 */
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+        will-change: transform, opacity;
+        display: none; 
+        mix-blend-mode: difference; 
     }
+    
+    /* 網站啟動後顯示中心點和外圈容器 */
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
-    body.hover-active .cursor-ring { width: 50px; height: 50px; background: transparent; border-color: #fff; }
+    
+    /* 懸停狀態：放大並顯示外圈 */
+    body.hover-active .cursor-ring { 
+        opacity: 1;
+        /* 回到原始大小 1 (即 50px) */
+        transform: translate(-50%, -50%) scale(1);
+        background: transparent;
+    }
 
-    /* --- 5. HERO SECTION (PURE CODE - NO IMAGE) --- */
+    /* --- 6. Hero Section (VIDEO BACK) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -156,25 +179,18 @@
         background: #000;
     }
     
-    /* 🌟 純 CSS 聚光燈背景 (確保有畫面) 🌟 */
-    .hero-light-bg {
+    /* 🌟 影片背景樣式 🌟 */
+    .hero-bg-video {
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
-        z-index: 0; /* 確保在底層 */
-        /* 創建一個柔和的頂光效果 */
-        background: radial-gradient(circle at 50% 30%, #444444 0%, #1a1a1a 40%, #000000 85%);
-        opacity: 0.8;
-        animation: subtlePulse 8s infinite alternate ease-in-out;
+        object-fit: cover; /* 確保影片填滿螢幕 */
+        z-index: -5; /* 放在最底層 */
+        opacity: 0.5; /* 調整影片亮度 */
     }
 
-    @keyframes subtlePulse {
-        0% { opacity: 0.6; transform: scale(1); }
-        100% { opacity: 0.9; transform: scale(1.05); }
-    }
-    
     .hero-content { 
-        z-index: 2; /* 確保文字浮在光上面 */
+        z-index: 2;
         opacity: 0; transform: translateY(30px); 
         width: 100%; padding: 0 20px; 
         transition: opacity 2s ease, transform 2s ease; 
@@ -185,7 +201,7 @@
     .hero h1 { 
         font-family: 'Cinzel', serif; font-size: 7vw; line-height: 1; 
         font-weight: 400; letter-spacing: 0.1em; margin: 0; color: #fff; 
-        text-shadow: 0 20px 60px rgba(0,0,0,0.9); /* 讓字更跳 */
+        text-shadow: 0 20px 60px rgba(0,0,0,0.9);
     }
     .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.7; }
     .hero p { margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
@@ -196,12 +212,12 @@
     @keyframes scrollDown { 0% { transform-origin: top; transform: scaleY(0); } 50% { transform-origin: top; transform: scaleY(1); } 51% { transform-origin: bottom; transform: scaleY(1); } 100% { transform-origin: bottom; transform: scaleY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 6. Sections --- */
+    /* --- 7. Sections --- */
     .section-header { text-align: center; margin-bottom: 120px; position: relative; padding: 0 20px; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.12em; color: #fff; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #666; text-transform: uppercase; margin-top: 25px; display: block; }
 
-    /* --- 7. Gallery --- */
+    /* --- 8. Gallery --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 100px; flex-wrap: wrap; width: 100%; }
     .filter-btn { 
@@ -233,12 +249,11 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.1); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s; }
     .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
-    /* --- 8. Pricing --- */
+    /* --- 9. Pricing --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 650px; overflow: hidden; }
     
-    /* 卡片背景也使用代碼，確保不破圖 */
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; }
     .price-card:hover .card-bg { opacity: 0.3; }
 
@@ -263,7 +278,7 @@
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.4); }
     .price-card.featured .current-price { color: #BF953F; }
 
-    /* --- Delivery Section --- */
+    /* --- 10. Delivery Section --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
     .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
     .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #555; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 70px; display: block; }
@@ -273,7 +288,7 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: #ddd; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 2; font-weight: 300; }
 
-    /* --- 9. Royal --- */
+    /* --- 11. Royal --- */
     .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #020202 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
     .royal-bg-svg { position: absolute; top: 0; right: 0; width: 85vh; height: 85vh; z-index: 1; opacity: 0.2; pointer-events: none; transition: opacity 0.5s ease; }
     .royal-section:hover .royal-bg-svg { opacity: 0.5; }
@@ -296,7 +311,7 @@
     .royal-title { font-family: 'Cinzel', serif; font-size: 3.8rem; color: #fff; margin: 0 0 30px 0; letter-spacing: 0.05em; }
     .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #999; line-height: 2; max-width: 500px; font-weight: 300; }
 
-    /* --- 10. Booking --- */
+    /* --- 12. Booking --- */
     .booking-cta-section { padding: 120px 0; text-align: center; background: #050505; width: 100%; }
     .initiate-btn { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; padding: 35px 100px; background: transparent; border: 1px solid rgba(255,255,255,0.8); color: #fff; font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: none; transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden; }
     .initiate-btn span { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.5em; opacity: 0.6; transition: color 0.3s; }
@@ -324,7 +339,7 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 11. About --- */
+    /* --- 13. About --- */
     .background { padding: 200px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; position: relative; overflow: hidden; }
     .editorial-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 120px; max-width: 1400px; margin: 0 auto; align-items: center; }
     .about-name-big { font-family: 'Cinzel', serif; font-size: 12rem; line-height: 0.8; font-weight: 700; text-align: left; -webkit-text-stroke: 1px rgba(191, 149, 63, 0.3); color: transparent; opacity: 0.8; }
@@ -407,7 +422,9 @@
   </nav>
 
   <section class="hero">
-    <div class="hero-light-bg"></div>
+    <video class="hero-bg-video" autoplay muted loop playsinline>
+        <source src="hero.mp4" type="video/mp4">
+    </video>
     
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
@@ -784,7 +801,7 @@
       });
     }
 
-    /* --- Platinum Cursor Logic --- */
+    /* --- Platinum Cursor Logic (FIXED ALIGNMENT) --- */
     const cursorCore = document.querySelector('.cursor-core');
     const cursorRing = document.querySelector('.cursor-ring');
     let mouseX = 0, mouseY = 0; let ringX = 0, ringY = 0;
