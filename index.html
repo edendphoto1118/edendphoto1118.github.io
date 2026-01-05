@@ -638,7 +638,7 @@
   </nav>
 
   <section class="hero">
-    <video muted playsinline loop autoplay class="hero-video" id="heroVideo">
+    <video muted playsinline loop autoplay class="hero-video" id="heroVideo" poster="images/hero-poster.jpg">
         <source src="hero-video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
@@ -861,7 +861,7 @@
           </div>
       </div>
       <div class="calendar-wrapper">
-          <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=050505&text_color=ccc&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
+          <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=050505&text_color=e0e0e0&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
       </div>
   </div>
@@ -934,7 +934,10 @@
         window.scrollTo(0, 0);
         // Force video play muted on load as backup
         const video = document.getElementById('heroVideo');
-        if(video) video.play().catch(e => console.log("Auto-play blocked, waiting for user interaction."));
+        if(video) {
+            video.muted = true; // Ensure muted specifically for autoplay
+            video.play().catch(e => console.log("Auto-play blocked, waiting for user interaction."));
+        }
     });
 
     // 2.5s: Reveal Enter Button
@@ -947,6 +950,7 @@
     function enterArchive() {
         const audio = document.getElementById('bgMusic');
         const wave = document.getElementById('soundWave');
+        const video = document.getElementById('heroVideo');
         
         // 1. Play Audio
         if(audio) {
@@ -968,9 +972,14 @@
         // 2. Fade Out Preloader
         document.getElementById('preloader').style.opacity = 0;
         
-        // 3. Ensure Video is playing
-        const video = document.getElementById('heroVideo');
-        if(video && video.paused) video.play().catch(e => {});
+        // 3. 🌟 影片播放終極解法：在用戶互動時強制播放 🌟
+        if(video) {
+            video.muted = true; // 再次確認靜音，這是自動播放的關鍵
+            video.play().catch(e => {
+                console.log("Video play failed even on interaction:", e);
+                // 如果真的播放失敗，至少我們有 poster 圖片墊底
+            });
+        }
 
         // 4. Unlock Scroll & Show Site
         setTimeout(() => {
