@@ -424,7 +424,7 @@
     .royal-title { font-family: 'Cinzel', serif; font-size: 3.8rem; color: #fff; margin: 0 0 30px 0; letter-spacing: 0.05em; }
     .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #999; line-height: 2; max-width: 500px; font-weight: 300; }
 
-    /* --- 10. Booking --- */
+    /* --- 10. Booking (Replaced with Custom Form) --- */
     .booking-cta-section { padding: 120px 0; text-align: center; background: #050505; width: 100%; }
     .initiate-btn { 
         display: inline-flex; flex-direction: column; align-items: center; gap: 8px; padding: 35px 100px; 
@@ -446,8 +446,31 @@
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; text-align: left; }
     .term-item h4 { color: #ddd; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
     .term-item p { color: #777; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 1.9; font-weight: 300; padding-left: 16px; }
-    .calendar-wrapper { width: 100%; display: flex; justify-content: center; background: #050505; }
-    .calendly-inline-widget { width: 100%; height: 700px; border: none; background: #050505; }
+
+    /* Custom Form Styling */
+    .custom-booking-form { width: 100%; max-width: 600px; margin: 0 auto; }
+    .form-group { margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; }
+    .form-group label { 
+        display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; 
+        letter-spacing: 0.2em; color: #BF953F; margin-bottom: 10px; text-transform: uppercase;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%; background: transparent; border: none; color: #fff;
+        font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none;
+        letter-spacing: 0.05em; border-radius: 0;
+    }
+    .form-group select { cursor: pointer; color: #e0e0e0; }
+    .form-group option { background: #050505; color: #fff; padding: 10px; }
+    ::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
+
+    .submit-btn {
+        width: 100%; padding: 20px; margin-top: 20px;
+        background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F;
+        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em;
+        cursor: pointer; transition: all 0.4s ease; text-transform: uppercase;
+    }
+    .submit-btn:hover { background: #BF953F; color: #000; }
+
 
     /* --- 11. About Section --- */
     .background { padding: 200px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; position: relative; overflow: hidden; }
@@ -639,7 +662,7 @@
 
   <section class="hero">
     <video muted playsinline loop autoplay class="hero-video" id="heroVideo" poster="images/hero-poster.jpg">
-        <source src="hero-video.mp4" type="video/mp4">
+        <source src="images/hero-video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -860,9 +883,42 @@
                   <div class="term-item"><h4>成品交付</h4><p>所有方案皆包含實體胡桃木 USB 與火漆封蠟認證卡交付。RAW 檔恕不提供。</p></div>
           </div>
       </div>
-      <div class="calendar-wrapper">
-          <div class="calendly-inline-widget" data-url="https://calendly.com/edendphoto1118/30min?background_color=050505&text_color=e0e0e0&primary_color=bf953f" style="min-width:320px;height:700px;"></div>
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      
+      <div class="custom-booking-form">
+          <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
+            
+            <div class="form-group">
+              <label for="name">NAME / 姓名</label>
+              <input type="text" name="name" id="name" required placeholder="YOUR NAME">
+            </div>
+
+            <div class="form-group">
+              <label for="email">CONTACT / 聯絡信箱</label>
+              <input type="email" name="email" id="email" required placeholder="EMAIL ADDRESS">
+            </div>
+
+            <div class="form-group">
+              <label for="plan">SESSION / 預約方案</label>
+              <select name="plan" id="plan">
+                <option value="Structure">PORTRAIT - STRUCTURE (肖像)</option>
+                <option value="Scale">AMBIANCE - SCALE (氛圍)</option>
+                <option value="Dimension">CINEMATIC - DIMENSION (電影)</option>
+                <option value="Royal">PROJECT: ROYAL DECK (撲克牌企劃)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="date">PREFERRED DATE / 期望日期</label>
+              <input type="date" name="date" id="date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">VISION / 拍攝想法</label>
+              <textarea name="message" id="message" rows="4" placeholder="TELL ME ABOUT YOUR VISION..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn hover-target">CONFIRM REQUEST</button>
+          </form>
       </div>
   </div>
   </div>
@@ -974,10 +1030,9 @@
         
         // 3. 🌟 影片播放終極解法：在用戶互動時強制播放 🌟
         if(video) {
-            video.muted = true; // 再次確認靜音，這是自動播放的關鍵
+            video.muted = true; // 再次確認靜音
             video.play().catch(e => {
                 console.log("Video play failed even on interaction:", e);
-                // 如果真的播放失敗，至少我們有 poster 圖片墊底
             });
         }
 
