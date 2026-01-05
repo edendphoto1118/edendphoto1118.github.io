@@ -127,44 +127,29 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* --- 5. Platinum Cursor Design (FIXED ALIGNMENT & LOGIC) --- */
-    /* 中心點：永遠顯示 */
+    /* --- 5. Platinum Cursor Design --- */
     .cursor-core {
         width: 4px; height: 4px; background: #fff; border-radius: 50%;
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
         pointer-events: none; z-index: 10002; mix-blend-mode: normal;
         display: none; 
     }
-    
-    /* 外圈：預設隱藏 (縮小+透明)，懸停時才顯示 */
     .cursor-ring {
-        /* 固定為最大尺寸，確保圓心對齊 */
         width: 50px; height: 50px; 
         border: 1px solid rgba(255,255,255,0.8); border-radius: 50%;
         position: fixed; top: 0; left: 0; 
-        /* 關鍵修改：預設狀態是縮小到0且透明，但位置已經置中 */
         transform: translate(-50%, -50%) scale(0); 
         opacity: 0;
         pointer-events: none; z-index: 10001; 
-        /* 改用 transform 和 opacity 過渡，效能更好且不會歪斜 */
         transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
         will-change: transform, opacity;
         display: none; 
         mix-blend-mode: difference; 
     }
-    
-    /* 網站啟動後顯示中心點和外圈容器 */
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
-    
-    /* 懸停狀態：放大並顯示外圈 */
-    body.hover-active .cursor-ring { 
-        opacity: 1;
-        /* 回到原始大小 1 (即 50px) */
-        transform: translate(-50%, -50%) scale(1);
-        background: transparent;
-    }
+    body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (VIDEO BACK) --- */
+    /* --- 6. Hero Section (Silver Aurora & Centered Text) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -172,21 +157,41 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: flex-end; 
+        /* 關鍵修改：內容絕對置中 */
+        justify-content: center; 
         align-items: center; 
         text-align: center; 
-        padding-bottom: 12vh; 
+        padding-bottom: 0; /* 移除底部 padding */
         background: #000;
     }
     
-    /* 🌟 影片背景樣式 🌟 */
-    .hero-bg-video {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        object-fit: cover; /* 確保影片填滿螢幕 */
-        z-index: -5; /* 放在最底層 */
-        opacity: 0.5; /* 調整影片亮度 */
+    /* 🌟 銀白色極光流動背景 (Pure CSS) 🌟 */
+    .hero-aurora-bg {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        background: #050505; overflow: hidden;
+    }
+    /* 第一層極光 */
+    .aurora-1 {
+        position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+        /* 使用銀色和冷白色的漸層，並保持高透明度 */
+        background: radial-gradient(ellipse at center, rgba(240, 240, 255, 0.08) 0%, rgba(192, 192, 192, 0.05) 40%, transparent 70%);
+        filter: blur(120px); /* 極度模糊以製造柔和感 */
+        animation: auroraFlow 25s infinite alternate ease-in-out;
+        opacity: 0.7;
+    }
+    /* 第二層極光，增加層次感 */
+    .aurora-2 {
+        position: absolute; width: 180%; height: 180%; top: -40%; left: -40%;
+        background: radial-gradient(circle at center, rgba(220, 220, 220, 0.06) 0%, transparent 60%);
+        filter: blur(100px);
+        animation: auroraFlow 35s infinite alternate-reverse ease-in-out; /* 不同速度和方向 */
+        opacity: 0.5;
+    }
+
+    @keyframes auroraFlow {
+        0% { transform: translate(-10%, -5%) rotate(0deg) scale(1); }
+        50% { transform: translate(5%, 10%) rotate(3deg) scale(1.1); }
+        100% { transform: translate(-5%, 15%) rotate(-3deg) scale(1.05); }
     }
 
     .hero-content { 
@@ -422,9 +427,10 @@
   </nav>
 
   <section class="hero">
-    <video class="hero-bg-video" autoplay muted loop playsinline>
-        <source src="hero.mp4" type="video/mp4">
-    </video>
+    <div class="hero-aurora-bg">
+        <div class="aurora-1"></div>
+        <div class="aurora-2"></div>
+    </div>
     
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
