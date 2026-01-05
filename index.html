@@ -192,7 +192,7 @@
         background: transparent;
     }
 
-    /* --- 5. Hero Section (New: Cinematic Still) --- */
+    /* --- 5. Hero Section (Updated: Hero Image) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -206,7 +206,7 @@
         padding-bottom: 12vh; 
     }
     
-    /* 大師級動態背景：使用圖片取代影片 */
+    /* 大師級動態背景：使用 hero.jpg */
     .hero-bg-image {
         position: absolute;
         top: 0; left: 0;
@@ -214,8 +214,8 @@
         background-size: cover;
         background-position: center;
         z-index: -5;
-        /* 這裡連結到你根目錄的 plan-dimension.jpg，你也可以換成你最強的一張作品 */
-        background-image: url('plan-dimension.jpg'); 
+        /* 🌟 更新：指向剛上傳的 hero.jpg */
+        background-image: url('hero.jpg'); 
         
         /* 呼吸運鏡效果：20秒內緩慢放大 */
         animation: heroZoom 20s infinite alternate ease-in-out;
@@ -337,7 +337,6 @@
         min-height: 650px; overflow: hidden; 
     }
     
-    /* 修正：路徑改為根目錄 */
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 0.8s ease; z-index: 0; filter: grayscale(100%) brightness(0.4); transform: scale(1); }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
 
