@@ -53,13 +53,14 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- 2. Texture (Noise) - 這是質感的靈魂，保留 --- */
+    /* --- 2. Texture (Noise) --- */
+    /* 保留噪點，這是質感來源，但因為是純CSS背景，我們把透明度調高一點點讓顆粒感更明顯 */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
       z-index: 9000; 
       pointer-events: none;
-      opacity: 0.35; /* 稍微加強一點，讓純色背景更有質感 */
+      opacity: 0.4; 
       mix-blend-mode: overlay;
     }
 
@@ -107,11 +108,11 @@
         text-transform: uppercase; cursor: pointer; 
         padding: 20px 40px;
         transition: letter-spacing 0.5s ease, color 0.3s;
-        animation: breathe 3s infinite ease-in-out; 
+        animation: breathe 3s infinite ease-in-out; /* The Breathing Effect */
     }
     .enter-btn:hover { 
         letter-spacing: 0.6em; 
-        animation: none; 
+        animation: none; /* Stop breathing on hover */
         opacity: 1; 
         color: #fff; 
         text-shadow: 0 0 20px rgba(255,255,255,0.8); 
@@ -130,7 +131,7 @@
 
     .nav-logo { 
         font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; 
-        letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: pointer; 
+        letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: pointer; /* Changed to pointer */
         flex-shrink: 0; display: inline-block;
     }
     .nav-menu { display: flex; gap: 40px; align-items: center; flex-shrink: 0; }
@@ -192,7 +193,7 @@
         background: transparent;
     }
 
-    /* --- 5. Hero Section (NO IMAGE, NO VIDEO - PURE CODE) --- */
+    /* --- 5. Hero Section (PURE CSS GENERATIVE LIGHT) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -204,34 +205,28 @@
         align-items: center; 
         text-align: center; 
         padding-bottom: 12vh; 
+        background: #000; /* Fallback */
     }
     
-    /* 🌟 大師級純代碼背景：光影呼吸建築 🌟 */
-    .hero-generative {
+    /* 🌟 核心修改：純代碼繪製的光影背景 🌟 */
+    .hero-generative-bg {
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
         z-index: -5;
-        background-color: #050505;
-        
-        /* 創造一個位於上方中心的柔和光源，模擬頂光 */
-        background-image: radial-gradient(
-            circle at 50% 30%, 
-            #222222 0%, 
-            #111111 40%, 
-            #050505 80%
-        );
-        
-        /* 呼吸動畫：讓光影緩慢變化，彷彿空間在呼吸 */
-        animation: deepBreath 15s infinite alternate ease-in-out;
+        /* 創造一個由上而下的聚光燈效果：深灰 -> 全黑 */
+        background: radial-gradient(circle at 50% 30%, #3a3a3a 0%, #1a1a1a 40%, #000000 85%);
+        /* 讓這個光影緩慢呼吸 */
+        animation: lightBreath 10s infinite alternate ease-in-out;
+        will-change: transform, opacity;
     }
 
-    @keyframes deepBreath {
+    @keyframes lightBreath {
         0% { transform: scale(1); opacity: 0.8; }
-        100% { transform: scale(1.15); opacity: 1; }
+        100% { transform: scale(1.1); opacity: 1; }
     }
     
-    /* 移除 overlay，因為背景已經很暗了，直接讓文字浮在光影上 */
+    /* 移除 overlay，直接讓光影呈現 */
     .hero-content { z-index: 1; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; }
     
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
@@ -239,8 +234,8 @@
     .hero h1 { 
         font-family: 'Cinzel', serif; font-size: 7vw; line-height: 1; 
         font-weight: 400; letter-spacing: 0.1em; margin: 0; color: #fff; 
-        /* 增加更強的陰影，讓字在純色背景更立體 */
-        text-shadow: 0 10px 50px rgba(0,0,0,0.8); 
+        /* 增加強烈陰影，讓文字在光影中浮起 */
+        text-shadow: 0 10px 30px rgba(0,0,0,0.8); 
     }
     .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.7; }
     .hero p { margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
@@ -437,7 +432,7 @@
     .royal-title { font-family: 'Cinzel', serif; font-size: 3.8rem; color: #fff; margin: 0 0 30px 0; letter-spacing: 0.05em; }
     .royal-desc { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #999; line-height: 2; max-width: 500px; font-weight: 300; }
 
-    /* --- 10. Booking (Custom Form) --- */
+    /* --- 10. Booking (Custom Form with IG field) --- */
     .booking-cta-section { padding: 120px 0; text-align: center; background: #050505; width: 100%; }
     .initiate-btn { 
         display: inline-flex; flex-direction: column; align-items: center; gap: 8px; padding: 35px 100px; 
@@ -679,7 +674,7 @@
   </nav>
 
   <section class="hero">
-    <div class="hero-generative"></div>
+    <div class="hero-generative-bg"></div>
     
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
