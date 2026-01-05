@@ -192,9 +192,33 @@
         background: transparent;
     }
 
-    /* --- 5. Hero Video --- */
-    .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; padding-bottom: 12vh; }
-    .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; filter: grayscale(100%) brightness(0.5) contrast(1.1); will-change: transform; }
+    /* --- 5. Hero Video (Fix: Ensure Visibility) --- */
+    .hero { 
+        height: 100vh; 
+        position: relative; 
+        overflow: hidden; 
+        width: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: flex-end; 
+        align-items: center; 
+        text-align: center; 
+        padding-bottom: 12vh; 
+    }
+    
+    /* 修正：確保影片強制佔滿且可見 */
+    .hero-video { 
+        position: absolute; 
+        top: 0; left: 0; 
+        width: 100%; height: 100%; 
+        object-fit: cover; 
+        z-index: -5; 
+        filter: grayscale(100%) brightness(0.5) contrast(1.1); 
+        will-change: transform; 
+        display: block !important; /* 強制顯示 */
+        opacity: 1 !important; /* 強制不透明 */
+    }
+    
     .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050505 5%, transparent 60%); z-index: -1; }
     .hero-content { z-index: 1; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; }
     
@@ -994,6 +1018,7 @@
         itemDiv.setAttribute('data-category', category);
         if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
+        // 🌟 圖片互動回復：加入 image-hover-target class
         itemDiv.innerHTML = `
             <img src="${imgPath}" loading="lazy" class="image-hover-target" onclick="openLightbox(this)" onerror="this.parentElement.style.display='none'">
             <div class="item-meta"><span class="meta-id">FIG. ${figNum}</span><div class="meta-line"></div><span class="meta-tag">${category.toUpperCase()}</span></div>
