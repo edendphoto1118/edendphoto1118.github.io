@@ -149,7 +149,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (Silver Aurora & Centered Text) --- */
+    /* --- 6. Hero Section (Silver Aurora) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -157,34 +157,30 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        /* 關鍵修改：內容絕對置中 */
-        justify-content: center; 
+        justify-content: center; /* Center Content */
         align-items: center; 
         text-align: center; 
-        padding-bottom: 0; /* 移除底部 padding */
+        padding-bottom: 0; 
         background: #000;
     }
     
-    /* 🌟 銀白色極光流動背景 (Pure CSS) 🌟 */
+    /* 🌟 Aurora Background 🌟 */
     .hero-aurora-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         background: #050505; overflow: hidden;
     }
-    /* 第一層極光 */
     .aurora-1 {
         position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
-        /* 使用銀色和冷白色的漸層，並保持高透明度 */
         background: radial-gradient(ellipse at center, rgba(240, 240, 255, 0.08) 0%, rgba(192, 192, 192, 0.05) 40%, transparent 70%);
-        filter: blur(120px); /* 極度模糊以製造柔和感 */
+        filter: blur(120px); 
         animation: auroraFlow 25s infinite alternate ease-in-out;
         opacity: 0.7;
     }
-    /* 第二層極光，增加層次感 */
     .aurora-2 {
         position: absolute; width: 180%; height: 180%; top: -40%; left: -40%;
         background: radial-gradient(circle at center, rgba(220, 220, 220, 0.06) 0%, transparent 60%);
         filter: blur(100px);
-        animation: auroraFlow 35s infinite alternate-reverse ease-in-out; /* 不同速度和方向 */
+        animation: auroraFlow 35s infinite alternate-reverse ease-in-out;
         opacity: 0.5;
     }
 
@@ -344,22 +340,34 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About --- */
-    .background { padding: 200px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; position: relative; overflow: hidden; }
-    .editorial-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 120px; max-width: 1400px; margin: 0 auto; align-items: center; }
-    .about-name-big { font-family: 'Cinzel', serif; font-size: 12rem; line-height: 0.8; font-weight: 700; text-align: left; -webkit-text-stroke: 1px rgba(191, 149, 63, 0.3); color: transparent; opacity: 0.8; }
-    .about-title-small { display: block; font-family: 'Montserrat', sans-serif; color: #BF953F; font-size: 1rem; letter-spacing: 0.4em; margin-top: 40px; font-weight: 400; text-transform: uppercase; padding-left: 10px; }
-    .about-content-block { text-align: left; }
-    .about-headline { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #e0e0e0; margin-bottom: 50px; font-weight: 400; letter-spacing: 0.05em; }
-    .about-headline span { color: #BF953F; }
-    .artist-statement-body { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 2.4; color: #ccc; font-weight: 400; margin-bottom: 80px; }
-    .about-slogan { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #BF953F; letter-spacing: 0.3em; text-transform: uppercase; display: block; margin-bottom: 30px; }
-    .about-slogan-en { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #666; letter-spacing: 0.2em; text-transform: uppercase; display: block; }
-    .signature-block { margin-top: 100px; text-align: right; border-top: 1px solid rgba(191, 149, 63, 0.3); padding-top: 30px; display: inline-block; float: right; }
-    .signature { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; color: #BF953F; }
-    .contact-info { margin-top: 150px; display: flex; gap: 50px; justify-content: flex-start; }
-    .contact-link, .email-btn { color: #777; text-decoration: none; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; background: none; border: none; cursor: none; transition: color 0.3s; font-family: 'Montserrat', sans-serif; display: inline-block; }
-    .contact-link:hover, .email-btn:hover { color: #BF953F; }
+    /* --- 13. About Section (Minimal) --- */
+    .background {
+        padding: 150px 8vw;
+        background: #050505;
+        border-top: 1px solid rgba(255,255,255,0.03);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+    }
+    .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
+    .about-slogan-minimal {
+        font-family: 'Cinzel', serif;
+        font-size: 3.5rem;
+        color: #BF953F;
+        letter-spacing: 0.5em;
+        font-weight: 400;
+        margin: 0;
+        margin-right: -0.5em; /* Optical alignment */
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 768px) { .about-slogan-minimal { font-size: 1.5rem; letter-spacing: 0.3em; } }
     
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; }
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.15em; }
@@ -386,7 +394,7 @@
     .toast { position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 40px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; opacity: 0; pointer-events: none; transition: all 0.5s ease; z-index: 20000; font-weight: 500; text-transform: uppercase; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .editorial-grid { grid-template-columns: 1fr; gap: 60px; text-align: left; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
+    @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .about-headline { font-size: 1.5rem; } .artist-statement-body { font-size: 1.1rem; } .contact-info { justify-content: center; } }
     @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 14vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .about-name-big { font-size: 5rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .royal-sp-amount { font-size: 3rem; } .tech-ticker-wrap { height: 30px; } }
   </style>
@@ -620,19 +628,8 @@
   </div>
 
   <section class="background" id="about">
-    <div class="editorial-grid">
-        <div class="about-name-container"><div class="about-name-big">EDEN<br>D.</div><span class="about-title-small">VISUAL DIRECTOR</span></div>
-        <div class="about-content-block">
-            <h3 class="about-headline">在這個充滿雜訊的世界裡，<br><span>沉默是頂級的奢華。</span></h3>
-            <div class="artist-statement-body">鏡頭不只是觀察，而是將現實重組為永恆的結構。<br>剝離多餘，只留下形式與光線的絕對關係。</div>
-            <div class="about-slogan-block"><span class="about-slogan">用影像 策展人生。</span><span class="about-slogan-en">Curating life through imagery.</span></div>
-            <div class="signature-block"><div class="signature">EDEN D.</div></div>
-        </div>
-        <div class="contact-info">
-          <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="contact-link hover-target">Instagram</a>
-          <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="contact-link hover-target">Threads</a>
-          <button class="email-btn hover-target" onclick="copyEmail()">edendphoto1118@gmail.com</button>
-        </div>
+    <div class="about-minimal-container">
+        <h2 class="about-slogan-minimal">用影像 策展美好。</h2>
     </div>
   </section>
   
@@ -807,7 +804,7 @@
       });
     }
 
-    /* --- Platinum Cursor Logic (FIXED ALIGNMENT) --- */
+    /* --- Platinum Cursor Logic --- */
     const cursorCore = document.querySelector('.cursor-core');
     const cursorRing = document.querySelector('.cursor-ring');
     let mouseX = 0, mouseY = 0; let ringX = 0, ringY = 0;
