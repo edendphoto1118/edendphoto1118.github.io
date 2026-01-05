@@ -192,7 +192,7 @@
         background: transparent;
     }
 
-    /* --- 5. Hero Video (Fix: Ensure Visibility) --- */
+    /* --- 5. Hero Section (New: Cinematic Still) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -206,17 +206,25 @@
         padding-bottom: 12vh; 
     }
     
-    /* 修正：確保影片強制佔滿且可見 */
-    .hero-video { 
-        position: absolute; 
-        top: 0; left: 0; 
-        width: 100%; height: 100%; 
-        object-fit: cover; 
-        z-index: -5; 
-        filter: grayscale(100%) brightness(0.5) contrast(1.1); 
-        will-change: transform; 
-        display: block !important; /* 強制顯示 */
-        opacity: 1 !important; /* 強制不透明 */
+    /* 大師級動態背景：使用圖片取代影片 */
+    .hero-bg-image {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: -5;
+        /* 這裡連結到你根目錄的 plan-dimension.jpg，你也可以換成你最強的一張作品 */
+        background-image: url('plan-dimension.jpg'); 
+        
+        /* 呼吸運鏡效果：20秒內緩慢放大 */
+        animation: heroZoom 20s infinite alternate ease-in-out;
+        opacity: 0.6; /* 稍微壓暗一點，讓文字跳出來 */
+    }
+
+    @keyframes heroZoom {
+        from { transform: scale(1); }
+        to { transform: scale(1.15); }
     }
     
     .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050505 5%, transparent 60%); z-index: -1; }
@@ -329,6 +337,7 @@
         min-height: 650px; overflow: hidden; 
     }
     
+    /* 修正：路徑改為根目錄 */
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: all 0.8s ease; z-index: 0; filter: grayscale(100%) brightness(0.4); transform: scale(1); }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
 
@@ -454,6 +463,12 @@
         display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; 
         letter-spacing: 0.2em; color: #BF953F; margin-bottom: 10px; text-transform: uppercase;
     }
+    
+    /* IG Hint Style */
+    .input-hint {
+        color: #888; text-transform: none; font-size: 0.55rem; letter-spacing: 0.05em; margin-left: 10px; font-style: italic;
+    }
+    
     .form-group input, .form-group select, .form-group textarea {
         width: 100%; background: transparent; border: none; color: #fff;
         font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none;
@@ -606,7 +621,7 @@
       nav { padding: 25px 30px; }
       .nav-menu { display: none; }
       .hero h1 { font-size: 14vw; }
-      .hero-video { object-position: center 20%; } 
+      .hero-bg-image { animation: none; transform: scale(1.1); } /* 手機版不放大縮小，避免過度耗電，直接稍微放大即可 */
       .gallery-container { column-count: 1; }
       .gallery-item img { filter: grayscale(0%) contrast(100%); } /* Mobile: show color always */
       
@@ -661,9 +676,8 @@
   </nav>
 
   <section class="hero">
-    <video muted playsinline loop autoplay class="hero-video" id="heroVideo" poster="images/hero-poster.jpg">
-        <source src="images/hero-video.mp4" type="video/mp4">
-    </video>
+    <div class="hero-bg-image"></div>
+    
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
@@ -898,6 +912,11 @@
             </div>
 
             <div class="form-group">
+              <label for="instagram">INSTAGRAM ID / IG 帳號 <span class="input-hint">*我們會透過 IG 私訊確認，請留意陌生訊息</span></label>
+              <input type="text" name="instagram" id="instagram" required placeholder="@YOUR_ID">
+            </div>
+
+            <div class="form-group">
               <label for="plan">SESSION / 預約方案</label>
               <select name="plan" id="plan">
                 <option value="Structure">PORTRAIT - STRUCTURE (肖像)</option>
@@ -988,12 +1007,6 @@
     }
     window.addEventListener('load', () => {
         window.scrollTo(0, 0);
-        // Force video play muted on load as backup
-        const video = document.getElementById('heroVideo');
-        if(video) {
-            video.muted = true; // Ensure muted specifically for autoplay
-            video.play().catch(e => console.log("Auto-play blocked, waiting for user interaction."));
-        }
     });
 
     // 2.5s: Reveal Enter Button
@@ -1006,7 +1019,6 @@
     function enterArchive() {
         const audio = document.getElementById('bgMusic');
         const wave = document.getElementById('soundWave');
-        const video = document.getElementById('heroVideo');
         
         // 1. Play Audio
         if(audio) {
@@ -1028,14 +1040,6 @@
         // 2. Fade Out Preloader
         document.getElementById('preloader').style.opacity = 0;
         
-        // 3. 🌟 影片播放終極解法：在用戶互動時強制播放 🌟
-        if(video) {
-            video.muted = true; // 再次確認靜音
-            video.play().catch(e => {
-                console.log("Video play failed even on interaction:", e);
-            });
-        }
-
         // 4. Unlock Scroll & Show Site
         setTimeout(() => {
             document.body.classList.add('site-active');
