@@ -149,7 +149,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (Silver Aurora) --- */
+    /* --- 6. Hero Section (Video) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -157,36 +157,20 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: center; 
+        justify-content: flex-end; 
         align-items: center; 
         text-align: center; 
-        padding-bottom: 0; 
+        padding-bottom: 12vh; 
         background: #000;
     }
     
-    .hero-aurora-bg {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        background: #050505; overflow: hidden;
-    }
-    .aurora-1 {
-        position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
-        background: radial-gradient(ellipse at center, rgba(240, 240, 255, 0.08) 0%, rgba(192, 192, 192, 0.05) 40%, transparent 70%);
-        filter: blur(120px); 
-        animation: auroraFlow 25s infinite alternate ease-in-out;
-        opacity: 0.7;
-    }
-    .aurora-2 {
-        position: absolute; width: 180%; height: 180%; top: -40%; left: -40%;
-        background: radial-gradient(circle at center, rgba(220, 220, 220, 0.06) 0%, transparent 60%);
-        filter: blur(100px);
-        animation: auroraFlow 35s infinite alternate-reverse ease-in-out;
+    .hero-bg-video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; 
+        z-index: -5; 
         opacity: 0.5;
-    }
-
-    @keyframes auroraFlow {
-        0% { transform: translate(-10%, -5%) rotate(0deg) scale(1); }
-        50% { transform: translate(5%, 10%) rotate(3deg) scale(1.1); }
-        100% { transform: translate(-5%, 15%) rotate(-3deg) scale(1.05); }
     }
 
     .hero-content { 
@@ -230,7 +214,7 @@
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
 
-    .gallery-container { column-count: 3; column-gap: 40px; width: 100%; max-width: 1600px; margin: 0 auto; }
+    .gallery-container { column-count: 3; column-gap: 40px; width: 100%; max-width: 1600px; margin: 0 auto; min-height: 400px; }
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: none; opacity: 0; transform: translateY(40px) scale(0.98); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s ease, transform 1.2s, filter 1.4s; }
     .gallery-item.reveal { opacity: 1; transform: translateY(0) scale(1); filter: grayscale(100%) contrast(110%) brightness(0.9); }
     .gallery-item.filtered-out, .gallery-item.hidden-loadmore { display: none; }
@@ -245,6 +229,14 @@
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
     .gallery-item:hover .item-meta { opacity: 1; }
     
+    /* Offline Message for The Vision */
+    .gallery-offline-msg {
+        display: none; text-align: center; width: 100%; padding: 100px 0;
+        font-family: 'Space Mono', monospace; color: #333; letter-spacing: 0.2em;
+        text-shadow: 2px 0 rgba(255,0,0,0.2), -2px 0 rgba(0,0,255,0.2);
+    }
+    .gallery-offline-msg.active { display: block; animation: glitch 2s infinite; }
+
     .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; }
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.1); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s; }
     .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
@@ -263,7 +255,7 @@
         transition: all 0.5s ease; 
         display: flex; flex-direction: column; 
         background: #080808;
-        min-height: 700px; /* Taller for new layout */
+        min-height: 700px; 
         overflow: hidden; 
     }
     
@@ -272,16 +264,13 @@
 
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 50px 40px; }
     
-    /* 1. Header (Roman + Title) */
     .price-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
     .plan-roman { display: block; font-family: 'Cinzel', serif; font-size: 4rem; color: rgba(255,255,255,0.1); margin-bottom: 10px; line-height: 1; }
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 1.8rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 5px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: #888; font-weight: 300; }
 
-    /* 2. Content */
     .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 10px; }
 
-    /* 3. Specs */
     .specs-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; width: 100%; }
     .spec-item { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.05); padding-right: 15px; text-align: right; }
@@ -289,11 +278,9 @@
     .spec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; line-height: 1.4; }
     .spec-val { display: block; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #ccc; }
 
-    /* 4. Price */
     .price-area-bottom { margin-top: 30px; text-align: center; margin-bottom: 20px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; display: block; }
 
-    /* 5. Button */
     .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; }
     .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
     
@@ -301,38 +288,28 @@
     .price-card.featured .current-price { color: #BF953F; }
     .price-card.featured .plan-en { color: #BF953F; }
 
-    /* --- Cyberpunk Offline Card Style --- */
+    /* Cyberpunk Offline Style */
     .price-card.offline { 
         background: #050505; 
         border: 1px solid #1a1a1a;
         position: relative;
         overflow: hidden;
     }
-    
-    /* Scanlines Background */
     .price-card.offline::before {
         content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 0, 0.03) 3px);
         pointer-events: none; z-index: 1;
     }
-    
     .price-card.offline .plan-roman, 
     .price-card.offline .plan-en,
     .price-card.offline .current-price {
         color: #333;
-        text-shadow: 2px 0 rgba(255,0,0,0.2), -2px 0 rgba(0,0,255,0.2); /* Subtle chromatic aberration */
+        text-shadow: 2px 0 rgba(255,0,0,0.2), -2px 0 rgba(0,0,255,0.2);
     }
+    .price-card.offline .jump-btn { border-color: #333; color: #333; cursor: not-allowed; }
+    .price-card.offline:hover .jump-btn { background: transparent; color: #333; }
     
-    .price-card.offline .jump-btn {
-        border-color: #333; color: #333; cursor: not-allowed;
-    }
-    .price-card.offline:hover .jump-btn {
-        background: transparent; color: #333;
-    }
-    
-    /* Glitch Animation for Content */
     .glitch-text { animation: glitch 3s infinite; }
-    
     @keyframes glitch {
         0% { opacity: 1; transform: translateX(0); }
         95% { opacity: 1; transform: translateX(0); }
@@ -352,14 +329,49 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: #ddd; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 2; font-weight: 300; }
 
-    /* --- 11. Royal --- */
-    .royal-section { padding: 150px 8vw; background: linear-gradient(135deg, #050505 0%, #020202 100%); border-top: 1px solid #111; border-bottom: 1px solid #111; width: 100%; position: relative; overflow: hidden; }
-    .royal-bg-svg { position: absolute; top: 0; right: 0; width: 85vh; height: 85vh; z-index: 1; opacity: 0.2; pointer-events: none; transition: opacity 0.5s ease; }
-    .royal-section:hover .royal-bg-svg { opacity: 0.5; }
-    .constellation-line { fill: none; stroke: url(#star-gold-gradient); stroke-width: 0.8; stroke-linecap: round; stroke-dasharray: 2000; stroke-dashoffset: 2000; transition: stroke-dashoffset 4s cubic-bezier(0.2, 0, 0.2, 1); filter: drop-shadow(0 0 5px rgba(191, 149, 63, 0.3)); }
-    .constellation-node { fill: #FFF; opacity: 0; transition: opacity 0.8s ease; }
-    .royal-section:hover .constellation-line { stroke-dashoffset: 0; transition-delay: 0.8s; }
-    .royal-section:hover .node-group { opacity: 1; } 
+    /* --- 11. Royal (Updated to Metallic Border) --- */
+    .royal-section { 
+        padding: 150px 8vw; 
+        background: linear-gradient(135deg, #050505 0%, #020202 100%); 
+        border-top: 1px solid #111; 
+        border-bottom: 1px solid #111; 
+        width: 100%; 
+        position: relative; 
+        overflow: hidden; 
+    }
+    
+    /* Golden Metallic Border - Pseudo Elements */
+    .royal-border-box {
+        position: absolute;
+        top: 40px; left: 40px; right: 40px; bottom: 40px;
+        pointer-events: none;
+    }
+    
+    .border-line {
+        position: absolute;
+        background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f, #aa771c);
+        transition: all 0.8s ease-out;
+        opacity: 0;
+    }
+    
+    /* Top Line */
+    .border-top { top: 0; left: 0; height: 1px; width: 0%; }
+    /* Right Line */
+    .border-right { top: 0; right: 0; width: 1px; height: 0%; }
+    /* Bottom Line */
+    .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; }
+    /* Left Line */
+    .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
+
+    /* Hover State: Draw the border */
+    .royal-section:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; }
+    .royal-section:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.2s; }
+    .royal-section:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.4s; }
+    .royal-section:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.6s; }
+    
+    /* Leave State: Fade out reversely */
+    .royal-section:not(:hover) .border-line { transition-delay: 0s; opacity: 0; }
+
     .royal-grid { display: flex; gap: 80px; justify-content: space-between; align-items: center; z-index: 5; position: relative; max-width: 1400px; margin: 0 auto; }
     .royal-info { flex: 1; }
     .royal-price { flex: 0.9; border-left: 1px solid rgba(191,149,63,0.1); padding-left: 80px; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); padding: 40px; border: 1px solid rgba(191,149,63,0.1); }
@@ -403,7 +415,7 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About Section (Minimal) --- */
+    /* --- 13. About Section (Updated Slogan) --- */
     .background {
         padding: 150px 8vw;
         background: #050505;
@@ -417,20 +429,39 @@
         min-height: 60vh;
     }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
-    .about-slogan-minimal {
+    
+    .about-slogan-main {
         font-family: 'Cinzel', serif;
         font-size: 3.5rem;
         color: #BF953F;
-        letter-spacing: 0.5em;
+        letter-spacing: 0.2em;
         font-weight: 400;
-        margin: 0;
-        margin-right: -0.5em; /* Optical alignment */
+        margin: 0 0 30px 0;
+        display: block;
         opacity: 0;
         transform: translateY(30px);
         animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
+    
+    .about-slogan-sub {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.8rem;
+        color: #888;
+        letter-spacing: 0.8em;
+        text-transform: uppercase;
+        display: block;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        margin-left: 0.8em; /* Offset for spacing balance */
+    }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 768px) { .about-slogan-minimal { font-size: 1.5rem; letter-spacing: 0.3em; } }
+    
+    @media (max-width: 768px) { 
+        .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.1em; } 
+        .about-slogan-sub { font-size: 0.6rem; letter-spacing: 0.4em; }
+    }
     
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; }
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.15em; }
@@ -498,10 +529,9 @@
   </nav>
 
   <section class="hero">
-    <div class="hero-aurora-bg">
-        <div class="aurora-1"></div>
-        <div class="aurora-2"></div>
-    </div>
+    <video class="hero-bg-video" autoplay muted loop playsinline>
+        <source src="hero.mp4" type="video/mp4">
+    </video>
     
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
@@ -520,11 +550,16 @@
     </div>
     <div class="filter-tabs">
         <button class="filter-btn active hover-target" onclick="filterGallery('all', this)">ALL</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Structure', this)">STRUCTURE</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Scale', this)">SCALE</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Dimension', this)">DIMENSION</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Identity', this)">IDENTITY</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Editorial', this)">EDITORIAL</button>
+        <button class="filter-btn hover-target" onclick="filterGallery('Vision', this)">THE VISION</button>
     </div>
     <div class="gallery-container" id="galleryContainer"></div>
+    
+    <div id="vision-offline-msg" class="gallery-offline-msg">
+        [ SYSTEM OFFLINE ]<br>ACCESS DENIED.<br>CONTENT ENCRYPTED.
+    </div>
+
     <div class="load-more-container">
         <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
     </div>
@@ -571,7 +606,7 @@
                 <span class="current-price">NT$ 8,800</span>
             </div>
             
-            <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
+            <button class="jump-btn hover-target" onclick="jumpToCategory('Identity', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
       
@@ -599,7 +634,7 @@
                 <span class="current-price">NT$ 14,800</span>
             </div>
             
-            <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
+            <button class="jump-btn hover-target" onclick="jumpToCategory('Editorial', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
       
@@ -651,22 +686,14 @@
   </section>
 
   <section class="royal-section">
-    <svg width="0" height="0"><defs><linearGradient id="star-gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8a6e2f;stop-opacity:0.8" /><stop offset="50%" style="stop-color:#fcf6ba;stop-opacity:1" /><stop offset="100%" style="stop-color:#d4af37;stop-opacity:0.8" /></linearGradient></defs></svg>
-    <div class="royal-border">
-      <svg class="royal-bg-svg" viewBox="0 0 500 500">
-        <path class="constellation-line" d="M100,50 Q400,100 400,250 T250,450 L250,600" />
-        <g class="node-group">
-            <circle class="constellation-node node-1" cx="100" cy="50" r="2.5" />
-            <circle class="constellation-node node-2" cx="220" cy="80" r="2.5" />
-            <circle class="constellation-node node-3" cx="350" cy="150" r="3.5" /> <circle class="constellation-node node-4" cx="400" cy="250" r="2.5" />
-            <circle class="constellation-node node-5" cx="350" cy="350" r="2.5" />
-            <circle class="constellation-node node-6" cx="250" cy="450" r="3.5" />
-            <circle class="constellation-node node-7" cx="250" cy="550" r="2.5" />
-            <circle class="constellation-node node-1" cx="450" cy="100" r="1.5" />
-            <circle class="constellation-node node-3" cx="50" cy="200" r="1.5" />
-        </g>
-      </svg>
-      <div class="royal-grid">
+    <div class="royal-border-box">
+        <span class="border-line border-top"></span>
+        <span class="border-line border-right"></span>
+        <span class="border-line border-bottom"></span>
+        <span class="border-line border-left"></span>
+    </div>
+
+    <div class="royal-grid">
         <div class="royal-info">
           <span class="royal-tag">Limited Edition</span>
           <h2 class="royal-title">PROJECT: ROYAL DECK</h2>
@@ -686,7 +713,6 @@
           </div>
         </div>
       </div>
-    </div>
   </section>
 
   <section class="booking-cta-section">
@@ -716,9 +742,8 @@
             <div class="form-group">
               <label for="plan">SESSION / 預約方案</label>
               <select name="plan" id="plan">
-                <option value="Structure">PORTRAIT - STRUCTURE (肖像)</option>
-                <option value="Scale">AMBIANCE - SCALE (氛圍)</option>
-                <option value="Dimension">CINEMATIC - DIMENSION (電影)</option>
+                <option value="Structure">IDENTITY - THE COVER (封面人物)</option>
+                <option value="Scale">EDITORIAL - THE STORY (畫報敘事)</option>
                 <option value="Royal">PROJECT: ROYAL DECK (撲克牌企劃)</option>
               </select>
             </div>
@@ -732,7 +757,8 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-minimal">用影像 策展美好。</h2>
+        <h2 class="about-slogan-main">CURATING LIFE THROUGH IMAGERY.</h2>
+        <span class="about-slogan-sub">用 攝 影 　 策 展 美 好</span>
     </div>
   </section>
   
@@ -804,8 +830,10 @@
       for (let i = 1; i <= totalWorks; i++) {
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
         const figNum = i.toString().padStart(3, '0');
-        let category = 'Structure'; 
-        if (i <= 40) { category = 'Structure'; } else if (i <= 80) { category = 'Scale'; } else { category = 'Dimension'; }
+        
+        // 分配圖片到新分類：前60張為 Identity，其餘為 Editorial
+        let category = 'Identity'; 
+        if (i > 60) { category = 'Editorial'; }
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
@@ -843,7 +871,20 @@
     function filterGallery(category, btn) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        
         const items = document.querySelectorAll('.gallery-item');
+        const offlineMsg = document.getElementById('vision-offline-msg');
+        
+        // 特殊處理：如果是 The Vision (offline)
+        if(category === 'Vision') {
+            items.forEach(item => item.classList.add('filtered-out'));
+            offlineMsg.classList.add('active');
+            document.getElementById('loadMoreBtn').style.display = 'none';
+            return;
+        } else {
+            offlineMsg.classList.remove('active');
+        }
+
         items.forEach(item => {
             item.classList.remove('hidden-loadmore'); 
             if (category === 'all' || item.getAttribute('data-category') === category) {
