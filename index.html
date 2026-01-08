@@ -149,7 +149,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (Silver Aurora) --- */
+    /* --- 6. Hero Section --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -157,14 +157,13 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: center; /* Center Content */
+        justify-content: center; 
         align-items: center; 
         text-align: center; 
         padding-bottom: 0; 
         background: #000;
     }
     
-    /* 🌟 Aurora Background 🌟 */
     .hero-aurora-bg {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         background: #050505; overflow: hidden;
@@ -250,7 +249,12 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.1); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s; }
     .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
-    /* --- 9. Pricing --- */
+    /* --- 8.5 NEW: Visual Personality Test --- */
+    .tool-section { padding: 100px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
+    .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
+
+    /* --- 9. Pricing (UPDATED) --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 650px; overflow: hidden; }
@@ -274,8 +278,15 @@
     .spec-item:nth-child(even) { padding-left: 15px; }
     .spec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
     .spec-val { display: block; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #ccc; }
+    
     .jump-btn { margin-top: 30px; padding: 15px 0; background: #111; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; }
     .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
+    
+    /* Offline Card Style */
+    .price-card.offline { opacity: 0.6; pointer-events: none; }
+    .price-card.offline .card-content { filter: grayscale(100%) blur(0.5px); }
+    .price-card.offline .jump-btn { border-color: #333; color: #555; }
+    
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.4); }
     .price-card.featured .current-price { color: #BF953F; }
 
@@ -467,64 +478,98 @@
     </div>
   </section>
   
+  <section class="tool-section" id="archetype">
+      <div class="section-header">
+          <h2 class="section-title">EDEN ARCHETYPE</h2>
+          <span class="section-subtitle">Visual Personality Analysis. 探索您的視覺人格。</span>
+      </div>
+      <div class="tool-container hover-target">
+          <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="Eden Visual Archetype"></iframe>
+      </div>
+  </section>
+  
   <section class="pricing-section" id="pricing">
     <div class="section-header">
       <h2 class="section-title">EDEN VISUALS</h2>
       <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
     </div>
     <div class="pricing-grid">
+      
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
-        <div class="card-bg"></div>
+        <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-id">01</span>
-                <div class="plan-title-block"><span class="plan-zh">肖像・結構</span><span class="plan-en">The Portrait</span></div>
+                <div class="plan-title-block">
+                    <span class="plan-zh">肖像・封面</span>
+                    <span class="plan-en">THE COVER</span>
+                </div>
             </div>
-            <div class="price-area"><span class="current-price">NT$ 6,800</span><span class="old-price">NT$ 8,800</span></div>
-            <p class="plan-desc">專為個人品牌打造的視覺基石。剝離多餘的裝飾，透過建築般的幾何光影，精準重塑您的專業輪廓。</p>
+            <div class="price-area">
+                <span class="current-price">NT$ 8,800</span>
+            </div>
+            <p class="plan-desc">
+                不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，讓每一張照片都成為您的成名作。
+            </p>
             <div class="specs-grid">
                 <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">1.5 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">1 SET</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">6 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">USB + CARD</span></div>
+                <div class="spec-item"><span class="spec-label">Styling</span><span class="spec-val">INCLUDED</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">8 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">POSTER + USB</span></div>
             </div>
             <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
-      <div class="price-card hover-target" onclick="this.classList.toggle('active')">
-        <div class="card-bg"></div>
+      
+      <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
+        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-id">02</span>
-                <div class="plan-title-block"><span class="plan-zh">氛圍・尺度</span><span class="plan-en">The Ambiance</span></div>
+                <div class="plan-title-block">
+                    <span class="plan-zh">畫報・敘事</span>
+                    <span class="plan-en">THE STORY</span>
+                </div>
             </div>
-            <div class="price-area"><span class="current-price">NT$ 10,800</span><span class="old-price">NT$ 12,800</span></div>
-            <p class="plan-desc">人與空間的深度對話。在宏大的城市地景或自然荒野中，捕捉您與環境共鳴的呼吸感。</p>
+            <div class="price-area">
+                <span class="current-price">NT$ 14,800</span>
+            </div>
+            <p class="plan-desc">
+                人與空間的化學反應。我們將為您打造專屬的 A5 攝影小誌 (Zine)，紀錄一場關於風格與情緒的紙上電影。
+            </p>
             <div class="specs-grid">
                 <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">2.0 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">1 SET</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">9 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">USB + CARD</span></div>
+                <div class="spec-item"><span class="spec-label">Styling</span><span class="spec-val">ADVICE</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">10 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">A5 ZINE + USB</span></div>
             </div>
             <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
-      <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
-        <div class="card-bg"></div>
+      
+      <div class="price-card offline hover-target">
+        <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-id">03</span>
-                <div class="plan-title-block"><span class="plan-zh">電影・維度</span><span class="plan-en">The Cinematic</span></div>
+                <div class="plan-title-block">
+                    <span class="plan-zh">電影・維度</span>
+                    <span class="plan-en">THE VISION</span>
+                </div>
             </div>
-            <div class="price-area"><span class="current-price">NT$ 14,800</span><span class="old-price">NT$ 16,800</span></div>
-            <p class="plan-desc">一場靜止的電影演出。運用電影美術道具與戲劇光法，為您的影像注入深層敘事。</p>
+            <div class="price-area">
+                <span class="current-price">???</span>
+            </div>
+            <p class="plan-desc">
+                超越現實的視覺衝擊。RGB 與 3D 結構的極致實驗。(籌備中)
+            </p>
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">2.5 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">2 SETS</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">12 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">USB + CARD</span></div>
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">---</span></div>
             </div>
-            <button class="jump-btn hover-target" onclick="jumpToCategory('Dimension', event)">VIEW SAMPLES ↗</button>
+            <button class="jump-btn">[ SYSTEM OFFLINE ]</button>
         </div>
       </div>
     </div>
@@ -613,9 +658,8 @@
             <div class="form-group">
               <label for="plan">SESSION / 預約方案</label>
               <select name="plan" id="plan">
-                <option value="Structure">PORTRAIT - STRUCTURE (肖像)</option>
-                <option value="Scale">AMBIANCE - SCALE (氛圍)</option>
-                <option value="Dimension">CINEMATIC - DIMENSION (電影)</option>
+                <option value="Structure">IDENTITY - THE COVER (封面人物)</option>
+                <option value="Scale">EDITORIAL - THE STORY (畫報敘事)</option>
                 <option value="Royal">PROJECT: ROYAL DECK (撲克牌企劃)</option>
               </select>
             </div>
@@ -804,7 +848,7 @@
       });
     }
 
-    /* --- Platinum Cursor Logic --- */
+    /* --- Platinum Cursor Logic (FIXED ALIGNMENT) --- */
     const cursorCore = document.querySelector('.cursor-core');
     const cursorRing = document.querySelector('.cursor-ring');
     let mouseX = 0, mouseY = 0; let ringX = 0, ringY = 0;
