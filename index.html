@@ -149,7 +149,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section --- */
+    /* --- 6. Hero Section (Silver Aurora) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -249,46 +249,98 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.1); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s; }
     .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
-    /* --- 8.5 NEW: Visual Personality Test --- */
+    /* --- 8.5 Visual Personality Test --- */
     .tool-section { padding: 100px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
-    /* --- 9. Pricing (UPDATED) --- */
+    /* --- 9. Pricing (RESTRUCTURED) --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
-    .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 650px; overflow: hidden; }
+    
+    .price-card { 
+        border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; 
+        transition: all 0.5s ease; 
+        display: flex; flex-direction: column; 
+        background: #080808;
+        min-height: 700px; /* Taller for new layout */
+        overflow: hidden; 
+    }
     
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; }
     .price-card:hover .card-bg { opacity: 0.3; }
 
-    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 40px; }
-    .price-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
-    .plan-id { font-family: 'Space Mono', monospace; font-size: 3rem; color: rgba(255,255,255,0.1); line-height: 1; }
-    .plan-title-block { text-align: right; }
-    .plan-zh { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff; display: block; margin-bottom: 5px; }
-    .plan-en { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #666; text-transform: uppercase; }
-    .price-area { margin-bottom: 40px; }
-    .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; display: block; }
-    .old-price { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #444; text-decoration: line-through; display: block; margin-top: 5px; }
-    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #999; line-height: 1.8; margin-bottom: auto; font-weight: 300; text-align: justify; }
-    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; }
+    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 50px 40px; }
+    
+    /* 1. Header (Roman + Title) */
+    .price-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+    .plan-roman { display: block; font-family: 'Cinzel', serif; font-size: 4rem; color: rgba(255,255,255,0.1); margin-bottom: 10px; line-height: 1; }
+    .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 1.8rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 5px; }
+    .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: #888; font-weight: 300; }
+
+    /* 2. Content */
+    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 10px; }
+
+    /* 3. Specs */
+    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; width: 100%; }
     .spec-item { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .spec-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.05); padding-right: 15px; }
-    .spec-item:nth-child(even) { padding-left: 15px; }
-    .spec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+    .spec-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.05); padding-right: 15px; text-align: right; }
+    .spec-item:nth-child(even) { padding-left: 15px; text-align: left; }
+    .spec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; line-height: 1.4; }
     .spec-val { display: block; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #ccc; }
-    
-    .jump-btn { margin-top: 30px; padding: 15px 0; background: #111; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-align: center; width: 100%; display: block; }
+
+    /* 4. Price */
+    .price-area-bottom { margin-top: 30px; text-align: center; margin-bottom: 20px; }
+    .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; display: block; }
+
+    /* 5. Button */
+    .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; }
     .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
-    
-    /* Offline Card Style */
-    .price-card.offline { opacity: 0.6; pointer-events: none; }
-    .price-card.offline .card-content { filter: grayscale(100%) blur(0.5px); }
-    .price-card.offline .jump-btn { border-color: #333; color: #555; }
     
     .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.4); }
     .price-card.featured .current-price { color: #BF953F; }
+    .price-card.featured .plan-en { color: #BF953F; }
+
+    /* --- Cyberpunk Offline Card Style --- */
+    .price-card.offline { 
+        background: #050505; 
+        border: 1px solid #1a1a1a;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Scanlines Background */
+    .price-card.offline::before {
+        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 0, 0.03) 3px);
+        pointer-events: none; z-index: 1;
+    }
+    
+    .price-card.offline .plan-roman, 
+    .price-card.offline .plan-en,
+    .price-card.offline .current-price {
+        color: #333;
+        text-shadow: 2px 0 rgba(255,0,0,0.2), -2px 0 rgba(0,0,255,0.2); /* Subtle chromatic aberration */
+    }
+    
+    .price-card.offline .jump-btn {
+        border-color: #333; color: #333; cursor: not-allowed;
+    }
+    .price-card.offline:hover .jump-btn {
+        background: transparent; color: #333;
+    }
+    
+    /* Glitch Animation for Content */
+    .glitch-text { animation: glitch 3s infinite; }
+    
+    @keyframes glitch {
+        0% { opacity: 1; transform: translateX(0); }
+        95% { opacity: 1; transform: translateX(0); }
+        96% { opacity: 0.8; transform: translateX(-2px); }
+        97% { opacity: 1; transform: translateX(2px); }
+        98% { opacity: 0.5; transform: translateX(0); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
 
     /* --- 10. Delivery Section --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
@@ -499,24 +551,26 @@
         <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-id">01</span>
-                <div class="plan-title-block">
-                    <span class="plan-zh">肖像・封面</span>
-                    <span class="plan-en">THE COVER</span>
-                </div>
+                <span class="plan-roman">I</span>
+                <span class="plan-en">THE COVER</span>
+                <span class="plan-zh">肖像・封面</span>
             </div>
-            <div class="price-area">
-                <span class="current-price">NT$ 8,800</span>
-            </div>
+            
             <p class="plan-desc">
                 不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，讓每一張照片都成為您的成名作。
             </p>
+            
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">1.5 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Styling</span><span class="spec-val">INCLUDED</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">8 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">POSTER + USB</span></div>
+                <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">1.5 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Styling<br>妝髮造型</span><span class="spec-val">INCLUDED</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">8 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">POSTER + USB</span></div>
             </div>
+            
+            <div class="price-area-bottom">
+                <span class="current-price">NT$ 8,800</span>
+            </div>
+            
             <button class="jump-btn hover-target" onclick="jumpToCategory('Structure', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
@@ -525,24 +579,26 @@
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-id">02</span>
-                <div class="plan-title-block">
-                    <span class="plan-zh">畫報・敘事</span>
-                    <span class="plan-en">THE STORY</span>
-                </div>
+                <span class="plan-roman">II</span>
+                <span class="plan-en">THE STORY</span>
+                <span class="plan-zh">畫報・敘事</span>
             </div>
-            <div class="price-area">
-                <span class="current-price">NT$ 14,800</span>
-            </div>
+            
             <p class="plan-desc">
                 人與空間的化學反應。我們將為您打造專屬的 A5 攝影小誌 (Zine)，紀錄一場關於風格與情緒的紙上電影。
             </p>
+            
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">2.0 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Styling</span><span class="spec-val">ADVICE</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">10 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">A5 ZINE + USB</span></div>
+                <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">2.0 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Styling<br>造型顧問</span><span class="spec-val">ADVICE</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">10 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">A5 ZINE + USB</span></div>
             </div>
+            
+            <div class="price-area-bottom">
+                <span class="current-price">NT$ 14,800</span>
+            </div>
+            
             <button class="jump-btn hover-target" onclick="jumpToCategory('Scale', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
@@ -550,25 +606,27 @@
       <div class="price-card offline hover-target">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
         <div class="card-content">
-            <div class="price-header">
-                <span class="plan-id">03</span>
-                <div class="plan-title-block">
-                    <span class="plan-zh">電影・維度</span>
-                    <span class="plan-en">THE VISION</span>
-                </div>
+            <div class="price-header glitch-text">
+                <span class="plan-roman">III</span>
+                <span class="plan-en">THE VISION</span>
+                <span class="plan-zh">電影・維度</span>
             </div>
-            <div class="price-area">
-                <span class="current-price">???</span>
-            </div>
-            <p class="plan-desc">
-                超越現實的視覺衝擊。RGB 與 3D 結構的極致實驗。(籌備中)
+            
+            <p class="plan-desc glitch-text">
+                超越現實的視覺衝擊。RGB 與 3D 結構的極致實驗。(機密籌備中)
             </p>
+            
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">---</span></div>
-                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">---</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">---</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Looks<br>造型數量</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">---</span></div>
             </div>
+            
+            <div class="price-area-bottom">
+                <span class="current-price glitch-text">[ ENCRYPTED ]</span>
+            </div>
+            
             <button class="jump-btn">[ SYSTEM OFFLINE ]</button>
         </div>
       </div>
@@ -658,8 +716,9 @@
             <div class="form-group">
               <label for="plan">SESSION / 預約方案</label>
               <select name="plan" id="plan">
-                <option value="Structure">IDENTITY - THE COVER (封面人物)</option>
-                <option value="Scale">EDITORIAL - THE STORY (畫報敘事)</option>
+                <option value="Structure">PORTRAIT - STRUCTURE (肖像)</option>
+                <option value="Scale">AMBIANCE - SCALE (氛圍)</option>
+                <option value="Dimension">CINEMATIC - DIMENSION (電影)</option>
                 <option value="Royal">PROJECT: ROYAL DECK (撲克牌企劃)</option>
               </select>
             </div>
