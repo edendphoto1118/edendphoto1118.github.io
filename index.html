@@ -47,13 +47,13 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- Metallic Text Effect Classes (Refined Gradients) --- */
+    /* --- Metallic Text Effect Classes --- */
     .metallic-gold {
         background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        color: #BF953F; /* Fallback */
+        color: #BF953F;
         text-shadow: 0 0 1px rgba(191, 149, 63, 0.3);
     }
     
@@ -62,7 +62,7 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        color: #fff; /* Fallback */
+        color: #fff;
         text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     }
 
@@ -87,17 +87,22 @@
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
       text-transform: uppercase; text-align: center;
-      opacity: 0; letter-spacing: 3em; transform: scale(1.1); 
+      width: 100%;
+      opacity: 0; 
+      letter-spacing: 3em; 
+      margin-right: -3em; 
+      transform: scale(1.1); 
       animation: opticalEmerge 3s ease forwards;
     }
     
     @keyframes opticalEmerge {
-        0% { opacity: 0; letter-spacing: 3em; filter: blur(10px); }
-        100% { opacity: 1; letter-spacing: 0.5em; filter: blur(0); }
+        0% { opacity: 0; letter-spacing: 3em; margin-right: -3em; filter: blur(10px); }
+        100% { opacity: 1; letter-spacing: 0.5em; margin-right: -0.5em; filter: blur(0); }
     }
 
     .enter-btn-wrapper {
         position: absolute; bottom: 15vh;
+        left: 50%; transform: translateX(-50%);
         opacity: 0; transition: opacity 1s ease; pointer-events: none; 
     }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
@@ -107,6 +112,7 @@
         font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.4em;
         text-transform: uppercase; cursor: pointer; padding: 15px 40px;
         transition: all 0.5s ease;
+        white-space: nowrap;
     }
     .enter-btn:hover { letter-spacing: 0.6em; background: #fff; color: #000; }
 
@@ -170,7 +176,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (Centered & Metallic) --- */
+    /* --- 6. Hero Section --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -178,7 +184,7 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: center; /* Absolute Center */
+        justify-content: center; 
         align-items: center; 
         text-align: center; 
         background: #000;
@@ -198,6 +204,7 @@
         opacity: 0; transform: translateY(30px); 
         width: 100%; padding: 0 20px; 
         transition: opacity 2s ease, transform 2s ease; 
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
     
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
@@ -205,15 +212,24 @@
     .hero h1 { 
         font-family: 'Cinzel', serif; font-size: 7vw; line-height: 1; 
         font-weight: 400; letter-spacing: 0.1em; margin: 0; 
-        /* Metallic White Effect for EDEN | DEEN */
         background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 50%, #a0a0a0 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: #fff;
         text-shadow: 0 20px 60px rgba(0,0,0,0.9);
-        white-space: nowrap; /* Keep on one line if possible */
+        white-space: nowrap; 
+        display: flex; align-items: center; gap: 20px;
     }
-    .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.6; margin: 0 0.1em; }
+    
+    .hero-line {
+        display: inline-block;
+        width: 2px;
+        height: 0.8em; 
+        background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 50%, rgba(255,255,255,0) 100%);
+        opacity: 0.7;
+        transform: rotate(15deg); 
+    }
+
     .hero p { margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
     
     .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; }
@@ -271,7 +287,7 @@
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
-    /* --- 9. Pricing (Refined Typography & Metallic) --- */
+    /* --- 9. Pricing --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -313,7 +329,7 @@
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 1.8rem; letter-spacing: 0.1em; margin-bottom: 5px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: #888; font-weight: 300; }
 
-    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #bbb; line-height: 1.8; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 5px; }
+    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 1.8; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 5px; }
 
     .specs-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; width: 100%; }
     .spec-item { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -328,7 +344,6 @@
     .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; }
     .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
     
-    /* Plan 2 Featured - Uniform Border */
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
     /* Offline Card Style */
@@ -336,9 +351,9 @@
     .price-card.offline .card-content { filter: grayscale(80%); }
     .price-card.offline .jump-btn { border-color: #333; color: #555; }
 
-    /* --- 10. Delivery Section (Refined) --- */
+    /* --- 10. Delivery Section --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
-    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.15em; }
+    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
     .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #555; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 70px; display: block; }
     .delivery-grid { display: flex; justify-content: center; gap: 80px; max-width: 1400px; margin: 0 auto; }
     .delivery-item { flex: 1; text-align: center; max-width: 400px; }
@@ -395,31 +410,72 @@
     
     .royal-price-area { margin-top: 40px; text-align: center; margin-bottom: 10px; }
     .royal-old-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #555; text-decoration: line-through; display: block; margin-bottom: 10px; }
-    .royal-current-price { 
-        font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; 
+    .royal-current-price { font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; }
+    
+    /* --- 12. NEW: Booking Ritual Section --- */
+    .booking-cta-section { 
+        padding: 120px 0 150px; text-align: center; background: #050505; width: 100%; 
+        display: flex; justify-content: center; align-items: center;
     }
     
-    .royal-btn { 
-        width: 100%; padding: 25px 0; margin-top: 30px;
-        background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F; 
-        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; 
-        cursor: none; transition: all 0.4s ease; text-transform: uppercase; 
+    /* The Ritual Button */
+    .ritual-btn { 
+        position: relative;
+        padding: 25px 80px; 
+        background: transparent; 
+        border: 1px solid rgba(191, 149, 63, 0.4); 
+        color: #fff; 
+        font-family: 'Cinzel', serif; 
+        font-size: 1.1rem; 
+        letter-spacing: 0.25em; 
+        text-transform: uppercase; 
+        cursor: none; 
+        transition: all 0.5s ease; 
+        overflow: hidden; /* Contains the ripple */
     }
-    .royal-btn:hover { background: #BF953F; color: #000; box-shadow: 0 0 30px rgba(191,149,63,0.3); }
+    
+    .ritual-btn span {
+        position: relative; z-index: 2; /* Keeps text above ripple */
+        pointer-events: none;
+    }
+    
+    .ritual-btn::before {
+        content: '預約席次';
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.4em;
+        color: #BF953F;
+        margin-top: 8px;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    }
 
-    /* --- 12. Booking --- */
-    .booking-cta-section { padding: 120px 0; text-align: center; background: #050505; width: 100%; }
-    .initiate-btn { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; padding: 35px 100px; background: transparent; border: 1px solid rgba(255,255,255,0.8); color: #fff; font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: none; transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden; }
-    .initiate-btn span { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.5em; opacity: 0.6; transition: color 0.3s; }
-    .initiate-btn:hover { background: #fff; color: #000; box-shadow: 0 0 80px rgba(255,255,255,0.2); border-color: #fff; }
-    .initiate-btn:hover span { color: #000; }
-    
+    .ritual-btn:hover { border-color: #BF953F; box-shadow: 0 0 40px rgba(191, 149, 63, 0.15); }
+    .ritual-btn:hover::before { opacity: 1; }
+
+    /* The Ripple Element (Created via JS) */
+    .ripple {
+        position: absolute;
+        background: rgba(191, 149, 63, 0.8); /* Liquid Gold */
+        border-radius: 50%;
+        transform: scale(0);
+        animation: rippleEffect 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Healing fluidity */
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    @keyframes rippleEffect {
+        to { transform: scale(4); opacity: 0; }
+    }
+
+    /* Hidden Booking Form */
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 3000px; opacity: 1; padding: 100px 4vw; }
     .booking-interface { width: 100%; max-width: 1000px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 70px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
     .booking-interface::before { content: 'SESSION TERMINAL // 001'; position: absolute; top: 25px; left: 25px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     .booking-terms { padding: 0 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 60px; border-top: none; }
-    .terms-title { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 0.9; }
+    .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 0.9; }
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; text-align: left; }
     .term-item h4 { color: #ddd; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
     .term-item p { color: #777; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 1.9; font-weight: 300; padding-left: 16px; }
@@ -553,7 +609,7 @@
     </video>
     
     <div class="hero-content">
-      <h1>EDEN <span>｜</span> DEEN</h1>
+      <h1>EDEN <span class="hero-line"></span> DEEN</h1>
       <p>Visual Director / Photographer</p>
     </div>
     <div class="scroll-indicator">
@@ -611,7 +667,7 @@
         
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-roman">I</span>
+                <span class="plan-roman metallic-silver">I</span>
                 <span class="plan-en metallic-silver">THE COVER</span>
                 <span class="plan-zh">肖像・封面</span>
             </div>
@@ -644,7 +700,7 @@
 
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-roman">II</span>
+                <span class="plan-roman metallic-gold">II</span>
                 <span class="plan-en metallic-gold">THE STORY</span>
                 <span class="plan-zh">畫報・敘事</span>
             </div>
@@ -677,12 +733,12 @@
 
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-roman">III</span>
+                <span class="plan-roman metallic-silver">III</span>
                 <span class="plan-en metallic-silver">THE VISION</span>
                 <span class="plan-zh">電影・維度</span>
             </div>
             
-            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em;">
+            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em; padding-top: 30px;">
                 電影級的視覺震撼。<br>盛大籌備中。
             </p>
             
@@ -735,7 +791,7 @@
 
     <div class="royal-card-wrapper">
         <div class="royal-header">
-            <span class="royal-roman">IV</span>
+            <span class="royal-roman metallic-gold">IV</span>
             <span class="royal-en metallic-gold">PROJECT: ROYAL DECK</span>
             <span class="royal-zh">企劃・王牌</span>
             <span class="royal-tag">Limited Edition / 限量席次</span>
@@ -756,13 +812,13 @@
             <span class="royal-old-price">原價 NT$ 44,800</span>
             <span class="royal-current-price metallic-gold">NT$ 24,800</span>
         </div>
-        
-        <button class="royal-btn" onclick="toggleBooking()">SECURE YOUR SEAT 預約席次</button>
     </div>
   </section>
 
   <section class="booking-cta-section">
-      <button class="initiate-btn hover-target" onclick="toggleBooking()">SECURE YOUR SESSION <span>預約席次</span></button>
+      <button class="ritual-btn hover-target" onclick="createRipple(event)">
+          <span>SECURE YOUR SESSION</span>
+      </button>
   </section>
 
   <div id="hiddenBooking" class="hidden-booking-container">
@@ -948,6 +1004,29 @@
         hiddenItems.forEach(item => item.classList.remove('hidden-loadmore'));
         document.getElementById('loadMoreBtn').style.display = 'none';
         setTimeout(initScrollReveal, 100);
+    }
+    
+    /* --- The Ritual Ripple Effect --- */
+    function createRipple(event) {
+        const button = event.currentTarget;
+        const circle = document.createElement("span");
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+        circle.classList.add("ripple");
+
+        const ripple = button.getElementsByClassName("ripple")[0];
+        if (ripple) { ripple.remove(); }
+
+        button.appendChild(circle);
+        
+        // Trigger booking open
+        setTimeout(() => {
+            toggleBooking();
+        }, 300); // Slight delay for ripple to start
     }
     
     function toggleBooking() {
