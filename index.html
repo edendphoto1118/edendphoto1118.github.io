@@ -149,7 +149,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (Silver Aurora) --- */
+    /* --- 6. Hero Section (Video) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -157,36 +157,20 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: center; 
+        justify-content: flex-end; 
         align-items: center; 
         text-align: center; 
-        padding-bottom: 0; 
+        padding-bottom: 12vh; 
         background: #000;
     }
     
-    .hero-aurora-bg {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        background: #050505; overflow: hidden;
-    }
-    .aurora-1 {
-        position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
-        background: radial-gradient(ellipse at center, rgba(240, 240, 255, 0.08) 0%, rgba(192, 192, 192, 0.05) 40%, transparent 70%);
-        filter: blur(120px); 
-        animation: auroraFlow 25s infinite alternate ease-in-out;
-        opacity: 0.7;
-    }
-    .aurora-2 {
-        position: absolute; width: 180%; height: 180%; top: -40%; left: -40%;
-        background: radial-gradient(circle at center, rgba(220, 220, 220, 0.06) 0%, transparent 60%);
-        filter: blur(100px);
-        animation: auroraFlow 35s infinite alternate-reverse ease-in-out;
+    .hero-bg-video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; 
+        z-index: -5; 
         opacity: 0.5;
-    }
-
-    @keyframes auroraFlow {
-        0% { transform: translate(-10%, -5%) rotate(0deg) scale(1); }
-        50% { transform: translate(5%, 10%) rotate(3deg) scale(1.1); }
-        100% { transform: translate(-5%, 15%) rotate(-3deg) scale(1.05); }
     }
 
     .hero-content { 
@@ -535,10 +519,9 @@
   </nav>
 
   <section class="hero">
-    <div class="hero-aurora-bg">
-        <div class="aurora-1"></div>
-        <div class="aurora-2"></div>
-    </div>
+    <video class="hero-bg-video" autoplay muted loop playsinline>
+        <source src="hero.mp4" type="video/mp4">
+    </video>
     
     <div class="hero-content">
       <h1>EDEN <span>D.</span></h1>
@@ -600,7 +583,7 @@
             </div>
             
             <p class="plan-desc">
-                不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，讓每一張照片都成為您的成名作。
+                不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，交付實體 A3 藝術海報 (Rolled Poster)，讓每一張照片都成為您的成名作。
             </p>
             
             <div class="specs-grid">
@@ -628,14 +611,14 @@
             </div>
             
             <p class="plan-desc">
-                聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A5 攝影小誌 (Zine)。
+                聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A4 攝影小誌 (Lookbook)。
             </p>
             
             <div class="specs-grid">
                 <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">2.0 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Styling<br>妝髮造型</span><span class="spec-val">INCLUDED</span></div>
+                <div class="spec-item"><span class="spec-label">Styling<br>造型顧問</span><span class="spec-val">INCLUDED</span></div>
                 <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">10 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">A5 ZINE + USB</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">A4 LOOKBOOK</span></div>
             </div>
             
             <div class="price-area-bottom">
@@ -682,13 +665,13 @@
       <div class="delivery-grid">
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
-              <h4>Metal Engraved USB<br>客製化刻字金屬隨身碟</h4>
-              <p>手感冷冽的金屬載體，雷射刻印您的專屬英文名。這不只是檔案，是您的數位資產。</p>
+              <h4>The Grand Archive Box<br>典藏黑禮盒 (A4)</h4>
+              <p>所有實體交付物（含捲軸海報、攝影畫報、金屬 USB）皆完美收納於特製的全黑硬式禮盒中，給予最高規格的開箱體驗。</p>
           </div>
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
-              <h4>The Archive Loop<br>檔案重啟禮遇</h4>
-              <p>我們不製造電子垃圾。下次拍攝帶回您的專屬 USB，即享 NT$ 1,000 的「檔案重啟」折抵優惠。</p>
+              <h4>Metal Engraved USB<br>客製化刻字金屬隨身碟</h4>
+              <p>手感冷冽的金屬載體，雷射刻印您的專屬英文名。下次拍攝帶回此鑰匙，即享 NT$ 1,000 的「檔案重啟」折抵禮遇。</p>
           </div>
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
