@@ -245,7 +245,7 @@
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
-    /* --- 9. Pricing (RESTRUCTURED) --- */
+    /* --- 9. Pricing (RESTRUCTURED & ANIMATED) --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -257,6 +257,25 @@
         min-height: 700px; 
         overflow: hidden; 
     }
+    
+    /* Metallic Border Animation for Pricing Cards */
+    .price-card .border-line {
+        position: absolute;
+        background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f, #aa771c);
+        transition: all 0.4s ease-out; /* Fast speed */
+        opacity: 0;
+        z-index: 10;
+    }
+    .border-top { top: 0; left: 0; height: 1px; width: 0%; }
+    .border-right { top: 0; right: 0; width: 1px; height: 0%; }
+    .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; }
+    .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
+
+    .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; }
+    .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
+    .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; }
+    .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
+    .price-card:not(:hover) .border-line { transition-delay: 0s; opacity: 0; }
     
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; }
     .price-card:hover .card-bg { opacity: 0.3; }
@@ -283,7 +302,7 @@
     .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; }
     .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
     
-    .price-card.featured { border: 1px solid rgba(191, 149, 63, 0.4); }
+    /* Plan 2 Featured - Text Gold, but Border Uniform */
     .price-card.featured .current-price { color: #BF953F; }
     .price-card.featured .plan-en { color: #BF953F; }
 
@@ -315,23 +334,12 @@
         justify-content: center;
     }
     
-    /* Golden Metallic Border - Pseudo Elements */
     .royal-border-box {
         position: absolute;
         top: 40px; left: 40px; right: 40px; bottom: 40px;
         pointer-events: none;
     }
-    .border-line {
-        position: absolute;
-        background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f, #aa771c);
-        transition: all 0.8s ease-out;
-        opacity: 0;
-    }
-    .border-top { top: 0; left: 0; height: 1px; width: 0%; }
-    .border-right { top: 0; right: 0; width: 1px; height: 0%; }
-    .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; }
-    .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
-
+    
     .royal-section:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; }
     .royal-section:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.2s; }
     .royal-section:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.4s; }
@@ -575,6 +583,11 @@
       
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
+        <span class="border-line border-top"></span>
+        <span class="border-line border-right"></span>
+        <span class="border-line border-bottom"></span>
+        <span class="border-line border-left"></span>
+        
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">I</span>
@@ -603,6 +616,11 @@
       
       <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
+        <span class="border-line border-top"></span>
+        <span class="border-line border-right"></span>
+        <span class="border-line border-bottom"></span>
+        <span class="border-line border-left"></span>
+
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">II</span>
@@ -631,6 +649,11 @@
       
       <div class="price-card offline hover-target">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
+        <span class="border-line border-top"></span>
+        <span class="border-line border-right"></span>
+        <span class="border-line border-bottom"></span>
+        <span class="border-line border-left"></span>
+
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">III</span>
@@ -665,7 +688,7 @@
       <div class="delivery-grid">
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
-              <h4>The Grand Archive Box<br>典藏黑禮盒 (A4)</h4>
+              <h4>The Grand Obsidian Box<br>典藏曜黑精裝盒</h4>
               <p>所有實體交付物（含捲軸海報、攝影畫報、金屬 USB）皆完美收納於特製的全黑硬式禮盒中，給予最高規格的開箱體驗。</p>
           </div>
           <div class="delivery-item">
