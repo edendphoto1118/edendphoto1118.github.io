@@ -47,6 +47,23 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
+    /* --- Metallic Text Effect Classes --- */
+    .metallic-gold {
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 40%, #b38728 60%, #fbf5b7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: #BF953F; /* Fallback */
+    }
+    
+    .metallic-silver {
+        background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 50%, #a0a0a0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: #fff; /* Fallback */
+    }
+
     /* --- 2. Texture (Noise) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -149,7 +166,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (Video) --- */
+    /* --- 6. Hero Section (Centered & Metallic) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -157,10 +174,9 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: flex-end; 
+        justify-content: center; /* Absolute Center */
         align-items: center; 
         text-align: center; 
-        padding-bottom: 12vh; 
         background: #000;
     }
     
@@ -184,10 +200,15 @@
     
     .hero h1 { 
         font-family: 'Cinzel', serif; font-size: 7vw; line-height: 1; 
-        font-weight: 400; letter-spacing: 0.1em; margin: 0; color: #fff; 
+        font-weight: 400; letter-spacing: 0.1em; margin: 0; 
+        /* Metallic White Effect */
+        background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 50%, #909090 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #fff;
         text-shadow: 0 20px 60px rgba(0,0,0,0.9);
     }
-    .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.7; }
+    .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.8; }
     .hero p { margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
     
     .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; }
@@ -229,7 +250,7 @@
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
     .gallery-item:hover .item-meta { opacity: 1; }
     
-    /* Elegant Offline Message for The Vision */
+    /* Elegant Offline Message */
     .gallery-offline-msg { display: none; text-align: center; width: 100%; padding: 150px 0; }
     .gallery-offline-msg.active { display: block; }
     .coming-soon-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; letter-spacing: 0.3em; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
@@ -245,7 +266,7 @@
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
-    /* --- 9. Pricing (RESTRUCTURED & ANIMATED) --- */
+    /* --- 9. Pricing --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -258,11 +279,11 @@
         overflow: hidden; 
     }
     
-    /* Metallic Border Animation for Pricing Cards */
+    /* Metallic Border Animation */
     .price-card .border-line {
         position: absolute;
         background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f, #aa771c);
-        transition: all 0.4s ease-out; /* Fast speed */
+        transition: all 0.4s ease-out;
         opacity: 0;
         z-index: 10;
     }
@@ -284,7 +305,7 @@
     
     .price-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
     .plan-roman { display: block; font-family: 'Cinzel', serif; font-size: 4rem; color: rgba(255,255,255,0.1); margin-bottom: 10px; line-height: 1; }
-    .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 1.8rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 5px; }
+    .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 1.8rem; letter-spacing: 0.1em; margin-bottom: 5px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: #888; font-weight: 300; }
 
     .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 10px; }
@@ -297,28 +318,27 @@
     .spec-val { display: block; font-family: 'Cinzel', serif; font-size: 0.9rem; color: #ccc; }
 
     .price-area-bottom { margin-top: 30px; text-align: center; margin-bottom: 20px; }
-    .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; display: block; }
+    .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; display: block; }
 
     .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; }
     .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
     
-    /* Plan 2 Featured - Text Gold, but Border Uniform */
-    .price-card.featured .current-price { color: #BF953F; }
-    .price-card.featured .plan-en { color: #BF953F; }
+    /* Plan 2 Featured - Uniform Border */
+    .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
-    /* Offline Card Style (Elegant Version) */
+    /* Offline Card Style */
     .price-card.offline { opacity: 0.6; pointer-events: none; }
     .price-card.offline .card-content { filter: grayscale(100%); }
     .price-card.offline .jump-btn { border-color: #333; color: #555; }
 
-    /* --- 10. Delivery Section (Updated) --- */
+    /* --- 10. Delivery Section (Refined) --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
-    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
+    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
     .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #555; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 70px; display: block; }
     .delivery-grid { display: flex; justify-content: center; gap: 80px; max-width: 1400px; margin: 0 auto; }
     .delivery-item { flex: 1; text-align: center; max-width: 400px; }
     .delivery-icon { font-size: 2rem; color: #BF953F; margin-bottom: 30px; display: block; opacity: 0.6; }
-    .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: #ddd; margin-bottom: 20px; letter-spacing: 0.1em; }
+    .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 2; font-weight: 300; }
 
     /* --- 11. Royal (Metallic Border) --- */
@@ -346,7 +366,6 @@
     .royal-section:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.6s; }
     .royal-section:not(:hover) .border-line { transition-delay: 0s; opacity: 0; }
 
-    /* Royal Grid as a Centered Card */
     .royal-card-wrapper {
         width: 100%;
         max-width: 600px;
@@ -358,13 +377,12 @@
     
     .royal-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(191,149,63,0.3); padding-bottom: 30px; }
     .royal-roman { display: block; font-family: 'Cinzel', serif; font-size: 4rem; color: rgba(191,149,63,0.1); margin-bottom: 10px; line-height: 1; }
-    .royal-en { display: block; font-family: 'Cinzel', serif; font-size: 2.2rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .royal-en { display: block; font-family: 'Cinzel', serif; font-size: 2.2rem; letter-spacing: 0.1em; margin-bottom: 10px; }
     .royal-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: #BF953F; font-weight: 300; }
     .royal-tag { display: inline-block; background: #BF953F; color: #000; padding: 5px 15px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em; margin-top: 15px; border-radius: 1px; text-transform: uppercase; }
 
     .royal-desc { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #bbb; line-height: 2; margin-bottom: 40px; font-weight: 300; }
 
-    /* Royal Specs (Same Grid as others) */
     .royal-specs { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(191,149,63,0.2); margin-top: 0; width: 100%; }
     .royal-spec-item { padding: 20px 0; border-bottom: 1px solid rgba(191,149,63,0.1); }
     .royal-spec-item:nth-child(odd) { border-right: 1px solid rgba(191,149,63,0.1); padding-right: 20px; text-align: right; }
@@ -373,8 +391,7 @@
     .royal-price-area { margin-top: 40px; text-align: center; margin-bottom: 10px; }
     .royal-old-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #555; text-decoration: line-through; display: block; margin-bottom: 10px; }
     .royal-current-price { 
-        font-family: 'Cinzel', serif; font-size: 3.5rem; color: #BF953F; display: block; 
-        background: linear-gradient(to bottom right, #BF953F, #FCF6BA, #8a6e2f); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; 
     }
     
     .royal-btn { 
@@ -431,7 +448,6 @@
     .about-slogan-main {
         font-family: 'Cinzel', serif;
         font-size: 3.5rem;
-        color: #BF953F;
         letter-spacing: 0.2em;
         font-weight: 400;
         margin: 0 0 30px 0;
@@ -543,7 +559,7 @@
 
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
-      <h2 class="section-title">Visual Anthology</h2>
+      <h2 class="section-title metallic-white">Visual Anthology</h2>
       <span class="section-subtitle">Categorized Archive</span>
     </div>
     <div class="filter-tabs">
@@ -555,7 +571,7 @@
     <div class="gallery-container" id="galleryContainer"></div>
     
     <div id="vision-offline-msg" class="gallery-offline-msg">
-        <span class="coming-soon-title">COMING SOON</span>
+        <span class="coming-soon-title metallic-gold">COMING SOON</span>
         <span class="coming-soon-sub">The Vision is being curated.</span>
     </div>
 
@@ -566,7 +582,7 @@
   
   <section class="tool-section" id="archetype">
       <div class="section-header">
-          <h2 class="section-title">EDEN ARCHETYPE</h2>
+          <h2 class="section-title metallic-gold">EDEN ARCHETYPE</h2>
           <span class="section-subtitle">Visual Personality Analysis. 探索您的視覺人格。</span>
       </div>
       <div class="tool-container hover-target">
@@ -576,7 +592,7 @@
   
   <section class="pricing-section" id="pricing">
     <div class="section-header">
-      <h2 class="section-title">EDEN VISUALS</h2>
+      <h2 class="section-title metallic-white">EDEN VISUALS</h2>
       <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
     </div>
     <div class="pricing-grid">
@@ -591,7 +607,7 @@
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">I</span>
-                <span class="plan-en">THE COVER</span>
+                <span class="plan-en metallic-white">THE COVER</span>
                 <span class="plan-zh">肖像・封面</span>
             </div>
             
@@ -607,7 +623,7 @@
             </div>
             
             <div class="price-area-bottom">
-                <span class="current-price">NT$ 8,800</span>
+                <span class="current-price metallic-white">NT$ 8,800</span>
             </div>
             
             <button class="jump-btn hover-target" onclick="jumpToCategory('Identity', event)">VIEW SAMPLES ↗</button>
@@ -624,7 +640,7 @@
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">II</span>
-                <span class="plan-en">THE STORY</span>
+                <span class="plan-en metallic-gold">THE STORY</span>
                 <span class="plan-zh">畫報・敘事</span>
             </div>
             
@@ -640,7 +656,7 @@
             </div>
             
             <div class="price-area-bottom">
-                <span class="current-price">NT$ 14,800</span>
+                <span class="current-price metallic-gold">NT$ 14,800</span>
             </div>
             
             <button class="jump-btn hover-target" onclick="jumpToCategory('Editorial', event)">VIEW SAMPLES ↗</button>
@@ -657,7 +673,7 @@
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">III</span>
-                <span class="plan-en">THE VISION</span>
+                <span class="plan-en metallic-silver">THE VISION</span>
                 <span class="plan-zh">電影・維度</span>
             </div>
             
@@ -673,7 +689,7 @@
             </div>
             
             <div class="price-area-bottom">
-                <span class="current-price">[ COMING SOON ]</span>
+                <span class="current-price metallic-silver">[ COMING SOON ]</span>
             </div>
             
             <button class="jump-btn">[ SYSTEM OFFLINE ]</button>
@@ -683,23 +699,23 @@
   </section>
   
   <section class="delivery-section">
-      <h3 class="delivery-title">THE UNBOXING RITUAL</h3>
+      <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
       <span class="delivery-subtitle">Elevating the tangible experience. 尊榮實體交付儀式。</span>
       <div class="delivery-grid">
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
-              <h4>The Grand Obsidian Box<br>典藏曜黑精裝盒</h4>
-              <p>所有實體交付物（含捲軸海報、攝影畫報、金屬 USB）皆完美收納於特製的全黑硬式禮盒中，給予最高規格的開箱體驗。</p>
+              <h4 class="metallic-silver">The Grand Obsidian Box<br>典藏曜黑精裝盒</h4>
+              <p>以特製的硬式結構與曜黑質感，提供最高規格的開箱儀式與收藏保護。</p>
           </div>
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
-              <h4>Metal Engraved USB<br>客製化刻字金屬隨身碟</h4>
-              <p>手感冷冽的金屬載體，雷射刻印您的專屬英文名。下次拍攝帶回此鑰匙，即享 NT$ 1,000 的「檔案重啟」折抵禮遇。</p>
+              <h4 class="metallic-silver">Metal Engraved USB<br>客製化刻字金屬隨身碟</h4>
+              <p>雷射刻印專屬英文名的金屬載體。憑此鑰匙回歸，即享 NT$ 1,000 的「檔案重啟」禮遇。</p>
           </div>
           <div class="delivery-item">
               <span class="delivery-icon">◈</span>
-              <h4>Wax-Sealed Authenticity<br>火漆封蠟認證卡</h4>
-              <p>每份作品皆附上一張由攝影師親手蓋上火漆封蠟的認證卡片，象徵獨一無二的藝術價值。</p>
+              <h4 class="metallic-silver">Wax-Sealed Authenticity<br>火漆封蠟認證卡</h4>
+              <p>攝影師親手蓋上火漆封蠟的認證卡片，象徵每一份作品獨一無二的藝術價值。</p>
           </div>
       </div>
   </section>
@@ -715,7 +731,7 @@
     <div class="royal-card-wrapper">
         <div class="royal-header">
             <span class="royal-roman">IV</span>
-            <span class="royal-en">PROJECT: ROYAL DECK</span>
+            <span class="royal-en metallic-gold">PROJECT: ROYAL DECK</span>
             <span class="royal-zh">企劃・王牌</span>
             <span class="royal-tag">Limited Edition / 限量席次</span>
         </div>
@@ -747,7 +763,7 @@
   <div id="hiddenBooking" class="hidden-booking-container">
       <div class="booking-interface">
           <div class="booking-terms">
-              <h3 class="terms-title">BOOKING POLICY</h3>
+              <h3 class="terms-title metallic-gold">BOOKING POLICY</h3>
               <div class="terms-grid">
                   <div class="term-item"><h4>費用說明</h4><p>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目。</p></div>
                   <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p></div>
@@ -782,7 +798,7 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main">CURATING LIFE THROUGH IMAGERY.</h2>
+        <h2 class="about-slogan-main metallic-gold">CURATING LIFE THROUGH IMAGERY.</h2>
         <span class="about-slogan-sub">用 攝 影 　 策 展 美 好</span>
     </div>
   </section>
