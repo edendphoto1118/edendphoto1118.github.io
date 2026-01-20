@@ -2,9 +2,9 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN — VISUAL ARCHIVE</title>
+  <title>EDEN｜DEEN — VISUAL ARCHIVE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="EDEN D. — Visual Director & Photographer.">
+  <meta name="description" content="EDEN｜DEEN — Visual Director & Photographer.">
   <meta name="theme-color" content="#050505">
 
   <link rel="icon" type="image/png" href="images/favicon.png"> 
@@ -47,13 +47,14 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- Metallic Text Effect Classes --- */
+    /* --- Metallic Text Effect Classes (Refined Gradients) --- */
     .metallic-gold {
-        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 40%, #b38728 60%, #fbf5b7 100%);
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         color: #BF953F; /* Fallback */
+        text-shadow: 0 0 1px rgba(191, 149, 63, 0.3);
     }
     
     .metallic-silver {
@@ -62,6 +63,7 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         color: #fff; /* Fallback */
+        text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     }
 
     /* --- 2. Texture (Noise) --- */
@@ -121,14 +123,14 @@
 
     .nav-logo { 
         font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; 
-        letter-spacing: 0.15em; text-decoration: none; color: #fff; cursor: pointer;
+        letter-spacing: 0.15em; text-decoration: none; cursor: pointer;
     }
     .nav-menu { display: flex; gap: 40px; align-items: center; }
     
     .nav-item { 
         font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; 
         text-decoration: none; letter-spacing: 0.25em; text-transform: uppercase; 
-        position: relative; cursor: none; opacity: 0.7; transition: opacity 0.3s;
+        position: relative; cursor: none; opacity: 0.8; transition: opacity 0.3s;
     }
     .nav-item:hover { opacity: 1; }
     
@@ -137,7 +139,9 @@
         padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; 
         font-family: 'Montserrat', sans-serif; cursor: none; 
         border-radius: 30px; display: flex; align-items: center; gap: 8px;
+        opacity: 0.8; transition: opacity 0.3s;
     }
+    .audio-btn:hover { opacity: 1; }
     .sound-wave { display: flex; gap: 2px; height: 10px; align-items: flex-end; }
     .bar { width: 1px; background: currentColor; height: 100%; animation: wave 1s infinite ease-in-out; }
     .bar:nth-child(1) { animation-delay: 0s; } .bar:nth-child(2) { animation-delay: 0.2s; } .bar:nth-child(3) { animation-delay: 0.4s; }
@@ -201,14 +205,15 @@
     .hero h1 { 
         font-family: 'Cinzel', serif; font-size: 7vw; line-height: 1; 
         font-weight: 400; letter-spacing: 0.1em; margin: 0; 
-        /* Metallic White Effect */
-        background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 50%, #909090 100%);
+        /* Metallic White Effect for EDEN | DEEN */
+        background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 50%, #a0a0a0 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: #fff;
         text-shadow: 0 20px 60px rgba(0,0,0,0.9);
+        white-space: nowrap; /* Keep on one line if possible */
     }
-    .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.8; }
+    .hero h1 span { font-family: 'Cinzel', serif; opacity: 0.6; margin: 0 0.1em; }
     .hero p { margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
     
     .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; }
@@ -219,14 +224,14 @@
 
     /* --- 7. Sections --- */
     .section-header { text-align: center; margin-bottom: 120px; position: relative; padding: 0 20px; width: 100%; margin-top: 80px; }
-    .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.12em; color: #fff; font-weight: 400; margin: 0; }
-    .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #666; text-transform: uppercase; margin-top: 25px; display: block; }
+    .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.12em; font-weight: 400; margin: 0; }
+    .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; }
 
     /* --- 8. Gallery --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 100px; flex-wrap: wrap; width: 100%; }
     .filter-btn { 
-        background: transparent; border: none; color: #444; 
+        background: transparent; border: none; color: #555; 
         font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; 
         text-transform: uppercase; cursor: none; position: relative; padding-bottom: 10px; 
         transition: all 0.4s ease; display: inline-block;
@@ -253,7 +258,7 @@
     /* Elegant Offline Message */
     .gallery-offline-msg { display: none; text-align: center; width: 100%; padding: 150px 0; }
     .gallery-offline-msg.active { display: block; }
-    .coming-soon-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #BF953F; letter-spacing: 0.3em; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+    .coming-soon-title { font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.3em; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
     .coming-soon-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
     @keyframes fadeUpElegant { to { opacity: 1; transform: translateY(0); } }
 
@@ -266,7 +271,7 @@
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
-    /* --- 9. Pricing --- */
+    /* --- 9. Pricing (Refined Typography & Metallic) --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
     
@@ -308,7 +313,7 @@
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 1.8rem; letter-spacing: 0.1em; margin-bottom: 5px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: #888; font-weight: 300; }
 
-    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 10px; }
+    .plan-desc { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #bbb; line-height: 1.8; margin-bottom: auto; font-weight: 300; text-align: justify; padding: 0 5px; }
 
     .specs-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; width: 100%; }
     .spec-item { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -327,19 +332,19 @@
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
     /* Offline Card Style */
-    .price-card.offline { opacity: 0.6; pointer-events: none; }
-    .price-card.offline .card-content { filter: grayscale(100%); }
+    .price-card.offline { opacity: 0.7; pointer-events: none; }
+    .price-card.offline .card-content { filter: grayscale(80%); }
     .price-card.offline .jump-btn { border-color: #333; color: #555; }
 
     /* --- 10. Delivery Section (Refined) --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
-    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
+    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.15em; }
     .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #555; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 70px; display: block; }
     .delivery-grid { display: flex; justify-content: center; gap: 80px; max-width: 1400px; margin: 0 auto; }
     .delivery-item { flex: 1; text-align: center; max-width: 400px; }
-    .delivery-icon { font-size: 2rem; color: #BF953F; margin-bottom: 30px; display: block; opacity: 0.6; }
+    .delivery-icon { font-size: 2rem; color: #BF953F; margin-bottom: 30px; display: block; opacity: 0.7; }
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 20px; letter-spacing: 0.1em; }
-    .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 2; font-weight: 300; }
+    .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 1.8; font-weight: 300; }
 
     /* --- 11. Royal (Metallic Border) --- */
     .royal-section { 
@@ -381,7 +386,7 @@
     .royal-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: #BF953F; font-weight: 300; }
     .royal-tag { display: inline-block; background: #BF953F; color: #000; padding: 5px 15px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em; margin-top: 15px; border-radius: 1px; text-transform: uppercase; }
 
-    .royal-desc { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #bbb; line-height: 2; margin-bottom: 40px; font-weight: 300; }
+    .royal-desc { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #bbb; line-height: 1.8; margin-bottom: 40px; font-weight: 300; }
 
     .royal-specs { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(191,149,63,0.2); margin-top: 0; width: 100%; }
     .royal-spec-item { padding: 20px 0; border-bottom: 1px solid rgba(191,149,63,0.1); }
@@ -414,7 +419,7 @@
     .booking-interface { width: 100%; max-width: 1000px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 70px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
     .booking-interface::before { content: 'SESSION TERMINAL // 001'; position: absolute; top: 25px; left: 25px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     .booking-terms { padding: 0 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 60px; border-top: none; }
-    .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 0.9; }
+    .terms-title { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 0.9; }
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; text-align: left; }
     .term-item h4 { color: #ddd; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
     .term-item p { color: #777; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 1.9; font-weight: 300; padding-left: 16px; }
@@ -502,9 +507,9 @@
     .toast { position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 40px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; opacity: 0; pointer-events: none; transition: all 0.5s ease; z-index: 20000; font-weight: 500; text-transform: uppercase; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
-    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .about-headline { font-size: 1.5rem; } .artist-statement-body { font-size: 1.1rem; } .contact-info { justify-content: center; } }
-    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 14vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .about-name-big { font-size: 5rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .royal-sp-amount { font-size: 3rem; } .tech-ticker-wrap { height: 30px; } }
+    @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .contact-info { justify-content: center; } }
+    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .tech-ticker-wrap { height: 30px; } }
   </style>
 </head>
 
@@ -517,7 +522,7 @@
   </audio>
 
   <div id="preloader">
-    <div class="loader-text">EDEN D</div>
+    <div class="loader-text">EDEN｜DEEN</div>
     <div class="enter-btn-wrapper" id="enterWrapper">
         <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE</button>
     </div>
@@ -529,7 +534,7 @@
   <div class="cursor-ring"></div>
 
   <nav>
-    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target">EDEN</a>
+    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target metallic-silver">EDEN</a>
     <div class="nav-menu">
       <a href="#work" class="nav-item hover-target" data-text="Portfolio"><span>Portfolio</span></a>
       <a href="#pricing" class="nav-item hover-target" data-text="Pricing"><span>Pricing</span></a>
@@ -548,7 +553,7 @@
     </video>
     
     <div class="hero-content">
-      <h1>EDEN <span>D.</span></h1>
+      <h1>EDEN <span>｜</span> DEEN</h1>
       <p>Visual Director / Photographer</p>
     </div>
     <div class="scroll-indicator">
@@ -559,7 +564,7 @@
 
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
-      <h2 class="section-title metallic-white">Visual Anthology</h2>
+      <h2 class="section-title metallic-silver">Visual Anthology</h2>
       <span class="section-subtitle">Categorized Archive</span>
     </div>
     <div class="filter-tabs">
@@ -592,7 +597,7 @@
   
   <section class="pricing-section" id="pricing">
     <div class="section-header">
-      <h2 class="section-title metallic-white">EDEN VISUALS</h2>
+      <h2 class="section-title metallic-silver">EDEN VISUALS</h2>
       <span class="section-subtitle">Beyond Photography. I Curate Identity.</span>
     </div>
     <div class="pricing-grid">
@@ -607,7 +612,7 @@
         <div class="card-content">
             <div class="price-header">
                 <span class="plan-roman">I</span>
-                <span class="plan-en metallic-white">THE COVER</span>
+                <span class="plan-en metallic-silver">THE COVER</span>
                 <span class="plan-zh">肖像・封面</span>
             </div>
             
@@ -623,7 +628,7 @@
             </div>
             
             <div class="price-area-bottom">
-                <span class="current-price metallic-white">NT$ 8,800</span>
+                <span class="current-price metallic-silver">NT$ 8,800</span>
             </div>
             
             <button class="jump-btn hover-target" onclick="jumpToCategory('Identity', event)">VIEW SAMPLES ↗</button>
@@ -677,8 +682,8 @@
                 <span class="plan-zh">電影・維度</span>
             </div>
             
-            <p class="plan-desc">
-                超越現實的視覺衝擊。RGB 與 3D 結構的極致實驗。(機密籌備中)
+            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em;">
+                電影級的視覺震撼。<br>盛大籌備中。
             </p>
             
             <div class="specs-grid">
@@ -749,7 +754,7 @@
         
         <div class="royal-price-area">
             <span class="royal-old-price">原價 NT$ 44,800</span>
-            <span class="royal-current-price">NT$ 24,800</span>
+            <span class="royal-current-price metallic-gold">NT$ 24,800</span>
         </div>
         
         <button class="royal-btn" onclick="toggleBooking()">SECURE YOUR SEAT 預約席次</button>
@@ -809,7 +814,7 @@
   </div>
 
   <footer>
-      <p>&copy; 2025 EDEN. All Rights Reserved.</p>
+      <p>&copy; 2025 EDEN｜DEEN. All Rights Reserved.</p>
       <div class="tech-stack">POWERED BY VANILLA JS & CUSTOM CSS RENDERER</div>
   </footer>
 
