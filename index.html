@@ -76,7 +76,7 @@
       mix-blend-mode: overlay;
     }
 
-    /* --- 3. Preloader --- */
+    /* --- 3. Preloader (FIXED CENTERING) --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
@@ -416,13 +416,31 @@
     .booking-cta-section { 
         padding: 120px 0 150px; text-align: center; background: #050505; width: 100%; 
         display: flex; justify-content: center; align-items: center;
+        position: relative; /* Context for the line */
     }
     
+    /* THE HORIZON LINE */
+    .ritual-line {
+        position: absolute; 
+        top: 50%; left: 50%; 
+        transform: translate(-50%, -50%);
+        width: 0; 
+        height: 1px;
+        /* Metallic Gradient: Fades at ends, bright in middle */
+        background: linear-gradient(90deg, transparent 0%, #bf953f 20%, #fff 50%, #bf953f 80%, transparent 100%);
+        transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+        z-index: 0;
+        opacity: 0.6;
+    }
+    
+    .ritual-line.extended { width: 90vw; max-width: 1600px; } /* Extends when active */
+
     /* The Ritual Button */
     .ritual-btn { 
         position: relative;
         padding: 25px 80px; 
-        background: transparent; 
+        /* Solid black background to hide the line crossing through */
+        background: #050505; 
         border: 1px solid rgba(191, 149, 63, 0.4); 
         color: #fff; 
         font-family: 'Cinzel', serif; 
@@ -431,7 +449,8 @@
         text-transform: uppercase; 
         cursor: none; 
         transition: all 0.5s ease; 
-        overflow: hidden; /* Contains the ripple */
+        overflow: hidden; 
+        z-index: 2; /* Sits above the line */
     }
     
     .ritual-btn span {
@@ -454,13 +473,13 @@
     .ritual-btn:hover { border-color: #BF953F; box-shadow: 0 0 40px rgba(191, 149, 63, 0.15); }
     .ritual-btn:hover::before { opacity: 1; }
 
-    /* The Ripple Element (Created via JS) */
+    /* The Ripple Element */
     .ripple {
         position: absolute;
-        background: rgba(191, 149, 63, 0.8); /* Liquid Gold */
+        background: rgba(191, 149, 63, 0.8);
         border-radius: 50%;
         transform: scale(0);
-        animation: rippleEffect 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Healing fluidity */
+        animation: rippleEffect 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         pointer-events: none;
         z-index: 1;
     }
@@ -816,6 +835,8 @@
   </section>
 
   <section class="booking-cta-section">
+      <div class="ritual-line"></div>
+      
       <button class="ritual-btn hover-target" onclick="createRipple(event)">
           <span>SECURE YOUR SESSION</span>
       </button>
@@ -1006,7 +1027,7 @@
         setTimeout(initScrollReveal, 100);
     }
     
-    /* --- The Ritual Ripple Effect --- */
+    /* --- The Ritual Ripple Effect & Horizon Line --- */
     function createRipple(event) {
         const button = event.currentTarget;
         const circle = document.createElement("span");
@@ -1031,9 +1052,16 @@
     
     function toggleBooking() {
         const bookingSection = document.getElementById('hiddenBooking');
+        const line = document.querySelector('.ritual-line');
+        const isOpen = bookingSection.classList.contains('open');
+        
         bookingSection.classList.toggle('open');
-        if(bookingSection.classList.contains('open')) {
+        
+        if (!isOpen) {
+            line.classList.add('extended'); // Extend line
             setTimeout(() => { bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
+        } else {
+            line.classList.remove('extended'); // Retract line
         }
     }
 
