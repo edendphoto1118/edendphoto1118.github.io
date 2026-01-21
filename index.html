@@ -58,7 +58,6 @@
     }
     
     .metallic-silver {
-        /* Pale Platinum - Cooler, sharper */
         background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -67,14 +66,14 @@
         text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
     }
 
-    /* --- Universal Vertical Separator (The Razor Beam) --- */
+    /* --- Universal Vertical Separator --- */
     .vertical-separator {
         display: inline-block;
-        width: 1px; /* Ultra thin */
+        width: 1px;
         background: linear-gradient(to bottom, transparent 0%, #ffffff 50%, transparent 100%);
         opacity: 0.8;
         transform: rotate(0deg);
-        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Glowing effect */
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
 
     /* --- 2. Texture (Noise) --- */
@@ -87,7 +86,7 @@
       mix-blend-mode: overlay;
     }
 
-    /* --- 3. Preloader (Refined) --- */
+    /* --- 3. Preloader --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
@@ -103,7 +102,7 @@
 
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; 
-      text-transform: uppercase; letter-spacing: 0.4em; margin-right: -0.4em; /* Compensate */
+      text-transform: uppercase; letter-spacing: 0.4em; margin-right: -0.4em;
     }
     
     .loader-sep { height: 2.5rem; margin: 0 40px; }
@@ -188,7 +187,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (DUNE AESTHETIC) --- */
+    /* --- 6. Hero Section --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -223,29 +222,24 @@
     
     .hero h1 { 
         font-family: 'Cinzel', serif; 
-        /* The Dune Formula: Smaller Size + Massive Spacing */
         font-size: 4.5vw; 
         line-height: 1; 
         font-weight: 400; 
-        letter-spacing: 0.4em; /* Epic spacing */
-        margin: 0; margin-right: -0.4em; /* Compensate for spacing */
-        
-        /* Cold Platinum Gradient */
+        letter-spacing: 0.4em; 
+        margin: 0; 
         background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: #fff;
-        
         text-shadow: 0 20px 60px rgba(0,0,0,0.9);
         white-space: nowrap; 
         display: flex; align-items: center; justify-content: center;
     }
     
-    /* Hero Vertical Line - Taller and Thinner */
     .hero .vertical-separator { 
         height: 1.5em; 
         width: 1px; 
-        margin: 0 3.5vw; /* Proportional spacing */
+        margin: 0 3.5vw; 
     }
 
     .hero p { 
@@ -258,7 +252,7 @@
         margin-right: -0.6em;
     }
     
-    .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; }
+    .scroll-indicator { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 40px; }
     .scroll-text { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
     .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, #fff, transparent); animation: scrollDown 2s infinite; }
     @keyframes scrollDown { 0% { transform-origin: top; transform: scaleY(0); } 50% { transform-origin: top; transform: scaleY(1); } 51% { transform-origin: bottom; transform: scaleY(1); } 100% { transform-origin: bottom; transform: scaleY(0); } }
@@ -372,10 +366,20 @@
     
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
-    /* --- Offline Card & Sealing Animation --- */
-    .price-card.offline { opacity: 0.7; pointer-events: none; overflow: hidden; }
+    /* --- Offline Card & Sealing Animation (FIXED) --- */
+    /* Remove pointer-events: none from container so hover works */
+    .price-card.offline { 
+        opacity: 0.7; 
+        overflow: hidden; 
+        cursor: not-allowed; 
+        pointer-events: auto; /* ENABLE HOVER DETECTION */
+    }
+    
     .price-card.offline .card-content { filter: grayscale(80%); transition: filter 0.5s; }
-    .price-card.offline .jump-btn { border-color: #333; color: #555; }
+    
+    /* Disable the button inside */
+    .price-card.offline .jump-btn { border-color: #333; color: #555; pointer-events: none; }
+    
     .price-card.offline:hover .card-content { filter: grayscale(100%) brightness(0.6); }
 
     .sealing-container {
@@ -600,7 +604,7 @@
 
     @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .about-headline { font-size: 1.5rem; } .artist-statement-body { font-size: 1.1rem; } .contact-info { justify-content: center; } }
-    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 14vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .about-name-big { font-size: 5rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .royal-sp-amount { font-size: 3rem; } .tech-ticker-wrap { height: 30px; } }
+    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .tech-ticker-wrap { height: 30px; } }
   </style>
 </head>
 
