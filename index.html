@@ -195,7 +195,7 @@
         width: 100%; 
         display: flex; 
         flex-direction: column; 
-        justify-content: center; 
+        justify-content: space-between; 
         align-items: center; 
         text-align: center; 
         background: #000;
@@ -216,6 +216,7 @@
         width: 100%; padding: 0 20px; 
         transition: opacity 2s ease, transform 2s ease; 
         display: flex; flex-direction: column; align-items: center; justify-content: center;
+        flex-grow: 1; 
     }
     
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
@@ -252,11 +253,35 @@
         margin-right: -0.6em;
     }
     
-    .scroll-indicator { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 40px; }
-    .scroll-text { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
-    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, #fff, transparent); animation: scrollDown 2s infinite; }
-    @keyframes scrollDown { 0% { transform-origin: top; transform: scaleY(0); } 50% { transform-origin: top; transform: scaleY(1); } 51% { transform-origin: bottom; transform: scaleY(1); } 100% { transform-origin: bottom; transform: scaleY(0); } }
+    /* --- UPDATED: Dual Flowing Scroll Indicators --- */
+    .scroll-indicator { 
+        position: relative;
+        width: 2px; height: 70px; /* Fixed container height for flow */
+        overflow: hidden; /* Masking */
+        opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; 
+        margin-bottom: 30px; 
+    }
+    /* Removed .scroll-text */
+    .scroll-line { 
+        position: absolute; top: -100%; left: 50%; /* Start above */
+        width: 1px; height: 100%; 
+        /* Finer, double-fade gradient */
+        background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%);
+        transform: translateX(-50%);
+        animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+    .scroll-line:nth-child(2) {
+        animation-delay: 1.5s; /* Stagger for continuous sequence */
+    }
+
+    @keyframes scrollFlow { 
+        0% { top: -100%; opacity: 0; }
+        20% { opacity: 0.8; }
+        80% { opacity: 0.8; }
+        100% { top: 100%; opacity: 0; } 
+    }
     @keyframes fadeIn { to { opacity: 1; } }
+
 
     /* --- 7. Sections --- */
     .section-header { text-align: center; margin-bottom: 120px; position: relative; padding: 0 20px; width: 100%; margin-top: 80px; }
@@ -366,20 +391,10 @@
     
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
-    /* --- Offline Card & Sealing Animation (FIXED) --- */
-    /* Remove pointer-events: none from container so hover works */
-    .price-card.offline { 
-        opacity: 0.7; 
-        overflow: hidden; 
-        cursor: not-allowed; 
-        pointer-events: auto; /* ENABLE HOVER DETECTION */
-    }
-    
+    /* --- Offline Card & Sealing Animation --- */
+    .price-card.offline { opacity: 0.7; overflow: hidden; cursor: not-allowed; pointer-events: auto; }
     .price-card.offline .card-content { filter: grayscale(80%); transition: filter 0.5s; }
-    
-    /* Disable the button inside */
     .price-card.offline .jump-btn { border-color: #333; color: #555; pointer-events: none; }
-    
     .price-card.offline:hover .card-content { filter: grayscale(100%) brightness(0.6); }
 
     .sealing-container {
@@ -656,7 +671,7 @@
       <p>Visual Director / Photographer</p>
     </div>
     <div class="scroll-indicator">
-        <span class="scroll-text">Scroll</span>
+        <div class="scroll-line"></div>
         <div class="scroll-line"></div>
     </div>
   </section>
