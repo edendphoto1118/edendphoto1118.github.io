@@ -47,7 +47,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- Metallic Text Effect Classes --- */
+    /* --- Metallic Text Effect Classes (Pale Platinum & Deep Gold) --- */
     .metallic-gold {
         background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
         -webkit-background-clip: text;
@@ -58,7 +58,8 @@
     }
     
     .metallic-silver {
-        background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a0 70%, #d4d4d4 100%);
+        /* Cold, sharp platinum */
+        background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -66,7 +67,7 @@
         text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
     }
 
-    /* --- Universal Vertical Separator --- */
+    /* --- Universal Vertical Separator (The Razor Beam) --- */
     .vertical-separator {
         display: inline-block;
         width: 1px;
@@ -86,7 +87,7 @@
       mix-blend-mode: overlay;
     }
 
-    /* --- 3. Preloader --- */
+    /* --- 3. Preloader (Refined) --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
@@ -119,20 +120,19 @@
     }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
 
-    /* Updated Enter Button Style (No Block, Metallic Border) */
+    /* De-blocked Button Style */
     .enter-btn {
         background: transparent; 
-        border: 1px solid rgba(255,255,255,0.3); 
+        border: 1px solid rgba(255,255,255,0.25); 
         color: #fff;
         font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.4em;
         text-transform: uppercase; cursor: pointer; padding: 18px 50px;
         transition: all 0.5s ease; white-space: nowrap;
-        box-shadow: 0 0 10px rgba(255,255,255,0.05);
     }
     .enter-btn:hover { 
         letter-spacing: 0.6em; 
         border-color: #fff; 
-        box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        box-shadow: 0 0 20px rgba(255,255,255,0.2);
         text-shadow: 0 0 8px rgba(255,255,255,0.5);
     }
 
@@ -196,34 +196,21 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section --- */
+    /* --- 6. Hero Section (DUNE AESTHETIC) --- */
     .hero { 
-        height: 100vh; 
-        position: relative; 
-        overflow: hidden; 
-        width: 100%; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: space-between; 
-        align-items: center; 
-        text-align: center; 
-        background: #000;
+        height: 100vh; position: relative; overflow: hidden; width: 100%; 
+        display: flex; flex-direction: column; justify-content: space-between; 
+        align-items: center; text-align: center; background: #000;
     }
     
     .hero-bg-video {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        object-fit: cover; 
-        z-index: -5; 
-        opacity: 0.5;
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        object-fit: cover; z-index: -5; opacity: 0.5;
     }
 
     .hero-content { 
-        z-index: 2;
-        opacity: 0; transform: translateY(30px); 
-        width: 100%; padding: 0 20px; 
-        transition: opacity 2s ease, transform 2s ease; 
+        z-index: 2; opacity: 0; transform: translateY(30px); 
+        width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; 
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         flex-grow: 1; 
     }
@@ -232,47 +219,31 @@
     
     .hero h1 { 
         font-family: 'Cinzel', serif; 
-        font-size: 4.5vw; 
-        line-height: 1; 
-        font-weight: 400; 
-        letter-spacing: 0.4em; 
-        margin: 0; 
+        /* Dune Formula: Small Size + Huge Spacing */
+        font-size: 4.5vw; line-height: 1; font-weight: 400; 
+        letter-spacing: 0.4em; margin: 0; 
         background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: #fff;
-        text-shadow: 0 20px 60px rgba(0,0,0,0.9);
-        white-space: nowrap; 
-        display: flex; align-items: center; justify-content: center;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9);
+        white-space: nowrap; display: flex; align-items: center; justify-content: center;
     }
     
-    .hero .vertical-separator { 
-        height: 1.5em; 
-        width: 1px; 
-        margin: 0 3.5vw; 
-    }
+    .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
 
     .hero p { 
-        margin-top: 40px; 
-        font-family: 'Montserrat', sans-serif; 
-        font-size: 0.75rem; 
-        letter-spacing: 0.6em; 
-        text-transform: uppercase; 
-        color: rgba(255,255,255,0.6); 
-        margin-right: -0.6em;
+        margin-top: 40px; font-family: 'Montserrat', sans-serif; 
+        font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; 
+        color: rgba(255,255,255,0.6); margin-right: -0.6em;
     }
     
+    /* Flowing Light Indicators */
     .scroll-indicator { 
-        position: relative;
-        width: 2px; height: 70px; 
-        overflow: hidden; 
-        opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; 
-        margin-bottom: 30px; 
+        position: relative; width: 2px; height: 70px; overflow: hidden; 
+        opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; 
     }
     
     .scroll-line { 
-        position: absolute; top: -100%; left: 50%; 
-        width: 1px; height: 100%; 
+        position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; 
         background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%);
         transform: translateX(-50%);
         animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
@@ -330,7 +301,7 @@
 
     .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; }
     
-    /* Updated Load More Button */
+    /* De-blocked Load More Button */
     .load-more-btn { 
         display: inline-block; padding: 25px 70px; 
         background: transparent;
@@ -340,8 +311,7 @@
         text-transform: uppercase; cursor: none; transition: all 0.5s; 
     }
     .load-more-btn:hover { 
-        border-color: #fff; 
-        color: #fff;
+        border-color: #fff; color: #fff;
         box-shadow: 0 0 20px rgba(255,255,255,0.1); 
         text-shadow: 0 0 5px rgba(255,255,255,0.3);
     }
@@ -405,7 +375,7 @@
     .price-area-bottom { margin-top: 30px; text-align: center; margin-bottom: 20px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; display: block; }
 
-    /* Updated Jump Button Style */
+    /* De-blocked Jump Button */
     .jump-btn { 
         width: 100%; padding: 18px 0; 
         background: transparent; 
@@ -416,24 +386,33 @@
     .price-card:hover .jump-btn { 
         border-color: #fff; 
         box-shadow: 0 0 15px rgba(255,255,255,0.1);
-        background: transparent;
     }
     
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
-    /* --- Offline Card & Sealing Animation --- */
-    .price-card.offline { opacity: 0.7; overflow: hidden; cursor: not-allowed; pointer-events: auto; }
-    .price-card.offline .card-content { filter: grayscale(80%); transition: filter 0.5s; }
-    .price-card.offline .jump-btn { border-color: #333; color: #555; pointer-events: none; }
-    .price-card.offline:hover .card-content { filter: grayscale(100%) brightness(0.6); }
+    /* --- LOCKED / OFFLINE CARDS (Plans II, III, IV) --- */
+    .price-card.locked-plan { 
+        opacity: 0.7; 
+        overflow: hidden; 
+        cursor: not-allowed; 
+        pointer-events: auto; /* Enable hover detection */
+    }
+    .price-card.locked-plan .card-content { filter: grayscale(80%); transition: filter 0.5s; }
+    
+    /* Disable Button in Locked Plans */
+    .price-card.locked-plan .jump-btn { border-color: #333; color: #555; pointer-events: none; }
+    
+    .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.6); }
 
+    /* Sealing Container */
     .sealing-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         z-index: 20; pointer-events: none; overflow: hidden;
         opacity: 0; transition: opacity 0.1s;
     }
-    .price-card.offline:hover .sealing-container { opacity: 1; }
+    .price-card.locked-plan:hover .sealing-container { opacity: 1; }
 
+    /* The Tape Strips */
     .tape-strip {
         position: absolute;
         background: #fff; color: #000;
@@ -447,8 +426,9 @@
     .tape-left { top: 35%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 55%; left: -25%; transform: rotate(-20deg) translateX(120%); }
 
-    .price-card.offline:hover .tape-left { transform: rotate(20deg) translateX(0); }
-    .price-card.offline:hover .tape-right { transform: rotate(-20deg) translateX(0); }
+    /* Animate on Hover */
+    .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); }
+    .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); }
 
 
     /* --- 10. Delivery Section --- */
@@ -461,39 +441,34 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 1.8; font-weight: 300; }
 
-    /* --- 11. Royal (Metallic Border) --- */
+    /* --- 11. Royal (Locked) --- */
     .royal-section { 
         padding: 150px 8vw; 
         background: linear-gradient(135deg, #050505 0%, #020202 100%); 
-        border-top: 1px solid #111; 
-        border-bottom: 1px solid #111; 
-        width: 100%; 
-        position: relative; 
-        overflow: hidden; 
-        display: flex;
-        justify-content: center;
+        border-top: 1px solid #111; border-bottom: 1px solid #111; 
+        width: 100%; position: relative; overflow: hidden; display: flex; justify-content: center;
+        /* Locked Style Base */
+        cursor: not-allowed;
     }
     
+    /* Apply locking visual to Royal section as well */
+    .royal-section .sealing-container { opacity: 0; transition: opacity 0.1s; z-index: 20; }
+    .royal-section:hover .sealing-container { opacity: 1; }
+    .royal-section:hover .tape-left { transform: rotate(20deg) translateX(0); }
+    .royal-section:hover .tape-right { transform: rotate(-20deg) translateX(0); }
+    .royal-section:hover .royal-card-wrapper { filter: grayscale(100%) brightness(0.6); }
+    .royal-section .royal-card-wrapper { transition: filter 0.5s; filter: grayscale(50%); }
+
     .royal-border-box {
-        position: absolute;
-        top: 40px; left: 40px; right: 40px; bottom: 40px;
-        pointer-events: none;
+        position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; pointer-events: none;
     }
-    
     .royal-section:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; }
     .royal-section:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.2s; }
     .royal-section:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.4s; }
     .royal-section:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.6s; }
     .royal-section:not(:hover) .border-line { transition-delay: 0s; opacity: 0; }
 
-    .royal-card-wrapper {
-        width: 100%;
-        max-width: 600px;
-        background: transparent;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-    }
+    .royal-card-wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: stretch; }
     
     .royal-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(191,149,63,0.3); padding-bottom: 30px; }
     .royal-roman { display: block; font-family: 'Cinzel', serif; font-size: 4rem; color: rgba(191,149,63,0.1); margin-bottom: 10px; line-height: 1; }
@@ -512,20 +487,15 @@
     .royal-old-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #555; text-decoration: line-through; display: block; margin-bottom: 10px; }
     .royal-current-price { font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; }
     
-    /* Updated Royal Button (No Block) */
+    /* De-blocked Royal Button (Disabled) */
     .royal-btn { 
         width: 100%; padding: 25px 0; margin-top: 30px;
         background: transparent; 
         border: 1px solid rgba(191, 149, 63, 0.3); 
-        color: #BF953F; 
+        color: #555; /* Dimmed */
         font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; 
-        cursor: none; transition: all 0.4s ease; text-transform: uppercase; 
-    }
-    .royal-btn:hover { 
-        border-color: #BF953F; 
-        box-shadow: 0 0 20px rgba(191, 149, 63, 0.2);
-        color: #fff;
-        text-shadow: 0 0 8px rgba(191, 149, 63, 0.6);
+        cursor: not-allowed; transition: all 0.4s ease; text-transform: uppercase; 
+        pointer-events: none;
     }
 
     /* --- 12. Booking Ritual Section --- */
@@ -544,6 +514,7 @@
     }
     .ritual-line.extended { width: 90vw; max-width: 1600px; }
 
+    /* De-blocked Ritual Button */
     .ritual-btn { 
         position: relative; padding: 25px 80px; background: #050505; 
         border: 1px solid rgba(191, 149, 63, 0.4); color: #fff; 
@@ -557,7 +528,10 @@
         font-size: 0.65rem; letter-spacing: 0.4em; color: #BF953F;
         margin-top: 8px; opacity: 0.7; transition: opacity 0.3s;
     }
-    .ritual-btn:hover { border-color: #BF953F; box-shadow: 0 0 40px rgba(191, 149, 63, 0.15); }
+    .ritual-btn:hover { 
+        border-color: #BF953F; 
+        box-shadow: 0 0 40px rgba(191, 149, 63, 0.2); 
+    }
     .ritual-btn:hover::before { opacity: 1; }
 
     .ripple {
@@ -573,7 +547,6 @@
     .booking-interface { width: 100%; max-width: 1000px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 70px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
     .booking-interface::before { content: 'SESSION TERMINAL // 001'; position: absolute; top: 25px; left: 25px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     
-    /* UPDATED: Booking Terms High Contrast */
     .booking-terms { padding: 0 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 60px; border-top: none; }
     .terms-title { font-family: 'Cinzel', serif; color: #e0e0e0; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 1; }
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; text-align: left; }
@@ -589,7 +562,7 @@
     .form-group option { background: #050505; color: #fff; padding: 10px; }
     ::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
     
-    /* Submit Button De-blocking */
+    /* De-blocked Submit Button */
     .submit-btn { 
         width: 100%; padding: 20px; margin-top: 20px; 
         background: transparent; 
@@ -599,9 +572,9 @@
         cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; 
     }
     .submit-btn:hover { 
-        background: transparent; 
-        border-color: #BF953F; 
-        box-shadow: 0 0 20px rgba(191, 149, 63, 0.2);
+        background: transparent;
+        border-color: #BF953F;
+        box-shadow: 0 0 20px rgba(191, 149, 63, 0.2); 
         color: #fff;
         text-shadow: 0 0 5px rgba(191, 149, 63, 0.5);
     }
@@ -681,7 +654,7 @@
 
     @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .about-headline { font-size: 1.5rem; } .artist-statement-body { font-size: 1.1rem; } .contact-info { justify-content: center; } }
-    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .royal-sp-amount { font-size: 3rem; } .tech-ticker-wrap { height: 30px; } }
+    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .tech-ticker-wrap { height: 30px; } }
   </style>
 </head>
 
@@ -789,7 +762,7 @@
             <div class="price-header">
                 <span class="plan-roman metallic-silver">I</span>
                 <span class="plan-en metallic-silver">THE COVER</span>
-                <span class="plan-zh">肖像・封面</span>
+                <span class="plan-zh">封面・映象</span>
             </div>
             
             <p class="plan-desc">
@@ -811,8 +784,12 @@
         </div>
       </div>
       
-      <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
+      <div class="price-card featured locked-plan hover-target">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
+        <div class="sealing-container">
+            <div class="tape-strip tape-left"></div>
+            <div class="tape-strip tape-right"></div>
+        </div>
         <span class="border-line border-top"></span>
         <span class="border-line border-right"></span>
         <span class="border-line border-bottom"></span>
@@ -822,29 +799,29 @@
             <div class="price-header">
                 <span class="plan-roman metallic-gold">II</span>
                 <span class="plan-en metallic-gold">THE STORY</span>
-                <span class="plan-zh">畫報・敘事</span>
+                <span class="plan-zh">敘事・畫報</span>
             </div>
             
             <p class="plan-desc">
-                聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A4 訂製映像畫報 (Editorial Lookbook)。
+                由設計師選品店操刀造型，結合專業妝髮團隊。將您的風格敘事，凝縮為一本專屬的訂製映像期刊 (A4)。
             </p>
             
             <div class="specs-grid">
                 <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">2.0 HR</span></div>
                 <div class="spec-item"><span class="spec-label">Styling<br>造型顧問</span><span class="spec-val">INCLUDED</span></div>
                 <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">10 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">A4 LOOKBOOK</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">A4 JOURNAL</span></div>
             </div>
             
             <div class="price-area-bottom">
                 <span class="current-price metallic-gold">NT$ 14,800</span>
             </div>
             
-            <button class="jump-btn hover-target" onclick="jumpToCategory('Editorial', event)">VIEW SAMPLES ↗</button>
+            <button class="jump-btn">[ WAITLIST ]</button>
         </div>
       </div>
       
-      <div class="price-card offline hover-target">
+      <div class="price-card offline locked-plan hover-target">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
         <div class="sealing-container">
             <div class="tape-strip tape-left"></div>
@@ -877,7 +854,7 @@
                 <span class="current-price metallic-silver">[ COMING SOON ]</span>
             </div>
             
-            <button class="jump-btn">[ SYSTEM OFFLINE ]</button>
+            <button class="jump-btn">[ WAITLIST ]</button>
         </div>
       </div>
     </div>
@@ -912,11 +889,16 @@
         <span class="border-line border-bottom"></span>
         <span class="border-line border-left"></span>
     </div>
+    
+    <div class="sealing-container">
+        <div class="tape-strip tape-left"></div>
+        <div class="tape-strip tape-right"></div>
+    </div>
 
     <div class="royal-card-wrapper">
         <div class="royal-header">
             <span class="royal-roman metallic-gold">IV</span>
-            <span class="royal-en metallic-gold">PROJECT: ROYAL DECK</span>
+            <span class="royal-en metallic-gold">PROJECT: ROYAL</span>
             <span class="royal-zh">典藏・王牌</span>
             <span class="royal-tag">Limited Edition / 限量席次</span>
         </div>
@@ -936,6 +918,8 @@
             <span class="royal-old-price">原價 NT$ 44,800</span>
             <span class="royal-current-price metallic-gold">NT$ 24,800</span>
         </div>
+        
+        <button class="royal-btn">[ WAITLIST ]</button>
     </div>
   </section>
 
@@ -952,7 +936,7 @@
           <div class="booking-terms">
               <h3 class="terms-title metallic-gold">BOOKING POLICY</h3>
               <div class="terms-grid">
-                  <div class="term-item"><h4>SESSION FEE ｜ 費用與範疇</h4><p>報價已包含攝影、專業妝髮、攝影棚租借與後期製作。僅特殊道具或外景車馬費屬代收代付項目，實報實銷。</p></div>
+                  <div class="term-item"><h4>SESSION FEE ｜ 費用與範疇</h4><p>費用涵蓋攝影、專業妝髮、攝影棚租借與後期製作。僅特殊道具或外景車馬費屬實報實銷。</p></div>
                   <div class="term-item"><h4>RESERVATION ｜ 檔期與訂金</h4><p>為確保雙方權益，預約需支付 30% 訂金以鎖定檔期。餘款請於拍攝當日結清。</p></div>
                   <div class="term-item"><h4>PUNCTUALITY ｜ 時間與承諾</h4><p>請準時抵達以確保完整的創作時數。遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金恕不退還。</p></div>
                   <div class="term-item"><h4>DELIVERABLES ｜ 交付與權益</h4><p>所有方案皆包含曜黑禮盒、金屬 USB 與火漆認證卡。RAW 檔為原始素材，恕不提供，僅交付精修成品。</p></div>
@@ -971,8 +955,8 @@
               <label for="plan">SESSION / 預約方案</label>
               <select name="plan" id="plan">
                 <option value="Structure">THE COVER - 封面・映象</option>
-                <option value="Scale">THE STORY - 敘事・畫報</option>
-                <option value="Royal">PROJECT: ROYAL - 典藏・王牌</option>
+                <option value="Scale">THE STORY - 敘事・畫報 (WAITLIST / 候補)</option>
+                <option value="Royal">PROJECT: ROYAL - 典藏・王牌 (WAITLIST / 候補)</option>
               </select>
             </div>
             <div class="form-group"><label for="date">PREFERRED DATE / 期望日期</label><input type="date" name="date" id="date" required></div>
