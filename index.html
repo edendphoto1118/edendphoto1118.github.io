@@ -66,6 +66,18 @@
         text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
     }
 
+    /* --- NEW: Standard Vertical Separator --- */
+    .vertical-separator {
+        display: inline-block;
+        width: 2px;
+        height: 1.2em; /* Relative height to font */
+        /* Clean silver vertical gradient */
+        background: linear-gradient(to bottom, transparent 0%, #ffffff 50%, transparent 100%);
+        margin: 0 25px; /* More breathing room */
+        opacity: 0.9;
+        transform: rotate(0deg); /* Strictly vertical */
+    }
+
     /* --- 2. Texture (Noise) --- */
     .noise-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -76,7 +88,7 @@
       mix-blend-mode: overlay;
     }
 
-    /* --- 3. Preloader (FIXED CENTERING) --- */
+    /* --- 3. Preloader (UPDATED) --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
@@ -84,20 +96,22 @@
       transition: opacity 1.5s ease, visibility 1.5s ease;
     }
     
+    .loader-content-wrap {
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; transform: scale(1.1); filter: blur(10px);
+        animation: opticalEmerge 3s ease forwards;
+    }
+
     .loader-text {
       font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; 
-      text-transform: uppercase; text-align: center;
-      width: 100%;
-      opacity: 0; 
-      letter-spacing: 3em; 
-      margin-right: -3em; 
-      transform: scale(1.1); 
-      animation: opticalEmerge 3s ease forwards;
+      text-transform: uppercase; letter-spacing: 0.3em;
     }
     
+    .loader-sep { height: 2.5rem; margin: 0 30px; background: #fff; opacity: 0.8; }
+    
     @keyframes opticalEmerge {
-        0% { opacity: 0; letter-spacing: 3em; margin-right: -3em; filter: blur(10px); }
-        100% { opacity: 1; letter-spacing: 0.5em; margin-right: -0.5em; filter: blur(0); }
+        0% { opacity: 0; transform: scale(1.1); filter: blur(10px); letter-spacing: 0.5em; }
+        100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.3em; }
     }
 
     .enter-btn-wrapper {
@@ -176,7 +190,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section --- */
+    /* --- 6. Hero Section (REFINED TYPOGRAPHY) --- */
     .hero { 
         height: 100vh; 
         position: relative; 
@@ -210,25 +224,25 @@
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
     
     .hero h1 { 
-        font-family: 'Cinzel', serif; font-size: 7vw; line-height: 1; 
-        font-weight: 400; letter-spacing: 0.1em; margin: 0; 
+        font-family: 'Cinzel', serif; 
+        /* Smaller, more elegant size */
+        font-size: 5.5vw; 
+        line-height: 1; 
+        font-weight: 400; 
+        /* Increased spacing for luxury feel */
+        letter-spacing: 0.2em; 
+        margin: 0; 
         background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 50%, #a0a0a0 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: #fff;
         text-shadow: 0 20px 60px rgba(0,0,0,0.9);
         white-space: nowrap; 
-        display: flex; align-items: center; gap: 20px;
+        display: flex; align-items: center; justify-content: center;
     }
     
-    .hero-line {
-        display: inline-block;
-        width: 2px;
-        height: 0.8em; 
-        background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 50%, rgba(255,255,255,0) 100%);
-        opacity: 0.7;
-        transform: rotate(15deg); 
-    }
+    /* Hero specific adjustment for the separator */
+    .hero .vertical-separator { height: 0.9em; }
 
     .hero p { margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
     
@@ -346,10 +360,40 @@
     
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
-    /* Offline Card Style */
-    .price-card.offline { opacity: 0.7; pointer-events: none; }
-    .price-card.offline .card-content { filter: grayscale(80%); }
+    /* --- Offline Card & Sealing Animation (NEW) --- */
+    .price-card.offline { opacity: 0.7; pointer-events: none; overflow: hidden; }
+    .price-card.offline .card-content { filter: grayscale(80%); transition: filter 0.5s; }
     .price-card.offline .jump-btn { border-color: #333; color: #555; }
+    .price-card.offline:hover .card-content { filter: grayscale(100%) brightness(0.6); }
+
+    /* Sealing Container covering the card */
+    .sealing-container {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 20; pointer-events: none; overflow: hidden;
+        opacity: 0; transition: opacity 0.1s;
+    }
+    .price-card.offline:hover .sealing-container { opacity: 1; }
+
+    /* The tape strips */
+    .tape-strip {
+        position: absolute;
+        background: #fff; color: #000;
+        font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em;
+        padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1); /* Crawling lock feel */
+    }
+    /* Create repeated text */
+    .tape-strip::before, .tape-strip::after { content: 'EDEN   EDEN   EDEN   EDEN   EDEN'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
+
+    /* Positioning and initial state (off-screen) */
+    .tape-left { top: 35%; left: -25%; transform: rotate(20deg) translateX(-120%); }
+    .tape-right { top: 55%; left: -25%; transform: rotate(-20deg) translateX(120%); }
+
+    /* Hover state - crossing */
+    .price-card.offline:hover .tape-left { transform: rotate(20deg) translateX(0); }
+    .price-card.offline:hover .tape-right { transform: rotate(-20deg) translateX(0); }
+
 
     /* --- 10. Delivery Section --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
@@ -412,81 +456,44 @@
     .royal-old-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #555; text-decoration: line-through; display: block; margin-bottom: 10px; }
     .royal-current-price { font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; }
     
-    /* --- 12. NEW: Booking Ritual Section --- */
+    /* --- 12. Booking Ritual Section --- */
     .booking-cta-section { 
         padding: 120px 0 150px; text-align: center; background: #050505; width: 100%; 
         display: flex; justify-content: center; align-items: center;
-        position: relative; /* Context for the line */
+        position: relative;
     }
     
-    /* THE HORIZON LINE */
     .ritual-line {
-        position: absolute; 
-        top: 50%; left: 50%; 
-        transform: translate(-50%, -50%);
-        width: 0; 
-        height: 1px;
-        /* Metallic Gradient: Fades at ends, bright in middle */
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: 0; height: 1px;
         background: linear-gradient(90deg, transparent 0%, #bf953f 20%, #fff 50%, #bf953f 80%, transparent 100%);
         transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
-        z-index: 0;
-        opacity: 0.6;
+        z-index: 0; opacity: 0.6;
     }
-    
-    .ritual-line.extended { width: 90vw; max-width: 1600px; } /* Extends when active */
+    .ritual-line.extended { width: 90vw; max-width: 1600px; }
 
-    /* The Ritual Button */
     .ritual-btn { 
-        position: relative;
-        padding: 25px 80px; 
-        /* Solid black background to hide the line crossing through */
-        background: #050505; 
-        border: 1px solid rgba(191, 149, 63, 0.4); 
-        color: #fff; 
-        font-family: 'Cinzel', serif; 
-        font-size: 1.1rem; 
-        letter-spacing: 0.25em; 
-        text-transform: uppercase; 
-        cursor: none; 
-        transition: all 0.5s ease; 
-        overflow: hidden; 
-        z-index: 2; /* Sits above the line */
+        position: relative; padding: 25px 80px; background: #050505; 
+        border: 1px solid rgba(191, 149, 63, 0.4); color: #fff; 
+        font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; 
+        text-transform: uppercase; cursor: none; transition: all 0.5s ease; 
+        overflow: hidden; z-index: 2;
     }
-    
-    .ritual-btn span {
-        position: relative; z-index: 2; /* Keeps text above ripple */
-        pointer-events: none;
-    }
-    
+    .ritual-btn span { position: relative; z-index: 2; pointer-events: none; }
     .ritual-btn::before {
-        content: '預約席次';
-        display: block;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.65rem;
-        letter-spacing: 0.4em;
-        color: #BF953F;
-        margin-top: 8px;
-        opacity: 0.7;
-        transition: opacity 0.3s;
+        content: '預約席次'; display: block; font-family: 'Montserrat', sans-serif;
+        font-size: 0.65rem; letter-spacing: 0.4em; color: #BF953F;
+        margin-top: 8px; opacity: 0.7; transition: opacity 0.3s;
     }
-
     .ritual-btn:hover { border-color: #BF953F; box-shadow: 0 0 40px rgba(191, 149, 63, 0.15); }
     .ritual-btn:hover::before { opacity: 1; }
 
-    /* The Ripple Element */
     .ripple {
-        position: absolute;
-        background: rgba(191, 149, 63, 0.8);
-        border-radius: 50%;
-        transform: scale(0);
-        animation: rippleEffect 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        pointer-events: none;
-        z-index: 1;
+        position: absolute; background: rgba(191, 149, 63, 0.8); border-radius: 50%;
+        transform: scale(0); animation: rippleEffect 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        pointer-events: none; z-index: 1;
     }
-
-    @keyframes rippleEffect {
-        to { transform: scale(4); opacity: 0; }
-    }
+    @keyframes rippleEffect { to { transform: scale(4); opacity: 0; } }
 
     /* Hidden Booking Form */
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
@@ -510,49 +517,29 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About Section (Updated Slogan) --- */
+    /* --- 13. About Section --- */
     .background {
-        padding: 150px 8vw;
-        background: #050505;
-        border-top: 1px solid rgba(255,255,255,0.03);
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 60vh;
+        padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03);
+        width: 100%; position: relative; overflow: hidden; display: flex;
+        justify-content: center; align-items: center; min-height: 60vh;
     }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
     
     .about-slogan-main {
-        font-family: 'Cinzel', serif;
-        font-size: 3.5rem;
-        letter-spacing: 0.2em;
-        font-weight: 400;
-        margin: 0 0 30px 0;
-        display: block;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.2em;
+        font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0;
+        transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
-    
     .about-slogan-sub {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.8rem;
-        color: #888;
-        letter-spacing: 0.8em;
-        text-transform: uppercase;
-        display: block;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        margin-left: 0.8em; /* Offset for spacing balance */
+        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #888;
+        letter-spacing: 0.8em; text-transform: uppercase; display: block; opacity: 0;
+        transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        margin-left: 0.8em;
     }
-
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     
     @media (max-width: 768px) { 
+        .hero h1 { font-size: 10vw; }
         .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.1em; } 
         .about-slogan-sub { font-size: 0.6rem; letter-spacing: 0.4em; }
     }
@@ -597,7 +584,11 @@
   </audio>
 
   <div id="preloader">
-    <div class="loader-text">EDEN｜DEEN</div>
+    <div class="loader-content-wrap">
+        <span class="loader-text">EDEN</span>
+        <span class="vertical-separator loader-sep"></span>
+        <span class="loader-text">DEEN</span>
+    </div>
     <div class="enter-btn-wrapper" id="enterWrapper">
         <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE</button>
     </div>
@@ -628,7 +619,7 @@
     </video>
     
     <div class="hero-content">
-      <h1>EDEN <span class="hero-line"></span> DEEN</h1>
+      <h1>EDEN <span class="vertical-separator"></span> DEEN</h1>
       <p>Visual Director / Photographer</p>
     </div>
     <div class="scroll-indicator">
@@ -679,99 +670,61 @@
       
       <div class="price-card hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
-        <span class="border-line border-top"></span>
-        <span class="border-line border-right"></span>
-        <span class="border-line border-bottom"></span>
-        <span class="border-line border-left"></span>
-        
+        <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-roman metallic-silver">I</span>
-                <span class="plan-en metallic-silver">THE COVER</span>
-                <span class="plan-zh">肖像・封面</span>
+                <span class="plan-roman metallic-silver">I</span><span class="plan-en metallic-silver">THE COVER</span><span class="plan-zh">肖像・封面</span>
             </div>
-            
-            <p class="plan-desc">
-                不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，交付實體 A3 藝術海報 (Rolled Poster)，讓每一張照片都成為您的成名作。
-            </p>
-            
+            <p class="plan-desc">不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，交付實體 A3 藝術海報 (Rolled Poster)，讓每一張照片都成為您的成名作。</p>
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">1.5 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Styling<br>妝髮造型</span><span class="spec-val">INCLUDED</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">8 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">POSTER + USB</span></div>
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">1.5 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Styling</span><span class="spec-val">INCLUDED</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">8 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">POSTER + USB</span></div>
             </div>
-            
-            <div class="price-area-bottom">
-                <span class="current-price metallic-silver">NT$ 8,800</span>
-            </div>
-            
+            <div class="price-area-bottom"><span class="current-price metallic-silver">NT$ 8,800</span></div>
             <button class="jump-btn hover-target" onclick="jumpToCategory('Identity', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
       
       <div class="price-card featured hover-target" onclick="this.classList.toggle('active')">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
-        <span class="border-line border-top"></span>
-        <span class="border-line border-right"></span>
-        <span class="border-line border-bottom"></span>
-        <span class="border-line border-left"></span>
-
+        <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-roman metallic-gold">II</span>
-                <span class="plan-en metallic-gold">THE STORY</span>
-                <span class="plan-zh">畫報・敘事</span>
+                <span class="plan-roman metallic-gold">II</span><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">畫報・敘事</span>
             </div>
-            
-            <p class="plan-desc">
-                聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A4 攝影小誌 (Lookbook)。
-            </p>
-            
+            <p class="plan-desc">聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A4 攝影小誌 (Lookbook)。</p>
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">2.0 HR</span></div>
-                <div class="spec-item"><span class="spec-label">Styling<br>造型顧問</span><span class="spec-val">INCLUDED</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">10 PICS</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">A4 LOOKBOOK</span></div>
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">2.0 HR</span></div>
+                <div class="spec-item"><span class="spec-label">Styling</span><span class="spec-val">INCLUDED</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">10 PICS</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">A4 LOOKBOOK</span></div>
             </div>
-            
-            <div class="price-area-bottom">
-                <span class="current-price metallic-gold">NT$ 14,800</span>
-            </div>
-            
+            <div class="price-area-bottom"><span class="current-price metallic-gold">NT$ 14,800</span></div>
             <button class="jump-btn hover-target" onclick="jumpToCategory('Editorial', event)">VIEW SAMPLES ↗</button>
         </div>
       </div>
       
       <div class="price-card offline hover-target">
         <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
-        <span class="border-line border-top"></span>
-        <span class="border-line border-right"></span>
-        <span class="border-line border-bottom"></span>
-        <span class="border-line border-left"></span>
-
+        <div class="sealing-container">
+            <div class="tape-strip tape-left"></div>
+            <div class="tape-strip tape-right"></div>
+        </div>
+        <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div class="price-header">
-                <span class="plan-roman metallic-silver">III</span>
-                <span class="plan-en metallic-silver">THE VISION</span>
-                <span class="plan-zh">電影・維度</span>
+                <span class="plan-roman metallic-silver">III</span><span class="plan-en metallic-silver">THE VISION</span><span class="plan-zh">電影・維度</span>
             </div>
-            
-            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em; padding-top: 30px;">
-                電影級的視覺震撼。<br>盛大籌備中。
-            </p>
-            
+            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em; padding-top: 30px;">電影級的視覺震撼。<br>盛大籌備中。</p>
             <div class="specs-grid">
-                <div class="spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">---</span></div>
-                <div class="spec-item"><span class="spec-label">Looks<br>造型數量</span><span class="spec-val">---</span></div>
-                <div class="spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">---</span></div>
-                <div class="spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Session</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Looks</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Retouch</span><span class="spec-val">---</span></div>
+                <div class="spec-item"><span class="spec-label">Deliver</span><span class="spec-val">---</span></div>
             </div>
-            
-            <div class="price-area-bottom">
-                <span class="current-price metallic-silver">[ COMING SOON ]</span>
-            </div>
-            
+            <div class="price-area-bottom"><span class="current-price metallic-silver">[ COMING SOON ]</span></div>
             <button class="jump-btn">[ SYSTEM OFFLINE ]</button>
         </div>
       </div>
@@ -802,41 +755,27 @@
 
   <section class="royal-section">
     <div class="royal-border-box">
-        <span class="border-line border-top"></span>
-        <span class="border-line border-right"></span>
-        <span class="border-line border-bottom"></span>
-        <span class="border-line border-left"></span>
+        <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
     </div>
-
     <div class="royal-card-wrapper">
         <div class="royal-header">
-            <span class="royal-roman metallic-gold">IV</span>
-            <span class="royal-en metallic-gold">PROJECT: ROYAL DECK</span>
-            <span class="royal-zh">企劃・王牌</span>
-            <span class="royal-tag">Limited Edition / 限量席次</span>
+            <span class="royal-roman metallic-gold">IV</span><span class="royal-en metallic-gold">PROJECT: ROYAL DECK</span><span class="royal-zh">企劃・王牌</span><span class="royal-tag">Limited Edition / 限量席次</span>
         </div>
-        
-        <p class="royal-desc">
-            將您的形象鑄造成可流通的實體王牌。<br>採用德國黑芯紙與燙金工藝，這是屬於您的頂級社交貨幣。
-        </p>
-        
+        <p class="royal-desc">將您的形象鑄造成可流通的實體王牌。<br>採用德國黑芯紙與燙金工藝，這是屬於您的頂級社交貨幣。</p>
         <div class="royal-specs">
-            <div class="royal-spec-item"><span class="spec-label">Session<br>拍攝時長</span><span class="spec-val">Dual Style (2.5 HR)</span></div>
-            <div class="royal-spec-item"><span class="spec-label">Styling<br>妝髮造型</span><span class="spec-val">Full Team Included</span></div>
-            <div class="royal-spec-item"><span class="spec-label">Retouch<br>精修張數</span><span class="spec-val">20 PICS</span></div>
-            <div class="royal-spec-item"><span class="spec-label">Deliver<br>交付成品</span><span class="spec-val">5 Decks + Poster</span></div>
+            <div class="royal-spec-item"><span class="spec-label">Session</span><span class="spec-val">Dual Style (2.5 HR)</span></div>
+            <div class="royal-spec-item"><span class="spec-label">Styling</span><span class="spec-val">Full Team Included</span></div>
+            <div class="royal-spec-item"><span class="spec-label">Retouch</span><span class="spec-val">20 PICS</span></div>
+            <div class="royal-spec-item"><span class="spec-label">Deliver</span><span class="spec-val">5 Decks + Poster</span></div>
         </div>
-        
         <div class="royal-price-area">
-            <span class="royal-old-price">原價 NT$ 44,800</span>
-            <span class="royal-current-price metallic-gold">NT$ 24,800</span>
+            <span class="royal-old-price">原價 NT$ 44,800</span><span class="royal-current-price metallic-gold">NT$ 24,800</span>
         </div>
     </div>
   </section>
 
   <section class="booking-cta-section">
       <div class="ritual-line"></div>
-      
       <button class="ritual-btn hover-target" onclick="createRipple(event)">
           <span>SECURE YOUR SESSION</span>
       </button>
