@@ -58,7 +58,7 @@
     }
     
     .metallic-silver {
-        background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%);
+        background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a0 70%, #d4d4d4 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -253,26 +253,23 @@
         margin-right: -0.6em;
     }
     
-    /* --- UPDATED: Dual Flowing Scroll Indicators --- */
+    /* --- Scroll Indicators --- */
     .scroll-indicator { 
         position: relative;
-        width: 2px; height: 70px; /* Fixed container height for flow */
-        overflow: hidden; /* Masking */
+        width: 2px; height: 70px; 
+        overflow: hidden; 
         opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; 
         margin-bottom: 30px; 
     }
-    /* Removed .scroll-text */
+    
     .scroll-line { 
-        position: absolute; top: -100%; left: 50%; /* Start above */
+        position: absolute; top: -100%; left: 50%; 
         width: 1px; height: 100%; 
-        /* Finer, double-fade gradient */
         background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%);
         transform: translateX(-50%);
         animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     }
-    .scroll-line:nth-child(2) {
-        animation-delay: 1.5s; /* Stagger for continuous sequence */
-    }
+    .scroll-line:nth-child(2) { animation-delay: 1.5s; }
 
     @keyframes scrollFlow { 
         0% { top: -100%; opacity: 0; }
@@ -527,11 +524,13 @@
     .hidden-booking-container.open { max-height: 3000px; opacity: 1; padding: 100px 4vw; }
     .booking-interface { width: 100%; max-width: 1000px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 70px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
     .booking-interface::before { content: 'SESSION TERMINAL // 001'; position: absolute; top: 25px; left: 25px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
+    
+    /* UPDATED: Prestige Booking Policy */
     .booking-terms { padding: 0 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 60px; border-top: none; }
-    .terms-title { font-family: 'Cinzel', serif; color: #BF953F; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 0.9; }
+    .terms-title { font-family: 'Cinzel', serif; color: #e0e0e0; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 1; }
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; text-align: left; }
-    .term-item h4 { color: #ddd; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
-    .term-item p { color: #777; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 1.9; font-weight: 300; padding-left: 16px; }
+    .term-item h4 { color: #fff; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
+    .term-item p { color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 2; font-weight: 300; padding-left: 16px; }
 
     .custom-booking-form { width: 100%; max-width: 600px; margin: 0 auto; }
     .form-group { margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; }
@@ -890,10 +889,10 @@
           <div class="booking-terms">
               <h3 class="terms-title metallic-gold">BOOKING POLICY</h3>
               <div class="terms-grid">
-                  <div class="term-item"><h4>費用說明</h4><p>報價為純攝影與成品費。妝髮(方案A除外)、場地及特殊道具屬代收代付項目。</p></div>
-                  <div class="term-item"><h4>訂金政策</h4><p>預約需支付 30% 訂金保留檔期，拍攝當日結清餘款。</p></div>
-                  <div class="term-item"><h4>準時原則</h4><p>遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金不退。</p></div>
-                  <div class="term-item"><h4>成品交付</h4><p>所有方案皆包含實體胡桃木 USB 與火漆封蠟認證卡交付。RAW 檔恕不提供。</p></div>
+                  <div class="term-item"><h4>SESSION FEE ｜ 費用與範疇</h4><p>報價涵蓋視覺指導、攝影技術與後期製作。妝髮（除方案 I 外）、場地租借及特殊道具為代收項目，實報實銷。</p></div>
+                  <div class="term-item"><h4>RESERVATION ｜ 檔期與訂金</h4><p>為確保雙方權益，預約需支付 30% 訂金以鎖定檔期。餘款請於拍攝當日結清。</p></div>
+                  <div class="term-item"><h4>PUNCTUALITY ｜ 時間與承諾</h4><p>請準時抵達以確保完整的創作時數。遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金恕不退還。</p></div>
+                  <div class="term-item"><h4>DELIVERABLES ｜ 交付與權益</h4><p>所有方案皆包含曜黑禮盒、金屬 USB 與火漆認證卡。RAW 檔為原始素材，恕不提供，僅交付精修成品。</p></div>
           </div>
       </div>
       
@@ -908,9 +907,9 @@
             <div class="form-group">
               <label for="plan">SESSION / 預約方案</label>
               <select name="plan" id="plan">
-                <option value="Structure">IDENTITY ｜ THE COVER （ 封面・映象 ）</option>
-                <option value="Scale">EDITORIAL ｜ THE STORY （ 敘事・畫報 ）</option>
-                <option value="Royal">PROJECT : ROYAL DECK （ 典藏・王牌 ）</option>
+                <option value="Structure">THE COVER - 封面・映象</option>
+                <option value="Scale">THE STORY - 敘事・畫報</option>
+                <option value="Royal">PROJECT: ROYAL - 典藏・王牌</option>
               </select>
             </div>
             <div class="form-group"><label for="date">PREFERRED DATE / 期望日期</label><input type="date" name="date" id="date" required></div>
