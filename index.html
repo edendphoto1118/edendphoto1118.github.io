@@ -47,7 +47,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- Metallic Text Effect Classes (Dune Palette) --- */
+    /* --- Metallic Text Effect Classes --- */
     .metallic-gold {
         background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
         -webkit-background-clip: text;
@@ -119,13 +119,22 @@
     }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
 
+    /* Updated Enter Button Style (No Block, Metallic Border) */
     .enter-btn {
-        background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff;
-        font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.4em;
-        text-transform: uppercase; cursor: pointer; padding: 15px 40px;
+        background: transparent; 
+        border: 1px solid rgba(255,255,255,0.3); 
+        color: #fff;
+        font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.4em;
+        text-transform: uppercase; cursor: pointer; padding: 18px 50px;
         transition: all 0.5s ease; white-space: nowrap;
+        box-shadow: 0 0 10px rgba(255,255,255,0.05);
     }
-    .enter-btn:hover { letter-spacing: 0.6em; background: #fff; color: #000; }
+    .enter-btn:hover { 
+        letter-spacing: 0.6em; 
+        border-color: #fff; 
+        box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        text-shadow: 0 0 8px rgba(255,255,255,0.5);
+    }
 
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
@@ -253,7 +262,6 @@
         margin-right: -0.6em;
     }
     
-    /* --- Scroll Indicators --- */
     .scroll-indicator { 
         position: relative;
         width: 2px; height: 70px; 
@@ -321,8 +329,22 @@
     @keyframes fadeUpElegant { to { opacity: 1; transform: translateY(0); } }
 
     .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; }
-    .load-more-btn { display: inline-block; padding: 25px 70px; border: 1px solid rgba(255,255,255,0.1); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.5s; }
-    .load-more-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
+    
+    /* Updated Load More Button */
+    .load-more-btn { 
+        display: inline-block; padding: 25px 70px; 
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2); 
+        color: #aaa; 
+        font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; 
+        text-transform: uppercase; cursor: none; transition: all 0.5s; 
+    }
+    .load-more-btn:hover { 
+        border-color: #fff; 
+        color: #fff;
+        box-shadow: 0 0 20px rgba(255,255,255,0.1); 
+        text-shadow: 0 0 5px rgba(255,255,255,0.3);
+    }
 
     /* --- 8.5 Visual Personality Test --- */
     .tool-section { padding: 100px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
@@ -383,8 +405,19 @@
     .price-area-bottom { margin-top: 30px; text-align: center; margin-bottom: 20px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; display: block; }
 
-    .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: none; transition: all 0.3s; }
-    .price-card:hover .jump-btn { background: #fff; color: #000; border-color: #fff; }
+    /* Updated Jump Button Style */
+    .jump-btn { 
+        width: 100%; padding: 18px 0; 
+        background: transparent; 
+        border: 1px solid rgba(255,255,255,0.15); 
+        color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; 
+        text-transform: uppercase; cursor: none; transition: all 0.3s; 
+    }
+    .price-card:hover .jump-btn { 
+        border-color: #fff; 
+        box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        background: transparent;
+    }
     
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
@@ -401,7 +434,6 @@
     }
     .price-card.offline:hover .sealing-container { opacity: 1; }
 
-    /* The tape strips */
     .tape-strip {
         position: absolute;
         background: #fff; color: #000;
@@ -480,6 +512,22 @@
     .royal-old-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #555; text-decoration: line-through; display: block; margin-bottom: 10px; }
     .royal-current-price { font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; }
     
+    /* Updated Royal Button (No Block) */
+    .royal-btn { 
+        width: 100%; padding: 25px 0; margin-top: 30px;
+        background: transparent; 
+        border: 1px solid rgba(191, 149, 63, 0.3); 
+        color: #BF953F; 
+        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; 
+        cursor: none; transition: all 0.4s ease; text-transform: uppercase; 
+    }
+    .royal-btn:hover { 
+        border-color: #BF953F; 
+        box-shadow: 0 0 20px rgba(191, 149, 63, 0.2);
+        color: #fff;
+        text-shadow: 0 0 8px rgba(191, 149, 63, 0.6);
+    }
+
     /* --- 12. Booking Ritual Section --- */
     .booking-cta-section { 
         padding: 120px 0 150px; text-align: center; background: #050505; width: 100%; 
@@ -525,11 +573,11 @@
     .booking-interface { width: 100%; max-width: 1000px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 70px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
     .booking-interface::before { content: 'SESSION TERMINAL // 001'; position: absolute; top: 25px; left: 25px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     
-    /* UPDATED: Prestige Booking Policy */
+    /* UPDATED: Booking Terms High Contrast */
     .booking-terms { padding: 0 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 60px; border-top: none; }
     .terms-title { font-family: 'Cinzel', serif; color: #e0e0e0; font-size: 1.5rem; margin-bottom: 50px; letter-spacing: 0.15em; opacity: 1; }
     .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; text-align: left; }
-    .term-item h4 { color: #fff; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
+    .term-item h4 { color: #e0e0e0; font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 12px; letter-spacing: 0.05em; border-left: 1px solid #BF953F; padding-left: 15px; }
     .term-item p { color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; line-height: 2; font-weight: 300; padding-left: 16px; }
 
     .custom-booking-form { width: 100%; max-width: 600px; margin: 0 auto; }
@@ -540,8 +588,23 @@
     .form-group select { cursor: pointer; color: #e0e0e0; }
     .form-group option { background: #050505; color: #fff; padding: 10px; }
     ::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
-    .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: rgba(191, 149, 63, 0.1); border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; }
-    .submit-btn:hover { background: #BF953F; color: #000; }
+    
+    /* Submit Button De-blocking */
+    .submit-btn { 
+        width: 100%; padding: 20px; margin-top: 20px; 
+        background: transparent; 
+        border: 1px solid rgba(191, 149, 63, 0.4); 
+        color: #BF953F; 
+        font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; 
+        cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; 
+    }
+    .submit-btn:hover { 
+        background: transparent; 
+        border-color: #BF953F; 
+        box-shadow: 0 0 20px rgba(191, 149, 63, 0.2);
+        color: #fff;
+        text-shadow: 0 0 5px rgba(191, 149, 63, 0.5);
+    }
 
     /* --- 13. About Section (Updated Slogan) --- */
     .background {
@@ -618,7 +681,7 @@
 
     @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .about-headline { font-size: 1.5rem; } .artist-statement-body { font-size: 1.1rem; } .contact-info { justify-content: center; } }
-    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .tech-ticker-wrap { height: 30px; } }
+    @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .royal-sp-amount { font-size: 3rem; } .tech-ticker-wrap { height: 30px; } }
   </style>
 </head>
 
@@ -763,7 +826,7 @@
             </div>
             
             <p class="plan-desc">
-                聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A4 攝影小誌 (Lookbook)。
+                聯手設計師精品店，提供 VIP 專屬造型顧問與完整妝髮服務。這場關於風格與情緒的化學反應，將被永久封存於為您訂製的 A4 訂製映像畫報 (Editorial Lookbook)。
             </p>
             
             <div class="specs-grid">
@@ -889,7 +952,7 @@
           <div class="booking-terms">
               <h3 class="terms-title metallic-gold">BOOKING POLICY</h3>
               <div class="terms-grid">
-                  <div class="term-item"><h4>SESSION FEE ｜ 費用與範疇</h4><p>報價涵蓋視覺指導、攝影技術與後期製作。妝髮（除方案 I 外）、場地租借及特殊道具為代收項目，實報實銷。</p></div>
+                  <div class="term-item"><h4>SESSION FEE ｜ 費用與範疇</h4><p>報價已包含攝影、專業妝髮、攝影棚租借與後期製作。僅特殊道具或外景車馬費屬代收代付項目，實報實銷。</p></div>
                   <div class="term-item"><h4>RESERVATION ｜ 檔期與訂金</h4><p>為確保雙方權益，預約需支付 30% 訂金以鎖定檔期。餘款請於拍攝當日結清。</p></div>
                   <div class="term-item"><h4>PUNCTUALITY ｜ 時間與承諾</h4><p>請準時抵達以確保完整的創作時數。遲到超過 15 分鐘將壓縮拍攝時間；超過 30 分鐘視同放棄，訂金恕不退還。</p></div>
                   <div class="term-item"><h4>DELIVERABLES ｜ 交付與權益</h4><p>所有方案皆包含曜黑禮盒、金屬 USB 與火漆認證卡。RAW 檔為原始素材，恕不提供，僅交付精修成品。</p></div>
