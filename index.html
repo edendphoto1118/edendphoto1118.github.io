@@ -47,7 +47,7 @@
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
-    /* --- Metallic Text Effect Classes (Dune Palette) --- */
+    /* --- Metallic Text Effect Classes --- */
     .metallic-gold {
         background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
         -webkit-background-clip: text;
@@ -58,7 +58,6 @@
     }
     
     .metallic-silver {
-        /* Cold, sharp platinum */
         background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -67,7 +66,7 @@
         text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
     }
 
-    /* --- Universal Vertical Separator (The Razor Beam) --- */
+    /* --- Universal Vertical Separator --- */
     .vertical-separator {
         display: inline-block;
         width: 1px;
@@ -87,7 +86,7 @@
       mix-blend-mode: overlay;
     }
 
-    /* --- 3. Preloader (Refined) --- */
+    /* --- 3. Preloader --- */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 20000; 
@@ -120,7 +119,6 @@
     }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
 
-    /* De-blocked Button Style */
     .enter-btn {
         background: transparent; 
         border: 1px solid rgba(255,255,255,0.25); 
@@ -196,7 +194,7 @@
     body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
     body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
 
-    /* --- 6. Hero Section (DUNE AESTHETIC) --- */
+    /* --- 6. Hero Section --- */
     .hero { 
         height: 100vh; position: relative; overflow: hidden; width: 100%; 
         display: flex; flex-direction: column; justify-content: space-between; 
@@ -219,7 +217,6 @@
     
     .hero h1 { 
         font-family: 'Cinzel', serif; 
-        /* Dune Formula: Small Size + Huge Spacing */
         font-size: 4.5vw; line-height: 1; font-weight: 400; 
         letter-spacing: 0.4em; margin: 0; 
         background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%);
@@ -236,7 +233,6 @@
         color: rgba(255,255,255,0.6); margin-right: -0.6em;
     }
     
-    /* Flowing Light Indicators */
     .scroll-indicator { 
         position: relative; width: 2px; height: 70px; overflow: hidden; 
         opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; 
@@ -301,7 +297,6 @@
 
     .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; }
     
-    /* De-blocked Load More Button */
     .load-more-btn { 
         display: inline-block; padding: 25px 70px; 
         background: transparent;
@@ -334,7 +329,6 @@
         overflow: hidden; 
     }
     
-    /* Metallic Border Animation */
     .price-card .border-line {
         position: absolute;
         background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f, #aa771c);
@@ -375,7 +369,6 @@
     .price-area-bottom { margin-top: 30px; text-align: center; margin-bottom: 20px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 2.2rem; display: block; }
 
-    /* De-blocked Jump Button */
     .jump-btn { 
         width: 100%; padding: 18px 0; 
         background: transparent; 
@@ -390,21 +383,17 @@
     
     .price-card.featured { border: 1px solid rgba(255,255,255,0.1); } 
 
-    /* --- LOCKED / OFFLINE CARDS (Plans II, III, IV) --- */
+    /* --- LOCKED / OFFLINE CARDS --- */
     .price-card.locked-plan { 
         opacity: 0.7; 
         overflow: hidden; 
         cursor: not-allowed; 
-        pointer-events: auto; /* Enable hover detection */
+        pointer-events: auto; 
     }
     .price-card.locked-plan .card-content { filter: grayscale(80%); transition: filter 0.5s; }
-    
-    /* Disable Button in Locked Plans */
     .price-card.locked-plan .jump-btn { border-color: #333; color: #555; pointer-events: none; }
-    
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.6); }
 
-    /* Sealing Container */
     .sealing-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         z-index: 20; pointer-events: none; overflow: hidden;
@@ -412,7 +401,6 @@
     }
     .price-card.locked-plan:hover .sealing-container { opacity: 1; }
 
-    /* The Tape Strips */
     .tape-strip {
         position: absolute;
         background: #fff; color: #000;
@@ -426,7 +414,6 @@
     .tape-left { top: 35%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 55%; left: -25%; transform: rotate(-20deg) translateX(120%); }
 
-    /* Animate on Hover */
     .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); }
     .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); }
 
@@ -447,11 +434,9 @@
         background: linear-gradient(135deg, #050505 0%, #020202 100%); 
         border-top: 1px solid #111; border-bottom: 1px solid #111; 
         width: 100%; position: relative; overflow: hidden; display: flex; justify-content: center;
-        /* Locked Style Base */
         cursor: not-allowed;
     }
     
-    /* Apply locking visual to Royal section as well */
     .royal-section .sealing-container { opacity: 0; transition: opacity 0.1s; z-index: 20; }
     .royal-section:hover .sealing-container { opacity: 1; }
     .royal-section:hover .tape-left { transform: rotate(20deg) translateX(0); }
@@ -487,12 +472,11 @@
     .royal-old-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #555; text-decoration: line-through; display: block; margin-bottom: 10px; }
     .royal-current-price { font-family: 'Cinzel', serif; font-size: 3.5rem; display: block; }
     
-    /* De-blocked Royal Button (Disabled) */
     .royal-btn { 
         width: 100%; padding: 25px 0; margin-top: 30px;
         background: transparent; 
         border: 1px solid rgba(191, 149, 63, 0.3); 
-        color: #555; /* Dimmed */
+        color: #555; 
         font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; 
         cursor: not-allowed; transition: all 0.4s ease; text-transform: uppercase; 
         pointer-events: none;
@@ -514,7 +498,6 @@
     }
     .ritual-line.extended { width: 90vw; max-width: 1600px; }
 
-    /* De-blocked Ritual Button */
     .ritual-btn { 
         position: relative; padding: 25px 80px; background: #050505; 
         border: 1px solid rgba(191, 149, 63, 0.4); color: #fff; 
@@ -562,7 +545,6 @@
     .form-group option { background: #050505; color: #fff; padding: 10px; }
     ::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
     
-    /* De-blocked Submit Button */
     .submit-btn { 
         width: 100%; padding: 20px; margin-top: 20px; 
         background: transparent; 
@@ -579,7 +561,7 @@
         text-shadow: 0 0 5px rgba(191, 149, 63, 0.5);
     }
 
-    /* --- 13. About Section (Updated Slogan) --- */
+    /* --- 13. About Section (Supreme Version Slogan) --- */
     .background {
         padding: 150px 8vw;
         background: #050505;
@@ -594,9 +576,10 @@
     }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
     
+    /* V26.0: The Supreme Slogan */
     .about-slogan-main {
         font-family: 'Cinzel', serif;
-        font-size: 3.5rem;
+        font-size: 3rem;
         letter-spacing: 0.2em;
         font-weight: 400;
         margin: 0 0 30px 0;
@@ -604,27 +587,31 @@
         opacity: 0;
         transform: translateY(30px);
         animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        line-height: 1.4;
     }
     
+    /* Using Noto Serif TC if available, or Montserrat */
     .about-slogan-sub {
         font-family: 'Montserrat', sans-serif;
-        font-size: 0.8rem;
-        color: #888;
-        letter-spacing: 0.8em;
+        font-size: 0.9rem;
+        color: #aaa;
+        letter-spacing: 0.3em;
         text-transform: uppercase;
         display: block;
         opacity: 0;
         transform: translateY(30px);
         animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        margin-left: 0.8em; /* Offset for spacing balance */
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 30px auto 0;
     }
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     
     @media (max-width: 768px) { 
         .hero h1 { font-size: 9vw; }
-        .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.1em; } 
-        .about-slogan-sub { font-size: 0.6rem; letter-spacing: 0.4em; }
+        .about-slogan-main { font-size: 1.5rem; letter-spacing: 0.1em; } 
+        .about-slogan-sub { font-size: 0.65rem; letter-spacing: 0.15em; }
     }
     
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; }
@@ -652,8 +639,8 @@
     .toast { position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 15px 40px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; opacity: 0; pointer-events: none; transition: all 0.5s ease; z-index: 20000; font-weight: 500; text-transform: uppercase; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .about-name-big { font-size: 8rem; text-align: left; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
-    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .about-headline { font-size: 1.5rem; } .artist-statement-body { font-size: 1.1rem; } .contact-info { justify-content: center; } }
+    @media (max-width: 1200px) { nav { padding: 30px; } .nav-menu { gap: 25px; } .gallery-container { column-count: 2; column-gap: 30px; } .signature-block { float: none; } footer .tech-stack { display: none; } footer { text-align: center; padding-right: 0; } .royal-grid { flex-direction: column; } .royal-price { border-left: none; padding-left: 0; border: 1px solid rgba(191,149,63,0.1); } }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 60px; max-width: 500px; } .delivery-grid { flex-direction: column; gap: 50px; } .contact-info { justify-content: center; } }
     @media (max-width: 768px) { .cursor-core, .cursor-ring { display: none !important; } body { cursor: auto !important; } nav { padding: 25px 30px; } .nav-menu { display: none; } .hero h1 { font-size: 13vw; } .gallery-container { column-count: 1; } .gallery-item img { filter: grayscale(0%) contrast(100%); } .royal-grid { flex-direction: column; gap: 60px; } .royal-price { padding: 20px; } .hidden-booking-container.open { padding: 80px 5vw; } .booking-interface { padding: 40px 25px; } .terms-grid { grid-template-columns: 1fr; gap: 30px; } .filter-tabs { gap: 25px; } .filter-btn { font-size: 0.65rem; } .price-block { flex-direction: column; align-items: flex-start; gap: 8px; } .original-price { font-size: 1rem; } .tech-ticker-wrap { height: 30px; } }
   </style>
 </head>
@@ -766,7 +753,7 @@
             </div>
             
             <p class="plan-desc">
-                不只是像你，而是成名後的你。包含專業妝髮與雜誌級排版，交付實體 A3 藝術海報 (Rolled Poster)，讓每一張照片都成為您的成名作。
+                以國際刊物的封面規格，定格您的風格維度。包含專業妝髮造型與雜誌級排版，將您的存在感凝縮於一張 A3 藝術海報 (Rolled Poster) 之中。
             </p>
             
             <div class="specs-grid">
@@ -803,7 +790,7 @@
             </div>
             
             <p class="plan-desc">
-                由設計師選品店操刀造型，結合專業妝髮團隊。將您的風格敘事，凝縮為一本專屬的訂製映像期刊 (A4)。
+                聯手設計師選品店與專業妝髮團隊，打造專屬造型企劃。捕捉光影下的情緒流動，將您的風格敘事編纂為一本具備收藏價值的映像期刊。
             </p>
             
             <div class="specs-grid">
@@ -839,8 +826,8 @@
                 <span class="plan-zh">電影・維度</span>
             </div>
             
-            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em; padding-top: 30px;">
-                電影級的視覺震撼。<br>盛大籌備中。
+            <p class="plan-desc" style="text-align: center; letter-spacing: 0.1em;">
+                突破平面邊界，跨越至電影維度的視覺實驗。<br>極致視覺企劃，即將解鎖。
             </p>
             
             <div class="specs-grid">
@@ -968,8 +955,11 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main metallic-gold">CURATING LIFE THROUGH IMAGERY.</h2>
-        <span class="about-slogan-sub">用 攝 影 　 策 展 美 好</span>
+        <h2 class="about-slogan-main metallic-gold">你佇立之處，即是時代的封面。</h2>
+        <span class="about-slogan-sub">
+            無需證明你的不凡。<br>
+            WHERE YOU STAND IS THE COVER.
+        </span>
     </div>
   </section>
   
