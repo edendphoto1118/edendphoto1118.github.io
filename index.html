@@ -37,6 +37,9 @@
       overflow-y: auto; height: auto;
       -webkit-font-smoothing: antialiased;
     }
+    
+    /* Lock body scroll when menu is open */
+    body.menu-open { overflow: hidden; }
 
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
@@ -103,36 +106,82 @@
     }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation --- */
-    nav {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 40px 50px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease 1s; 
+    /* --- 4. Navigation (Hamburger Overhaul) --- */
+    
+    /* Top Bar - Clean */
+    .top-bar {
+        position: fixed; top: 0; left: 0; width: 100%; padding: 40px 50px;
+        display: flex; justify-content: space-between; align-items: center;
+        z-index: 10000; mix-blend-mode: difference;
+        opacity: 0; transition: opacity 2s ease 1s; pointer-events: none;
     }
-    body.site-active nav { opacity: 1; }
+    body.site-active .top-bar { opacity: 1; }
+
     .nav-logo { 
         font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; 
-        letter-spacing: 0.15em; text-decoration: none; cursor: pointer;
+        letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto;
     }
-    .nav-menu { display: flex; gap: 40px; align-items: center; }
-    .nav-item { 
-        font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: #fff; 
-        text-decoration: none; letter-spacing: 0.25em; text-transform: uppercase; 
-        position: relative; cursor: pointer; opacity: 0.8; transition: opacity 0.3s;
+
+    /* Hamburger Trigger */
+    .menu-trigger {
+        width: 40px; height: 20px; position: relative; cursor: pointer; pointer-events: auto;
+        display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;
     }
-    .nav-item:hover { opacity: 1; }
-    .audio-btn { 
-        background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; 
-        padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; 
-        font-family: 'Montserrat', sans-serif; cursor: pointer; 
-        border-radius: 30px; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s;
+    .menu-line {
+        width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     }
-    .audio-btn:hover { opacity: 1; }
-    .sound-wave { display: flex; gap: 2px; height: 10px; align-items: flex-end; }
-    .bar { width: 1px; background: currentColor; height: 100%; animation: wave 1s infinite ease-in-out; }
-    .bar:nth-child(1) { animation-delay: 0s; } .bar:nth-child(2) { animation-delay: 0.2s; } .bar:nth-child(3) { animation-delay: 0.4s; }
-    .paused .bar { animation-play-state: paused; height: 2px; }
-    @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
+    .menu-line:nth-child(2) { width: 60%; }
+    
+    .menu-trigger:hover .menu-line:nth-child(2) { width: 100%; }
+    
+    /* Menu Overlay */
+    .menu-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: #000; z-index: 9999;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .menu-overlay.active { opacity: 1; visibility: visible; }
+    
+    .menu-close-btn {
+        position: absolute; top: 40px; right: 50px; width: 40px; height: 40px; cursor: pointer;
+    }
+    .menu-close-btn::before, .menu-close-btn::after {
+        content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #fff;
+        transform: rotate(45deg);
+    }
+    .menu-close-btn::after { transform: rotate(-45deg); }
+
+    .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
+    
+    .menu-link {
+        font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none;
+        letter-spacing: 0.1em; transition: all 0.3s; position: relative;
+        transform: translateY(20px); opacity: 0; transition: transform 0.5s ease, opacity 0.5s ease, color 0.3s;
+    }
+    .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
+    /* Stagger delay */
+    .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
+    .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.2s; }
+    .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; }
+    .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
+
+    .menu-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+    .menu-link span { font-size: 0.8rem; vertical-align: top; margin-left: 5px; color: #BF953F; }
+
+    /* Sound Switch in Menu */
+    .menu-sound-wrap {
+        margin-top: 60px; opacity: 0; transform: translateY(20px); 
+        transition: all 0.5s ease 0.5s;
+    }
+    .menu-overlay.active .menu-sound-wrap { opacity: 1; transform: translateY(0); }
+    
+    .sound-switch {
+        background: transparent; border: 1px solid #333; padding: 10px 30px;
+        color: #888; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+        cursor: pointer; transition: all 0.3s;
+    }
+    .sound-switch:hover, .sound-switch.on { border-color: #BF953F; color: #BF953F; }
 
     /* --- 5. Cursor (Desktop Only) --- */
     .cursor-core, .cursor-ring { display: none; }
@@ -185,7 +234,6 @@
         color: rgba(255,255,255,0.6); margin-right: -0.6em;
     }
     
-    /* UX Optimization: Direct access to Work */
     .hero-cta-btn {
         margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
         color: #fff; padding: 12px 35px; font-family: 'Montserrat', sans-serif;
@@ -209,7 +257,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Gallery --- */
+    /* --- 7. Sections (Gallery) --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -230,33 +278,16 @@
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: pointer; opacity: 0; transform: translateY(40px) scale(0.98); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s ease, transform 1.2s, filter 1.4s; }
     .gallery-item.reveal { opacity: 1; transform: translateY(0) scale(1); filter: grayscale(100%) contrast(110%) brightness(0.9); }
     .gallery-item.filtered-out, .gallery-item.hidden-loadmore { display: none; }
-    
     .gallery-item img { width: 100%; height: auto; display: block; background: #0a0a0a; min-height: 100px; outline: 1px solid rgba(255,255,255,0); transition: transform 1.4s, outline-color 0.6s, outline-offset 0.6s; }
-    .item-meta { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; opacity: 0; transition: opacity 0.8s ease; }
-    .meta-id { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; letter-spacing: 0.2em; color: #666; }
-    .meta-line { height: 1px; background: #222; flex-grow: 1; margin: 0 15px; }
-    .meta-tag { font-family: 'Cinzel', serif; font-size: 0.55rem; color: #888; letter-spacing: 0.1em; }
-    
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
-    .gallery-item:hover .item-meta { opacity: 1; }
     
     /* THE VISION - Glitch Presentation */
-    .gallery-item[data-category="Vision"] img {
-        filter: contrast(1.2) brightness(0.8);
-    }
-    .gallery-item[data-category="Vision"]:hover img {
-        animation: glitch-anim 0.3s infinite;
-        outline-color: #0ff;
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-    }
+    .gallery-item[data-category="Vision"] img { filter: contrast(1.2) brightness(0.8); }
+    .gallery-item[data-category="Vision"]:hover img { animation: glitch-anim 0.3s infinite; outline-color: #0ff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
     @keyframes glitch-anim {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
+        0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
     }
 
     .gallery-offline-msg { display: none; text-align: center; width: 100%; padding: 150px 0; }
@@ -266,11 +297,7 @@
     @keyframes fadeUpElegant { to { opacity: 1; transform: translateY(0); } }
 
     .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; }
-    .load-more-btn { 
-        display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); 
-        color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; 
-        text-transform: uppercase; cursor: pointer; transition: all 0.5s; 
-    }
+    .load-more-btn { display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.5s; }
     .load-more-btn:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 
     /* --- Archetype --- */
@@ -278,90 +305,68 @@
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
-    /* --- 9. PRICING (Simplified / Gallery Card Style) --- */
+    /* --- 9. PRICING --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto; width: 100%; }
+    .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 750px; overflow: hidden; }
     
-    .price-card { 
-        border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; 
-        transition: all 0.5s ease; display: flex; flex-direction: column; 
-        background: #080808; min-height: 600px; overflow: hidden; /* Reduced height as specs moved */
-    }
-    
-    /* V30.0: Noise Gradient for Border */
-    .price-card .border-line {
-        position: absolute;
-        background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f);
-        transition: all 0.4s ease-out; opacity: 0; z-index: 10;
-    }
-    .border-top { top: 0; left: 0; height: 1px; width: 0%; }
-    .border-right { top: 0; right: 0; width: 1px; height: 0%; }
-    .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; }
-    .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
-
-    .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; }
-    .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
-    .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; }
-    .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
+    .price-card .border-line { position: absolute; background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); transition: all 0.4s ease-out; opacity: 0; z-index: 10; }
+    .border-top { top: 0; left: 0; height: 1px; width: 0%; } .border-right { top: 0; right: 0; width: 1px; height: 0%; }
+    .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
+    .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; } .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
+    .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; } .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
     
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
-
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     
-    /* Clean, ID-focused Header */
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
-    
     .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; color: #888; font-weight: 300; }
-
-    /* Literary/High-Concept Description */
-    .plan-philosophy { 
-        font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; 
-        line-height: 2; font-weight: 300; text-align: justify; 
-        border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px;
-    }
-
+    .plan-philosophy { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
     .plan-footer { margin-top: auto; }
     .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
 
-    /* --- The Vision Special Effects --- */
+    /* The Vision Special Effects */
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
     
-    /* --- Locked Plans (Mobile Optimized) --- */
+    /* Locked Plans */
     .price-card.locked-plan { cursor: not-allowed; }
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
-
     .sealing-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 0.3s; }
-    
-    .tape-strip {
-        position: absolute; background: #fff; color: #000;
-        font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em;
-        padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    }
+    .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
     .tape-strip::before, .tape-strip::after { content: 'LOCKED   LOCKED   LOCKED   LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
 
-    /* Desktop Hover Logic */
+    /* Tape logic */
     @media (hover: hover) {
         .price-card.locked-plan:hover .sealing-container { opacity: 1; }
         .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); }
         .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); }
     }
-    /* Mobile: Always Visible for Locked Plans */
     @media (hover: none) {
         .price-card.locked-plan .sealing-container { opacity: 1; }
         .tape-left { transform: rotate(20deg) translateX(0); }
         .tape-right { transform: rotate(-20deg) translateX(0); }
         .price-card.locked-plan .card-content { opacity: 0.3; }
     }
+
+    /* List Style for Spec Sheet (in Plan 0/1) */
+    .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
+    .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
+    .spec-val { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #ccc; letter-spacing: 0.05em; text-align: right; }
+    .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+    .spec-gold { color: #BF953F; }
+
+    .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+    .price-card:hover .jump-btn { border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
+    .price-card.locked-plan .jump-btn { border-color: #333; color: #555; pointer-events: none; }
 
     /* --- 10. Delivery --- */
     .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
@@ -373,14 +378,9 @@
     .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 20px; letter-spacing: 0.1em; }
     .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 1.8; font-weight: 300; }
 
-    /* --- 11. Booking (The Smart Terminal) --- */
+    /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    .ritual-btn { 
-        position: relative; padding: 25px 80px; background: #050505; 
-        border: 1px solid rgba(191, 149, 63, 0.4); color: #fff; 
-        font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; 
-        text-transform: uppercase; cursor: pointer; transition: all 0.5s ease; z-index: 2;
-    }
+    .ritual-btn { position: relative; padding: 25px 80px; background: #050505; border: 1px solid rgba(191, 149, 63, 0.4); color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all 0.5s ease; z-index: 2; }
     .ritual-btn::before { content: '預約席次'; display: block; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.4em; color: #BF953F; margin-top: 8px; opacity: 0.7; }
     .ritual-btn:hover { border-color: #BF953F; box-shadow: 0 0 40px rgba(191, 149, 63, 0.2); }
     .ripple { position: absolute; background: rgba(191, 149, 63, 0.8); border-radius: 50%; transform: scale(0); animation: rippleEffect 0.8s; pointer-events: none; }
@@ -396,13 +396,12 @@
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .form-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #BF953F; margin-bottom: 5px; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
-    .form-group select option { background: #111; }
+    
+    /* Unavailable options styling */
+    .form-group select option:disabled { color: #555; background: #000; }
+    .form-group select option { background: #111; color: #fff; padding: 10px; }
 
-    /* Dynamic Plan Details Box */
-    #plan-details-box {
-        background: rgba(191,149,63, 0.05); border: 1px solid rgba(191,149,63, 0.2);
-        padding: 30px; margin: 30px 0; display: none; /* Hidden by default */
-    }
+    #plan-details-box { background: rgba(191,149,63, 0.05); border: 1px solid rgba(191,149,63, 0.2); padding: 30px; margin: 30px 0; display: none; }
     .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
     .detail-val { color: #fff; }
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
@@ -414,21 +413,22 @@
 
     /* --- 13. About --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
-    .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3vw; letter-spacing: 0.2em; text-align: center; line-height: 1.4; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.5s forwards; }
-    .about-slogan-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.3em; text-align: center; margin-top: 30px; opacity: 0; animation: fadeUp 1.5s 0.8s forwards; }
+    .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.2em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
+    .about-slogan-sub { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.3em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     /* --- Footer --- */
     footer { padding: 50px 4vw; text-align: right; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
 
-    /* --- Media Queries --- */
+    /* --- Mobile --- */
     @media (max-width: 900px) { 
         .pricing-grid { grid-template-columns: 1fr; max-width: 500px; } 
         .delivery-grid { flex-direction: column; gap: 50px; }
         .hero h1 { font-size: 12vw; }
         .about-slogan-main { font-size: 6vw; }
         .gallery-container { column-count: 1; }
-        .nav-menu { display: none; } /* Hide menu items on mobile, maybe add hamburger later */
+        .menu-link { font-size: 2rem; }
     }
   </style>
 </head>
@@ -450,15 +450,28 @@
   <div class="cursor-core"></div>
   <div class="cursor-ring"></div>
 
-  <nav>
-    <a href="https://www.instagram.com/eden_d_photo/" target="_blank" class="nav-logo hover-target metallic-silver">EDEN</a>
-    <div class="nav-menu">
-      <a href="#work" class="nav-item hover-target">PORTFOLIO</a>
-      <a href="#pricing" class="nav-item hover-target">VISUALS</a>
-      <a href="#hiddenBooking" onclick="toggleBooking()" class="nav-item hover-target">CONTACT</a>
-      <button class="audio-btn hover-target" onclick="toggleAudio()">SOUND</button>
-    </div>
-  </nav>
+  <div class="top-bar">
+      <a href="#" class="nav-logo" onclick="toggleMenu(); return false;">EDEN</a>
+      
+      <div class="menu-trigger hover-target" onclick="toggleMenu()">
+          <div class="menu-line"></div>
+          <div class="menu-line"></div>
+      </div>
+  </div>
+
+  <div class="menu-overlay" id="menuOverlay">
+      <div class="menu-close-btn hover-target" onclick="toggleMenu()"></div>
+      <div class="menu-items">
+          <a href="#work" class="menu-link hover-target" onclick="toggleMenu()">PORTFOLIO</a>
+          <a href="#pricing" class="menu-link hover-target" onclick="toggleMenu()">VISUALS</a>
+          <a href="#archetype" class="menu-link hover-target" onclick="toggleMenu()">ARCHETYPE</a>
+          <a href="#hiddenBooking" class="menu-link hover-target" onclick="toggleMenu()">CONTACT</a>
+          
+          <div class="menu-sound-wrap">
+              <button class="sound-switch hover-target" id="soundBtn" onclick="toggleAudio()">SOUND: OFF</button>
+          </div>
+      </div>
+  </div>
 
   <section class="hero">
     <video class="hero-bg-video" autoplay muted loop playsinline><source src="hero.mp4" type="video/mp4"></video>
@@ -519,8 +532,13 @@
                     一張好的肖像，是專業的入場券。捨棄繁複背景，用頂級光影雕琢面孔細節。
                 </p>
             </div>
+            <div class="spec-list">
+                <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR</span></div>
+                <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON (NT$ 2,500)</span></div>
+                <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES</span></div>
+                <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL</span></div>
+            </div>
             <div class="plan-footer">
-                <span class="artifact-info">DIGITAL DELIVERY</span>
                 <span class="current-price metallic-silver">NT$ 3,600</span>
             </div>
         </div>
@@ -540,8 +558,13 @@
                     無需刻意演繹，你的存在即是頂級。包含專業妝髮與排版，將您的存在感凝縮於海報之中。
                 </p>
             </div>
+            <div class="spec-list">
+                <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR</span></div>
+                <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val spec-highlight">INCLUDED (1 LOOK)</span></div>
+                <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES</span></div>
+                <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB</span></div>
+            </div>
             <div class="plan-footer">
-                <span class="artifact-info">A3 POSTER + USB</span>
                 <span class="current-price metallic-silver">NT$ 8,800</span>
             </div>
         </div>
@@ -585,6 +608,27 @@
             <div class="plan-footer">
                 <span class="artifact-info">WEB EXHIBITION</span>
                 <span class="current-price metallic-silver">[ COMING SOON ]</span>
+            </div>
+        </div>
+      </div>
+      
+      <div class="price-card locked-plan hover-target">
+        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
+        <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
+        <div class="card-content">
+            <div>
+                <span class="plan-id">NO. IV</span>
+                <div class="plan-title-block">
+                    <span class="plan-en metallic-gold">ROYAL</span>
+                    <span class="plan-zh">典藏・王牌</span>
+                </div>
+                <p class="plan-philosophy">
+                    將您的形象鑄造成可流通的實體王牌。採用德國黑芯紙與燙金工藝，這是屬於您的頂級社交貨幣。
+                </p>
+            </div>
+            <div class="plan-footer">
+                <span class="artifact-info">LIMITED EDITION</span>
+                <span class="current-price metallic-gold">[ WAITLIST ]</span>
             </div>
         </div>
       </div>
@@ -666,7 +710,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V30 --- */
+    /* --- JS Logic for V31 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
@@ -681,6 +725,13 @@
             document.body.classList.add('site-active'); 
             document.getElementById('preloader').style.display='none';
         }, 1500);
+    }
+
+    // Toggle Hamburger Menu
+    function toggleMenu() {
+        const menu = document.getElementById('menuOverlay');
+        menu.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
     }
 
     // Dynamic Plan Details Logic
@@ -708,7 +759,7 @@
     function openBookingWithPlan(planValue) {
         const bookingSection = document.getElementById('hiddenBooking');
         const select = document.getElementById('planSelect');
-        if (!bookingSection.classList.contains('open')) { toggleBooking(); }
+        if (!bookingSection.classList.contains('open')) { toggleBookingSection(); }
         setTimeout(() => {
             select.value = planValue;
             updatePlanDetails();
@@ -716,9 +767,8 @@
         }, 500);
     }
 
-    /* --- Toggle Booking --- */
-    function createRipple(event) { toggleBooking(); }
-    function toggleBooking() {
+    function createRipple(event) { toggleBookingSection(); }
+    function toggleBookingSection() {
         const el = document.getElementById('hiddenBooking');
         el.classList.toggle('open');
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
@@ -733,7 +783,6 @@
       galleryContainer.innerHTML = '';
       for (let i = 1; i <= totalWorks; i++) {
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
-        const figNum = i.toString().padStart(3, '0');
         let category = 'Identity'; 
         if (i <= 10) { category = 'Essentials'; }
         else if (i > 60) { category = 'Editorial'; }
@@ -802,7 +851,16 @@
     }
     function toggleAudio() {
         const audio = document.getElementById('bgMusic');
-        audio.paused ? audio.play() : audio.pause();
+        const btn = document.getElementById('soundBtn');
+        if(audio.paused) {
+            audio.play();
+            btn.innerHTML = "SOUND: ON";
+            btn.classList.add('on');
+        } else {
+            audio.pause();
+            btn.innerHTML = "SOUND: OFF";
+            btn.classList.remove('on');
+        }
     }
   </script>
 </body>
