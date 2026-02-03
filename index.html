@@ -38,7 +38,6 @@
       -webkit-font-smoothing: antialiased;
     }
     
-    /* Lock body scroll when menu is open */
     body.menu-open { overflow: hidden; }
 
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
@@ -106,11 +105,11 @@
     }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation (Hamburger Overhaul) --- */
+    /* --- 4. Navigation (Hybrid V32) --- */
     
-    /* Top Bar - Clean */
+    /* Fixed Top Bar */
     .top-bar {
-        position: fixed; top: 0; left: 0; width: 100%; padding: 40px 50px;
+        position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
         display: flex; justify-content: space-between; align-items: center;
         z-index: 10000; mix-blend-mode: difference;
         opacity: 0; transition: opacity 2s ease 1s; pointer-events: none;
@@ -122,29 +121,48 @@
         letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto;
     }
 
+    .nav-controls {
+        display: flex; align-items: center; gap: 30px; pointer-events: auto;
+    }
+
+    /* Restored Visible Audio Button */
+    .audio-btn { 
+        background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; 
+        padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; 
+        font-family: 'Montserrat', sans-serif; cursor: pointer; 
+        border-radius: 30px; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s;
+    }
+    .audio-btn:hover { opacity: 1; border-color: #fff; }
+    .audio-btn.active { border-color: #BF953F; color: #BF953F; }
+    
+    .sound-wave { display: flex; gap: 2px; height: 10px; align-items: flex-end; }
+    .bar { width: 1px; background: currentColor; height: 100%; animation: wave 1s infinite ease-in-out; }
+    .bar:nth-child(1) { animation-delay: 0s; } .bar:nth-child(2) { animation-delay: 0.2s; } .bar:nth-child(3) { animation-delay: 0.4s; }
+    .paused .bar { animation-play-state: paused; height: 2px; }
+    @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
+
     /* Hamburger Trigger */
     .menu-trigger {
-        width: 40px; height: 20px; position: relative; cursor: pointer; pointer-events: auto;
+        width: 30px; height: 14px; position: relative; cursor: pointer; 
         display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;
     }
     .menu-line {
         width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     }
     .menu-line:nth-child(2) { width: 60%; }
-    
     .menu-trigger:hover .menu-line:nth-child(2) { width: 100%; }
     
     /* Menu Overlay */
     .menu-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #000; z-index: 9999;
+        background: #050505; z-index: 9999;
         display: flex; flex-direction: column; justify-content: center; align-items: center;
         opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s ease;
     }
     .menu-overlay.active { opacity: 1; visibility: visible; }
     
     .menu-close-btn {
-        position: absolute; top: 40px; right: 50px; width: 40px; height: 40px; cursor: pointer;
+        position: absolute; top: 35px; right: 50px; width: 40px; height: 40px; cursor: pointer;
     }
     .menu-close-btn::before, .menu-close-btn::after {
         content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #fff;
@@ -160,28 +178,12 @@
         transform: translateY(20px); opacity: 0; transition: transform 0.5s ease, opacity 0.5s ease, color 0.3s;
     }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
-    /* Stagger delay */
     .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
     .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.2s; }
     .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; }
     .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
 
-    .menu-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-    .menu-link span { font-size: 0.8rem; vertical-align: top; margin-left: 5px; color: #BF953F; }
-
-    /* Sound Switch in Menu */
-    .menu-sound-wrap {
-        margin-top: 60px; opacity: 0; transform: translateY(20px); 
-        transition: all 0.5s ease 0.5s;
-    }
-    .menu-overlay.active .menu-sound-wrap { opacity: 1; transform: translateY(0); }
-    
-    .sound-switch {
-        background: transparent; border: 1px solid #333; padding: 10px 30px;
-        color: #888; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-        cursor: pointer; transition: all 0.3s;
-    }
-    .sound-switch:hover, .sound-switch.on { border-color: #BF953F; color: #BF953F; }
+    .menu-link:hover { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.4); }
 
     /* --- 5. Cursor (Desktop Only) --- */
     .cursor-core, .cursor-ring { display: none; }
@@ -257,7 +259,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Sections (Gallery) --- */
+    /* --- 7. Gallery --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -397,7 +399,6 @@
     .form-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #BF953F; margin-bottom: 5px; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
     
-    /* Unavailable options styling */
     .form-group select option:disabled { color: #555; background: #000; }
     .form-group select option { background: #111; color: #fff; padding: 10px; }
 
@@ -407,18 +408,26 @@
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
 
     .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
-    
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About --- */
+    /* --- 13. About (RESTORED) --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
+    .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
     .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.2em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
     .about-slogan-sub { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.3em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* --- Footer --- */
-    footer { padding: 50px 4vw; text-align: right; }
+    /* --- Ticker & Footer (RESTORED) --- */
+    .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
+    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.15em; }
+    @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    .visitor-counter { display: flex; align-items: center; gap: 15px; z-index: 9001; background: #050505; padding-left: 20px; box-shadow: -10px 0 20px #050505; }
+    .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.15em; text-transform: uppercase; }
+    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
+    @keyframes pulseText { 0% { opacity: 0.7; } 50% { opacity: 1; text-shadow: 0 0 10px rgba(191, 149, 63, 0.4); } 100% { opacity: 0.7; } }
+
+    footer { padding: 50px 4vw 100px; text-align: right; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
 
     /* --- Mobile --- */
@@ -453,9 +462,18 @@
   <div class="top-bar">
       <a href="#" class="nav-logo" onclick="toggleMenu(); return false;">EDEN</a>
       
-      <div class="menu-trigger hover-target" onclick="toggleMenu()">
-          <div class="menu-line"></div>
-          <div class="menu-line"></div>
+      <div class="nav-controls">
+          <button class="audio-btn hover-target" id="topAudioBtn" onclick="toggleAudio()">
+              SOUND
+              <div class="sound-wave paused" id="soundWave">
+                  <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              </div>
+          </button>
+          
+          <div class="menu-trigger hover-target" onclick="toggleMenu()">
+              <div class="menu-line"></div>
+              <div class="menu-line"></div>
+          </div>
       </div>
   </div>
 
@@ -466,10 +484,6 @@
           <a href="#pricing" class="menu-link hover-target" onclick="toggleMenu()">VISUALS</a>
           <a href="#archetype" class="menu-link hover-target" onclick="toggleMenu()">ARCHETYPE</a>
           <a href="#hiddenBooking" class="menu-link hover-target" onclick="toggleMenu()">CONTACT</a>
-          
-          <div class="menu-sound-wrap">
-              <button class="sound-switch hover-target" id="soundBtn" onclick="toggleAudio()">SOUND: OFF</button>
-          </div>
       </div>
   </div>
 
@@ -695,11 +709,20 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main metallic-gold">你佇立之處，即是時代的封面。</h2>
-        <span class="about-slogan-sub">WHERE YOU STAND IS THE COVER.</span>
+        <h2 class="about-slogan-main metallic-gold">用 攝 影 　 策 展 美 好</h2>
+        <span class="about-slogan-sub">
+            無需證明你的不凡。<br>
+            你佇立之處，即是時代的封面。<br>
+            WHERE YOU STAND IS THE COVER.
+        </span>
     </div>
   </section>
   
+  <div class="tech-ticker-wrap">
+      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // FISHEYE DISTORTION // 3D PRINTED PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
+      <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
+  </div>
+
   <footer>
       <p>&copy; 2025 EDEN｜DEEN. All Rights Reserved.</p>
   </footer>
@@ -710,7 +733,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V31 --- */
+    /* --- JS Logic for V32 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
@@ -727,14 +750,14 @@
         }, 1500);
     }
 
-    // Toggle Hamburger Menu
+    /* Toggle Hamburger Menu */
     function toggleMenu() {
         const menu = document.getElementById('menuOverlay');
         menu.classList.toggle('active');
         document.body.classList.toggle('menu-open');
     }
 
-    // Dynamic Plan Details Logic
+    /* Dynamic Plan Details Logic */
     const planData = {
         'Essentials': { time: '0.5 HR', style: 'ADD-ON (+NT$2,500)', retouch: '2 IMAGES', deposit: 'NT$ 1,000' },
         'Structure': { time: '1.5 HR', style: 'INCLUDED (1 LOOK)', retouch: '8 IMAGES', deposit: 'NT$ 2,600' }
@@ -827,6 +850,16 @@
         document.getElementById('loadMoreBtn').style.display = 'none';
     }
 
+    /* Visitor Counter */
+    let count = localStorage.getItem('eden_visitor_count');
+    if (!count) { count = 12840; } else { count = parseInt(count); }
+    if(!sessionStorage.getItem('session_counted')) {
+        count += Math.floor(Math.random() * 3) + 1;
+        localStorage.setItem('eden_visitor_count', count);
+        sessionStorage.setItem('session_counted', 'true');
+    }
+    document.getElementById('visitorCount').innerText = "NO. " + count.toLocaleString('en-US', {minimumIntegerDigits: 6, useGrouping:true});
+
     /* Cursor */
     const cursorCore = document.querySelector('.cursor-core');
     const cursorRing = document.querySelector('.cursor-ring');
@@ -851,15 +884,16 @@
     }
     function toggleAudio() {
         const audio = document.getElementById('bgMusic');
-        const btn = document.getElementById('soundBtn');
+        const wave = document.querySelector('#soundWave');
+        const btn = document.getElementById('topAudioBtn');
         if(audio.paused) {
             audio.play();
-            btn.innerHTML = "SOUND: ON";
-            btn.classList.add('on');
+            wave.classList.remove('paused');
+            btn.classList.add('active');
         } else {
             audio.pause();
-            btn.innerHTML = "SOUND: OFF";
-            btn.classList.remove('on');
+            wave.classList.add('paused');
+            btn.classList.remove('active');
         }
     }
   </script>
