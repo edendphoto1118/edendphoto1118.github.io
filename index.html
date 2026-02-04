@@ -105,7 +105,7 @@
     }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation (V34 Optimized) --- */
+    /* --- 4. Navigation --- */
     .top-bar {
         position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
         display: flex; justify-content: space-between; align-items: center;
@@ -164,7 +164,6 @@
 
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
     
-    /* V34.0: Silky Smooth Hover Animation */
     .menu-link {
         font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none;
         letter-spacing: 0.1em; position: relative;
@@ -282,6 +281,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
     
+    /* THE VISION - Glitch Presentation */
     .gallery-item[data-category="Vision"] img { filter: contrast(1.2) brightness(0.8); }
     .gallery-item[data-category="Vision"]:hover img { animation: glitch-anim 0.3s infinite; outline-color: #0ff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
     @keyframes glitch-anim {
@@ -299,7 +299,7 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.5s; }
     .load-more-btn:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 
-    /* --- 8.5 Archetype (V34 Optimized) --- */
+    /* --- Archetype (Updated) --- */
     .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
     
     .archetype-intro { margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
@@ -368,7 +368,7 @@
     .price-card:hover .jump-btn { border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
     .price-card.locked-plan .jump-btn { border-color: #333; color: #555; pointer-events: none; }
 
-    /* --- 10. Delivery (V34: Levitating Showcase) --- */
+    /* --- 10. Delivery (Levitating Showcase) --- */
     .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
     .delivery-title { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
     .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 80px; display: block; }
@@ -436,11 +436,23 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About --- */
+    /* --- 13. About (Slogan Option A) --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
-    .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.2em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
-    .about-slogan-sub { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.3em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
+    
+    .about-slogan-main { 
+        font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.25em; font-weight: 400; 
+        margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); 
+        animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; 
+    }
+    
+    .about-slogan-sub { 
+        font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; 
+        letter-spacing: 0.3em; text-transform: uppercase; display: block; 
+        opacity: 0; transform: translateY(30px); 
+        animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+        line-height: 1.8; max-width: 800px; margin: 30px auto 0; 
+    }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     /* --- Ticker & Footer --- */
@@ -721,7 +733,16 @@
               <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
                 <div class="form-group"><label>NAME / 姓名</label><input type="text" name="name" required placeholder="YOUR NAME"></div>
                 <div class="form-group"><label>CONTACT / 聯絡信箱</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
-                <div class="form-group"><label>INSTAGRAM ID</label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
+                
+                <div class="form-group">
+                    <label>
+                        INSTAGRAM ID / IG 帳號
+                        <span class="input-hint" style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em; font-weight: 300;">
+                            * 請填寫公開帳號。入選合作企劃者，將收到 EDEN 官方拍攝邀請。
+                        </span>
+                    </label>
+                    <input type="text" name="instagram" required placeholder="@YOUR_ID">
+                </div>
                 
                 <div class="form-group">
                   <label>PLAN / 方案選擇</label>
@@ -778,7 +799,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V34 --- */
+    /* --- JS Logic for V35 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
