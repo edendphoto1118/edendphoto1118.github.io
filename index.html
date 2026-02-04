@@ -105,9 +105,7 @@
     }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation (Hybrid V32) --- */
-    
-    /* Fixed Top Bar */
+    /* --- 4. Navigation (V34 Optimized) --- */
     .top-bar {
         position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
         display: flex; justify-content: space-between; align-items: center;
@@ -121,11 +119,8 @@
         letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto;
     }
 
-    .nav-controls {
-        display: flex; align-items: center; gap: 30px; pointer-events: auto;
-    }
+    .nav-controls { display: flex; align-items: center; gap: 30px; pointer-events: auto; }
 
-    /* Restored Visible Audio Button */
     .audio-btn { 
         background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; 
         padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; 
@@ -141,14 +136,11 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
 
-    /* Hamburger Trigger */
     .menu-trigger {
         width: 30px; height: 14px; position: relative; cursor: pointer; 
         display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;
     }
-    .menu-line {
-        width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    }
+    .menu-line { width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
     .menu-line:nth-child(2) { width: 60%; }
     .menu-trigger:hover .menu-line:nth-child(2) { width: 100%; }
     
@@ -157,7 +149,7 @@
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: #050505; z-index: 9999;
         display: flex; flex-direction: column; justify-content: center; align-items: center;
-        opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s ease;
+        opacity: 0; visibility: hidden; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
     }
     .menu-overlay.active { opacity: 1; visibility: visible; }
     
@@ -172,10 +164,12 @@
 
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
     
+    /* V34.0: Silky Smooth Hover Animation */
     .menu-link {
         font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none;
-        letter-spacing: 0.1em; transition: all 0.3s; position: relative;
-        transform: translateY(20px); opacity: 0; transition: transform 0.5s ease, opacity 0.5s ease, color 0.3s;
+        letter-spacing: 0.1em; position: relative;
+        transform: translateY(20px); opacity: 0; 
+        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s;
     }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
     .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
@@ -183,7 +177,11 @@
     .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; }
     .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
 
-    .menu-link:hover { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.4); }
+    /* Cinematic Bloom Effect */
+    .menu-link:hover { 
+        color: #fff; 
+        text-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(191,149,63,0.2);
+    }
 
     /* --- 5. Cursor (Desktop Only) --- */
     .cursor-core, .cursor-ring { display: none; }
@@ -284,7 +282,6 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
     
-    /* THE VISION - Glitch Presentation */
     .gallery-item[data-category="Vision"] img { filter: contrast(1.2) brightness(0.8); }
     .gallery-item[data-category="Vision"]:hover img { animation: glitch-anim 0.3s infinite; outline-color: #0ff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
     @keyframes glitch-anim {
@@ -302,8 +299,13 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.5s; }
     .load-more-btn:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 
-    /* --- Archetype --- */
-    .tool-section { padding: 100px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    /* --- 8.5 Archetype (V34 Optimized) --- */
+    .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    
+    .archetype-intro { margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .archetype-text { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #aaa; line-height: 1.8; letter-spacing: 0.15em; font-weight: 300; }
+    .archetype-text strong { color: #BF953F; font-weight: 500; }
+
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
@@ -331,11 +333,9 @@
     .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
 
-    /* The Vision Special Effects */
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
     
-    /* Locked Plans */
     .price-card.locked-plan { cursor: not-allowed; }
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
@@ -345,7 +345,6 @@
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
 
-    /* Tape logic */
     @media (hover: hover) {
         .price-card.locked-plan:hover .sealing-container { opacity: 1; }
         .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); }
@@ -358,7 +357,6 @@
         .price-card.locked-plan .card-content { opacity: 0.3; }
     }
 
-    /* List Style for Spec Sheet (in Plan 0/1) */
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -370,15 +368,42 @@
     .price-card:hover .jump-btn { border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
     .price-card.locked-plan .jump-btn { border-color: #333; color: #555; pointer-events: none; }
 
-    /* --- 10. Delivery --- */
-    .delivery-section { padding: 120px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
-    .delivery-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
-    .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #555; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 70px; display: block; }
-    .delivery-grid { display: flex; justify-content: center; gap: 80px; max-width: 1400px; margin: 0 auto; }
-    .delivery-item { flex: 1; text-align: center; max-width: 400px; }
-    .delivery-icon { font-size: 2rem; color: #BF953F; margin-bottom: 30px; display: block; opacity: 0.7; }
-    .delivery-item h4 { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 20px; letter-spacing: 0.1em; }
-    .delivery-item p { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #777; line-height: 1.8; font-weight: 300; }
+    /* --- 10. Delivery (V34: Levitating Showcase) --- */
+    .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
+    .delivery-title { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
+    .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 80px; display: block; }
+    
+    .delivery-showcase { 
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; 
+        max-width: 1400px; margin: 0 auto; 
+    }
+    
+    .delivery-card { 
+        padding: 50px 30px; border: 1px solid rgba(255,255,255,0.05); 
+        background: #050505; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        position: relative; overflow: hidden;
+    }
+    
+    .delivery-card h4 { 
+        font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 0.1em; color: #e0e0e0; transition: color 0.4s;
+    }
+    .delivery-card p { 
+        font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #666; line-height: 1.8; font-weight: 300; transition: color 0.4s;
+    }
+    .delivery-icon { 
+        font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s;
+    }
+
+    /* Spotlight Interaction */
+    .delivery-showcase:hover .delivery-card { opacity: 0.3; filter: grayscale(100%); }
+    .delivery-showcase .delivery-card:hover { 
+        opacity: 1; filter: grayscale(0%); transform: translateY(-15px); 
+        border-color: rgba(191, 149, 63, 0.3);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    }
+    .delivery-card:hover .delivery-icon { color: #BF953F; text-shadow: 0 0 15px rgba(191, 149, 63, 0.3); }
+    .delivery-card:hover h4 { color: #fff; }
+    .delivery-card:hover p { color: #aaa; }
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
@@ -411,14 +436,14 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About (RESTORED & OPTIMIZED) --- */
+    /* --- 13. About --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
     .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.2em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
     .about-slogan-sub { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.3em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* --- Ticker & Footer (RESTORED) --- */
+    /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
     .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.15em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
@@ -433,7 +458,7 @@
     /* --- Mobile --- */
     @media (max-width: 900px) { 
         .pricing-grid { grid-template-columns: 1fr; max-width: 500px; } 
-        .delivery-grid { flex-direction: column; gap: 50px; }
+        .delivery-showcase { grid-template-columns: 1fr; }
         .hero h1 { font-size: 12vw; }
         .about-slogan-main { font-size: 6vw; }
         .gallery-container { column-count: 1; }
@@ -520,6 +545,14 @@
           <h2 class="section-title metallic-gold">EDEN ARCHETYPE</h2>
           <span class="section-subtitle">Visual Personality Analysis.</span>
       </div>
+      
+      <div class="archetype-intro">
+          <p class="archetype-text">
+              解構內在與外在的維度反差。<br>
+              測驗您的視覺人格，即有機會獲得 <strong>EDEN 官方拍攝邀請</strong>。
+          </p>
+      </div>
+
       <div class="tool-container hover-target">
           <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="Eden Visual Archetype"></iframe>
       </div>
@@ -652,10 +685,24 @@
   
   <section class="delivery-section">
       <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
-      <div class="delivery-grid">
-          <div class="delivery-item"><span class="delivery-icon">◈</span><h4>Obsidian Box</h4><p>典藏曜黑精裝盒</p></div>
-          <div class="delivery-item"><span class="delivery-icon">◈</span><h4>Metal USB</h4><p>客製化刻字隨身碟</p></div>
-          <div class="delivery-item"><span class="delivery-icon">◈</span><h4>Wax Seal</h4><p>火漆封蠟認證卡</p></div>
+      <span class="delivery-subtitle">ELEVATING THE TANGIBLE EXPERIENCE</span>
+      
+      <div class="delivery-showcase">
+          <div class="delivery-card hover-target">
+              <span class="delivery-icon">◈</span>
+              <h4>THE GRAND OBSIDIAN BOX</h4>
+              <p>典藏曜黑精裝盒<br>以特製的硬式結構與曜黑質感，提供最高規格的開箱儀式與收藏保護。</p>
+          </div>
+          <div class="delivery-card hover-target">
+              <span class="delivery-icon">◈</span>
+              <h4>METAL ENGRAVED USB</h4>
+              <p>客製化刻字隨身碟<br>雷射刻印專屬英文名的金屬載體。憑此鑰匙回歸，即享檔案重啟禮遇。</p>
+          </div>
+          <div class="delivery-card hover-target">
+              <span class="delivery-icon">◈</span>
+              <h4>WAX-SEALED AUTHENTICITY</h4>
+              <p>火漆封蠟認證卡<br>攝影師親手蓋上火漆封蠟的認證卡片，象徵每一份作品的藝術價值。</p>
+          </div>
       </div>
   </section>
 
@@ -731,7 +778,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V33 --- */
+    /* --- JS Logic for V34 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
