@@ -259,7 +259,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Gallery --- */
+    /* --- 7. Sections (Gallery) --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -411,7 +411,7 @@
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About (RESTORED) --- */
+    /* --- 13. About (RESTORED & OPTIMIZED) --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
     .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.2em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
@@ -709,10 +709,8 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main metallic-gold">用 攝 影 　 策 展 美 好</h2>
+        <h2 class="about-slogan-main metallic-gold">你 佇 立 之 處　即 是 時 代 封 面</h2>
         <span class="about-slogan-sub">
-            無需證明你的不凡。<br>
-            你佇立之處，即是時代的封面。<br>
             WHERE YOU STAND IS THE COVER.
         </span>
     </div>
@@ -733,7 +731,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V32 --- */
+    /* --- JS Logic for V33 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
