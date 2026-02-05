@@ -105,7 +105,7 @@
     }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation --- */
+    /* --- 4. Navigation (V34 Optimized) --- */
     .top-bar {
         position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
         display: flex; justify-content: space-between; align-items: center;
@@ -164,6 +164,7 @@
 
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
     
+    /* V34.0: Silky Smooth Hover Animation */
     .menu-link {
         font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none;
         letter-spacing: 0.1em; position: relative;
@@ -738,7 +739,7 @@
                     <label>
                         INSTAGRAM ID / IG 帳號
                         <span class="input-hint" style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em; font-weight: 300;">
-                            * 請填寫公開帳號。入選合作企劃者，將收到 EDEN 官方拍攝邀請。
+                            * 請填寫公開帳號，我們將透過 IG 私訊確認檔期。
                         </span>
                     </label>
                     <input type="text" name="instagram" required placeholder="@YOUR_ID">
@@ -799,7 +800,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V35 --- */
+    /* --- JS Logic for V36 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
