@@ -105,7 +105,7 @@
     }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation (V34 Optimized) --- */
+    /* --- 4. Navigation --- */
     .top-bar {
         position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
         display: flex; justify-content: space-between; align-items: center;
@@ -164,7 +164,6 @@
 
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
     
-    /* V34.0: Silky Smooth Hover Animation */
     .menu-link {
         font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none;
         letter-spacing: 0.1em; position: relative;
@@ -177,7 +176,6 @@
     .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; }
     .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
 
-    /* Cinematic Bloom Effect */
     .menu-link:hover { 
         color: #fff; 
         text-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(191,149,63,0.2);
@@ -300,13 +298,11 @@
     .load-more-btn { display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.5s; }
     .load-more-btn:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 
-    /* --- Archetype (Updated) --- */
+    /* --- Archetype --- */
     .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
-    
     .archetype-intro { margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
     .archetype-text { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #aaa; line-height: 1.8; letter-spacing: 0.15em; font-weight: 300; }
     .archetype-text strong { color: #BF953F; font-weight: 500; }
-
     .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
@@ -800,7 +796,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V36 --- */
+    /* --- JS Logic for V37 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
@@ -865,8 +861,9 @@
     }
 
     /* --- Gallery & Cursor Logic --- */
+    // V37.0: Show only 6 images initially
+    const initialShow = 6; 
     const totalWorks = 117; 
-    const initialShow = 15; 
     const galleryContainer = document.getElementById('galleryContainer');
 
     function generateGallery() {
@@ -880,10 +877,17 @@
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
         itemDiv.setAttribute('data-category', category);
+        
+        // Hide items beyond the limit initially
         if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
         itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)">`;
         galleryContainer.appendChild(itemDiv);
+      }
+      
+      // Ensure the button is visible initially if there are more works
+      if (totalWorks > initialShow) {
+          document.getElementById('loadMoreBtn').parentElement.style.display = 'block';
       }
     }
     generateGallery();
@@ -897,7 +901,7 @@
         if(category === 'Vision') {
             items.forEach(item => item.classList.add('filtered-out'));
             offlineMsg.classList.add('active');
-            document.getElementById('loadMoreBtn').style.display = 'none';
+            document.getElementById('loadMoreBtn').parentElement.style.display = 'none';
             return;
         } else { offlineMsg.classList.remove('active'); }
 
@@ -909,12 +913,12 @@
                 setTimeout(() => item.classList.add('reveal'), 50);
             } else { item.classList.add('filtered-out'); }
         });
-        document.getElementById('loadMoreBtn').style.display = 'none';
+        document.getElementById('loadMoreBtn').parentElement.style.display = 'none';
     }
 
     function loadAllWorks() {
         document.querySelectorAll('.hidden-loadmore').forEach(item => item.classList.remove('hidden-loadmore'));
-        document.getElementById('loadMoreBtn').style.display = 'none';
+        document.getElementById('loadMoreBtn').parentElement.style.display = 'none';
     }
 
     /* Visitor Counter */
