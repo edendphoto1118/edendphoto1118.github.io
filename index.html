@@ -15,7 +15,7 @@
 
   <style>
     /* --- 1. Base & Reset --- */
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
     html { 
         scroll-behavior: smooth; 
@@ -23,6 +23,7 @@
         overflow-x: hidden; 
         height: 100%; 
         background-color: #050505;
+        font-size: 16px; /* Base size */
     }
     
     ::-webkit-scrollbar { width: 3px; }
@@ -36,6 +37,9 @@
       user-select: none; -webkit-user-select: none;
       overflow-y: auto; height: auto;
       -webkit-font-smoothing: antialiased;
+      /* Prevent horizontal scroll caused by overflow text */
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     
     body.menu-open { overflow: hidden; }
@@ -294,7 +298,7 @@
     .coming-soon-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
     @keyframes fadeUpElegant { to { opacity: 1; transform: translateY(0); } }
 
-    .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; }
+    .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; display: none; }
     .load-more-btn { display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.5s; }
     .load-more-btn:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
 
@@ -464,14 +468,19 @@
     footer { padding: 50px 4vw 100px; text-align: right; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
 
-    /* --- Mobile --- */
+    /* --- Mobile Fixes V38 --- */
     @media (max-width: 900px) { 
         .pricing-grid { grid-template-columns: 1fr; max-width: 500px; } 
         .delivery-showcase { grid-template-columns: 1fr; }
-        .hero h1 { font-size: 12vw; }
-        .about-slogan-main { font-size: 6vw; }
+        .hero h1 { font-size: 11vw; } /* Adjusted for no overflow */
+        .about-slogan-main { font-size: 1.8rem; } /* Adjusted */
         .gallery-container { column-count: 1; }
         .menu-link { font-size: 2rem; }
+        
+        /* Fix Pricing Card Padding */
+        .card-content { padding: 40px 20px; }
+        .plan-roman { font-size: 3rem; }
+        .plan-en { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -544,8 +553,7 @@
         <button class="filter-btn hover-target" onclick="filterGallery('Vision', this)">THE VISION</button>
     </div>
     <div class="gallery-container" id="galleryContainer"></div>
-    <div class="load-more-container">
-        <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
+    <div class="load-more-container" style="display: block;"> <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
     </div>
   </section>
   
@@ -796,7 +804,7 @@
   </div>
 
   <script>
-    /* --- JS Logic for V37 --- */
+    /* --- JS Logic for V38 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
