@@ -4,11 +4,8 @@
   <meta charset="UTF-8" />
   <title>EDEN｜DEEN — VISUAL ARCHIVE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="EDEN｜DEEN — Visual Director & Photographer.">
   <meta name="theme-color" content="#050505">
 
-  <link rel="icon" type="image/png" href="images/favicon.png"> 
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono&display=swap" rel="stylesheet">
@@ -16,266 +13,90 @@
   <style>
     /* --- 1. Base & Reset --- */
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
-    html { 
-        scroll-behavior: smooth; 
-        width: 100%; 
-        overflow-x: hidden; 
-        height: 100%; 
-        background-color: #050505;
-        font-size: 16px; /* Base size */
-    }
-    
+    html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; height: 100%; background-color: #050505; font-size: 16px; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
-
-    body {
-      margin: 0; padding: 0; background: #050505; color: #e0e0e0;
-      font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden;
-      cursor: auto; 
-      user-select: none; -webkit-user-select: none;
-      overflow-y: auto; height: auto;
-      -webkit-font-smoothing: antialiased;
-      /* Prevent horizontal scroll caused by overflow text */
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-    
+    body { margin: 0; padding: 0; background: #050505; color: #e0e0e0; font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden; cursor: auto; user-select: none; -webkit-user-select: none; overflow-y: auto; height: auto; -webkit-font-smoothing: antialiased; word-wrap: break-word; overflow-wrap: break-word; }
     body.menu-open { overflow: hidden; }
-
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
 
     /* --- Typography & Colors --- */
-    .metallic-gold {
-        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #BF953F;
-        text-shadow: 0 0 1px rgba(191, 149, 63, 0.3);
-    }
-    .metallic-silver {
-        background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #fff;
-        text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
-    }
-    .vertical-separator {
-        display: inline-block; width: 1px;
-        background: linear-gradient(to bottom, transparent 0%, #ffffff 50%, transparent 100%);
-        opacity: 0.8; box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    }
+    .metallic-gold { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #BF953F; text-shadow: 0 0 1px rgba(191, 149, 63, 0.3); }
+    .metallic-silver { background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #fff; text-shadow: 0 0 2px rgba(255, 255, 255, 0.2); }
+    .vertical-separator { display: inline-block; width: 1px; background: linear-gradient(to bottom, transparent 0%, #ffffff 50%, transparent 100%); opacity: 0.8; box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
 
-    /* --- 2. Texture (Noise) --- */
-    .noise-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-      z-index: 9000; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay;
-    }
-
-    /* --- 3. Preloader --- */
-    #preloader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #000; z-index: 20000; 
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 1.5s ease, visibility 1.5s ease;
-    }
-    .loader-content-wrap {
-        display: flex; align-items: center; justify-content: center;
-        opacity: 0; transform: scale(1.05); filter: blur(10px);
-        animation: opticalEmerge 3s ease forwards;
-    }
-    .loader-text {
-      font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; 
-      text-transform: uppercase; letter-spacing: 0.4em; margin-right: -0.4em;
-    }
+    /* --- 2. Texture & Preloader --- */
+    .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); z-index: 9000; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay; }
+    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease, visibility 1.5s ease; }
+    .loader-content-wrap { display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(1.05); filter: blur(10px); animation: opticalEmerge 3s ease forwards; }
+    .loader-text { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; text-transform: uppercase; letter-spacing: 0.4em; margin-right: -0.4em; }
     .loader-sep { height: 2.5rem; margin: 0 40px; }
-    @keyframes opticalEmerge {
-        0% { opacity: 0; transform: scale(1.05); filter: blur(15px); letter-spacing: 0.6em; }
-        100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.4em; }
-    }
-    .enter-btn-wrapper {
-        position: absolute; bottom: 15vh; left: 50%; transform: translateX(-50%);
-        opacity: 0; transition: opacity 1s ease; pointer-events: none; 
-    }
+    @keyframes opticalEmerge { 0% { opacity: 0; transform: scale(1.05); filter: blur(15px); letter-spacing: 0.6em; } 100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.4em; } }
+    .enter-btn-wrapper { position: absolute; bottom: 15vh; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 1s ease; pointer-events: none; }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
-    .enter-btn {
-        background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #fff;
-        font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.4em;
-        text-transform: uppercase; cursor: pointer; padding: 18px 50px;
-        transition: all 0.5s ease; white-space: nowrap;
-    }
-    .enter-btn:hover { 
-        letter-spacing: 0.6em; border-color: #fff; 
-        box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5);
-    }
+    .enter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.4em; text-transform: uppercase; cursor: pointer; padding: 18px 50px; transition: all 0.5s ease; white-space: nowrap; }
+    .enter-btn:hover { letter-spacing: 0.6em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
     /* --- 4. Navigation --- */
-    .top-bar {
-        position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
-        display: flex; justify-content: space-between; align-items: center;
-        z-index: 10000; mix-blend-mode: difference;
-        opacity: 0; transition: opacity 2s ease 1s; pointer-events: none;
-    }
+    .top-bar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease 1s; pointer-events: none; }
     body.site-active .top-bar { opacity: 1; }
-
-    .nav-logo { 
-        font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; 
-        letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto;
-    }
-
-    .nav-controls { display: flex; align-items: center; gap: 30px; pointer-events: auto; }
-
-    .audio-btn { 
-        background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; 
-        padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; 
-        font-family: 'Montserrat', sans-serif; cursor: pointer; 
-        border-radius: 30px; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s;
-    }
+    .nav-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto; z-index: 10001;}
+    .nav-controls { display: flex; align-items: center; gap: 30px; pointer-events: auto; z-index: 10001;}
+    .audio-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; font-family: 'Montserrat', sans-serif; cursor: pointer; border-radius: 30px; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s; }
     .audio-btn:hover { opacity: 1; border-color: #fff; }
     .audio-btn.active { border-color: #BF953F; color: #BF953F; }
-    
     .sound-wave { display: flex; gap: 2px; height: 10px; align-items: flex-end; }
     .bar { width: 1px; background: currentColor; height: 100%; animation: wave 1s infinite ease-in-out; }
     .bar:nth-child(1) { animation-delay: 0s; } .bar:nth-child(2) { animation-delay: 0.2s; } .bar:nth-child(3) { animation-delay: 0.4s; }
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
-
-    .menu-trigger {
-        width: 30px; height: 14px; position: relative; cursor: pointer; 
-        display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;
-    }
+    
+    .menu-trigger { width: 30px; height: 14px; position: relative; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; z-index: 10001; }
     .menu-line { width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
     .menu-line:nth-child(2) { width: 60%; }
     .menu-trigger:hover .menu-line:nth-child(2) { width: 100%; }
     
-    /* Menu Overlay */
-    .menu-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #050505; z-index: 9999;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
-        opacity: 0; visibility: hidden; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
-    }
+    .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s; }
     .menu-overlay.active { opacity: 1; visibility: visible; }
-    
-    .menu-close-btn {
-        position: absolute; top: 35px; right: 50px; width: 40px; height: 40px; cursor: pointer;
-    }
-    .menu-close-btn::before, .menu-close-btn::after {
-        content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #fff;
-        transform: rotate(45deg);
-    }
+    .menu-close-btn { position: absolute; top: 35px; right: 50px; width: 40px; height: 40px; cursor: pointer; z-index: 10001;}
+    .menu-close-btn::before, .menu-close-btn::after { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #fff; transform: rotate(45deg); }
     .menu-close-btn::after { transform: rotate(-45deg); }
-
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-    
-    .menu-link {
-        font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none;
-        letter-spacing: 0.1em; position: relative;
-        transform: translateY(20px); opacity: 0; 
-        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s;
-    }
+    .menu-link { font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.1em; position: relative; transform: translateY(20px); opacity: 0; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s; }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
-    .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
-    .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.2s; }
-    .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; }
-    .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
+    .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; } .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.2s; }
+    .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; } .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
+    .menu-link:hover { color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(191,149,63,0.2); }
 
-    .menu-link:hover { 
-        color: #fff; 
-        text-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(191,149,63,0.2);
-    }
-
-    /* --- 5. Cursor (Desktop Only) --- */
-    .cursor-core, .cursor-ring { display: none; }
-    @media (hover: hover) and (pointer: fine) {
-        .cursor-core {
-            width: 4px; height: 4px; background: #fff; border-radius: 50%;
-            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-            pointer-events: none; z-index: 10002; mix-blend-mode: normal; display: block;
-        }
-        .cursor-ring {
-            width: 50px; height: 50px; border: 1px solid rgba(255,255,255,0.8); border-radius: 50%;
-            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%) scale(0); 
-            opacity: 0; pointer-events: none; z-index: 10001; 
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
-            mix-blend-mode: difference; display: block;
-        }
-        body.site-active .cursor-core, body.site-active .cursor-ring { display: block; }
-        body.hover-active .cursor-ring { opacity: 1; transform: translate(-50%, -50%) scale(1); background: transparent; }
-    }
-
-    /* --- 6. Hero Section --- */
-    .hero { 
-        height: 100vh; position: relative; overflow: hidden; width: 100%; 
-        display: flex; flex-direction: column; justify-content: space-between; 
-        align-items: center; text-align: center; background: #000;
-    }
-    .hero-bg-video {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        object-fit: cover; z-index: -5; opacity: 0.5;
-    }
-    .hero-content { 
-        z-index: 2; opacity: 0; transform: translateY(30px); 
-        width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; 
-        display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; 
-    }
+    /* --- 6. Hero --- */
+    .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; background: #000; }
+    .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; opacity: 0.5; }
+    .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
-    
-    .hero h1 { 
-        font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; 
-        letter-spacing: 0.4em; margin: 0; 
-        background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; 
-        display: flex; align-items: center; justify-content: center;
-    }
+    .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
-    .hero p { 
-        margin-top: 40px; font-family: 'Montserrat', sans-serif; 
-        font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; 
-        color: rgba(255,255,255,0.6); margin-right: -0.6em;
-    }
-    
-    .hero-cta-btn {
-        margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
-        color: #fff; padding: 12px 35px; font-family: 'Montserrat', sans-serif;
-        font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
-        cursor: pointer; transition: all 0.4s ease; text-decoration: none;
-        opacity: 0; animation: fadeIn 2s 1.5s forwards;
-    }
-    .hero-cta-btn:hover {
-        border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);
-    }
-    .scroll-indicator { 
-        position: relative; width: 2px; height: 70px; overflow: hidden; 
-        opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; 
-    }
-    .scroll-line { 
-        position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; 
-        background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%);
-        transform: translateX(-50%); animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    }
+    .hero p { margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: -0.6em; }
+    .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 35px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; }
+    .hero-cta-btn:hover { border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+    .scroll-indicator { position: relative; width: 2px; height: 70px; overflow: hidden; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; }
+    .scroll-line { position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%); transform: translateX(-50%); animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
     .scroll-line:nth-child(2) { animation-delay: 1.5s; }
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Sections (Gallery) --- */
+    /* --- 7. Gallery --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; }
-    
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 80px; flex-wrap: wrap; width: 100%; }
-    .filter-btn { 
-        background: transparent; border: none; color: #555; 
-        font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; 
-        text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; 
-        transition: all 0.4s ease; display: inline-block;
-    }
+    .filter-btn { background: transparent; border: none; color: #555; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; transition: all 0.4s ease; display: inline-block; }
     .filter-btn:hover, .filter-btn.active { color: #fff; }
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
-
     .gallery-container { column-count: 3; column-gap: 40px; width: 100%; max-width: 1600px; margin: 0 auto; min-height: 400px; }
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: pointer; opacity: 0; transform: translateY(40px) scale(0.98); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s ease, transform 1.2s, filter 1.4s; }
     .gallery-item.reveal { opacity: 1; transform: translateY(0) scale(1); filter: grayscale(100%) contrast(110%) brightness(0.9); }
@@ -283,21 +104,10 @@
     .gallery-item img { width: 100%; height: auto; display: block; background: #0a0a0a; min-height: 100px; outline: 1px solid rgba(255,255,255,0); transition: transform 1.4s, outline-color 0.6s, outline-offset 0.6s; }
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
-    
-    /* THE VISION - Glitch Presentation */
     .gallery-item[data-category="Vision"] img { filter: contrast(1.2) brightness(0.8); }
     .gallery-item[data-category="Vision"]:hover img { animation: glitch-anim 0.3s infinite; outline-color: #0ff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
-    @keyframes glitch-anim {
-        0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
-    }
-
-    .gallery-offline-msg { display: none; text-align: center; width: 100%; padding: 150px 0; }
-    .gallery-offline-msg.active { display: block; }
-    .coming-soon-title { font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.3em; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-    .coming-soon-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: fadeUpElegant 1s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-    @keyframes fadeUpElegant { to { opacity: 1; transform: translateY(0); } }
-
+    @keyframes glitch-anim { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); } }
+    
     .load-more-container { text-align: center; margin-top: 100px; padding-bottom: 60px; display: none; }
     .load-more-btn { display: inline-block; padding: 25px 70px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.5s; }
     .load-more-btn:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
@@ -314,17 +124,14 @@
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto; width: 100%; }
     .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 750px; overflow: hidden; }
-    
     .price-card .border-line { position: absolute; background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); transition: all 0.4s ease-out; opacity: 0; z-index: 10; }
     .border-top { top: 0; left: 0; height: 1px; width: 0%; } .border-right { top: 0; right: 0; width: 1px; height: 0%; }
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
     .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; } .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
     .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; } .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
-    
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
-    
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
     .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
@@ -333,10 +140,8 @@
     .plan-footer { margin-top: auto; }
     .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
-
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
-    
     .price-card.locked-plan { cursor: not-allowed; }
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
@@ -345,19 +150,8 @@
     .tape-strip::before, .tape-strip::after { content: 'LOCKED   LOCKED   LOCKED   LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
-
-    @media (hover: hover) {
-        .price-card.locked-plan:hover .sealing-container { opacity: 1; }
-        .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); }
-        .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); }
-    }
-    @media (hover: none) {
-        .price-card.locked-plan .sealing-container { opacity: 1; }
-        .tape-left { transform: rotate(20deg) translateX(0); }
-        .tape-right { transform: rotate(-20deg) translateX(0); }
-        .price-card.locked-plan .card-content { opacity: 0.3; }
-    }
-
+    @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
+    @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -365,43 +159,17 @@
     .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
     .spec-gold { color: #BF953F; }
 
-    .jump-btn { width: 100%; padding: 18px 0; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-    .price-card:hover .jump-btn { border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
-    .price-card.locked-plan .jump-btn { border-color: #333; color: #555; pointer-events: none; }
-
-    /* --- 10. Delivery (Levitating Showcase) --- */
+    /* --- 10. Delivery --- */
     .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
     .delivery-title { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
     .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 80px; display: block; }
-    
-    .delivery-showcase { 
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; 
-        max-width: 1400px; margin: 0 auto; 
-    }
-    
-    .delivery-card { 
-        padding: 50px 30px; border: 1px solid rgba(255,255,255,0.05); 
-        background: #050505; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        position: relative; overflow: hidden;
-    }
-    
-    .delivery-card h4 { 
-        font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 0.1em; color: #e0e0e0; transition: color 0.4s;
-    }
-    .delivery-card p { 
-        font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #666; line-height: 1.8; font-weight: 300; transition: color 0.4s;
-    }
-    .delivery-icon { 
-        font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s;
-    }
-
-    /* Spotlight Interaction */
+    .delivery-showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; }
+    .delivery-card { padding: 50px 30px; border: 1px solid rgba(255,255,255,0.05); background: #050505; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; }
+    .delivery-card h4 { font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 0.1em; color: #e0e0e0; transition: color 0.4s; }
+    .delivery-card p { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #666; line-height: 1.8; font-weight: 300; transition: color 0.4s; }
+    .delivery-icon { font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s; }
     .delivery-showcase:hover .delivery-card { opacity: 0.3; filter: grayscale(100%); }
-    .delivery-showcase .delivery-card:hover { 
-        opacity: 1; filter: grayscale(0%); transform: translateY(-15px); 
-        border-color: rgba(191, 149, 63, 0.3);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    }
+    .delivery-showcase .delivery-card:hover { opacity: 1; filter: grayscale(0%); transform: translateY(-15px); border-color: rgba(191, 149, 63, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
     .delivery-card:hover .delivery-icon { color: #BF953F; text-shadow: 0 0 15px rgba(191, 149, 63, 0.3); }
     .delivery-card:hover h4 { color: #fff; }
     .delivery-card:hover p { color: #aaa; }
@@ -411,49 +179,29 @@
     .ritual-btn { position: relative; padding: 25px 80px; background: #050505; border: 1px solid rgba(191, 149, 63, 0.4); color: #fff; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all 0.5s ease; z-index: 2; }
     .ritual-btn::before { content: '預約席次'; display: block; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.4em; color: #BF953F; margin-top: 8px; opacity: 0.7; }
     .ritual-btn:hover { border-color: #BF953F; box-shadow: 0 0 40px rgba(191, 149, 63, 0.2); }
-    .ripple { position: absolute; background: rgba(191, 149, 63, 0.8); border-radius: 50%; transform: scale(0); animation: rippleEffect 0.8s; pointer-events: none; }
-    @keyframes rippleEffect { to { transform: scale(4); opacity: 0; } }
-
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
-    
     .booking-interface { width: 100%; max-width: 900px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 60px; position: relative; }
     .booking-interface::before { content: 'TERMINAL // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
-
     .custom-booking-form { width: 100%; margin-top: 40px; }
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .form-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #BF953F; margin-bottom: 5px; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
-    
     .form-group select option:disabled { color: #555; background: #000; }
     .form-group select option { background: #111; color: #fff; padding: 10px; }
-
     #plan-details-box { background: rgba(191,149,63, 0.05); border: 1px solid rgba(191,149,63, 0.2); padding: 30px; margin: 30px 0; display: none; }
     .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
     .detail-val { color: #fff; }
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
-
     .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
-    /* --- 13. About (Slogan Option A) --- */
+    /* --- 13. About --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
-    
-    .about-slogan-main { 
-        font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.25em; font-weight: 400; 
-        margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); 
-        animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; 
-    }
-    
-    .about-slogan-sub { 
-        font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; 
-        letter-spacing: 0.3em; text-transform: uppercase; display: block; 
-        opacity: 0; transform: translateY(30px); 
-        animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
-        line-height: 1.8; max-width: 800px; margin: 30px auto 0; 
-    }
+    .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.25em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
+    .about-slogan-sub { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.3em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     /* --- Ticker & Footer --- */
@@ -464,27 +212,91 @@
     .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.15em; text-transform: uppercase; }
     .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
     @keyframes pulseText { 0% { opacity: 0.7; } 50% { opacity: 1; text-shadow: 0 0 10px rgba(191, 149, 63, 0.4); } 100% { opacity: 0.7; } }
-
     footer { padding: 50px 4vw 100px; text-align: right; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
+    
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5,5,5,0.98); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; cursor: zoom-out; backdrop-filter: blur(10px); }
+    .lightbox.active { display: flex; opacity: 1; }
+    .lightbox-content { max-width: 95%; max-height: 95vh; object-fit: contain; cursor: default; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+    .close-btn { position: absolute; top: 40px; right: 50px; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; z-index: 1000000; transition: transform 0.4s ease; cursor: pointer; pointer-events: auto; }
+    .close-btn::before, .close-btn::after { content: ''; position: absolute; width: 100%; height: 1px; background: #fff; transition: background 0.3s; }
+    .close-btn::before { transform: rotate(45deg); }
+    .close-btn::after { transform: rotate(-45deg); }
+    .close-btn:hover { transform: rotate(90deg); }
+    .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
 
-    /* --- Mobile Fixes V38 --- */
-    @media (max-width: 900px) { 
-        .pricing-grid { grid-template-columns: 1fr; max-width: 500px; } 
-        .delivery-showcase { grid-template-columns: 1fr; }
-        .hero h1 { font-size: 11vw; } /* Adjusted for no overflow */
-        .about-slogan-main { font-size: 1.8rem; } /* Adjusted */
-        .gallery-container { column-count: 1; }
-        .menu-link { font-size: 2rem; }
+    /* =========================================
+       V39.0 MOBILE OPTIMIZATION (THE FIX)
+       ========================================= */
+    @media (max-width: 768px) { 
+        /* Typography Fluid Scale */
+        .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
+        .hero p { font-size: 0.65rem; letter-spacing: 0.3em; margin-top: 30px; }
+        .section-title { font-size: 2rem; line-height: 1.3; }
+        .section-subtitle { font-size: 0.6rem; margin-top: 15px; }
+        .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.15em; line-height: 1.6; }
+        .about-slogan-sub { font-size: 0.7rem; letter-spacing: 0.2em; }
         
-        /* Fix Pricing Card Padding */
-        .card-content { padding: 40px 20px; }
-        .plan-roman { font-size: 3rem; }
-        .plan-en { font-size: 1.5rem; }
+        /* Layout & Z-Index Safety */
+        .top-bar { padding: 20px 5vw; }
+        .nav-logo { font-size: 1.2rem; }
+        .audio-btn { display: none; } 
+        .menu-link { font-size: 2.2rem; margin: 10px 0; }
+        .menu-close-btn { right: 5vw; top: 25px; }
+        
+        /* Gallery Breathing Room */
+        .gallery-container { column-count: 1; gap: 0; }
+        .gallery-item { margin-bottom: 30px; }
+        .filter-tabs { gap: 20px; margin-bottom: 50px; }
+        .filter-btn { font-size: 0.65rem; }
+        .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background { padding-left: 6vw; padding-right: 6vw; }
+        
+        /* Pricing Cards - Spatial Reconstruction */
+        .pricing-grid { display: flex; flex-direction: column; width: 100%; gap: 40px; } 
+        .price-card { 
+            min-height: auto; /* 解除高度封印 */
+            height: auto;
+            width: 100%; 
+        }
+        .card-content { 
+            padding: 50px 6vw; /* 改用百分比創造內部呼吸空間 */
+            gap: 40px; /* 拉開頂部文字與底部規格的距離 */
+            display: flex;
+            flex-direction: column;
+        }
+        .plan-id { font-size: 0.8rem; margin-bottom: 15px; }
+        .plan-en { font-size: 1.8rem; }
+        .plan-zh { font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
+        .plan-philosophy { 
+            font-size: 0.85rem; 
+            padding-left: 15px; 
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        .spec-list { margin-top: 20px; }
+        .spec-row { padding: 15px 0; }
+        .current-price { font-size: 1.5rem; margin-top: 20px; }
+        
+        /* Delivery Showcase - Vertical Stacking */
+        .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
+        .delivery-card { padding: 40px 6vw; }
+        .delivery-card p { font-size: 0.8rem; line-height: 1.8; }
+        
+        /* Booking Interface */
+        .hidden-booking-container.open { padding: 80px 5vw; }
+        .booking-interface { padding: 40px 5vw; }
+        .ritual-btn { padding: 20px 10vw; width: 90%; max-width: 350px; margin: 0 auto; display: block; }
+        .form-group input, .form-group select, .form-group textarea { font-size: 0.9rem; }
+        
+        /* Footer & Ticker */
+        footer { text-align: center; padding-bottom: 70px; }
+        .tech-ticker-wrap { padding-right: 15px; }
+        .visitor-counter { padding-left: 10px; }
+        .visitor-label { display: none; } /* 手機端空間有限，隱藏 Label 只留數字 */
     }
   </style>
 </head>
-
 <body oncontextmenu="return false">
   
   <div class="noise-overlay"></div>
@@ -499,21 +311,16 @@
     </div>
   </div>
 
-  <div class="cursor-core"></div>
-  <div class="cursor-ring"></div>
-
   <div class="top-bar">
       <a href="#" class="nav-logo" onclick="toggleMenu(); return false;">EDEN</a>
-      
       <div class="nav-controls">
-          <button class="audio-btn hover-target" id="topAudioBtn" onclick="toggleAudio()">
+          <button class="audio-btn" id="topAudioBtn" onclick="toggleAudio()">
               SOUND
               <div class="sound-wave paused" id="soundWave">
                   <div class="bar"></div><div class="bar"></div><div class="bar"></div>
               </div>
           </button>
-          
-          <div class="menu-trigger hover-target" onclick="toggleMenu()">
+          <div class="menu-trigger" onclick="toggleMenu()">
               <div class="menu-line"></div>
               <div class="menu-line"></div>
           </div>
@@ -521,12 +328,12 @@
   </div>
 
   <div class="menu-overlay" id="menuOverlay">
-      <div class="menu-close-btn hover-target" onclick="toggleMenu()"></div>
+      <div class="menu-close-btn" onclick="toggleMenu()"></div>
       <div class="menu-items">
-          <a href="#work" class="menu-link hover-target" onclick="toggleMenu()">PORTFOLIO</a>
-          <a href="#pricing" class="menu-link hover-target" onclick="toggleMenu()">VISUALS</a>
-          <a href="#archetype" class="menu-link hover-target" onclick="toggleMenu()">ARCHETYPE</a>
-          <a href="#hiddenBooking" class="menu-link hover-target" onclick="toggleMenu()">CONTACT</a>
+          <a href="#work" class="menu-link" onclick="toggleMenu()">PORTFOLIO</a>
+          <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS</a>
+          <a href="#archetype" class="menu-link" onclick="toggleMenu()">ARCHETYPE</a>
+          <a href="#hiddenBooking" class="menu-link" onclick="toggleMenu()">CONTACT</a>
       </div>
   </div>
 
@@ -535,7 +342,7 @@
     <div class="hero-content">
       <h1>EDEN <span class="vertical-separator"></span> DEEN</h1>
       <p>Visual Director / Photographer</p>
-      <a href="#work" class="hero-cta-btn hover-target">EXPLORE ARCHIVE</a>
+      <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE</a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
   </section>
@@ -546,14 +353,15 @@
       <span class="section-subtitle">Categorized Archive</span>
     </div>
     <div class="filter-tabs">
-        <button class="filter-btn active hover-target" onclick="filterGallery('all', this)">ALL</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Identity', this)">IDENTITY</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Essentials', this)">ESSENTIALS</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Editorial', this)">EDITORIAL</button>
-        <button class="filter-btn hover-target" onclick="filterGallery('Vision', this)">THE VISION</button>
+        <button class="filter-btn active" onclick="filterGallery('all', this)">ALL</button>
+        <button class="filter-btn" onclick="filterGallery('Identity', this)">IDENTITY</button>
+        <button class="filter-btn" onclick="filterGallery('Essentials', this)">ESSENTIALS</button>
+        <button class="filter-btn" onclick="filterGallery('Editorial', this)">EDITORIAL</button>
+        <button class="filter-btn" onclick="filterGallery('Vision', this)">THE VISION</button>
     </div>
     <div class="gallery-container" id="galleryContainer"></div>
-    <div class="load-more-container" style="display: block;"> <button id="loadMoreBtn" class="load-more-btn hover-target" onclick="loadAllWorks()">View Full Archive</button>
+    <div class="load-more-container">
+        <button id="loadMoreBtn" class="load-more-btn" onclick="loadAllWorks()">View Full Archive</button>
     </div>
   </section>
   
@@ -562,15 +370,10 @@
           <h2 class="section-title metallic-gold">EDEN ARCHETYPE</h2>
           <span class="section-subtitle">Visual Personality Analysis.</span>
       </div>
-      
       <div class="archetype-intro">
-          <p class="archetype-text">
-              解構內在與外在的維度反差。<br>
-              測驗您的視覺人格，即有機會獲得 <strong>EDEN 官方拍攝邀請</strong>。
-          </p>
+          <p class="archetype-text">解構內在與外在的維度反差。<br>測驗您的視覺人格，即有機會獲得 <strong>EDEN 官方拍攝邀請</strong>。</p>
       </div>
-
-      <div class="tool-container hover-target">
+      <div class="tool-container">
           <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="Eden Visual Archetype"></iframe>
       </div>
   </section>
@@ -582,7 +385,7 @@
     </div>
     <div class="pricing-grid">
       
-      <div class="price-card hover-target" onclick="openBookingWithPlan('Essentials')">
+      <div class="price-card" onclick="openBookingWithPlan('Essentials')">
         <div class="card-bg" style="background-image: url('plan-structure.jpg'); filter: brightness(0.6);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
@@ -592,23 +395,23 @@
                     <span class="plan-en">ESSENTIALS</span>
                     <span class="plan-zh">聚焦・本質</span>
                 </div>
-                <p class="plan-philosophy">
-                    一張好的肖像，是專業的入場券。捨棄繁複背景，用頂級光影雕琢面孔細節。
-                </p>
+                <p class="plan-philosophy">一張好的肖像，是專業的入場券。捨棄繁複背景，用頂級光影雕琢面孔細節。</p>
             </div>
-            <div class="spec-list">
-                <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR</span></div>
-                <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON (NT$ 2,500)</span></div>
-                <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES</span></div>
-                <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL</span></div>
-            </div>
-            <div class="plan-footer">
-                <span class="current-price metallic-silver">NT$ 3,600</span>
+            <div>
+                <div class="spec-list">
+                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR</span></div>
+                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON (NT$ 2,500)</span></div>
+                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES</span></div>
+                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL</span></div>
+                </div>
+                <div class="plan-footer" style="margin-top:20px; text-align:center;">
+                    <span class="current-price metallic-silver">NT$ 3,600</span>
+                </div>
             </div>
         </div>
       </div>
 
-      <div class="price-card featured hover-target" onclick="openBookingWithPlan('Structure')">
+      <div class="price-card featured" onclick="openBookingWithPlan('Structure')">
         <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
@@ -618,23 +421,23 @@
                     <span class="plan-en">THE COVER</span>
                     <span class="plan-zh">封面・映象</span>
                 </div>
-                <p class="plan-philosophy">
-                    無需刻意演繹，你的存在即是頂級。包含專業妝髮與排版，將您的存在感凝縮於海報之中。
-                </p>
+                <p class="plan-philosophy">無需刻意演繹，你的存在即是頂級。包含專業妝髮與排版，將您的存在感凝縮於海報之中。</p>
             </div>
-            <div class="spec-list">
-                <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR</span></div>
-                <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val spec-highlight">INCLUDED (1 LOOK)</span></div>
-                <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES</span></div>
-                <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB</span></div>
-            </div>
-            <div class="plan-footer">
-                <span class="current-price metallic-silver">NT$ 8,800</span>
+            <div>
+                <div class="spec-list">
+                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR</span></div>
+                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val spec-highlight">INCLUDED (1 LOOK)</span></div>
+                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES</span></div>
+                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB</span></div>
+                </div>
+                <div class="plan-footer" style="margin-top:20px; text-align:center;">
+                    <span class="current-price metallic-silver">NT$ 8,800</span>
+                </div>
             </div>
         </div>
       </div>
       
-      <div class="price-card locked-plan hover-target">
+      <div class="price-card locked-plan">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
         <div class="card-content">
@@ -644,78 +447,33 @@
                     <span class="plan-en metallic-gold">THE STORY</span>
                     <span class="plan-zh">敘事・畫報</span>
                 </div>
-                <p class="plan-philosophy">
-                    以設計師選品為詞，妝髮工藝為句，書寫一場視覺獨白。編纂為一本具備收藏價值的映像期刊。
-                </p>
+                <p class="plan-philosophy">以設計師選品為詞，妝髮工藝為句，書寫一場視覺獨白。編纂為一本具備收藏價值的映像期刊。</p>
             </div>
-            <div class="plan-footer">
+            <div class="plan-footer" style="margin-top:auto; text-align:center;">
                 <span class="artifact-info">A4 JOURNAL</span>
                 <span class="current-price metallic-gold">[ COMING SOON ]</span>
             </div>
         </div>
       </div>
 
-      <div class="price-card vision-card locked-plan hover-target">
-        <div class="card-bg" style="background-image: url('plan-dimension.jpg')"></div>
-        <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
-        <div class="card-content">
-            <div>
-                <span class="plan-id">NO. III</span>
-                <div class="plan-title-block">
-                    <span class="plan-en metallic-silver">THE VISION</span>
-                    <span class="plan-zh">電影・維度</span>
-                </div>
-                <p class="plan-philosophy">
-                    不只是照片，而是為您策展。提供專屬網頁連結，讓您的 IG Bio 成為一座線上美術館。
-                </p>
-            </div>
-            <div class="plan-footer">
-                <span class="artifact-info">WEB EXHIBITION</span>
-                <span class="current-price metallic-silver">[ COMING SOON ]</span>
-            </div>
-        </div>
-      </div>
-      
-      <div class="price-card locked-plan hover-target">
-        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
-        <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
-        <div class="card-content">
-            <div>
-                <span class="plan-id">NO. IV</span>
-                <div class="plan-title-block">
-                    <span class="plan-en metallic-gold">ROYAL</span>
-                    <span class="plan-zh">典藏・王牌</span>
-                </div>
-                <p class="plan-philosophy">
-                    將您的形象鑄造成可流通的實體王牌。採用德國黑芯紙與燙金工藝，這是屬於您的頂級社交貨幣。
-                </p>
-            </div>
-            <div class="plan-footer">
-                <span class="artifact-info">LIMITED EDITION</span>
-                <span class="current-price metallic-gold">[ WAITLIST ]</span>
-            </div>
-        </div>
-      </div>
-      
     </div>
   </section>
   
   <section class="delivery-section">
       <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
       <span class="delivery-subtitle">ELEVATING THE TANGIBLE EXPERIENCE</span>
-      
       <div class="delivery-showcase">
-          <div class="delivery-card hover-target">
+          <div class="delivery-card">
               <span class="delivery-icon">◈</span>
               <h4>THE GRAND OBSIDIAN BOX</h4>
               <p>典藏曜黑精裝盒<br>以特製的硬式結構與曜黑質感，提供最高規格的開箱儀式與收藏保護。</p>
           </div>
-          <div class="delivery-card hover-target">
+          <div class="delivery-card">
               <span class="delivery-icon">◈</span>
               <h4>METAL ENGRAVED USB</h4>
               <p>客製化刻字隨身碟<br>雷射刻印專屬英文名的金屬載體。憑此鑰匙回歸，即享檔案重啟禮遇。</p>
           </div>
-          <div class="delivery-card hover-target">
+          <div class="delivery-card">
               <span class="delivery-icon">◈</span>
               <h4>WAX-SEALED AUTHENTICITY</h4>
               <p>火漆封蠟認證卡<br>攝影師親手蓋上火漆封蠟的認證卡片，象徵每一份作品的藝術價值。</p>
@@ -725,30 +483,20 @@
 
   <section class="booking-cta-section">
       <div class="ritual-line"></div>
-      <button class="ritual-btn hover-target" onclick="createRipple(event)"><span>SECURE YOUR SESSION</span></button>
+      <button class="ritual-btn" onclick="createRipple(event)"><span>SECURE YOUR SESSION</span></button>
   </section>
 
   <div id="hiddenBooking" class="hidden-booking-container">
       <div class="booking-interface">
-          <div class="booking-terms">
-              <h3 class="terms-title metallic-gold">BOOKING REQUEST</h3>
-          </div>
-          
+          <div class="booking-terms"><h3 class="terms-title metallic-gold">BOOKING REQUEST</h3></div>
           <div class="custom-booking-form">
               <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
                 <div class="form-group"><label>NAME / 姓名</label><input type="text" name="name" required placeholder="YOUR NAME"></div>
                 <div class="form-group"><label>CONTACT / 聯絡信箱</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
-                
                 <div class="form-group">
-                    <label>
-                        INSTAGRAM ID / IG 帳號
-                        <span class="input-hint" style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em; font-weight: 300;">
-                            * 請填寫公開帳號，我們將透過 IG 私訊確認檔期。
-                        </span>
-                    </label>
+                    <label>INSTAGRAM ID / IG 帳號<span class="input-hint" style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em; font-weight: 300;">* 請填寫公開帳號，我們將透過 IG 私訊確認檔期。</span></label>
                     <input type="text" name="instagram" required placeholder="@YOUR_ID">
                 </div>
-                
                 <div class="form-group">
                   <label>PLAN / 方案選擇</label>
                   <select name="plan" id="planSelect" onchange="updatePlanDetails()">
@@ -759,22 +507,16 @@
                     <option value="Royal" disabled>PROJECT: ROYAL - 典藏・王牌 (WAITLIST)</option>
                   </select>
                 </div>
-
                 <div id="plan-details-box">
                     <div class="detail-row"><span>SHOOT TIME</span><span class="detail-val" id="d-time"></span></div>
                     <div class="detail-row"><span>STYLING</span><span class="detail-val" id="d-style"></span></div>
                     <div class="detail-row"><span>RETOUCH</span><span class="detail-val" id="d-retouch"></span></div>
                     <div class="detail-row deposit-row"><span>DEPOSIT REQUIRED</span><span class="detail-val" id="d-deposit"></span></div>
                 </div>
-
                 <div class="form-group"><label>DATE / 期望日期</label><input type="date" name="date" required></div>
                 <div class="form-group"><label>VISION / 拍攝想法</label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION..."></textarea></div>
-                
-                <p class="confirmation-text">
-                    提交預約後，我們將透過 Instagram 私訊與 Email 核對檔期。<br>
-                    確認無誤後請於 24 小時內支付訂金以完成委託。
-                </p>
-                <button type="submit" class="submit-btn hover-target">CONFIRM REQUEST</button>
+                <p class="confirmation-text">提交預約後，我們將透過 Instagram 私訊與 Email 核對檔期。<br>確認無誤後請於 24 小時內支付訂金以完成委託。</p>
+                <button type="submit" class="submit-btn">CONFIRM REQUEST</button>
               </form>
           </div>
       </div>
@@ -783,31 +525,25 @@
   <section class="background" id="about">
     <div class="about-minimal-container">
         <h2 class="about-slogan-main metallic-gold">你 佇 立 之 處　即 是 時 代 封 面</h2>
-        <span class="about-slogan-sub">
-            WHERE YOU STAND IS THE COVER.
-        </span>
+        <span class="about-slogan-sub">WHERE YOU STAND IS THE COVER.</span>
     </div>
   </section>
   
   <div class="tech-ticker-wrap">
-      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // FISHEYE DISTORTION // 3D PRINTED PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
+      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
       <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
   </div>
 
-  <footer>
-      <p>&copy; 2025 EDEN｜DEEN. All Rights Reserved.</p>
-  </footer>
+  <footer><p>&copy; 2025 EDEN｜DEEN. All Rights Reserved.</p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <div class="close-btn hover-target"></div>
+    <div class="close-btn"></div>
     <img class="lightbox-content" id="lightbox-img">
   </div>
 
   <script>
-    /* --- JS Logic for V38 --- */
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
-
     setTimeout(() => { document.getElementById('enterWrapper').classList.add('ready'); }, 2500);
 
     function enterArchive() {
@@ -815,20 +551,15 @@
         audio.volume = 0; audio.play().catch(e=>console.log("Audio blocked"));
         let vol = 0; setInterval(() => { if(vol<0.4) { vol+=0.05; audio.volume=vol; } }, 200);
         document.getElementById('preloader').style.opacity = 0;
-        setTimeout(() => { 
-            document.body.classList.add('site-active'); 
-            document.getElementById('preloader').style.display='none';
-        }, 1500);
+        setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 1500);
     }
 
-    /* Toggle Hamburger Menu */
     function toggleMenu() {
         const menu = document.getElementById('menuOverlay');
         menu.classList.toggle('active');
         document.body.classList.toggle('menu-open');
     }
 
-    /* Dynamic Plan Details Logic */
     const planData = {
         'Essentials': { time: '0.5 HR', style: 'ADD-ON (+NT$2,500)', retouch: '2 IMAGES', deposit: 'NT$ 1,000' },
         'Structure': { time: '1.5 HR', style: 'INCLUDED (1 LOOK)', retouch: '8 IMAGES', deposit: 'NT$ 2,600' }
@@ -837,41 +568,30 @@
     function updatePlanDetails() {
         const select = document.getElementById('planSelect');
         const box = document.getElementById('plan-details-box');
-        const val = select.value;
-        
-        if (planData[val]) {
-            document.getElementById('d-time').innerText = planData[val].time;
-            document.getElementById('d-style').innerText = planData[val].style;
-            document.getElementById('d-retouch').innerText = planData[val].retouch;
-            document.getElementById('d-deposit').innerText = planData[val].deposit;
+        if (planData[select.value]) {
+            document.getElementById('d-time').innerText = planData[select.value].time;
+            document.getElementById('d-style').innerText = planData[select.value].style;
+            document.getElementById('d-retouch').innerText = planData[select.value].retouch;
+            document.getElementById('d-deposit').innerText = planData[select.value].deposit;
             box.style.display = 'block';
-        } else {
-            box.style.display = 'none';
-        }
+        } else { box.style.display = 'none'; }
     }
 
     function openBookingWithPlan(planValue) {
-        const bookingSection = document.getElementById('hiddenBooking');
-        const select = document.getElementById('planSelect');
-        if (!bookingSection.classList.contains('open')) { toggleBookingSection(); }
-        setTimeout(() => {
-            select.value = planValue;
-            updatePlanDetails();
-            bookingSection.scrollIntoView({ behavior: 'smooth' });
-        }, 500);
+        const bs = document.getElementById('hiddenBooking');
+        if (!bs.classList.contains('open')) { toggleBookingSection(); }
+        setTimeout(() => { document.getElementById('planSelect').value = planValue; updatePlanDetails(); bs.scrollIntoView({ behavior: 'smooth' }); }, 500);
     }
 
     function createRipple(event) { toggleBookingSection(); }
     function toggleBookingSection() {
-        const el = document.getElementById('hiddenBooking');
-        el.classList.toggle('open');
+        const el = document.getElementById('hiddenBooking'); el.classList.toggle('open');
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    /* --- Gallery & Cursor Logic --- */
-    // V37.0: Show only 6 images initially
-    const initialShow = 6; 
+    /* --- V39.0 Image Loading Fix (DOM Purge) --- */
     const totalWorks = 117; 
+    const initialShow = 6; 
     const galleryContainer = document.getElementById('galleryContainer');
 
     function generateGallery() {
@@ -879,46 +599,28 @@
       for (let i = 1; i <= totalWorks; i++) {
         const imgPath = `images/works/portfolio0-${i}.jpg`; 
         let category = 'Identity'; 
-        if (i <= 10) { category = 'Essentials'; }
-        else if (i > 60) { category = 'Editorial'; }
+        if (i <= 10) { category = 'Essentials'; } else if (i > 60) { category = 'Editorial'; }
         
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
         itemDiv.setAttribute('data-category', category);
-        
-        // Hide items beyond the limit initially
         if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
-        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)">`;
+        // 核心更新：使用 this.closest('.gallery-item').remove() 徹底摧毀 DOM 節點，防止 Column-count 產生空白斷層
+        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" onerror="this.closest('.gallery-item').remove();">`;
         galleryContainer.appendChild(itemDiv);
       }
-      
-      // Ensure the button is visible initially if there are more works
-      if (totalWorks > initialShow) {
-          document.getElementById('loadMoreBtn').parentElement.style.display = 'block';
-      }
+      if (totalWorks > initialShow) { document.getElementById('loadMoreBtn').parentElement.style.display = 'block'; }
     }
     generateGallery();
 
     function filterGallery(category, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
         const items = document.querySelectorAll('.gallery-item');
-        const offlineMsg = document.getElementById('vision-offline-msg');
-        
-        if(category === 'Vision') {
-            items.forEach(item => item.classList.add('filtered-out'));
-            offlineMsg.classList.add('active');
-            document.getElementById('loadMoreBtn').parentElement.style.display = 'none';
-            return;
-        } else { offlineMsg.classList.remove('active'); }
-
         items.forEach(item => {
             item.classList.remove('hidden-loadmore'); 
             if (category === 'all' || item.getAttribute('data-category') === category) {
-                item.classList.remove('filtered-out');
-                item.classList.remove('reveal');
-                setTimeout(() => item.classList.add('reveal'), 50);
+                item.classList.remove('filtered-out'); item.classList.remove('reveal'); setTimeout(() => item.classList.add('reveal'), 50);
             } else { item.classList.add('filtered-out'); }
         });
         document.getElementById('loadMoreBtn').parentElement.style.display = 'none';
@@ -929,52 +631,14 @@
         document.getElementById('loadMoreBtn').parentElement.style.display = 'none';
     }
 
-    /* Visitor Counter */
     let count = localStorage.getItem('eden_visitor_count');
     if (!count) { count = 12840; } else { count = parseInt(count); }
-    if(!sessionStorage.getItem('session_counted')) {
-        count += Math.floor(Math.random() * 3) + 1;
-        localStorage.setItem('eden_visitor_count', count);
-        sessionStorage.setItem('session_counted', 'true');
-    }
+    if(!sessionStorage.getItem('session_counted')) { count += Math.floor(Math.random() * 3) + 1; localStorage.setItem('eden_visitor_count', count); sessionStorage.setItem('session_counted', 'true'); }
     document.getElementById('visitorCount').innerText = "NO. " + count.toLocaleString('en-US', {minimumIntegerDigits: 6, useGrouping:true});
 
-    /* Cursor */
-    const cursorCore = document.querySelector('.cursor-core');
-    const cursorRing = document.querySelector('.cursor-ring');
-    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-    document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; cursorCore.style.left = mouseX+'px'; cursorCore.style.top = mouseY+'px'; });
-    function animateCursor() {
-        ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
-        cursorRing.style.left = ringX+'px'; cursorRing.style.top = ringY+'px';
-        requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    /* Lightbox */
-    function openLightbox(el) {
-        const lb = document.getElementById("lightbox");
-        document.getElementById("lightbox-img").src = el.src;
-        lb.classList.add('active'); document.body.style.overflow = "hidden";
-    }
-    function closeLightbox() {
-        document.getElementById("lightbox").classList.remove('active');
-        document.body.style.overflow = "auto";
-    }
-    function toggleAudio() {
-        const audio = document.getElementById('bgMusic');
-        const wave = document.querySelector('#soundWave');
-        const btn = document.getElementById('topAudioBtn');
-        if(audio.paused) {
-            audio.play();
-            wave.classList.remove('paused');
-            btn.classList.add('active');
-        } else {
-            audio.pause();
-            wave.classList.add('paused');
-            btn.classList.remove('active');
-        }
-    }
+    function openLightbox(el) { document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.src; document.body.style.overflow = "hidden"; }
+    function closeLightbox() { document.getElementById("lightbox").classList.remove('active'); document.body.style.overflow = "auto"; }
+    function toggleAudio() { const a = document.getElementById('bgMusic'), w = document.querySelector('#soundWave'), b = document.getElementById('topAudioBtn'); if(a.paused) { a.play(); w.classList.remove('paused'); b.classList.add('active'); } else { a.pause(); w.classList.add('paused'); b.classList.remove('active'); } }
   </script>
 </body>
 </html>
