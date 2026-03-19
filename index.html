@@ -98,9 +98,11 @@
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
     .gallery-container { column-count: 3; column-gap: 40px; width: 100%; max-width: 1600px; margin: 0 auto; min-height: 400px; }
+    
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: pointer; opacity: 0; transform: translateY(40px) scale(0.98); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s ease, transform 1.2s, filter 1.4s; }
     .gallery-item.reveal { opacity: 1; transform: translateY(0) scale(1); filter: grayscale(100%) contrast(110%) brightness(0.9); }
     .gallery-item.filtered-out, .gallery-item.hidden-loadmore { display: none; }
+    
     .gallery-item img { width: 100%; height: auto; display: block; background: #0a0a0a; min-height: 100px; outline: 1px solid rgba(255,255,255,0); transition: transform 1.4s, outline-color 0.6s, outline-offset 0.6s; }
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
@@ -255,13 +257,13 @@
         /* Pricing Cards - Spatial Reconstruction */
         .pricing-grid { display: flex; flex-direction: column; width: 100%; gap: 40px; } 
         .price-card { 
-            min-height: auto; /* 解除高度封印 */
+            min-height: auto;
             height: auto;
             width: 100%; 
         }
         .card-content { 
-            padding: 50px 6vw; /* 改用百分比創造內部呼吸空間 */
-            gap: 40px; /* 拉開頂部文字與底部規格的距離 */
+            padding: 50px 6vw; 
+            gap: 40px; 
             display: flex;
             flex-direction: column;
         }
@@ -293,7 +295,7 @@
         footer { text-align: center; padding-bottom: 70px; }
         .tech-ticker-wrap { padding-right: 15px; }
         .visitor-counter { padding-left: 10px; }
-        .visitor-label { display: none; } /* 手機端空間有限，隱藏 Label 只留數字 */
+        .visitor-label { display: none; } 
     }
   </style>
 </head>
@@ -524,8 +526,8 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main metallic-gold">你 佇 立 之 處　即 是 時 代 封 面</h2>
-        <span class="about-slogan-sub">WHERE YOU STAND IS THE COVER.</span>
+        <h2 class="about-slogan-main metallic-gold">創 造　時 代 封 面</h2>
+        <span class="about-slogan-sub">CRAFT THE COVER OF THE ERA.</span>
     </div>
   </section>
   
@@ -589,7 +591,7 @@
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    /* --- V39.0 Image Loading Fix (DOM Purge) --- */
+    /* --- V39.1 Image Loading & Thumbnail Reveal Fix --- */
     const totalWorks = 117; 
     const initialShow = 6; 
     const galleryContainer = document.getElementById('galleryContainer');
@@ -604,13 +606,27 @@
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
         itemDiv.setAttribute('data-category', category);
-        if (i > initialShow) { itemDiv.classList.add('hidden-loadmore'); }
         
-        // 核心更新：使用 this.closest('.gallery-item').remove() 徹底摧毀 DOM 節點，防止 Column-count 產生空白斷層
+        // 分流：超過預設數量的隱藏，預設顯示的準備動畫
+        if (i > initialShow) { 
+            itemDiv.classList.add('hidden-loadmore'); 
+        }
+        
+        // 破圖自動刪除機制
         itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" onerror="this.closest('.gallery-item').remove();">`;
         galleryContainer.appendChild(itemDiv);
+
+        // 核心顯影修正：確保 DOM 掛載後，依序觸發 CSS 透明度漸變動畫
+        if (i <= initialShow) {
+            setTimeout(() => {
+                itemDiv.classList.add('reveal');
+            }, i * 100); 
+        }
       }
-      if (totalWorks > initialShow) { document.getElementById('loadMoreBtn').parentElement.style.display = 'block'; }
+      
+      if (totalWorks > initialShow) { 
+          document.getElementById('loadMoreBtn').parentElement.style.display = 'block'; 
+      }
     }
     generateGallery();
 
