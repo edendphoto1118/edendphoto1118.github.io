@@ -88,8 +88,7 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     /* --- 7. Gallery Refactor --- */
-    /* V08: 徹底移除 overflow-x: hidden，解放 3D 空間邊界 */
-    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; }
+    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; }
@@ -131,7 +130,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V07 Array Magazine Engine --- */
+    /* --- V09 Array Magazine Engine --- */
     .magazine-issue-container {
         margin-bottom: 120px;
         padding-bottom: 60px;
@@ -180,7 +179,6 @@
         box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
     }
     
-    /* V08: 調整背景底色為更深邃的 #050505，確保與 object-fit: contain 產生的留白完美融合 */
     .page-front, .page-back {
         position: absolute;
         top: 0;
@@ -206,7 +204,6 @@
         pointer-events: none;
     }
     
-    /* V08: 關鍵更新 -> 改為 object-fit: contain 確保任何比例的圖檔都絕不裁切 */
     .mag-page img { width: 100%; height: 100%; object-fit: contain; }
     
     .mag-page.flipped {
@@ -214,6 +211,7 @@
         box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
     }
 
+    /* V09 戰術級按鈕重構 (Tactical Button Refactor) */
     .magazine-hint {
         position: absolute;
         bottom: 0px;
@@ -225,14 +223,22 @@
         letter-spacing: 0.25em;
         text-transform: uppercase;
         animation: pulseBorder 2s infinite;
-        transition: opacity 0.6s;
+        transition: all 0.4s ease;
         border: 1px solid rgba(191, 149, 63, 0.4);
         padding: 12px 30px;
         background: rgba(5,5,5,0.9);
         z-index: 100;
-        pointer-events: none;
+        cursor: pointer;
+        pointer-events: auto; /* 預設允許點擊 */
         white-space: nowrap;
         backdrop-filter: blur(5px);
+    }
+    
+    .magazine-hint:hover {
+        background: rgba(191, 149, 63, 0.1);
+        border-color: rgba(191, 149, 63, 0.8);
+        text-shadow: 0 0 8px rgba(191, 149, 63, 0.6);
+        box-shadow: 0 0 20px rgba(191, 149, 63, 0.3);
     }
 
     @keyframes pulseBorder { 
@@ -772,26 +778,18 @@
       }
     }
 
-    /* --- V07 Array Magazine Engine --- */
-    // 未來要新增雜誌，只需在這裡複製一份並修改設定
+    /* --- V09 Array Magazine Engine with Tactical Buttons --- */
     const magazinesData = [
         {
             id: 'vol-01',
             title: 'ISSUE 01 // THE AWAKENING',
             path: 'images/works/cover/',
             sheets: [
-                { f: '1.png', b: '2.png' }, // 封面 / 內頁左
-                { f: '3.png', b: '4.png' }, // 內頁右 / 內頁左
-                { f: '5.png', b: '' }       // 封底 / 空白
+                { f: '1.png', b: '2.png' }, 
+                { f: '3.png', b: '4.png' }, 
+                { f: '5.png', b: '' }       
             ]
         }
-        // 未來擴充範例：
-        // ,{
-        //     id: 'vol-02',
-        //     title: 'ISSUE 02 // THE SILENCE',
-        //     path: 'images/works/cover2/',
-        //     sheets: [ { f: '1.png', b: '2.png' }, ... ]
-        // }
     ];
 
     function generateMagazines() {
@@ -801,6 +799,7 @@
         magazinesData.forEach((mag, magIndex) => {
             let currentSheet = 0;
             const numSheets = mag.sheets.length;
+            let pagesElements = []; // 儲存頁面 DOM 以供按鈕調用
 
             const issueWrap = document.createElement('div');
             issueWrap.className = 'magazine-issue-container';
@@ -835,9 +834,9 @@
                     ${backHtml}
                 `;
 
+                // 雜誌本體點擊事件
                 pageDiv.onclick = (e) => {
                     e.stopPropagation();
-
                     if (pageDiv.classList.contains('flipped')) {
                         pageDiv.classList.remove('flipped');
                         currentSheet--;
@@ -849,8 +848,27 @@
                     }
                     updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
                 };
+                
                 magazineDiv.appendChild(pageDiv);
+                pagesElements.push(pageDiv);
             });
+
+            // V09: 戰術級按鈕點擊連動
+            hintDiv.onclick = (e) => {
+                e.stopPropagation();
+                if (currentSheet === 0) {
+                    // 模擬點擊封面打開
+                    pagesElements[0].click();
+                } else if (currentSheet === numSheets) {
+                    // 點擊封底時，一鍵重置整本雜誌
+                    pagesElements.forEach((p, idx) => {
+                        p.classList.remove('flipped');
+                        setTimeout(() => { p.style.zIndex = numSheets - idx; }, 400);
+                    });
+                    currentSheet = 0;
+                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+                }
+            };
 
             // 初始校準
             updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
@@ -867,13 +885,16 @@
             magElement.style.transform = 'translateX(0)';
             hintElement.innerHTML = '[ 點擊翻閱 CLICK TO OPEN ]';
             hintElement.style.opacity = '1';
+            hintElement.style.pointerEvents = 'auto'; // 允許點擊
         } else if (current === total) {
             magElement.style.transform = 'translateX(100%)';
             hintElement.innerHTML = '[ 回到封面 CLOSE ISSUE ]';
             hintElement.style.opacity = '1';
+            hintElement.style.pointerEvents = 'auto'; // 允許點擊
         } else {
             magElement.style.transform = 'translateX(50%)';
             hintElement.style.opacity = '0'; 
+            hintElement.style.pointerEvents = 'none'; // 幽靈模式，防止閱讀中誤觸
         }
     }
 
