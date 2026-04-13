@@ -87,7 +87,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Gallery V04 Refactor --- */
+    /* --- 7. Gallery Refactor --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -122,14 +122,81 @@
     .gallery-sub-section { margin-top: 60px; margin-bottom: 120px; width: 100%; max-width: 1600px; margin-left: auto; margin-right: auto; }
     .gallery-sub-title { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #e0e0e0; letter-spacing: 0.15em; margin-bottom: 50px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; font-weight: 400; }
     .gallery-sub-title span { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.2em; font-weight: 300; margin-left: 15px; }
-    .gallery-container { column-count: 3; column-gap: 40px; width: 100%; }
     
+    .gallery-container { column-count: 3; column-gap: 40px; width: 100%; }
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: pointer; opacity: 0; transform: translateY(50px) scale(0.95); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.4s; }
     .gallery-item.reveal { opacity: 1; transform: translateY(0) scale(1); filter: grayscale(100%) contrast(110%) brightness(0.9); }
-    
     .gallery-item img { width: 100%; height: auto; display: block; background: #0a0a0a; min-height: 100px; outline: 1px solid rgba(255,255,255,0); transition: transform 1.4s, outline-color 0.6s, outline-offset 0.6s; }
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
+
+    /* --- V05 3D Magazine Display --- */
+    .magazine-showcase-wrap { 
+        width: 100%; 
+        perspective: 2000px; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        padding: 80px 0; 
+        position: relative;
+    }
+    .magazine-hint {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        color: #444;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        animation: pulseText 2s infinite;
+    }
+    .magazine {
+        position: relative;
+        width: 400px;
+        height: 560px;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        cursor: pointer;
+    }
+    .mag-page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform-origin: left;
+        transform-style: preserve-3d;
+        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .mag-page img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        backface-visibility: hidden;
+        background: #111;
+    }
+    .mag-page .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #080808;
+        transform: rotateY(180deg);
+        backface-visibility: hidden;
+    }
+    /* Page Flipping Logic */
+    .mag-page.flipped {
+        transform: rotateY(-180deg);
+    }
+    
+    @media (max-width: 768px) {
+        .magazine { width: 280px; height: 392px; }
+        .magazine-showcase-wrap { perspective: 1000px; }
+    }
 
     /* --- Archetype --- */
     .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
@@ -148,8 +215,10 @@
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
     .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; } .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
     .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; } .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
-    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; }
+    
+    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; background-size: cover; background-position: center; }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
+    
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
     .plan-title-block { margin-bottom: 40px; }
@@ -161,6 +230,7 @@
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
+    
     .price-card.locked-plan { cursor: not-allowed; }
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
@@ -171,6 +241,7 @@
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
     @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
+    
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -253,6 +324,8 @@
     .close-btn::after { transform: rotate(-45deg); }
     .close-btn:hover { transform: rotate(90deg); }
     .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
+
+    @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
 
     /* =========================================
        V39.0 MOBILE OPTIMIZATION (THE FIX)
@@ -389,7 +462,11 @@
 
     <div id="gallery-cover" class="gallery-sub-section">
         <h3 class="gallery-sub-title">THE COVER <span>/ 封面・映象</span></h3>
-        <div class="gallery-container" id="container-cover"></div>
+        <div class="magazine-showcase-wrap">
+            <div class="magazine" id="magazine">
+                </div>
+            <div class="magazine-hint">CLICK TO FLIP // 點擊翻閱</div>
+        </div>
     </div>
 
   </section>
@@ -415,7 +492,7 @@
     <div class="pricing-grid">
       
       <div class="price-card" onclick="openBookingWithPlan('Essentials')">
-        <div class="card-bg" style="background-image: url('plan-structure.jpg'); filter: brightness(0.6);"></div>
+        <div class="card-bg" style="background-image: url('images/works/essentials/essentials%20(1).jpg'); filter: brightness(0.4);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div>
@@ -441,7 +518,7 @@
       </div>
 
       <div class="price-card featured" onclick="openBookingWithPlan('Structure')">
-        <div class="card-bg" style="background-image: url('plan-structure.jpg')"></div>
+        <div class="card-bg" style="background-image: url('images/works/cover/1.png'); filter: brightness(0.4);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div>
@@ -628,66 +705,77 @@
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    /* --- V04 Gallery Logic: Intersection Observer + Dual Containers --- */
-    const totalWorks = 117; 
+    /* --- V05 Gallery Logic: Intersection Observer + Essentials Path Fix --- */
+    const numEssentials = 7; 
+    const numCoverPages = 5;
     const containerEssentials = document.getElementById('container-essentials');
-    const containerCover = document.getElementById('container-cover');
+    const magazine = document.getElementById('magazine');
 
-    // 視角觀測器：滾動到畫面時才加載浮現動畫
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if(entry.isIntersecting) {
-                // 延遲一點點產生錯落感
-                setTimeout(() => { entry.target.classList.add('reveal'); }, Math.random() * 200);
+                setTimeout(() => { entry.target.classList.add('reveal'); }, 100);
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    }, { threshold: 0.1 });
 
-    function generateGallery() {
+    function generateEssentials() {
       containerEssentials.innerHTML = '';
-      containerCover.innerHTML = '';
-      
-      for (let i = 1; i <= totalWorks; i++) {
-        const imgPath = `images/works/portfolio0-${i}.jpg`; 
-        
+      for (let i = 1; i <= numEssentials; i++) {
+        // 修正路徑以匹配使用者命名的檔案：essentials (1).jpg
+        const imgPath = `images/works/essentials/essentials%20(${i}).jpg`; 
         const itemDiv = document.createElement('div');
-        itemDiv.className = 'gallery-item'; // 移除預設的 reveal，交給 Observer
+        itemDiv.className = 'gallery-item';
         itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" onerror="this.closest('.gallery-item').remove();">`;
-        
-        // 交錯分發到兩個方案展區
-        if (i % 2 !== 0) {
-            containerEssentials.appendChild(itemDiv);
-        } else {
-            containerCover.appendChild(itemDiv);
-        }
-        
+        containerEssentials.appendChild(itemDiv);
         revealObserver.observe(itemDiv);
       }
     }
-    generateGallery();
 
-    // 頂部導航滾動邏輯
+    /* --- V05 3D Magazine Page Generation --- */
+    function generateMagazine() {
+        magazine.innerHTML = '';
+        // 5 張圖：1 (封面), 2 (內頁L), 3 (內頁R), 4 (內頁L), 5 (封底)
+        // 在 3D 結構中，我們將圖片分配給不同的 Page 元件
+        for (let i = 1; i <= numCoverPages; i++) {
+            const pageDiv = document.createElement('div');
+            pageDiv.className = 'mag-page';
+            // 設定層級，封面最上面
+            pageDiv.style.zIndex = numCoverPages - i;
+            
+            const imgPath = `images/works/cover/${i}.png`;
+            pageDiv.innerHTML = `
+                <img src="${imgPath}" onerror="this.parentElement.style.display='none';">
+                <div class="back"></div>
+            `;
+            
+            pageDiv.onclick = (e) => {
+                e.stopPropagation();
+                pageDiv.classList.toggle('flipped');
+                // 調整 z-index 確保翻過去的頁面不會擋住後面的
+                if (pageDiv.classList.contains('flipped')) {
+                    setTimeout(() => { pageDiv.style.zIndex = i; }, 300);
+                } else {
+                    setTimeout(() => { pageDiv.style.zIndex = numCoverPages - i; }, 300);
+                }
+            };
+            
+            magazine.appendChild(pageDiv);
+        }
+    }
+
+    generateEssentials();
+    generateMagazine();
+
     function scrollToSection(e, sectionId) {
         e.preventDefault();
         document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active'));
         e.currentTarget.classList.add('active');
-        
         const target = document.getElementById(sectionId);
-        // 扣除上方導航列的大約高度
-        const offset = 100; 
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = target.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-             top: offsetPosition,
-             behavior: 'smooth'
-        });
+        window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
     }
 
-    // 封條按鈕提示
     function showToast(msg) {
         const toast = document.getElementById('toast-msg');
         toast.innerHTML = msg.replace('//', '<br>');
