@@ -88,7 +88,8 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     /* --- 7. Gallery Refactor --- */
-    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
+    /* V08: 徹底移除 overflow-x: hidden，解放 3D 空間邊界 */
+    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; }
@@ -130,25 +131,39 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V06 3D Magazine Centered Dynamics --- */
+    /* --- V07 Array Magazine Engine --- */
+    .magazine-issue-container {
+        margin-bottom: 120px;
+        padding-bottom: 60px;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .magazine-issue-container:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    .issue-title {
+        text-align: center;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.9rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
     .magazine-showcase-wrap { 
         width: 100%; 
         perspective: 2500px; 
         display: flex; 
         justify-content: center; 
         align-items: center; 
-        padding: 80px 0 150px; 
+        padding: 50px 0 100px; 
         position: relative;
     }
     .magazine {
         position: relative;
-        /* 使用 vw 確保極致自適應，最大限制 400px */
         width: 35vw;
         max-width: 400px;
-        /* 標準實體雜誌比例 */
         aspect-ratio: 1 / 1.414;
         transform-style: preserve-3d;
-        /* 平滑的重心轉移運算 */
         transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
         cursor: pointer;
     }
@@ -165,6 +180,7 @@
         box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
     }
     
+    /* V08: 調整背景底色為更深邃的 #050505，確保與 object-fit: contain 產生的留白完美融合 */
     .page-front, .page-back {
         position: absolute;
         top: 0;
@@ -172,11 +188,10 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        background: #080808;
+        background: #050505;
         overflow: hidden;
     }
     
-    /* 實體書脊漸層陰影 */
     .page-front::after {
         content: ''; position: absolute; top:0; left:0; width:15%; height:100%;
         background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 100%);
@@ -191,17 +206,17 @@
         pointer-events: none;
     }
     
-    .mag-page img { width: 100%; height: 100%; object-fit: cover; }
+    /* V08: 關鍵更新 -> 改為 object-fit: contain 確保任何比例的圖檔都絕不裁切 */
+    .mag-page img { width: 100%; height: 100%; object-fit: contain; }
     
     .mag-page.flipped {
         transform: rotateY(-180deg);
         box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
     }
 
-    /* V06 互動引導呼吸燈 */
     .magazine-hint {
         position: absolute;
-        bottom: 50px;
+        bottom: 0px;
         left: 50%;
         transform: translateX(-50%);
         font-family: 'Space Mono', monospace;
@@ -353,6 +368,8 @@
     .close-btn:hover { transform: rotate(90deg); }
     .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
 
+    @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
+
     /* =========================================
        V39.0 MOBILE OPTIMIZATION (THE FIX)
        ========================================= */
@@ -377,9 +394,9 @@
         .filter-btn { font-size: 0.6rem; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
         
-        /* 響應式 3D 雜誌寬度：確保展開不破版 */
+        .magazine-issue-container { margin-bottom: 80px; padding-bottom: 40px; }
         .magazine { width: 44vw; } 
-        .magazine-hint { font-size: 0.6rem; bottom: 30px; }
+        .magazine-hint { font-size: 0.6rem; bottom: -20px; }
         
         .pricing-grid { display: flex; flex-direction: column; width: 100%; gap: 40px; } 
         .price-card { min-height: auto; height: auto; width: 100%; }
@@ -491,10 +508,8 @@
 
     <div id="gallery-cover" class="gallery-sub-section">
         <h3 class="gallery-sub-title">THE COVER <span>/ 封面・映象</span></h3>
-        <div class="magazine-showcase-wrap">
-            <div class="magazine" id="magazine"></div>
-            <div class="magazine-hint" id="mag-hint">[ 點擊翻閱 CLICK TO OPEN ]</div>
-        </div>
+        <div id="container-cover">
+            </div>
     </div>
   </section>
   
@@ -732,6 +747,7 @@
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
     }
 
+    /* --- V07 Gallery: Essentials --- */
     const numEssentials = 7; 
     const containerEssentials = document.getElementById('container-essentials');
 
@@ -756,91 +772,128 @@
       }
     }
 
-    /* --- V06: 3D Magazine Engine with Dynamic Centering --- */
-    const magazine = document.getElementById('magazine');
-    let currentSheet = 0;
-    
-    // 實體頁面映射：5張圖組成3張雙面紙
-    const sheets = [
-        { f: '1.png', b: '2.png' }, // 第一張紙：封面 / 內頁左
-        { f: '3.png', b: '4.png' }, // 第二張紙：內頁右 / 內頁左
-        { f: '5.png', b: '' }       // 第三張紙：封底 / 空白底板
+    /* --- V07 Array Magazine Engine --- */
+    // 未來要新增雜誌，只需在這裡複製一份並修改設定
+    const magazinesData = [
+        {
+            id: 'vol-01',
+            title: 'ISSUE 01 // THE AWAKENING',
+            path: 'images/works/cover/',
+            sheets: [
+                { f: '1.png', b: '2.png' }, // 封面 / 內頁左
+                { f: '3.png', b: '4.png' }, // 內頁右 / 內頁左
+                { f: '5.png', b: '' }       // 封底 / 空白
+            ]
+        }
+        // 未來擴充範例：
+        // ,{
+        //     id: 'vol-02',
+        //     title: 'ISSUE 02 // THE SILENCE',
+        //     path: 'images/works/cover2/',
+        //     sheets: [ { f: '1.png', b: '2.png' }, ... ]
+        // }
     ];
 
-    function generateMagazine() {
-        magazine.innerHTML = '';
-        sheets.forEach((sheet, index) => {
-            const pageDiv = document.createElement('div');
-            pageDiv.className = 'mag-page';
-            // 初始狀態下，未翻開的頁面層級由上而下遞減
-            pageDiv.style.zIndex = sheets.length - index;
+    function generateMagazines() {
+        const coverContainer = document.getElementById('container-cover');
+        coverContainer.innerHTML = '';
 
-            let backHtml = `<div class="page-back" style="background:#080808;"></div>`;
-            if (sheet.b) {
-                backHtml = `<div class="page-back"><img src="images/works/cover/${sheet.b}" onerror="this.closest('.page-back').style.background='#080808';this.style.display='none';"></div>`;
-            }
+        magazinesData.forEach((mag, magIndex) => {
+            let currentSheet = 0;
+            const numSheets = mag.sheets.length;
 
-            pageDiv.innerHTML = `
-                <div class="page-front"><img src="images/works/cover/${sheet.f}" onerror="this.style.display='none';"></div>
-                ${backHtml}
-            `;
+            const issueWrap = document.createElement('div');
+            issueWrap.className = 'magazine-issue-container';
 
-            pageDiv.onclick = (e) => {
-                e.stopPropagation();
+            const issueTitle = document.createElement('h4');
+            issueTitle.className = 'issue-title metallic-gold';
+            issueTitle.innerText = mag.title;
+            issueWrap.appendChild(issueTitle);
 
-                if (pageDiv.classList.contains('flipped')) {
-                    // 往回翻（合上）
-                    pageDiv.classList.remove('flipped');
-                    currentSheet--;
-                    // 等待動畫過半時切換 z-index，避免穿模
-                    setTimeout(() => { pageDiv.style.zIndex = sheets.length - index; }, 400); 
-                } else {
-                    // 往下翻（打開）
-                    pageDiv.classList.add('flipped');
-                    currentSheet++;
-                    setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400);
+            const showcaseWrap = document.createElement('div');
+            showcaseWrap.className = 'magazine-showcase-wrap';
+
+            const magazineDiv = document.createElement('div');
+            magazineDiv.className = 'magazine';
+            
+            const hintDiv = document.createElement('div');
+            hintDiv.className = 'magazine-hint';
+            hintDiv.innerText = '[ 點擊翻閱 CLICK TO OPEN ]';
+
+            mag.sheets.forEach((sheet, index) => {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'mag-page';
+                pageDiv.style.zIndex = numSheets - index;
+
+                let backHtml = `<div class="page-back" style="background:#050505;"></div>`;
+                if (sheet.b) {
+                    backHtml = `<div class="page-back"><img src="${mag.path}${sheet.b}" onerror="this.closest('.page-back').style.background='#050505';this.style.display='none';"></div>`;
                 }
-                
-                // 觸發重心校準
-                updateMagazineCenter();
-            };
-            magazine.appendChild(pageDiv);
+
+                pageDiv.innerHTML = `
+                    <div class="page-front"><img src="${mag.path}${sheet.f}" onerror="this.style.display='none';"></div>
+                    ${backHtml}
+                `;
+
+                pageDiv.onclick = (e) => {
+                    e.stopPropagation();
+
+                    if (pageDiv.classList.contains('flipped')) {
+                        pageDiv.classList.remove('flipped');
+                        currentSheet--;
+                        setTimeout(() => { pageDiv.style.zIndex = numSheets - index; }, 400); 
+                    } else {
+                        pageDiv.classList.add('flipped');
+                        currentSheet++;
+                        setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400);
+                    }
+                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+                };
+                magazineDiv.appendChild(pageDiv);
+            });
+
+            // 初始校準
+            updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+
+            showcaseWrap.appendChild(magazineDiv);
+            showcaseWrap.appendChild(hintDiv);
+            issueWrap.appendChild(showcaseWrap);
+            coverContainer.appendChild(issueWrap);
         });
-        
-        // 載入時初始化位置
-        updateMagazineCenter();
     }
 
-    function updateMagazineCenter() {
-        const hint = document.getElementById('mag-hint');
-        
-        if (currentSheet === 0) {
-            // 完全合上：封面置中
-            magazine.style.transform = 'translateX(0)';
-            hint.innerHTML = '[ 點擊翻閱 CLICK TO OPEN ]';
-            hint.style.opacity = '1';
-        } else if (currentSheet === sheets.length) {
-            // 翻到最後一頁：封底置中
-            magazine.style.transform = 'translateX(100%)';
-            hint.innerHTML = '[ 回到封面 CLOSE ISSUE ]';
-            hint.style.opacity = '1';
+    function updateMagazineCenter(magElement, hintElement, current, total) {
+        if (current === 0) {
+            magElement.style.transform = 'translateX(0)';
+            hintElement.innerHTML = '[ 點擊翻閱 CLICK TO OPEN ]';
+            hintElement.style.opacity = '1';
+        } else if (current === total) {
+            magElement.style.transform = 'translateX(100%)';
+            hintElement.innerHTML = '[ 回到封面 CLOSE ISSUE ]';
+            hintElement.style.opacity = '1';
         } else {
-            // 翻閱中：書脊精準置中，展現無縫跨頁
-            magazine.style.transform = 'translateX(50%)';
-            // 隱藏提示，還給使用者純淨的觀賞空間
-            hint.style.opacity = '0'; 
+            magElement.style.transform = 'translateX(50%)';
+            hintElement.style.opacity = '0'; 
         }
     }
 
     generateEssentials();
-    generateMagazine();
+    generateMagazines();
 
+    /* --- V07 Precision Scroll Logic --- */
     function scrollToSection(e, sectionId) {
         e.preventDefault();
         document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active'));
         e.currentTarget.classList.add('active');
+        
         const target = document.getElementById(sectionId);
-        window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+        // 使用絕對定位精準計算 (扣除上方導覽列高度約 120px)
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 120;
+
+        window.scrollTo({
+             top: targetPosition,
+             behavior: 'smooth'
+        });
     }
 
     function showToast(msg) {
