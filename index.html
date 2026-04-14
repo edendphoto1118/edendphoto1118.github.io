@@ -76,7 +76,11 @@
     .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; opacity: 0.5; }
     .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
+    
+    /* V11 光束置中修復機制 */
     .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
+    .title-word { display: inline-block; margin-right: -0.4em; } /* 吃掉最後一個字母產生的多餘間距，讓排版數學性完美置中 */
+    
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: -0.6em; }
     .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 35px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; }
@@ -88,7 +92,7 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     /* --- 7. Gallery Refactor --- */
-    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; }
+    .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
     .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; }
@@ -211,7 +215,6 @@
         box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
     }
 
-    /* V09 戰術級按鈕重構 (Tactical Button Refactor) */
     .magazine-hint {
         position: absolute;
         bottom: 0px;
@@ -405,6 +408,8 @@
        ========================================= */
     @media (max-width: 768px) { 
         .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
+        .title-word { margin-right: -0.2em; } /* 抵銷手機端的 letter-spacing，保持完美置中 */
+        
         .hero p { font-size: 0.65rem; letter-spacing: 0.3em; margin-top: 30px; }
         .section-title { font-size: 2rem; line-height: 1.3; }
         .section-subtitle { font-size: 0.6rem; margin-top: 15px; }
@@ -472,7 +477,7 @@
 
   <div id="preloader">
     <div class="loader-content-wrap">
-        <span class="loader-text">EDEN</span><span class="vertical-separator loader-sep"></span><span class="loader-text">DEEN</span>
+        <span class="loader-text title-word">EDEN</span><span class="vertical-separator loader-sep"></span><span class="loader-text title-word">DEEN</span>
     </div>
     <div class="enter-btn-wrapper" id="enterWrapper">
         <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE</button>
@@ -508,7 +513,7 @@
   <section class="hero">
     <video class="hero-bg-video" autoplay muted loop playsinline><source src="hero.mp4" type="video/mp4"></video>
     <div class="hero-content">
-      <h1>EDEN <span class="vertical-separator"></span> DEEN</h1>
+      <h1><span class="title-word">EDEN</span><span class="vertical-separator"></span><span class="title-word">DEEN</span></h1>
       <p>Visual Director / Photographer</p>
       <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE</a>
     </div>
@@ -703,7 +708,7 @@
                 </div>
                 <div class="form-group"><label>DATE / 期望日期</label><input type="date" name="date" required></div>
                 <div class="form-group"><label>VISION / 拍攝想法</label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION..."></textarea></div>
-                <p class="confirmation-text">提交預約後，我們將透過 Instagram 私訊與 Email 核對檔期。<br>確認無誤後請於 24 小時內支付訂金以完成委託。</p>
+                <p class="confirmation-text">提交預約後，我們透過 Instagram 私訊與 Email 核對檔期。<br>確認無誤後請於 24 小時內支付訂金以完成委託。</p>
                 <button type="submit" class="submit-btn">CONFIRM REQUEST</button>
               </form>
           </div>
@@ -953,6 +958,7 @@
     generateEssentials();
     generateMagazines();
 
+    /* --- V07 Precision Scroll Logic --- */
     function scrollToSection(e, sectionId) {
         e.preventDefault();
         document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active'));
