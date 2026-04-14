@@ -76,10 +76,8 @@
     .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; opacity: 0.5; }
     .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
-    
-    /* V11 光束置中修復機制 */
     .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
-    .title-word { display: inline-block; margin-right: -0.4em; } /* 吃掉最後一個字母產生的多餘間距，讓排版數學性完美置中 */
+    .title-word { display: inline-block; margin-right: -0.4em; }
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: -0.6em; }
@@ -316,18 +314,23 @@
     .delivery-card:hover h4 { color: #fff; }
     .delivery-card:hover p { color: #aaa; }
 
-    /* --- 11. Booking (V10 CTA Upgrade) --- */
+    /* --- 11. Booking (V12 CTA Extreme Smoothness) --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
     
     .ritual-btn { 
         display: block; margin: 0 auto; padding: 0; background: transparent; border: none; 
         cursor: pointer; position: relative; overflow: hidden; 
         outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; 
+        transform: translateZ(0); /* 強制建立 GPU 渲染層 */
     }
     .btn-glow { 
-        position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; 
-        background: conic-gradient(from 0deg, transparent 70%, #bf953f 80%, #fcf6ba 100%); 
-        animation: spinGlow 4s linear infinite; opacity: 0; transition: opacity 1.2s ease; z-index: 0; 
+        position: absolute; 
+        top: 50%; left: 50%; 
+        width: 300%; aspect-ratio: 1; border-radius: 50%; /* 正圓形演算極致絲滑 */
+        background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); 
+        animation: spinGlow 4s linear infinite; 
+        opacity: 0; transition: opacity 1.2s ease; z-index: 0; 
+        will-change: transform; /* 通知瀏覽器預先分配硬體資源 */
     }
     .ritual-btn.in-view .btn-glow { opacity: 1; }
     .btn-bg { 
@@ -343,7 +346,12 @@
     .ritual-btn:hover { outline-color: transparent; }
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
     .ritual-btn:hover .btn-glow { animation-duration: 2s; opacity: 1; }
-    @keyframes spinGlow { 100% { transform: rotate(360deg); } }
+    
+    /* V12: 絕對置中校準的數學模型 */
+    @keyframes spinGlow { 
+        0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 
+        100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } 
+    }
 
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
@@ -408,7 +416,7 @@
        ========================================= */
     @media (max-width: 768px) { 
         .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
-        .title-word { margin-right: -0.2em; } /* 抵銷手機端的 letter-spacing，保持完美置中 */
+        .title-word { margin-right: -0.2em; } 
         
         .hero p { font-size: 0.65rem; letter-spacing: 0.3em; margin-top: 30px; }
         .section-title { font-size: 2rem; line-height: 1.3; }
@@ -958,7 +966,6 @@
     generateEssentials();
     generateMagazines();
 
-    /* --- V07 Precision Scroll Logic --- */
     function scrollToSection(e, sectionId) {
         e.preventDefault();
         document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active'));
