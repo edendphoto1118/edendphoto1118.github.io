@@ -132,7 +132,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V09 Array Magazine Engine --- */
+    /* --- V13 Magazine Engine with Brand Back Cover --- */
     .magazine-issue-container {
         margin-bottom: 120px;
         padding-bottom: 60px;
@@ -211,6 +211,36 @@
     .mag-page.flipped {
         transform: rotateY(-180deg);
         box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
+    }
+
+    /* V13 封底專屬品牌烙印設計 */
+    .brand-back-cover {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: #030303; /* 比周圍再深一點，提升質感 */
+        border-left: 1px solid rgba(255,255,255,0.02);
+    }
+    .brand-back-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2.2rem;
+        letter-spacing: 0.25em;
+        margin-right: -0.25em;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .brand-back-sub {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.5rem;
+        color: #444;
+        letter-spacing: 0.4em;
+        margin-top: 20px;
+        margin-right: -0.4em;
+        text-transform: uppercase;
     }
 
     .magazine-hint {
@@ -314,23 +344,23 @@
     .delivery-card:hover h4 { color: #fff; }
     .delivery-card:hover p { color: #aaa; }
 
-    /* --- 11. Booking (V12 CTA Extreme Smoothness) --- */
+    /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
     
     .ritual-btn { 
         display: block; margin: 0 auto; padding: 0; background: transparent; border: none; 
         cursor: pointer; position: relative; overflow: hidden; 
         outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; 
-        transform: translateZ(0); /* 強制建立 GPU 渲染層 */
+        transform: translateZ(0); 
     }
     .btn-glow { 
         position: absolute; 
         top: 50%; left: 50%; 
-        width: 300%; aspect-ratio: 1; border-radius: 50%; /* 正圓形演算極致絲滑 */
+        width: 300%; aspect-ratio: 1; border-radius: 50%; 
         background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); 
         animation: spinGlow 4s linear infinite; 
         opacity: 0; transition: opacity 1.2s ease; z-index: 0; 
-        will-change: transform; /* 通知瀏覽器預先分配硬體資源 */
+        will-change: transform; 
     }
     .ritual-btn.in-view .btn-glow { opacity: 1; }
     .btn-bg { 
@@ -347,7 +377,6 @@
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
     .ritual-btn:hover .btn-glow { animation-duration: 2s; opacity: 1; }
     
-    /* V12: 絕對置中校準的數學模型 */
     @keyframes spinGlow { 
         0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 
         100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } 
@@ -800,7 +829,6 @@
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    /* --- V10 CTA Focus Observer --- */
     const bookingBtn = document.querySelector('.ritual-btn');
     const bookingObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -813,7 +841,6 @@
     }, { threshold: 0.5 });
     if(bookingBtn) bookingObserver.observe(bookingBtn);
 
-    /* --- V10 Email Copy Logic --- */
     function copyEmail(e) {
         e.preventDefault();
         navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => {
@@ -823,7 +850,6 @@
         });
     }
 
-    /* --- Gallery Essentials --- */
     const numEssentials = 7; 
     const containerEssentials = document.getElementById('container-essentials');
 
@@ -848,7 +874,7 @@
       }
     }
 
-    /* --- Array Magazine Engine --- */
+    /* --- V13 Array Magazine Engine (支援多本與品牌封底) --- */
     const magazinesData = [
         {
             id: 'vol-01',
@@ -857,7 +883,17 @@
             sheets: [
                 { f: '1.png', b: '2.png' }, 
                 { f: '3.png', b: '4.png' }, 
-                { f: '5.png', b: '' }       
+                { f: '5.png', b: 'BRAND' } // V13: 設定 b 為 BRAND 觸發品牌封底
+            ]
+        },
+        {
+            id: 'vol-02',
+            title: 'ISSUE 02 // THE SILENCE',
+            path: 'images/works/cover2/',
+            sheets: [
+                { f: '1.png', b: '2.png' }, 
+                { f: '3.png', b: '4.png' }, 
+                { f: '5.png', b: 'BRAND' } 
             ]
         }
     ];
@@ -894,8 +930,19 @@
                 pageDiv.className = 'mag-page';
                 pageDiv.style.zIndex = numSheets - index;
 
+                // V13 封底渲染邏輯
                 let backHtml = `<div class="page-back" style="background:#050505;"></div>`;
-                if (sheet.b) {
+                if (sheet.b === 'BRAND') {
+                    backHtml = `
+                    <div class="page-back brand-back-cover">
+                        <div class="brand-back-title">
+                            <span class="metallic-gold">EDEN</span>
+                            <span class="vertical-separator" style="height:1em; opacity:0.3;"></span>
+                            <span class="metallic-gold">DEEN</span>
+                        </div>
+                        <div class="brand-back-sub">VISUAL ARCHIVE</div>
+                    </div>`;
+                } else if (sheet.b) {
                     backHtml = `<div class="page-back"><img src="${mag.path}${sheet.b}" onerror="this.closest('.page-back').style.background='#050505';this.style.display='none';"></div>`;
                 }
 
