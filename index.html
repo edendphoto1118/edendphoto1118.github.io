@@ -40,7 +40,7 @@
     .enter-btn:hover { letter-spacing: 0.6em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation --- */
+    /* --- 4. Navigation & Morphing Hamburger --- */
     .top-bar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease 1s; pointer-events: none; }
     body.site-active .top-bar { opacity: 1; }
     .nav-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto; z-index: 10001;}
@@ -54,16 +54,20 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
     
-    .menu-trigger { width: 30px; height: 14px; position: relative; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; z-index: 10001; }
-    .menu-line { width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
-    .menu-line:nth-child(2) { width: 60%; }
+    /* V15: 形態轉換漢堡選單 (Morphing Hamburger) */
+    .menu-trigger { width: 30px; height: 20px; position: relative; cursor: pointer; z-index: 10001; }
+    .menu-line { position: absolute; right: 0; width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+    .menu-line:nth-child(1) { top: 5px; }
+    .menu-line:nth-child(2) { bottom: 5px; width: 60%; }
     .menu-trigger:hover .menu-line:nth-child(2) { width: 100%; }
+    
+    /* 當選單開啟時，觸發打叉動畫 */
+    .menu-trigger.open .menu-line:nth-child(1) { top: 9px; transform: rotate(45deg); }
+    .menu-trigger.open .menu-line:nth-child(2) { bottom: 10px; width: 100%; transform: rotate(-45deg); }
     
     .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s; }
     .menu-overlay.active { opacity: 1; visibility: visible; }
-    .menu-close-btn { position: absolute; top: 35px; right: 50px; width: 40px; height: 40px; cursor: pointer; z-index: 10001;}
-    .menu-close-btn::before, .menu-close-btn::after { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #fff; transform: rotate(45deg); }
-    .menu-close-btn::after { transform: rotate(-45deg); }
+    
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
     .menu-link { font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.1em; position: relative; transform: translateY(20px); opacity: 0; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s; }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
@@ -132,7 +136,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V13 Magazine Engine with Brand Back Cover --- */
+    /* --- V14 Array Magazine Engine --- */
     .magazine-issue-container {
         margin-bottom: 120px;
         padding-bottom: 60px;
@@ -193,16 +197,16 @@
     }
     
     .page-front::after {
-        content: ''; position: absolute; top:0; left:0; width:15%; height:100%;
-        background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 100%);
+        content: ''; position: absolute; top:0; left:0; width: 8%; height:100%;
+        background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%);
         pointer-events: none;
     }
     .page-back {
         transform: rotateY(180deg);
     }
     .page-back::after {
-        content: ''; position: absolute; top:0; right:0; width:15%; height:100%;
-        background: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
+        content: ''; position: absolute; top:0; right:0; width: 8%; height:100%;
+        background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, transparent 100%);
         pointer-events: none;
     }
     
@@ -213,7 +217,6 @@
         box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
     }
 
-    /* V13 封底專屬品牌烙印設計 */
     .brand-back-cover {
         display: flex;
         flex-direction: column;
@@ -221,7 +224,7 @@
         align-items: center;
         width: 100%;
         height: 100%;
-        background: #030303; /* 比周圍再深一點，提升質感 */
+        background: #030303;
         border-left: 1px solid rgba(255,255,255,0.02);
     }
     .brand-back-title {
@@ -456,7 +459,6 @@
         .nav-logo { font-size: 1.2rem; }
         .audio-btn { display: none; } 
         .menu-link { font-size: 2.2rem; margin: 10px 0; }
-        .menu-close-btn { right: 5vw; top: 25px; }
         
         .gallery-sub-title { font-size: 1.6rem; margin-bottom: 30px; }
         .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.7rem; }
@@ -485,7 +487,6 @@
         .delivery-card { padding: 40px 6vw; }
         .delivery-card p { font-size: 0.8rem; line-height: 1.8; }
         
-        /* Mobile CTA Button Layout */
         .ritual-btn { width: 90%; max-width: 350px; }
         .btn-content { padding: 25px 0; gap: 12px; }
         .btn-en { font-size: 1rem; }
@@ -530,7 +531,7 @@
                   <div class="bar"></div><div class="bar"></div><div class="bar"></div>
               </div>
           </button>
-          <div class="menu-trigger" onclick="toggleMenu()">
+          <div class="menu-trigger" id="menuBtn" onclick="toggleMenu()">
               <div class="menu-line"></div>
               <div class="menu-line"></div>
           </div>
@@ -538,12 +539,11 @@
   </div>
 
   <div class="menu-overlay" id="menuOverlay">
-      <div class="menu-close-btn" onclick="toggleMenu()"></div>
       <div class="menu-items">
-          <a href="#work" class="menu-link" onclick="toggleMenu()">PORTFOLIO</a>
-          <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS</a>
+          <a href="#work" class="menu-link" onclick="toggleMenu()">ANTHOLOGY</a>
           <a href="#archetype" class="menu-link" onclick="toggleMenu()">ARCHETYPE</a>
-          <a href="#contact" class="menu-link" onclick="toggleMenu()">CONTACT</a>
+          <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS</a>
+          <a href="#contact" class="menu-link" onclick="toggleMenu()">CONNECT</a>
       </div>
   </div>
 
@@ -786,17 +786,12 @@
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
     setTimeout(() => { document.getElementById('enterWrapper').classList.add('ready'); }, 2500);
 
-    function enterArchive() {
-        const audio = document.getElementById('bgMusic');
-        audio.volume = 0; audio.play().catch(e=>console.log("Audio blocked"));
-        let vol = 0; setInterval(() => { if(vol<0.4) { vol+=0.05; audio.volume=vol; } }, 200);
-        document.getElementById('preloader').style.opacity = 0;
-        setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 1500);
-    }
-
+    // V15 選單開關聯動按鈕變化
     function toggleMenu() {
         const menu = document.getElementById('menuOverlay');
+        const btn = document.getElementById('menuBtn');
         menu.classList.toggle('active');
+        btn.classList.toggle('open');
         document.body.classList.toggle('menu-open');
     }
 
@@ -874,7 +869,6 @@
       }
     }
 
-    /* --- V13 Array Magazine Engine (支援多本與品牌封底) --- */
     const magazinesData = [
         {
             id: 'vol-01',
@@ -883,7 +877,7 @@
             sheets: [
                 { f: '1.png', b: '2.png' }, 
                 { f: '3.png', b: '4.png' }, 
-                { f: '5.png', b: 'BRAND' } // V13: 設定 b 為 BRAND 觸發品牌封底
+                { f: '5.png', b: 'BRAND' }
             ]
         },
         {
@@ -930,7 +924,6 @@
                 pageDiv.className = 'mag-page';
                 pageDiv.style.zIndex = numSheets - index;
 
-                // V13 封底渲染邏輯
                 let backHtml = `<div class="page-back" style="background:#050505;"></div>`;
                 if (sheet.b === 'BRAND') {
                     backHtml = `
@@ -1015,6 +1008,12 @@
 
     function scrollToSection(e, sectionId) {
         e.preventDefault();
+        
+        // V15 若在選單模式下點擊導航，自動關閉選單並將 X 變回漢堡
+        if(document.body.classList.contains('menu-open')) {
+            toggleMenu();
+        }
+
         document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active'));
         e.currentTarget.classList.add('active');
         
