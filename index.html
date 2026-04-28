@@ -40,7 +40,7 @@
     .enter-btn:hover { letter-spacing: 0.6em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation & Morphing Hamburger --- */
+    /* --- 4. Navigation --- */
     .top-bar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease 1s; pointer-events: none; }
     body.site-active .top-bar { opacity: 1; }
     .nav-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto; z-index: 10001;}
@@ -54,14 +54,12 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
     
-    /* 形態轉換漢堡選單 (Morphing Hamburger) */
     .menu-trigger { width: 30px; height: 20px; position: relative; cursor: pointer; z-index: 10001; }
     .menu-line { position: absolute; right: 0; width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
     .menu-line:nth-child(1) { top: 5px; }
     .menu-line:nth-child(2) { bottom: 5px; width: 60%; }
     .menu-trigger:hover .menu-line:nth-child(2) { width: 100%; }
     
-    /* 當選單開啟時，觸發打叉動畫 */
     .menu-trigger.open .menu-line:nth-child(1) { top: 9px; transform: rotate(45deg); }
     .menu-trigger.open .menu-line:nth-child(2) { bottom: 10px; width: 100%; transform: rotate(-45deg); }
     
@@ -81,7 +79,7 @@
     .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
     .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
-    .title-word { display: inline-block; margin-right: -0.4em; } /* 吃掉字距產生的偏移 */
+    .title-word { display: inline-block; margin-right: -0.4em; }
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: -0.6em; }
@@ -93,7 +91,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Gallery Refactor --- */
+    /* --- 7. Gallery --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -105,7 +103,7 @@
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
 
-    /* Locked Filter Animation */
+    /* Locked Filter */
     .locked-filter-wrap { position: relative; display: inline-block; cursor: pointer; padding-bottom: 10px; }
     .locked-filter-wrap .filter-btn { pointer-events: none; padding-bottom: 0; }
     .locked-filter-wrap::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
@@ -120,11 +118,11 @@
     .locked-filter-wrap:hover .mini-tape-right { transform: rotate(-12deg) translateX(0); }
     .locked-filter-wrap:hover .filter-btn { opacity: 0.3; }
 
-    /* Toast Notification */
+    /* Toast */
     #toast-msg { position: fixed; top: 120px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(191, 149, 63, 0.1); border: 1px solid rgba(191, 149, 63, 0.5); color: #BF953F; padding: 15px 40px; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0; visibility: hidden; z-index: 99999; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(10px); text-align: center; line-height: 1.6; text-transform: uppercase; box-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
     #toast-msg.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-    /* Gallery Sub Sections */
+    /* Gallery Subs */
     .gallery-sub-section { margin-top: 60px; margin-bottom: 120px; width: 100%; max-width: 1600px; margin-left: auto; margin-right: auto; }
     .gallery-sub-title { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #e0e0e0; letter-spacing: 0.15em; margin-bottom: 50px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; font-weight: 400; }
     .gallery-sub-title span { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.2em; font-weight: 300; margin-left: 15px; }
@@ -136,150 +134,27 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- Array Magazine Engine --- */
-    .magazine-issue-container {
-        margin-bottom: 120px;
-        padding-bottom: 60px;
-        border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .magazine-issue-container:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-    }
-    .issue-title {
-        text-align: center;
-        font-family: 'Space Mono', monospace;
-        font-size: 0.9rem;
-        letter-spacing: 0.3em;
-        margin-bottom: 20px;
-        font-weight: 400;
-    }
-    .magazine-showcase-wrap { 
-        width: 100%; 
-        perspective: 2500px; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        padding: 50px 0 100px; 
-        position: relative;
-    }
-    .magazine {
-        position: relative;
-        width: 35vw;
-        max-width: 400px;
-        aspect-ratio: 1 / 1.414;
-        transform-style: preserve-3d;
-        transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
-        cursor: pointer;
-    }
-    
-    .mag-page {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transform-origin: left center;
-        transform-style: preserve-3d;
-        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.8s;
-        box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
-    }
-    
-    .page-front, .page-back {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        background: #050505;
-        overflow: hidden;
-    }
-    
-    .page-front::after {
-        content: ''; position: absolute; top:0; left:0; width: 8%; height:100%;
-        background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%);
-        pointer-events: none;
-    }
-    .page-back {
-        transform: rotateY(180deg);
-    }
-    .page-back::after {
-        content: ''; position: absolute; top:0; right:0; width: 8%; height:100%;
-        background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, transparent 100%);
-        pointer-events: none;
-    }
-    
+    /* --- Magazine Engine --- */
+    .magazine-issue-container { margin-bottom: 120px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .magazine-issue-container:last-child { border-bottom: none; margin-bottom: 0; }
+    .issue-title { text-align: center; font-family: 'Space Mono', monospace; font-size: 0.9rem; letter-spacing: 0.3em; margin-bottom: 20px; font-weight: 400; }
+    .magazine-showcase-wrap { width: 100%; perspective: 2500px; display: flex; justify-content: center; align-items: center; padding: 50px 0 100px; position: relative; }
+    .magazine { position: relative; width: 35vw; max-width: 400px; aspect-ratio: 1 / 1.414; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; }
+    .mag-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left center; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.8s; box-shadow: 5px 5px 20px rgba(0,0,0,0.3); }
+    .page-front, .page-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; backface-visibility: hidden; background: #050505; overflow: hidden; }
+    .page-front::after { content: ''; position: absolute; top:0; left:0; width: 8%; height:100%; background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%); pointer-events: none; }
+    .page-back { transform: rotateY(180deg); }
+    .page-back::after { content: ''; position: absolute; top:0; right:0; width: 8%; height:100%; background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, transparent 100%); pointer-events: none; }
     .mag-page img { width: 100%; height: 100%; object-fit: contain; }
-    
-    .mag-page.flipped {
-        transform: rotateY(-180deg);
-        box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
-    }
+    .mag-page.flipped { transform: rotateY(-180deg); box-shadow: -5px 5px 20px rgba(0,0,0,0.3); }
 
-    .brand-back-cover {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        background: #030303;
-        border-left: 1px solid rgba(255,255,255,0.02);
-    }
-    .brand-back-title {
-        font-family: 'Cinzel', serif;
-        font-size: 2.2rem;
-        letter-spacing: 0.25em;
-        margin-right: -0.25em;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-    .brand-back-sub {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.5rem;
-        color: #444;
-        letter-spacing: 0.4em;
-        margin-top: 20px;
-        margin-right: -0.4em;
-        text-transform: uppercase;
-    }
+    /* Brand Back Cover V13/V17 */
+    .brand-back-cover { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background: #030303; border-left: 1px solid rgba(255,255,255,0.02); }
+    .brand-back-title { font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.25em; margin-right: -0.25em; display: flex; align-items: center; justify-content: center; width: 100%; padding: 0 10px; }
+    .brand-back-sub { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.4em; margin-top: 20px; text-transform: uppercase; }
 
-    .magazine-hint {
-        position: absolute;
-        bottom: 0px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-family: 'Space Mono', monospace;
-        font-size: 0.7rem;
-        color: #BF953F;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        animation: pulseBorder 2s infinite;
-        transition: all 0.4s ease;
-        border: 1px solid rgba(191, 149, 63, 0.4);
-        padding: 12px 30px;
-        background: rgba(5,5,5,0.9);
-        z-index: 100;
-        cursor: pointer;
-        pointer-events: auto;
-        white-space: nowrap;
-        backdrop-filter: blur(5px);
-    }
-    
-    .magazine-hint:hover {
-        background: rgba(191, 149, 63, 0.1);
-        border-color: rgba(191, 149, 63, 0.8);
-        text-shadow: 0 0 8px rgba(191, 149, 63, 0.6);
-        box-shadow: 0 0 20px rgba(191, 149, 63, 0.3);
-    }
-
-    @keyframes pulseBorder { 
-        0% { box-shadow: 0 0 0 rgba(191, 149, 63, 0); border-color: rgba(191, 149, 63, 0.2); } 
-        50% { box-shadow: 0 0 20px rgba(191, 149, 63, 0.3); border-color: rgba(191, 149, 63, 0.8); } 
-        100% { box-shadow: 0 0 0 rgba(191, 149, 63, 0); border-color: rgba(191, 149, 63, 0.2); } 
-    }
+    .magazine-hint { position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.25em; text-transform: uppercase; animation: pulseBorder 2s infinite; transition: all 0.4s ease; border: 1px solid rgba(191, 149, 63, 0.4); padding: 12px 30px; background: rgba(5,5,5,0.9); z-index: 100; cursor: pointer; pointer-events: auto; white-space: nowrap; backdrop-filter: blur(5px); }
+    .magazine-hint:hover { background: rgba(191, 149, 63, 0.1); border-color: rgba(191, 149, 63, 0.8); text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); box-shadow: 0 0 20px rgba(191, 149, 63, 0.3); }
 
     /* --- Archetype --- */
     .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
@@ -298,39 +173,28 @@
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
     .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; } .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
     .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; } .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
-    
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; background-size: cover; background-position: center; }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
-    
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
-    .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; color: #888; font-weight: 300; }
     .plan-philosophy { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
-    .plan-footer { margin-top: auto; }
-    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
-    .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
-    .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
-    
     .price-card.locked-plan { cursor: not-allowed; }
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
     .sealing-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 0.3s; }
     .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-    .tape-strip::before, .tape-strip::after { content: 'LOCKED   LOCKED   LOCKED   LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
+    .tape-strip::before { content: 'LOCKED LOCKED LOCKED LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
-    @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
-    
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
     .spec-val { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #ccc; letter-spacing: 0.05em; text-align: right; }
     .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
-    .spec-gold { color: #BF953F; }
 
     /* --- 10. Delivery --- */
     .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
@@ -343,47 +207,18 @@
     .delivery-icon { font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s; }
     .delivery-showcase:hover .delivery-card { opacity: 0.3; filter: grayscale(100%); }
     .delivery-showcase .delivery-card:hover { opacity: 1; filter: grayscale(0%); transform: translateY(-15px); border-color: rgba(191, 149, 63, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
-    .delivery-card:hover .delivery-icon { color: #BF953F; text-shadow: 0 0 15px rgba(191, 149, 63, 0.3); }
-    .delivery-card:hover h4 { color: #fff; }
-    .delivery-card:hover p { color: #aaa; }
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    
-    .ritual-btn { 
-        display: block; margin: 0 auto; padding: 0; background: transparent; border: none; 
-        cursor: pointer; position: relative; overflow: hidden; 
-        outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; 
-        transform: translateZ(0); 
-    }
-    .btn-glow { 
-        position: absolute; 
-        top: 50%; left: 50%; 
-        width: 300%; aspect-ratio: 1; border-radius: 50%; 
-        background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); 
-        animation: spinGlow 4s linear infinite; 
-        opacity: 0; transition: opacity 1.2s ease; z-index: 0; 
-        will-change: transform; 
-    }
+    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: hidden; outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; transform: translateZ(0); }
+    .btn-glow { position: absolute; top: 50%; left: 50%; width: 300%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); animation: spinGlow 4s linear infinite; opacity: 0; transition: opacity 1.2s ease; z-index: 0; will-change: transform; }
     .ritual-btn.in-view .btn-glow { opacity: 1; }
-    .btn-bg { 
-        position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; 
-    }
-    .btn-content { 
-        position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; 
-        align-items: center; justify-content: center; gap: 15px; 
-    }
+    .btn-bg { position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; }
+    .btn-content { position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
     .btn-en { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; color: #fff; }
     .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
-    
-    .ritual-btn:hover { outline-color: transparent; }
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
-    .ritual-btn:hover .btn-glow { animation-duration: 2s; opacity: 1; }
-    
-    @keyframes spinGlow { 
-        0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 
-        100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } 
-    }
+    @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
 
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
@@ -393,13 +228,6 @@
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .form-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #BF953F; margin-bottom: 5px; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
-    .form-group select option:disabled { color: #555; background: #000; }
-    .form-group select option { background: #111; color: #fff; padding: 10px; }
-    #plan-details-box { background: rgba(191,149,63, 0.05); border: 1px solid rgba(191,149,63, 0.2); padding: 30px; margin: 30px 0; display: none; }
-    .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
-    .detail-val { color: #fff; }
-    .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
-    .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
@@ -417,7 +245,6 @@
     .social-link { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; text-decoration: none; letter-spacing: 0.2em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
     .social-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .social-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    .social-link:hover::after { width: 100%; }
 
     /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
@@ -426,7 +253,6 @@
     .visitor-counter { display: flex; align-items: center; gap: 15px; z-index: 9001; background: #050505; padding-left: 20px; box-shadow: -10px 0 20px #050505; }
     .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.15em; text-transform: uppercase; }
     .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
-    
     footer { padding: 20px 4vw 80px; text-align: right; background: #050505; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
     
@@ -439,70 +265,27 @@
     .close-btn::before { transform: rotate(45deg); }
     .close-btn::after { transform: rotate(-45deg); }
     .close-btn:hover { transform: rotate(90deg); }
-    .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
 
-    @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
-
-    /* =========================================
-       V39.0 MOBILE OPTIMIZATION (THE FIX)
-       ========================================= */
+    /* --- MOBILE OPTIMIZATION --- */
     @media (max-width: 768px) { 
         .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
         .title-word { margin-right: -0.2em; } 
-        
-        .hero p { font-size: 0.65rem; letter-spacing: 0.3em; margin-top: 30px; }
-        .section-title { font-size: 2rem; line-height: 1.3; }
-        .section-subtitle { font-size: 0.6rem; margin-top: 15px; }
-        .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.15em; line-height: 1.6; }
-        .about-slogan-sub { font-size: 0.7rem; letter-spacing: 0.2em; }
+        .section-title { font-size: 2rem; }
         .top-bar { padding: 20px 5vw; }
         .nav-logo { font-size: 1.2rem; }
-        .audio-btn { display: none; } 
-        .menu-link { font-size: 2.2rem; margin: 10px 0; }
-        
-        .gallery-sub-title { font-size: 1.6rem; margin-bottom: 30px; }
-        .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.7rem; }
+        .menu-link { font-size: 2.2rem; }
         .gallery-container { column-count: 1; gap: 0; }
-        .gallery-item { margin-bottom: 30px; }
-        .filter-tabs { gap: 15px; margin-bottom: 40px; }
-        .filter-btn { font-size: 0.6rem; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
-        
-        .magazine-issue-container { margin-bottom: 80px; padding-bottom: 40px; }
         .magazine { width: 44vw; } 
         .magazine-hint { font-size: 0.6rem; bottom: -20px; }
-        
-        .pricing-grid { display: flex; flex-direction: column; width: 100%; gap: 40px; } 
-        .price-card { min-height: auto; height: auto; width: 100%; }
-        .card-content { padding: 50px 6vw; gap: 40px; display: flex; flex-direction: column; }
-        .plan-id { font-size: 0.8rem; margin-bottom: 15px; }
-        .plan-en { font-size: 1.8rem; }
-        .plan-zh { font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
-        .plan-philosophy { font-size: 0.85rem; padding-left: 15px; line-height: 1.8; margin-bottom: 30px; }
-        .spec-list { margin-top: 20px; }
-        .spec-row { padding: 15px 0; }
-        .current-price { font-size: 1.5rem; margin-top: 20px; }
-        
+        .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
+        .price-card { min-height: auto; height: auto; }
+        .card-content { padding: 50px 6vw; gap: 40px; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
-        .delivery-card { padding: 40px 6vw; }
-        .delivery-card p { font-size: 0.8rem; line-height: 1.8; }
-        
         .ritual-btn { width: 90%; max-width: 350px; }
         .btn-content { padding: 25px 0; gap: 12px; }
-        .btn-en { font-size: 1rem; }
-        .btn-zh { font-size: 0.75rem; }
-        
-        .hidden-booking-container.open { padding: 80px 5vw; }
-        .booking-interface { padding: 40px 5vw; }
-        .form-group input, .form-group select, .form-group textarea { font-size: 0.9rem; }
-        
-        .contact-links { flex-direction: column; gap: 30px; align-items: center; }
-        .contact-title { font-size: 1.5rem; }
-        .social-link { font-size: 0.85rem; }
+        .contact-links { flex-direction: column; gap: 30px; }
         footer { text-align: center; padding-bottom: 70px; }
-        .tech-ticker-wrap { padding-right: 15px; }
-        .visitor-counter { padding-left: 10px; }
-        .visitor-label { display: none; } 
     }
   </style>
 </head>
@@ -566,12 +349,10 @@
     <div class="filter-tabs">
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS</a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">THE COVER</a>
-        
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 該方案籌備中')">
             <span class="filter-btn">THE STORY</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
-        
         <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 機密檔案鎖定')">
             <span class="filter-btn">PROJECT: ROYAL</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
@@ -608,19 +389,11 @@
       <span class="section-subtitle">Concepts & Philosophy</span>
     </div>
     <div class="pricing-grid">
-      
       <div class="price-card" onclick="openBookingWithPlan('Essentials')">
         <div class="card-bg" style="background-image: url('images/works/essentials/essentials%20(1).jpg'); filter: brightness(0.4);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div>
-                <span class="plan-id">NO. 0</span>
-                <div class="plan-title-block">
-                    <span class="plan-en">ESSENTIALS</span>
-                    <span class="plan-zh">聚焦・本質</span>
-                </div>
-                <p class="plan-philosophy">一張好的肖像，是專業的入場券。捨棄繁複背景，用頂級光影雕琢面孔細節。</p>
-            </div>
+            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">聚焦・本質</span></div><p class="plan-philosophy">一張好的肖像，是專業的入場券。捨棄繁複背景，用頂級光影雕琢面孔細節。</p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR</span></div>
@@ -628,25 +401,15 @@
                     <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES</span></div>
                     <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL</span></div>
                 </div>
-                <div class="plan-footer" style="margin-top:20px; text-align:center;">
-                    <span class="current-price metallic-silver">NT$ 3,600</span>
-                </div>
+                <div class="plan-footer" style="margin-top:20px; text-align:center;"><span class="current-price metallic-silver">NT$ 3,600</span></div>
             </div>
         </div>
       </div>
-
       <div class="price-card featured" onclick="openBookingWithPlan('Structure')">
         <div class="card-bg" style="background-image: url('images/works/cover/1.png'); filter: brightness(0.4);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div>
-                <span class="plan-id">NO. I</span>
-                <div class="plan-title-block">
-                    <span class="plan-en">THE COVER</span>
-                    <span class="plan-zh">封面・映象</span>
-                </div>
-                <p class="plan-philosophy">無需刻意演繹，你的存在即是頂級。包含專業妝髮與排版，將您的存在感凝縮於海報之中。</p>
-            </div>
+            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面・映象</span></div><p class="plan-philosophy">無需刻意演繹，你的存在即是頂級。包含專業妝髮與排版，將您的存在感凝縮於海報之中。</p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR</span></div>
@@ -654,32 +417,18 @@
                     <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES</span></div>
                     <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB</span></div>
                 </div>
-                <div class="plan-footer" style="margin-top:20px; text-align:center;">
-                    <span class="current-price metallic-silver">NT$ 8,800</span>
-                </div>
+                <div class="plan-footer" style="margin-top:20px; text-align:center;"><span class="current-price metallic-silver">NT$ 8,800</span></div>
             </div>
         </div>
       </div>
-      
       <div class="price-card locked-plan">
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
         <div class="card-content">
-            <div>
-                <span class="plan-id">NO. II</span>
-                <div class="plan-title-block">
-                    <span class="plan-en metallic-gold">THE STORY</span>
-                    <span class="plan-zh">敘事・畫報</span>
-                </div>
-                <p class="plan-philosophy">以設計師選品為詞，妝髮工藝為句，書寫一場視覺獨白。編纂為一本具備收藏價值的映像期刊。</p>
-            </div>
-            <div class="plan-footer" style="margin-top:auto; text-align:center;">
-                <span class="artifact-info">A4 JOURNAL</span>
-                <span class="current-price metallic-gold">[ COMING SOON ]</span>
-            </div>
+            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">敘事・畫報</span></div><p class="plan-philosophy">以設計師選品為詞，妝髮工藝為句，書寫一場視覺獨白。編纂為一本具備收藏價值的映像期刊。</p></div>
+            <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL</span><span class="current-price metallic-gold">[ COMING SOON ]</span></div>
         </div>
       </div>
-
     </div>
   </section>
   
@@ -687,32 +436,16 @@
       <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
       <span class="delivery-subtitle">ELEVATING THE TANGIBLE EXPERIENCE</span>
       <div class="delivery-showcase">
-          <div class="delivery-card">
-              <span class="delivery-icon">◈</span>
-              <h4>THE GRAND OBSIDIAN BOX</h4>
-              <p>典藏曜黑精裝盒<br>以特製的硬式結構與曜黑質感，提供最高規格的開箱儀式與收藏保護。</p>
-          </div>
-          <div class="delivery-card">
-              <span class="delivery-icon">◈</span>
-              <h4>METAL ENGRAVED USB</h4>
-              <p>客製化刻字隨身碟<br>雷射刻印專屬英文名的金屬載體。憑此鑰匙回歸，即享檔案重啟禮遇。</p>
-          </div>
-          <div class="delivery-card">
-              <span class="delivery-icon">◈</span>
-              <h4>WAX-SEALED AUTHENTICITY</h4>
-              <p>火漆封蠟認證卡<br>攝影師親手蓋上火漆封蠟的認證卡片，象徵每一份作品的藝術價值。</p>
-          </div>
+          <div class="delivery-card"><span class="delivery-icon">◈</span><h4>THE GRAND OBSIDIAN BOX</h4><p>典藏曜黑精裝盒<br>以特製的硬式結構與曜黑質感，提供最高規格的開箱儀式與收藏保護。</p></div>
+          <div class="delivery-card"><span class="delivery-icon">◈</span><h4>METAL ENGRAVED USB</h4><p>客製化刻字隨身碟<br>雷射刻印專屬英文名的金屬載體。憑此鑰匙回歸，即享檔案重啟禮遇。</p></div>
+          <div class="delivery-card"><span class="delivery-icon">◈</span><h4>WAX-SEALED AUTHENTICITY</h4><p>火漆封蠟認證卡<br>攝影師親手蓋上火漆封蠟的認證卡片，象徵每一份作品的藝術價值。</p></div>
       </div>
   </section>
 
   <section class="booking-cta-section">
-      <button class="ritual-btn" onclick="createRipple(event)">
-          <div class="btn-glow"></div>
-          <div class="btn-bg"></div>
-          <div class="btn-content">
-              <span class="btn-en">SECURE YOUR SESSION</span>
-              <span class="btn-zh">預約席次</span>
-          </div>
+      <button class="ritual-btn" onclick="toggleBookingSection()">
+          <div class="btn-glow"></div><div class="btn-bg"></div>
+          <div class="btn-content"><span class="btn-en">SECURE YOUR SESSION</span><span class="btn-zh">預約席次</span></div>
       </button>
   </section>
 
@@ -723,29 +456,15 @@
               <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
                 <div class="form-group"><label>NAME / 姓名</label><input type="text" name="name" required placeholder="YOUR NAME"></div>
                 <div class="form-group"><label>CONTACT / 聯絡信箱</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
-                <div class="form-group">
-                    <label>INSTAGRAM ID / IG 帳號<span class="input-hint" style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em; font-weight: 300;">* 請填寫公開帳號，我們將透過 IG 私訊確認檔期。</span></label>
-                    <input type="text" name="instagram" required placeholder="@YOUR_ID">
-                </div>
-                <div class="form-group">
-                  <label>PLAN / 方案選擇</label>
-                  <select name="plan" id="planSelect" onchange="updatePlanDetails()">
-                    <option value="" disabled selected>SELECT A PLAN...</option>
-                    <option value="Essentials">ESSENTIALS - 聚焦・本質</option>
-                    <option value="Structure">THE COVER - 封面・映象</option>
-                    <option value="Scale" disabled>THE STORY - 敘事・畫報 (WAITLIST)</option>
-                    <option value="Royal" disabled>PROJECT: ROYAL - 典藏・王牌 (WAITLIST)</option>
-                  </select>
-                </div>
-                <div id="plan-details-box">
-                    <div class="detail-row"><span>SHOOT TIME</span><span class="detail-val" id="d-time"></span></div>
-                    <div class="detail-row"><span>STYLING</span><span class="detail-val" id="d-style"></span></div>
-                    <div class="detail-row"><span>RETOUCH</span><span class="detail-val" id="d-retouch"></span></div>
-                    <div class="detail-row deposit-row"><span>DEPOSIT REQUIRED</span><span class="detail-val" id="d-deposit"></span></div>
+                <div class="form-group"><label>INSTAGRAM ID / IG 帳號<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em;">* 請填寫公開帳號，我們將透過 IG 私訊確認檔期。</span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
+                <div class="form-group"><label>PLAN / 方案選擇</label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN...</option><option value="Essentials">ESSENTIALS - 聚焦・本質</option><option value="Structure">THE COVER - 封面・映象</option></select></div>
+                <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT</span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING</span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">RETOUCH</span><span id="d-retouch" style="color:#fff; font-size:0.8rem;"></span></div>
                 </div>
                 <div class="form-group"><label>DATE / 期望日期</label><input type="date" name="date" required></div>
                 <div class="form-group"><label>VISION / 拍攝想法</label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION..."></textarea></div>
-                <p class="confirmation-text">提交預約後，我們透過 Instagram 私訊與 Email 核對檔期。<br>確認無誤後請於 24 小時內支付訂金以完成委託。</p>
                 <button type="submit" class="submit-btn">CONFIRM REQUEST</button>
               </form>
           </div>
@@ -770,23 +489,19 @@
   </section>
   
   <div class="tech-ticker-wrap">
-      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
+      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
       <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
   </div>
 
   <footer><p>&copy; 2025 EDEN｜DEEN. All Rights Reserved.</p></footer>
 
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <div class="close-btn"></div>
-    <img class="lightbox-content" id="lightbox-img">
-  </div>
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()"><div class="close-btn"></div><img class="lightbox-content" id="lightbox-img"></div>
 
   <script>
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
     setTimeout(() => { document.getElementById('enterWrapper').classList.add('ready'); }, 2500);
 
-    // V16 修復：加回啟動引擎
     function enterArchive() {
         const audio = document.getElementById('bgMusic');
         audio.volume = 0; audio.play().catch(e=>console.log("Audio blocked"));
@@ -804,8 +519,8 @@
     }
 
     const planData = {
-        'Essentials': { time: '0.5 HR', style: 'ADD-ON (+NT$2,500)', retouch: '2 IMAGES', deposit: 'NT$ 1,000' },
-        'Structure': { time: '1.5 HR', style: 'INCLUDED (1 LOOK)', retouch: '8 IMAGES', deposit: 'NT$ 2,600' }
+        'Essentials': { time: '0.5 HR', style: 'ADD-ON (+NT$2,500)', retouch: '2 IMAGES' },
+        'Structure': { time: '1.5 HR', style: 'INCLUDED (1 LOOK)', retouch: '8 IMAGES' }
     };
 
     function updatePlanDetails() {
@@ -815,54 +530,39 @@
             document.getElementById('d-time').innerText = planData[select.value].time;
             document.getElementById('d-style').innerText = planData[select.value].style;
             document.getElementById('d-retouch').innerText = planData[select.value].retouch;
-            document.getElementById('d-deposit').innerText = planData[select.value].deposit;
             box.style.display = 'block';
         } else { box.style.display = 'none'; }
     }
 
-    function openBookingWithPlan(planValue) {
-        const bs = document.getElementById('hiddenBooking');
-        if (!bs.classList.contains('open')) { toggleBookingSection(); }
-        setTimeout(() => { document.getElementById('planSelect').value = planValue; updatePlanDetails(); bs.scrollIntoView({ behavior: 'smooth' }); }, 500);
-    }
-
-    function createRipple(event) { toggleBookingSection(); }
     function toggleBookingSection() {
         const el = document.getElementById('hiddenBooking'); el.classList.toggle('open');
         if(el.classList.contains('open')) el.scrollIntoView({ behavior: 'smooth' });
     }
 
+    function openBookingWithPlan(planValue) {
+        if (!document.getElementById('hiddenBooking').classList.contains('open')) { toggleBookingSection(); }
+        setTimeout(() => { 
+            document.getElementById('planSelect').value = planValue; 
+            updatePlanDetails(); 
+            document.getElementById('hiddenBooking').scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+    }
+
     const bookingBtn = document.querySelector('.ritual-btn');
     const bookingObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-            } else {
-                entry.target.classList.remove('in-view');
-            }
-        });
+        entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('in-view'); else entry.target.classList.remove('in-view'); });
     }, { threshold: 0.5 });
     if(bookingBtn) bookingObserver.observe(bookingBtn);
 
     function copyEmail(e) {
         e.preventDefault();
-        navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => {
-            showToast('EMAIL COPIED // 已複製 edendphoto1118@gmail.com');
-        }).catch(err => {
-            console.error('Copy failed', err);
-        });
+        navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => { showToast('EMAIL COPIED // 已複製 edendphoto1118@gmail.com'); });
     }
 
     const numEssentials = 7; 
     const containerEssentials = document.getElementById('container-essentials');
-
     const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting) {
-                setTimeout(() => { entry.target.classList.add('reveal'); }, 100);
-                observer.unobserve(entry.target);
-            }
-        });
+        entries.forEach(entry => { if(entry.isIntersecting) { setTimeout(() => { entry.target.classList.add('reveal'); }, 100); observer.unobserve(entry.target); } });
     }, { threshold: 0.1 });
 
     function generateEssentials() {
@@ -877,138 +577,57 @@
       }
     }
 
+    /* --- V17 Array Magazine Engine (新增第三本) --- */
     const magazinesData = [
-        {
-            id: 'vol-01',
-            title: 'ISSUE 01 // THE AWAKENING',
-            path: 'images/works/cover/',
-            sheets: [
-                { f: '1.png', b: '2.png' }, 
-                { f: '3.png', b: '4.png' }, 
-                { f: '5.png', b: 'BRAND' }
-            ]
-        },
-        {
-            id: 'vol-02',
-            title: 'ISSUE 02 // THE SILENCE',
-            path: 'images/works/cover2/',
-            sheets: [
-                { f: '1.png', b: '2.png' }, 
-                { f: '3.png', b: '4.png' }, 
-                { f: '5.png', b: 'BRAND' } 
-            ]
-        }
+        { id: 'vol-01', title: 'ISSUE 01 // THE AWAKENING', path: 'images/works/cover/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        { id: 'vol-02', title: 'ISSUE 02 // THE SILENCE', path: 'images/works/cover2/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
     ];
 
     function generateMagazines() {
         const coverContainer = document.getElementById('container-cover');
         coverContainer.innerHTML = '';
-
-        magazinesData.forEach((mag, magIndex) => {
+        magazinesData.forEach((mag) => {
             let currentSheet = 0;
             const numSheets = mag.sheets.length;
             let pagesElements = [];
-
-            const issueWrap = document.createElement('div');
-            issueWrap.className = 'magazine-issue-container';
-
-            const issueTitle = document.createElement('h4');
-            issueTitle.className = 'issue-title metallic-gold';
-            issueTitle.innerText = mag.title;
-            issueWrap.appendChild(issueTitle);
-
-            const showcaseWrap = document.createElement('div');
-            showcaseWrap.className = 'magazine-showcase-wrap';
-
-            const magazineDiv = document.createElement('div');
-            magazineDiv.className = 'magazine';
-            
-            const hintDiv = document.createElement('div');
-            hintDiv.className = 'magazine-hint';
-            hintDiv.innerText = '[ 點擊翻閱 CLICK TO OPEN ]';
+            const issueWrap = document.createElement('div'); issueWrap.className = 'magazine-issue-container';
+            const issueTitle = document.createElement('h4'); issueTitle.className = 'issue-title metallic-gold'; issueTitle.innerText = mag.title; issueWrap.appendChild(issueTitle);
+            const showcaseWrap = document.createElement('div'); showcaseWrap.className = 'magazine-showcase-wrap';
+            const magazineDiv = document.createElement('div'); magazineDiv.className = 'magazine';
+            const hintDiv = document.createElement('div'); hintDiv.className = 'magazine-hint'; hintDiv.innerText = '[ 點擊翻閱 CLICK TO OPEN ]';
 
             mag.sheets.forEach((sheet, index) => {
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'mag-page';
-                pageDiv.style.zIndex = numSheets - index;
-
+                const pageDiv = document.createElement('div'); pageDiv.className = 'mag-page'; pageDiv.style.zIndex = numSheets - index;
                 let backHtml = `<div class="page-back" style="background:#050505;"></div>`;
                 if (sheet.b === 'BRAND') {
-                    backHtml = `
-                    <div class="page-back brand-back-cover">
-                        <div class="brand-back-title">
-                            <span class="metallic-gold">EDEN</span>
-                            <span class="vertical-separator" style="height:1em; opacity:0.3;"></span>
-                            <span class="metallic-gold">DEEN</span>
-                        </div>
-                        <div class="brand-back-sub">VISUAL ARCHIVE</div>
-                    </div>`;
+                    backHtml = `<div class="page-back brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">VISUAL ARCHIVE</div></div>`;
                 } else if (sheet.b) {
                     backHtml = `<div class="page-back"><img src="${mag.path}${sheet.b}" onerror="this.closest('.page-back').style.background='#050505';this.style.display='none';"></div>`;
                 }
-
-                pageDiv.innerHTML = `
-                    <div class="page-front"><img src="${mag.path}${sheet.f}" onerror="this.style.display='none';"></div>
-                    ${backHtml}
-                `;
-
+                pageDiv.innerHTML = `<div class="page-front"><img src="${mag.path}${sheet.f}" onerror="this.style.display='none';"></div>${backHtml}`;
                 pageDiv.onclick = (e) => {
                     e.stopPropagation();
-                    if (pageDiv.classList.contains('flipped')) {
-                        pageDiv.classList.remove('flipped');
-                        currentSheet--;
-                        setTimeout(() => { pageDiv.style.zIndex = numSheets - index; }, 400); 
-                    } else {
-                        pageDiv.classList.add('flipped');
-                        currentSheet++;
-                        setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400);
-                    }
+                    if (pageDiv.classList.contains('flipped')) { pageDiv.classList.remove('flipped'); currentSheet--; setTimeout(() => { pageDiv.style.zIndex = numSheets - index; }, 400); }
+                    else { pageDiv.classList.add('flipped'); currentSheet++; setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400); }
                     updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
                 };
-                
-                magazineDiv.appendChild(pageDiv);
-                pagesElements.push(pageDiv);
+                magazineDiv.appendChild(pageDiv); pagesElements.push(pageDiv);
             });
-
             hintDiv.onclick = (e) => {
                 e.stopPropagation();
-                if (currentSheet === 0) {
-                    pagesElements[0].click();
-                } else if (currentSheet === numSheets) {
-                    pagesElements.forEach((p, idx) => {
-                        p.classList.remove('flipped');
-                        setTimeout(() => { p.style.zIndex = numSheets - idx; }, 400);
-                    });
-                    currentSheet = 0;
-                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
-                }
+                if (currentSheet === 0) pagesElements[0].click();
+                else if (currentSheet === numSheets) { pagesElements.forEach((p, idx) => { p.classList.remove('flipped'); setTimeout(() => { p.style.zIndex = numSheets - idx; }, 400); }); currentSheet = 0; updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets); }
             };
-
             updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
-
-            showcaseWrap.appendChild(magazineDiv);
-            showcaseWrap.appendChild(hintDiv);
-            issueWrap.appendChild(showcaseWrap);
-            coverContainer.appendChild(issueWrap);
+            showcaseWrap.appendChild(magazineDiv); showcaseWrap.appendChild(hintDiv); issueWrap.appendChild(showcaseWrap); coverContainer.appendChild(issueWrap);
         });
     }
 
     function updateMagazineCenter(magElement, hintElement, current, total) {
-        if (current === 0) {
-            magElement.style.transform = 'translateX(0)';
-            hintElement.innerHTML = '[ 點擊翻閱 CLICK TO OPEN ]';
-            hintElement.style.opacity = '1';
-            hintElement.style.pointerEvents = 'auto'; 
-        } else if (current === total) {
-            magElement.style.transform = 'translateX(100%)';
-            hintElement.innerHTML = '[ 回到封面 CLOSE ISSUE ]';
-            hintElement.style.opacity = '1';
-            hintElement.style.pointerEvents = 'auto'; 
-        } else {
-            magElement.style.transform = 'translateX(50%)';
-            hintElement.style.opacity = '0'; 
-            hintElement.style.pointerEvents = 'none'; 
-        }
+        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ 點擊翻閱 CLICK TO OPEN ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = '[ 回到封面 CLOSE ISSUE ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        else { magElement.style.transform = 'translateX(50%)'; hintElement.style.opacity = '0'; hintElement.style.pointerEvents = 'none'; }
     }
 
     generateEssentials();
@@ -1016,34 +635,20 @@
 
     function scrollToSection(e, sectionId) {
         e.preventDefault();
-        
-        if(document.body.classList.contains('menu-open')) {
-            toggleMenu();
-        }
-
-        document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        
+        if(document.body.classList.contains('menu-open')) toggleMenu();
+        document.querySelectorAll('.filter-tabs a.filter-btn').forEach(b => b.classList.remove('active')); e.currentTarget.classList.add('active');
         const target = document.getElementById(sectionId);
-        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 120;
-
-        window.scrollTo({
-             top: targetPosition,
-             behavior: 'smooth'
-        });
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 120, behavior: 'smooth' });
     }
 
     function showToast(msg) {
-        const toast = document.getElementById('toast-msg');
-        toast.innerHTML = msg.replace('//', '<br>');
-        toast.classList.add('show');
+        const toast = document.getElementById('toast-msg'); toast.innerHTML = msg.replace('//', '<br>'); toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    let count = localStorage.getItem('eden_visitor_count');
-    if (!count) { count = 12840; } else { count = parseInt(count); }
-    if(!sessionStorage.getItem('session_counted')) { count += Math.floor(Math.random() * 3) + 1; localStorage.setItem('eden_visitor_count', count); sessionStorage.setItem('session_counted', 'true'); }
-    document.getElementById('visitorCount').innerText = "NO. " + count.toLocaleString('en-US', {minimumIntegerDigits: 6, useGrouping:true});
+    let count = localStorage.getItem('eden_visitor_count') || 12840;
+    if(!sessionStorage.getItem('session_counted')) { count = parseInt(count) + Math.floor(Math.random() * 3) + 1; localStorage.setItem('eden_visitor_count', count); sessionStorage.setItem('session_counted', 'true'); }
+    document.getElementById('visitorCount').innerText = "NO. " + parseInt(count).toLocaleString('en-US', {minimumIntegerDigits: 6});
 
     function openLightbox(el) { document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.src; document.body.style.overflow = "hidden"; }
     function closeLightbox() { document.getElementById("lightbox").classList.remove('active'); document.body.style.overflow = "auto"; }
