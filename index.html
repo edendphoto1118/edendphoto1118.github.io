@@ -54,7 +54,7 @@
     .paused .bar { animation-play-state: paused; height: 2px; }
     @keyframes wave { 0%, 100% { height: 2px; } 50% { height: 10px; } }
     
-    /* V15: 形態轉換漢堡選單 (Morphing Hamburger) */
+    /* 形態轉換漢堡選單 (Morphing Hamburger) */
     .menu-trigger { width: 30px; height: 20px; position: relative; cursor: pointer; z-index: 10001; }
     .menu-line { position: absolute; right: 0; width: 100%; height: 1px; background: #fff; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
     .menu-line:nth-child(1) { top: 5px; }
@@ -81,7 +81,7 @@
     .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
     .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
-    .title-word { display: inline-block; margin-right: -0.4em; }
+    .title-word { display: inline-block; margin-right: -0.4em; } /* 吃掉字距產生的偏移 */
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: -0.6em; }
@@ -136,7 +136,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V14 Array Magazine Engine --- */
+    /* --- Array Magazine Engine --- */
     .magazine-issue-container {
         margin-bottom: 120px;
         padding-bottom: 60px;
@@ -786,7 +786,15 @@
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
     setTimeout(() => { document.getElementById('enterWrapper').classList.add('ready'); }, 2500);
 
-    // V15 選單開關聯動按鈕變化
+    // V16 修復：加回啟動引擎
+    function enterArchive() {
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0; audio.play().catch(e=>console.log("Audio blocked"));
+        let vol = 0; setInterval(() => { if(vol<0.4) { vol+=0.05; audio.volume=vol; } }, 200);
+        document.getElementById('preloader').style.opacity = 0;
+        setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 1500);
+    }
+
     function toggleMenu() {
         const menu = document.getElementById('menuOverlay');
         const btn = document.getElementById('menuBtn');
@@ -1009,7 +1017,6 @@
     function scrollToSection(e, sectionId) {
         e.preventDefault();
         
-        // V15 若在選單模式下點擊導航，自動關閉選單並將 X 變回漢堡
         if(document.body.classList.contains('menu-open')) {
             toggleMenu();
         }
