@@ -40,7 +40,7 @@
     .enter-btn:hover { letter-spacing: 0.6em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation --- */
+    /* --- 4. Navigation & Morphing Hamburger --- */
     .top-bar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease 1s; pointer-events: none; }
     body.site-active .top-bar { opacity: 1; }
     .nav-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto; z-index: 10001;}
@@ -91,7 +91,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Gallery --- */
+    /* --- 7. Gallery Refactor --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -103,7 +103,7 @@
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
 
-    /* Locked Filter */
+    /* Locked Filter Animation */
     .locked-filter-wrap { position: relative; display: inline-block; cursor: pointer; padding-bottom: 10px; }
     .locked-filter-wrap .filter-btn { pointer-events: none; padding-bottom: 0; }
     .locked-filter-wrap::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
@@ -118,11 +118,11 @@
     .locked-filter-wrap:hover .mini-tape-right { transform: rotate(-12deg) translateX(0); }
     .locked-filter-wrap:hover .filter-btn { opacity: 0.3; }
 
-    /* Toast */
+    /* Toast Notification */
     #toast-msg { position: fixed; top: 120px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(191, 149, 63, 0.1); border: 1px solid rgba(191, 149, 63, 0.5); color: #BF953F; padding: 15px 40px; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0; visibility: hidden; z-index: 99999; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(10px); text-align: center; line-height: 1.6; text-transform: uppercase; box-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
     #toast-msg.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-    /* Gallery Subs */
+    /* Gallery Sub Sections */
     .gallery-sub-section { margin-top: 60px; margin-bottom: 120px; width: 100%; max-width: 1600px; margin-left: auto; margin-right: auto; }
     .gallery-sub-title { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #e0e0e0; letter-spacing: 0.15em; margin-bottom: 50px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; font-weight: 400; }
     .gallery-sub-title span { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.2em; font-weight: 300; margin-left: 15px; }
@@ -134,27 +134,141 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- Magazine Engine --- */
-    .magazine-issue-container { margin-bottom: 120px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-    .magazine-issue-container:last-child { border-bottom: none; margin-bottom: 0; }
-    .issue-title { text-align: center; font-family: 'Space Mono', monospace; font-size: 0.9rem; letter-spacing: 0.3em; margin-bottom: 20px; font-weight: 400; }
-    .magazine-showcase-wrap { width: 100%; perspective: 2500px; display: flex; justify-content: center; align-items: center; padding: 50px 0 100px; position: relative; }
-    .magazine { position: relative; width: 35vw; max-width: 400px; aspect-ratio: 1 / 1.414; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; }
-    .mag-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left center; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.8s; box-shadow: 5px 5px 20px rgba(0,0,0,0.3); }
-    .page-front, .page-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; backface-visibility: hidden; background: #050505; overflow: hidden; }
-    .page-front::after { content: ''; position: absolute; top:0; left:0; width: 8%; height:100%; background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%); pointer-events: none; }
+    /* --- V18 Array Magazine Engine (無縫跨頁版) --- */
+    .magazine-issue-container {
+        margin-bottom: 120px;
+        padding-bottom: 60px;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .magazine-issue-container:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    .issue-title {
+        text-align: center;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.9rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
+    .magazine-showcase-wrap { 
+        width: 100%; 
+        perspective: 2500px; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        padding: 50px 0 100px; 
+        position: relative;
+    }
+    .magazine {
+        position: relative;
+        width: 35vw;
+        max-width: 400px;
+        aspect-ratio: 1 / 1.414;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        cursor: pointer;
+    }
+    
+    .mag-page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform-origin: left center;
+        transform-style: preserve-3d;
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.8s;
+        box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
+    }
+    
+    .page-front, .page-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #050505;
+        overflow: hidden;
+    }
+    
+    /* V18 拔除所有人工假陰影，實現真正的無縫跨頁 */
+    .page-front::after { display: none; }
     .page-back { transform: rotateY(180deg); }
-    .page-back::after { content: ''; position: absolute; top:0; right:0; width: 8%; height:100%; background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, transparent 100%); pointer-events: none; }
+    .page-back::after { display: none; }
+    
     .mag-page img { width: 100%; height: 100%; object-fit: contain; }
-    .mag-page.flipped { transform: rotateY(-180deg); box-shadow: -5px 5px 20px rgba(0,0,0,0.3); }
+    
+    .mag-page.flipped {
+        transform: rotateY(-180deg);
+        box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
+    }
 
-    /* Brand Back Cover V13/V17 */
-    .brand-back-cover { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background: #030303; border-left: 1px solid rgba(255,255,255,0.02); }
-    .brand-back-title { font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.25em; margin-right: -0.25em; display: flex; align-items: center; justify-content: center; width: 100%; padding: 0 10px; }
-    .brand-back-sub { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #444; letter-spacing: 0.4em; margin-top: 20px; text-transform: uppercase; }
+    .brand-back-cover {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: #030303;
+        border-left: 1px solid rgba(255,255,255,0.02);
+    }
+    .brand-back-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2.2rem;
+        letter-spacing: 0.25em;
+        margin-right: -0.25em;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .brand-back-sub {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.5rem;
+        color: #444;
+        letter-spacing: 0.4em;
+        margin-top: 20px;
+        margin-right: -0.4em;
+        text-transform: uppercase;
+    }
 
-    .magazine-hint { position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.25em; text-transform: uppercase; animation: pulseBorder 2s infinite; transition: all 0.4s ease; border: 1px solid rgba(191, 149, 63, 0.4); padding: 12px 30px; background: rgba(5,5,5,0.9); z-index: 100; cursor: pointer; pointer-events: auto; white-space: nowrap; backdrop-filter: blur(5px); }
-    .magazine-hint:hover { background: rgba(191, 149, 63, 0.1); border-color: rgba(191, 149, 63, 0.8); text-shadow: 0 0 8px rgba(191, 149, 63, 0.6); box-shadow: 0 0 20px rgba(191, 149, 63, 0.3); }
+    .magazine-hint {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.7rem;
+        color: #BF953F;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        animation: pulseBorder 2s infinite;
+        transition: all 0.4s ease;
+        border: 1px solid rgba(191, 149, 63, 0.4);
+        padding: 12px 30px;
+        background: rgba(5,5,5,0.9);
+        z-index: 100;
+        cursor: pointer;
+        pointer-events: auto;
+        white-space: nowrap;
+        backdrop-filter: blur(5px);
+    }
+    
+    .magazine-hint:hover {
+        background: rgba(191, 149, 63, 0.1);
+        border-color: rgba(191, 149, 63, 0.8);
+        text-shadow: 0 0 8px rgba(191, 149, 63, 0.6);
+        box-shadow: 0 0 20px rgba(191, 149, 63, 0.3);
+    }
+
+    @keyframes pulseBorder { 
+        0% { box-shadow: 0 0 0 rgba(191, 149, 63, 0); border-color: rgba(191, 149, 63, 0.2); } 
+        50% { box-shadow: 0 0 20px rgba(191, 149, 63, 0.3); border-color: rgba(191, 149, 63, 0.8); } 
+        100% { box-shadow: 0 0 0 rgba(191, 149, 63, 0); border-color: rgba(191, 149, 63, 0.2); } 
+    }
 
     /* --- Archetype --- */
     .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
@@ -173,28 +287,39 @@
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
     .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; } .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
     .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; } .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
+    
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; background-size: cover; background-position: center; }
     .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
+    
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
+    .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; color: #888; font-weight: 300; }
     .plan-philosophy { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    .plan-footer { margin-top: auto; }
+    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
+    .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
+    .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
+    
     .price-card.locked-plan { cursor: not-allowed; }
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
     .sealing-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 0.3s; }
     .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-    .tape-strip::before { content: 'LOCKED LOCKED LOCKED LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
+    .tape-strip::before, .tape-strip::after { content: 'LOCKED   LOCKED   LOCKED   LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
+    @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
+    
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
     .spec-val { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #ccc; letter-spacing: 0.05em; text-align: right; }
     .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+    .spec-gold { color: #BF953F; }
 
     /* --- 10. Delivery --- */
     .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
@@ -207,18 +332,47 @@
     .delivery-icon { font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s; }
     .delivery-showcase:hover .delivery-card { opacity: 0.3; filter: grayscale(100%); }
     .delivery-showcase .delivery-card:hover { opacity: 1; filter: grayscale(0%); transform: translateY(-15px); border-color: rgba(191, 149, 63, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+    .delivery-card:hover .delivery-icon { color: #BF953F; text-shadow: 0 0 15px rgba(191, 149, 63, 0.3); }
+    .delivery-card:hover h4 { color: #fff; }
+    .delivery-card:hover p { color: #aaa; }
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: hidden; outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; transform: translateZ(0); }
-    .btn-glow { position: absolute; top: 50%; left: 50%; width: 300%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); animation: spinGlow 4s linear infinite; opacity: 0; transition: opacity 1.2s ease; z-index: 0; will-change: transform; }
+    
+    .ritual-btn { 
+        display: block; margin: 0 auto; padding: 0; background: transparent; border: none; 
+        cursor: pointer; position: relative; overflow: hidden; 
+        outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; 
+        transform: translateZ(0); 
+    }
+    .btn-glow { 
+        position: absolute; 
+        top: 50%; left: 50%; 
+        width: 300%; aspect-ratio: 1; border-radius: 50%; 
+        background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); 
+        animation: spinGlow 4s linear infinite; 
+        opacity: 0; transition: opacity 1.2s ease; z-index: 0; 
+        will-change: transform; 
+    }
     .ritual-btn.in-view .btn-glow { opacity: 1; }
-    .btn-bg { position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; }
-    .btn-content { position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+    .btn-bg { 
+        position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; 
+    }
+    .btn-content { 
+        position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; 
+        align-items: center; justify-content: center; gap: 15px; 
+    }
     .btn-en { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; color: #fff; }
     .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
+    
+    .ritual-btn:hover { outline-color: transparent; }
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
-    @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
+    .ritual-btn:hover .btn-glow { animation-duration: 2s; opacity: 1; }
+    
+    @keyframes spinGlow { 
+        0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 
+        100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } 
+    }
 
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
@@ -228,6 +382,13 @@
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .form-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #BF953F; margin-bottom: 5px; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
+    .form-group select option:disabled { color: #555; background: #000; }
+    .form-group select option { background: #111; color: #fff; padding: 10px; }
+    #plan-details-box { background: rgba(191,149,63, 0.05); border: 1px solid rgba(191,149,63, 0.2); padding: 30px; margin: 30px 0; display: none; }
+    .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+    .detail-val { color: #fff; }
+    .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
+    .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
     .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
@@ -245,6 +406,7 @@
     .social-link { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; text-decoration: none; letter-spacing: 0.2em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
     .social-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .social-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    .social-link:hover::after { width: 100%; }
 
     /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
@@ -253,6 +415,7 @@
     .visitor-counter { display: flex; align-items: center; gap: 15px; z-index: 9001; background: #050505; padding-left: 20px; box-shadow: -10px 0 20px #050505; }
     .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.15em; text-transform: uppercase; }
     .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
+    
     footer { padding: 20px 4vw 80px; text-align: right; background: #050505; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
     
@@ -265,27 +428,71 @@
     .close-btn::before { transform: rotate(45deg); }
     .close-btn::after { transform: rotate(-45deg); }
     .close-btn:hover { transform: rotate(90deg); }
+    .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
 
-    /* --- MOBILE OPTIMIZATION --- */
+    @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
+
+    /* =========================================
+       V39.0 MOBILE OPTIMIZATION (THE FIX)
+       ========================================= */
     @media (max-width: 768px) { 
         .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
         .title-word { margin-right: -0.2em; } 
-        .section-title { font-size: 2rem; }
+        
+        .hero p { font-size: 0.65rem; letter-spacing: 0.3em; margin-top: 30px; }
+        .section-title { font-size: 2rem; line-height: 1.3; }
+        .section-subtitle { font-size: 0.6rem; margin-top: 15px; }
+        .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.15em; line-height: 1.6; }
+        .about-slogan-sub { font-size: 0.7rem; letter-spacing: 0.2em; }
         .top-bar { padding: 20px 5vw; }
         .nav-logo { font-size: 1.2rem; }
-        .menu-link { font-size: 2.2rem; }
+        .audio-btn { display: none; } 
+        .menu-link { font-size: 2.2rem; margin: 10px 0; }
+        .menu-close-btn { right: 5vw; top: 25px; }
+        
+        .gallery-sub-title { font-size: 1.6rem; margin-bottom: 30px; }
+        .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.7rem; }
         .gallery-container { column-count: 1; gap: 0; }
+        .gallery-item { margin-bottom: 30px; }
+        .filter-tabs { gap: 15px; margin-bottom: 40px; }
+        .filter-btn { font-size: 0.6rem; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
+        
+        .magazine-issue-container { margin-bottom: 80px; padding-bottom: 40px; }
         .magazine { width: 44vw; } 
         .magazine-hint { font-size: 0.6rem; bottom: -20px; }
-        .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
-        .price-card { min-height: auto; height: auto; }
-        .card-content { padding: 50px 6vw; gap: 40px; }
+        
+        .pricing-grid { display: flex; flex-direction: column; width: 100%; gap: 40px; } 
+        .price-card { min-height: auto; height: auto; width: 100%; }
+        .card-content { padding: 50px 6vw; gap: 40px; display: flex; flex-direction: column; }
+        .plan-id { font-size: 0.8rem; margin-bottom: 15px; }
+        .plan-en { font-size: 1.8rem; }
+        .plan-zh { font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
+        .plan-philosophy { font-size: 0.85rem; padding-left: 15px; line-height: 1.8; margin-bottom: 30px; }
+        .spec-list { margin-top: 20px; }
+        .spec-row { padding: 15px 0; }
+        .current-price { font-size: 1.5rem; margin-top: 20px; }
+        
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
+        .delivery-card { padding: 40px 6vw; }
+        .delivery-card p { font-size: 0.8rem; line-height: 1.8; }
+        
         .ritual-btn { width: 90%; max-width: 350px; }
         .btn-content { padding: 25px 0; gap: 12px; }
-        .contact-links { flex-direction: column; gap: 30px; }
+        .btn-en { font-size: 1rem; }
+        .btn-zh { font-size: 0.75rem; }
+        
+        .hidden-booking-container.open { padding: 80px 5vw; }
+        .booking-interface { padding: 40px 5vw; }
+        .form-group input, .form-group select, .form-group textarea { font-size: 0.9rem; }
+        
+        .contact-links { flex-direction: column; gap: 30px; align-items: center; }
+        .contact-title { font-size: 1.5rem; }
+        .social-link { font-size: 0.85rem; }
         footer { text-align: center; padding-bottom: 70px; }
+        .tech-ticker-wrap { padding-right: 15px; }
+        .visitor-counter { padding-left: 10px; }
+        .visitor-label { display: none; } 
     }
   </style>
 </head>
@@ -349,10 +556,12 @@
     <div class="filter-tabs">
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS</a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">THE COVER</a>
+        
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 該方案籌備中')">
             <span class="filter-btn">THE STORY</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
+        
         <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 機密檔案鎖定')">
             <span class="filter-btn">PROJECT: ROYAL</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
@@ -577,7 +786,7 @@
       }
     }
 
-    /* --- V17 Array Magazine Engine (新增第三本) --- */
+    /* --- V18 Array Magazine Engine --- */
     const magazinesData = [
         { id: 'vol-01', title: 'ISSUE 01 // THE AWAKENING', path: 'images/works/cover/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
         { id: 'vol-02', title: 'ISSUE 02 // THE SILENCE', path: 'images/works/cover2/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
