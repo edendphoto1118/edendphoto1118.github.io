@@ -194,7 +194,6 @@
         overflow: hidden;
     }
     
-    /* V18 拔除所有人工假陰影，實現真正的無縫跨頁 */
     .page-front::after { display: none; }
     .page-back { transform: rotateY(180deg); }
     .page-back::after { display: none; }
@@ -786,11 +785,13 @@
       }
     }
 
-    /* --- V18 Array Magazine Engine --- */
+    /* --- V19 Array Magazine Engine (無縫支援 4 本) --- */
     const magazinesData = [
         { id: 'vol-01', title: 'ISSUE 01 // THE AWAKENING', path: 'images/works/cover/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
         { id: 'vol-02', title: 'ISSUE 02 // THE SILENCE', path: 'images/works/cover2/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
+        { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        // V19 新增第 4 本
+        { id: 'vol-04', title: 'ISSUE 04 // THE MOMENT', path: 'images/works/cover4/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
     ];
 
     function generateMagazines() {
