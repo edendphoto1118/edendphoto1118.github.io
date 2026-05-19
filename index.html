@@ -91,7 +91,7 @@
     @keyframes scrollFlow { 0% { top: -100%; opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { top: 100%; opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* --- 7. Gallery --- */
+    /* --- 7. Gallery Refactor --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
@@ -134,7 +134,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V20 Array Magazine Engine with Selective Shadows --- */
+    /* --- V21 Array Magazine Engine --- */
     .magazine-issue-container {
         margin-bottom: 120px;
         padding-bottom: 60px;
@@ -194,7 +194,6 @@
         overflow: hidden;
     }
     
-    /* 預設極弱書脊陰影 */
     .page-front::after {
         content: ''; position: absolute; top:0; left:0; width: 8%; height:100%;
         background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%);
@@ -209,7 +208,6 @@
         pointer-events: none;
     }
 
-    /* V20: 無陰影模式 (應用於 VOL 03) */
     .magazine.no-shadow .page-front::after,
     .magazine.no-shadow .page-back::after {
         display: none !important;
@@ -310,9 +308,12 @@
     
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
+    .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
     .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; color: #888; font-weight: 300; }
     .plan-philosophy { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    .plan-footer { margin-top: auto; }
+    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
@@ -324,7 +325,7 @@
     .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
     .tape-strip::before, .tape-strip::after { content: 'LOCKED   LOCKED   LOCKED   LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
-    .tape-right { top: 60%; left: -25%; transform: rotate(-12deg) translateX(120%); }
+    .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
     @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
     
@@ -418,7 +419,9 @@
 
     @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
 
-    /* --- MOBILE OPTIMIZATION --- */
+    /* =========================================
+       V39.0 MOBILE OPTIMIZATION (THE FIX)
+       ========================================= */
     @media (max-width: 768px) { 
         .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
         .title-word { margin-right: -0.2em; } 
@@ -641,7 +644,7 @@
   </section>
   
   <div class="tech-ticker-wrap">
-      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VINTAGE LANTERN // TACTICAL AESTHETICS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
+      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
       <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
   </div>
 
@@ -729,13 +732,15 @@
       }
     }
 
-    /* --- V20 Array Magazine Engine --- */
+    /* --- V21 Array Magazine Engine --- */
     const magazinesData = [
         { id: 'vol-01', title: 'ISSUE 01 // THE AWAKENING', path: 'images/works/cover/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
         { id: 'vol-02', title: 'ISSUE 02 // THE SILENCE', path: 'images/works/cover2/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        // V20: 取消 VOL03 中央陰影
         { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', noShadow: true, sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-04', title: 'ISSUE 04 // THE MOMENT', path: 'images/works/cover4/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
+        { id: 'vol-04', title: 'ISSUE 04 // THE MOMENT', path: 'images/works/cover4/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        // V21 新增 05 動態企劃紙本化 與 06
+        { id: 'vol-05', title: 'ISSUE 05 // THE MOTION', path: 'images/works/cover5/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        { id: 'vol-06', title: 'ISSUE 06 // THE OBSIDIAN', path: 'images/works/cover6/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
     ];
 
     function generateMagazines() {
@@ -749,7 +754,6 @@
             const issueTitle = document.createElement('h4'); issueTitle.className = 'issue-title metallic-gold'; issueTitle.innerText = mag.title; issueWrap.appendChild(issueTitle);
             const showcaseWrap = document.createElement('div'); showcaseWrap.className = 'magazine-showcase-wrap';
             
-            // V20: 判斷是否需要移除陰影
             const magazineDiv = document.createElement('div'); 
             magazineDiv.className = 'magazine' + (mag.noShadow ? ' no-shadow' : '');
             
