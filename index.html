@@ -40,7 +40,7 @@
     .enter-btn:hover { letter-spacing: 0.6em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
-    /* --- 4. Navigation & Morphing Hamburger --- */
+    /* --- 4. Navigation --- */
     .top-bar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease 1s; pointer-events: none; }
     body.site-active .top-bar { opacity: 1; }
     .nav-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto; z-index: 10001;}
@@ -134,7 +134,7 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V18 Array Magazine Engine (無縫跨頁版) --- */
+    /* --- V21 Array Magazine Engine --- */
     .magazine-issue-container {
         margin-bottom: 120px;
         padding-bottom: 60px;
@@ -194,10 +194,24 @@
         overflow: hidden;
     }
     
-    /* V18 拔除所有人工假陰影，實現真正的無縫跨頁 */
-    .page-front::after { display: none; }
-    .page-back { transform: rotateY(180deg); }
-    .page-back::after { display: none; }
+    .page-front::after {
+        content: ''; position: absolute; top:0; left:0; width: 8%; height:100%;
+        background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%);
+        pointer-events: none;
+    }
+    .page-back {
+        transform: rotateY(180deg);
+    }
+    .page-back::after {
+        content: ''; position: absolute; top:0; right:0; width: 8%; height:100%;
+        background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, transparent 100%);
+        pointer-events: none;
+    }
+
+    .magazine.no-shadow .page-front::after,
+    .magazine.no-shadow .page-back::after {
+        display: none !important;
+    }
     
     .mag-page img { width: 100%; height: 100%; object-fit: contain; }
     
@@ -218,12 +232,14 @@
     }
     .brand-back-title {
         font-family: 'Cinzel', serif;
-        font-size: 2.2rem;
+        font-size: 2rem;
         letter-spacing: 0.25em;
         margin-right: -0.25em;
         display: flex;
         align-items: center;
-        gap: 15px;
+        justify-content: center;
+        width: 100%;
+        padding: 0 10px;
     }
     .brand-back-sub {
         font-family: 'Montserrat', sans-serif;
@@ -231,7 +247,6 @@
         color: #444;
         letter-spacing: 0.4em;
         margin-top: 20px;
-        margin-right: -0.4em;
         text-transform: uppercase;
     }
 
@@ -338,41 +353,15 @@
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    
-    .ritual-btn { 
-        display: block; margin: 0 auto; padding: 0; background: transparent; border: none; 
-        cursor: pointer; position: relative; overflow: hidden; 
-        outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; 
-        transform: translateZ(0); 
-    }
-    .btn-glow { 
-        position: absolute; 
-        top: 50%; left: 50%; 
-        width: 300%; aspect-ratio: 1; border-radius: 50%; 
-        background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); 
-        animation: spinGlow 4s linear infinite; 
-        opacity: 0; transition: opacity 1.2s ease; z-index: 0; 
-        will-change: transform; 
-    }
+    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: hidden; outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; transform: translateZ(0); }
+    .btn-glow { position: absolute; top: 50%; left: 50%; width: 300%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); animation: spinGlow 4s linear infinite; opacity: 0; transition: opacity 1.2s ease; z-index: 0; will-change: transform; }
     .ritual-btn.in-view .btn-glow { opacity: 1; }
-    .btn-bg { 
-        position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; 
-    }
-    .btn-content { 
-        position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; 
-        align-items: center; justify-content: center; gap: 15px; 
-    }
+    .btn-bg { position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; }
+    .btn-content { position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
     .btn-en { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; color: #fff; }
     .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
-    
-    .ritual-btn:hover { outline-color: transparent; }
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
-    .ritual-btn:hover .btn-glow { animation-duration: 2s; opacity: 1; }
-    
-    @keyframes spinGlow { 
-        0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 
-        100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } 
-    }
+    @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
 
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
@@ -406,7 +395,6 @@
     .social-link { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; text-decoration: none; letter-spacing: 0.2em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
     .social-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .social-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    .social-link:hover::after { width: 100%; }
 
     /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
@@ -428,7 +416,6 @@
     .close-btn::before { transform: rotate(45deg); }
     .close-btn::after { transform: rotate(-45deg); }
     .close-btn:hover { transform: rotate(90deg); }
-    .close-btn:hover::before, .close-btn:hover::after { background: #BF953F; }
 
     @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
 
@@ -438,61 +425,22 @@
     @media (max-width: 768px) { 
         .hero h1 { font-size: 12vw; letter-spacing: 0.2em; } 
         .title-word { margin-right: -0.2em; } 
-        
-        .hero p { font-size: 0.65rem; letter-spacing: 0.3em; margin-top: 30px; }
-        .section-title { font-size: 2rem; line-height: 1.3; }
-        .section-subtitle { font-size: 0.6rem; margin-top: 15px; }
-        .about-slogan-main { font-size: 1.8rem; letter-spacing: 0.15em; line-height: 1.6; }
-        .about-slogan-sub { font-size: 0.7rem; letter-spacing: 0.2em; }
+        .section-title { font-size: 2rem; }
         .top-bar { padding: 20px 5vw; }
         .nav-logo { font-size: 1.2rem; }
-        .audio-btn { display: none; } 
-        .menu-link { font-size: 2.2rem; margin: 10px 0; }
-        .menu-close-btn { right: 5vw; top: 25px; }
-        
-        .gallery-sub-title { font-size: 1.6rem; margin-bottom: 30px; }
-        .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.7rem; }
+        .menu-link { font-size: 2.2rem; }
         .gallery-container { column-count: 1; gap: 0; }
-        .gallery-item { margin-bottom: 30px; }
-        .filter-tabs { gap: 15px; margin-bottom: 40px; }
-        .filter-btn { font-size: 0.6rem; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
-        
-        .magazine-issue-container { margin-bottom: 80px; padding-bottom: 40px; }
         .magazine { width: 44vw; } 
         .magazine-hint { font-size: 0.6rem; bottom: -20px; }
-        
-        .pricing-grid { display: flex; flex-direction: column; width: 100%; gap: 40px; } 
-        .price-card { min-height: auto; height: auto; width: 100%; }
-        .card-content { padding: 50px 6vw; gap: 40px; display: flex; flex-direction: column; }
-        .plan-id { font-size: 0.8rem; margin-bottom: 15px; }
-        .plan-en { font-size: 1.8rem; }
-        .plan-zh { font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
-        .plan-philosophy { font-size: 0.85rem; padding-left: 15px; line-height: 1.8; margin-bottom: 30px; }
-        .spec-list { margin-top: 20px; }
-        .spec-row { padding: 15px 0; }
-        .current-price { font-size: 1.5rem; margin-top: 20px; }
-        
+        .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
+        .price-card { min-height: auto; height: auto; }
+        .card-content { padding: 50px 6vw; gap: 40px; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
-        .delivery-card { padding: 40px 6vw; }
-        .delivery-card p { font-size: 0.8rem; line-height: 1.8; }
-        
         .ritual-btn { width: 90%; max-width: 350px; }
         .btn-content { padding: 25px 0; gap: 12px; }
-        .btn-en { font-size: 1rem; }
-        .btn-zh { font-size: 0.75rem; }
-        
-        .hidden-booking-container.open { padding: 80px 5vw; }
-        .booking-interface { padding: 40px 5vw; }
-        .form-group input, .form-group select, .form-group textarea { font-size: 0.9rem; }
-        
-        .contact-links { flex-direction: column; gap: 30px; align-items: center; }
-        .contact-title { font-size: 1.5rem; }
-        .social-link { font-size: 0.85rem; }
+        .contact-links { flex-direction: column; gap: 30px; }
         footer { text-align: center; padding-bottom: 70px; }
-        .tech-ticker-wrap { padding-right: 15px; }
-        .visitor-counter { padding-left: 10px; }
-        .visitor-label { display: none; } 
     }
   </style>
 </head>
@@ -556,12 +504,10 @@
     <div class="filter-tabs">
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS</a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">THE COVER</a>
-        
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 該方案籌備中')">
             <span class="filter-btn">THE STORY</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
-        
         <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 機密檔案鎖定')">
             <span class="filter-btn">PROJECT: ROYAL</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
@@ -786,11 +732,15 @@
       }
     }
 
-    /* --- V18 Array Magazine Engine --- */
+    /* --- V21 Array Magazine Engine --- */
     const magazinesData = [
         { id: 'vol-01', title: 'ISSUE 01 // THE AWAKENING', path: 'images/works/cover/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
         { id: 'vol-02', title: 'ISSUE 02 // THE SILENCE', path: 'images/works/cover2/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
+        { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', noShadow: true, sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        { id: 'vol-04', title: 'ISSUE 04 // THE MOMENT', path: 'images/works/cover4/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        // V21 新增 05 動態企劃紙本化 與 06
+        { id: 'vol-05', title: 'ISSUE 05 // THE MOTION', path: 'images/works/cover5/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
+        { id: 'vol-06', title: 'ISSUE 06 // THE OBSIDIAN', path: 'images/works/cover6/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
     ];
 
     function generateMagazines() {
@@ -803,7 +753,10 @@
             const issueWrap = document.createElement('div'); issueWrap.className = 'magazine-issue-container';
             const issueTitle = document.createElement('h4'); issueTitle.className = 'issue-title metallic-gold'; issueTitle.innerText = mag.title; issueWrap.appendChild(issueTitle);
             const showcaseWrap = document.createElement('div'); showcaseWrap.className = 'magazine-showcase-wrap';
-            const magazineDiv = document.createElement('div'); magazineDiv.className = 'magazine';
+            
+            const magazineDiv = document.createElement('div'); 
+            magazineDiv.className = 'magazine' + (mag.noShadow ? ' no-shadow' : '');
+            
             const hintDiv = document.createElement('div'); hintDiv.className = 'magazine-hint'; hintDiv.innerText = '[ 點擊翻閱 CLICK TO OPEN ]';
 
             mag.sheets.forEach((sheet, index) => {
