@@ -213,7 +213,8 @@
         display: none !important;
     }
     
-    .mag-page img { width: 100%; height: 100%; object-fit: contain; }
+    .mag-page img,
+    .mag-page video { width: 100%; height: 100%; object-fit: contain; display: block; }
     
     .mag-page.flipped {
         transform: rotateY(-180deg);
@@ -652,6 +653,7 @@
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()"><div class="close-btn"></div><img class="lightbox-content" id="lightbox-img"></div>
 
+  <script src="magazines-data.js"></script>
   <script>
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
@@ -732,23 +734,45 @@
       }
     }
 
-    /* --- V21 Array Magazine Engine --- */
-    const magazinesData = [
-        { id: 'vol-01', title: 'ISSUE 01 // THE AWAKENING', path: 'images/works/cover/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-02', title: 'ISSUE 02 // THE SILENCE', path: 'images/works/cover2/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-03', title: 'ISSUE 03 // THE VISION', path: 'images/works/cover3/', noShadow: true, sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-04', title: 'ISSUE 04 // THE MOMENT', path: 'images/works/cover4/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        // V21 新增 05 動態企劃紙本化 與 06
-        { id: 'vol-05', title: 'ISSUE 05 // THE MOTION', path: 'images/works/cover5/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] },
-        { id: 'vol-06', title: 'ISSUE 06 // THE OBSIDIAN', path: 'images/works/cover6/', sheets: [{ f: '1.png', b: '2.png' }, { f: '3.png', b: '4.png' }, { f: '5.png', b: 'BRAND' }] }
-    ];
+    /* --- Auto Magazine Engine --- */
+    const magazinesData = Array.isArray(globalThis.EDEN_MAGAZINES) ? globalThis.EDEN_MAGAZINES : [];
+
+    function createMagazineSheets(pages) {
+        const sheets = [];
+        for (let i = 0; i < pages.length; i += 2) {
+            sheets.push({ f: pages[i], b: pages[i + 1] || 'BRAND' });
+        }
+        if (sheets.length && sheets[sheets.length - 1].b !== 'BRAND') {
+            sheets.push({ f: 'BRAND', b: 'BRAND' });
+        }
+        return sheets;
+    }
+
+    function isVideoPage(fileName) {
+        return /\.(mp4|webm|mov|m4v)$/i.test(fileName);
+    }
+
+    function renderBrandPage(sideClass) {
+        return `<div class="${sideClass} brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">VISUAL ARCHIVE</div></div>`;
+    }
+
+    function renderMediaPage(sideClass, mag, fileName) {
+        if (fileName === 'BRAND') return renderBrandPage(sideClass);
+        const src = `${mag.path}${fileName}`;
+        if (isVideoPage(fileName)) {
+            return `<div class="${sideClass}"><video src="${src}" muted autoplay loop playsinline preload="metadata" onerror="this.style.display='none';"></video></div>`;
+        }
+        return `<div class="${sideClass}"><img src="${src}" onerror="this.style.display='none';"></div>`;
+    }
 
     function generateMagazines() {
         const coverContainer = document.getElementById('container-cover');
         coverContainer.innerHTML = '';
         magazinesData.forEach((mag) => {
             let currentSheet = 0;
-            const numSheets = mag.sheets.length;
+            const sheets = Array.isArray(mag.sheets) ? mag.sheets : createMagazineSheets(mag.pages || []);
+            const numSheets = sheets.length;
+            if (numSheets === 0) return;
             let pagesElements = [];
             const issueWrap = document.createElement('div'); issueWrap.className = 'magazine-issue-container';
             const issueTitle = document.createElement('h4'); issueTitle.className = 'issue-title metallic-gold'; issueTitle.innerText = mag.title; issueWrap.appendChild(issueTitle);
@@ -759,15 +783,11 @@
             
             const hintDiv = document.createElement('div'); hintDiv.className = 'magazine-hint'; hintDiv.innerText = '[ 點擊翻閱 CLICK TO OPEN ]';
 
-            mag.sheets.forEach((sheet, index) => {
+            sheets.forEach((sheet, index) => {
                 const pageDiv = document.createElement('div'); pageDiv.className = 'mag-page'; pageDiv.style.zIndex = numSheets - index;
-                let backHtml = `<div class="page-back" style="background:#050505;"></div>`;
-                if (sheet.b === 'BRAND') {
-                    backHtml = `<div class="page-back brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">VISUAL ARCHIVE</div></div>`;
-                } else if (sheet.b) {
-                    backHtml = `<div class="page-back"><img src="${mag.path}${sheet.b}" onerror="this.closest('.page-back').style.background='#050505';this.style.display='none';"></div>`;
-                }
-                pageDiv.innerHTML = `<div class="page-front"><img src="${mag.path}${sheet.f}" onerror="this.style.display='none';"></div>${backHtml}`;
+                const backHtml = sheet.b ? renderMediaPage('page-back', mag, sheet.b) : `<div class="page-back" style="background:#050505;"></div>`;
+                const frontHtml = renderMediaPage('page-front', mag, sheet.f);
+                pageDiv.innerHTML = `${frontHtml}${backHtml}`;
                 pageDiv.onclick = (e) => {
                     e.stopPropagation();
                     if (pageDiv.classList.contains('flipped')) { pageDiv.classList.remove('flipped'); currentSheet--; setTimeout(() => { pageDiv.style.zIndex = numSheets - index; }, 400); }

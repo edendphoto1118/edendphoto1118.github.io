@@ -24,6 +24,34 @@ This project serves as a showcase for advanced frontend techniques & visual dire
 * **JavaScript** (ES6+, Logic for Cursor/Modal/Audio)
 * **Zero Dependencies** (Removed all external libraries for pure code integrity)
 
+## Magazine Updates
+
+Magazine issues are generated from folders in `images/works`.
+
+* `cover` is VOL.01.
+* `cover2` is VOL.02.
+* `cover18` is VOL.18.
+* Incoming folders named `VOL.07`, `VOL.08`, etc. are renamed automatically to `cover7`, `cover8`, etc.
+* Any number of image or video pages is supported.
+* Supported media: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.mp4`, `.webm`, `.mov`, `.m4v`.
+* Page files are sorted naturally, so `1.png`, `2.mp4`, `10.png` stay in the right order.
+
+After adding or removing magazine folders or images, run:
+
+```bash
+node scripts/generate-magazines.js
+```
+
+This normalizes incoming folder names and refreshes `magazines-data.js`, which is the file read by the website.
+
+To keep this automatic while editing locally, run:
+
+```bash
+node scripts/watch-magazines.js
+```
+
+The watcher also runs `scripts/auto-publish.js`, which commits and pushes detected changes to GitHub Pages.
+
 ---
 
 > *Curating life through imagery.*
