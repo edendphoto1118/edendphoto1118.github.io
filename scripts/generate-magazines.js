@@ -1,10 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 
 const rootDir = path.resolve(__dirname, '..');
 const worksDir = path.join(rootDir, 'images', 'works');
 const essentialsDir = path.join(worksDir, 'essentials');
 const outputFile = path.join(rootDir, 'magazines-data.js');
+const toneAnalyzer = path.join(__dirname, 'analyze-essentials-tone.py');
+const pythonExecutable = process.env.EDEN_PYTHON || 'C:\\Users\\syding\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe';
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
 const videoExtensions = new Set(['.mp4', '.webm', '.mov', '.m4v']);
 const mediaExtensions = new Set([...imageExtensions, ...videoExtensions]);
@@ -114,7 +117,7 @@ function normalizeEssentialFiles() {
 function buildEssentials() {
   if (!fs.existsSync(essentialsDir)) return [];
 
-  return fs.readdirSync(essentialsDir, { withFileTypes: true })
+  const files = fs.readdirSync(essentialsDir, { withFileTypes: true })
     .filter((entry) => entry.isFile())
     .map((entry) => entry.name)
     .filter((fileName) => imageExtensions.has(path.extname(fileName).toLowerCase()))
@@ -126,6 +129,35 @@ function buildEssentials() {
       if (!numberA && numberB) return 1;
       return naturalPageSort(a, b);
     });
+
+  return sortEssentialsByTone(files);
+}
+
+function sortEssentialsByTone(files) {
+  if (!files.length || !fs.existsSync(toneAnalyzer) || !fs.existsSync(pythonExecutable)) return files;
+
+  const result = spawnSync(pythonExecutable, [toneAnalyzer, essentialsDir, ...files], {
+    cwd: rootDir,
+    encoding: 'utf8',
+    windowsHide: true,
+    timeout: 120000
+  });
+
+  if (result.status !== 0) {
+    const errorText = [result.stderr, result.stdout].filter(Boolean).join('\n').trim();
+    console.warn(`Tone sorting skipped: ${errorText}`);
+    return files;
+  }
+
+  try {
+    const tones = JSON.parse(result.stdout);
+    const sortedFiles = tones.map((item) => item.file).filter((fileName) => files.includes(fileName));
+    const missingFiles = files.filter((fileName) => !sortedFiles.includes(fileName));
+    return [...sortedFiles, ...missingFiles];
+  } catch (error) {
+    console.warn(`Tone sorting skipped: ${error.message}`);
+    return files;
+  }
 }
 
 function buildMagazine(folderName) {
