@@ -44,6 +44,8 @@ node scripts/generate-magazines.js
 
 This normalizes incoming folder names and refreshes `magazines-data.js`, which is the file read by the website.
 
+Files dropped into `images/works/essentials` are also normalized automatically to `essentials (number).jpg` style names and published through the same data file.
+
 To keep this automatic while editing locally, run:
 
 ```bash

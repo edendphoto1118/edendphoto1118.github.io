@@ -45,7 +45,7 @@ function hasStagedChanges() {
 }
 
 try {
-  run('git', ['add', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works/cover*']);
+  run('git', ['add', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works/cover*', 'images/works/essentials']);
 
   if (!hasStagedChanges()) {
     log('No staged changes to publish.');

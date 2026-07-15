@@ -746,13 +746,7 @@
         navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => { showToast('EMAIL COPIED // 已複製 edendphoto1118@gmail.com'); });
     }
 
-    const essentialImages = [
-        'essentials (1).jpg',
-        'essentials (2).jpg',
-        'essentials (3).jpg',
-        'essentials (6).jpg',
-        'essentials (7).jpg'
-    ];
+    const essentialImages = Array.isArray(globalThis.EDEN_ESSENTIALS) ? globalThis.EDEN_ESSENTIALS : [];
     const containerEssentials = document.getElementById('container-essentials');
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => { if(entry.isIntersecting) { setTimeout(() => { entry.target.classList.add('reveal'); }, 100); observer.unobserve(entry.target); } });
