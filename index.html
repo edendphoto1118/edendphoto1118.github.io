@@ -134,41 +134,57 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
-    /* --- V21 Array Magazine Engine --- */
-    .magazine-issue-container {
-        margin-bottom: 120px;
-        padding-bottom: 60px;
-        border-bottom: 1px solid rgba(255,255,255,0.03);
+    /* --- Magazine Carousel Reader --- */
+    .magazine-carousel-shell { width: 100%; max-width: 1600px; margin: 0 auto; position: relative; }
+    .magazine-rail-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
+    .rail-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #777; letter-spacing: 0.28em; text-transform: uppercase; }
+    .rail-controls { display: flex; align-items: center; gap: 10px; }
+    .rail-nav-btn, .reader-close-btn {
+        width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.12); background: rgba(5,5,5,0.85);
+        color: #d7d7d7; display: inline-flex; align-items: center; justify-content: center;
+        font-family: 'Space Mono', monospace; font-size: 1.2rem; line-height: 1; cursor: pointer;
+        transition: border-color 0.35s ease, color 0.35s ease, background 0.35s ease, transform 0.35s ease;
     }
-    .magazine-issue-container:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
+    .rail-nav-btn:hover, .reader-close-btn:hover { border-color: rgba(191,149,63,0.7); color: #BF953F; background: rgba(191,149,63,0.08); }
+    .magazine-rail {
+        display: grid; grid-auto-flow: column; grid-auto-columns: clamp(190px, 20vw, 260px); gap: 22px;
+        overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 4px;
+        padding: 6px 4px 26px; margin-bottom: 42px; -webkit-overflow-scrolling: touch;
     }
-    .issue-title {
-        text-align: center;
-        font-family: 'Space Mono', monospace;
-        font-size: 0.9rem;
-        letter-spacing: 0.3em;
-        margin-bottom: 20px;
-        font-weight: 400;
+    .magazine-rail::-webkit-scrollbar { height: 6px; }
+    .magazine-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
+    .magazine-rail::-webkit-scrollbar-thumb { background: rgba(191,149,63,0.45); border-radius: 999px; }
+    .magazine-card {
+        scroll-snap-align: start; border: 1px solid rgba(255,255,255,0.08); background: #070707; color: inherit;
+        padding: 0; text-align: left; cursor: pointer; overflow: hidden; min-height: 0;
+        transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
     }
-    .magazine-showcase-wrap { 
-        width: 100%; 
-        perspective: 2500px; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        padding: 50px 0 100px; 
-        position: relative;
+    .magazine-card:hover, .magazine-card.active { transform: translateY(-6px); border-color: rgba(191,149,63,0.75); background: #0b0b0b; box-shadow: 0 28px 70px rgba(0,0,0,0.45); }
+    .magazine-card-media { aspect-ratio: 1 / 1.414; width: 100%; background: #020202; overflow: hidden; }
+    .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%) contrast(1.08) brightness(0.78); transition: filter 0.45s ease, transform 0.55s ease; }
+    .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.active .magazine-card-media img, .magazine-card.active .magazine-card-media video { filter: grayscale(10%) contrast(1) brightness(1); transform: scale(1.025); }
+    .magazine-card-info { min-height: 92px; padding: 18px 18px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+    .magazine-card-title { font-family: 'Space Mono', monospace; font-size: 0.74rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.12em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .magazine-card-meta { font-family: 'Montserrat', sans-serif; font-size: 0.58rem; color: #777; letter-spacing: 0.24em; text-transform: uppercase; }
+    .magazine-reader-panel {
+        width: 100%; display: grid; grid-template-columns: minmax(210px, 0.45fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px);
+        align-items: stretch; border-top: 1px solid rgba(191,149,63,0.18); border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding: 0; max-height: 0; opacity: 0; overflow: hidden; transform: translateY(30px);
+        transition: max-height 0.9s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.55s ease, transform 0.75s cubic-bezier(0.25, 1, 0.5, 1), padding 0.75s ease;
+    }
+    .magazine-reader-panel.open { max-height: 860px; opacity: 1; transform: translateY(0); padding: 42px 0 52px; overflow: visible; }
+    .reader-meta { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 24px; min-width: 0; }
+    .reader-kicker { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: #BF953F; letter-spacing: 0.32em; text-transform: uppercase; }
+    .reader-title { font-family: 'Cinzel', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.12em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
+    .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.68rem; color: #777; letter-spacing: 0.24em; text-transform: uppercase; }
+    .reader-actions { display: flex; gap: 12px; align-items: center; }
+    .magazine-showcase-wrap {
+        width: 100%; min-height: min(62vh, 660px); perspective: 2500px; display: flex; justify-content: center;
+        align-items: center; padding: 42px clamp(24px, 4vw, 80px) 82px; position: relative; overflow: visible;
     }
     .magazine {
-        position: relative;
-        width: 35vw;
-        max-width: 400px;
-        aspect-ratio: 1 / 1.414;
-        transform-style: preserve-3d;
-        transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
-        cursor: pointer;
+        position: relative; width: min(30vw, 380px); aspect-ratio: 1 / 1.414; transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; flex: 0 0 auto;
     }
     
     .mag-page {
@@ -253,7 +269,7 @@
 
     .magazine-hint {
         position: absolute;
-        bottom: 0px;
+        bottom: 28px;
         left: 50%;
         transform: translateX(-50%);
         font-family: 'Space Mono', monospace;
@@ -432,8 +448,22 @@
         .menu-link { font-size: 2.2rem; }
         .gallery-container { column-count: 1; gap: 0; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
-        .magazine { width: 44vw; } 
-        .magazine-hint { font-size: 0.6rem; bottom: -20px; }
+        .gallery-sub-title { font-size: 1.45rem; line-height: 1.35; letter-spacing: 0.1em; }
+        .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.68rem; }
+        .magazine-rail-header { align-items: flex-end; gap: 16px; }
+        .rail-label { font-size: 0.58rem; letter-spacing: 0.22em; }
+        .rail-nav-btn, .reader-close-btn { width: 38px; height: 38px; }
+        .magazine-rail { grid-auto-columns: 72vw; gap: 16px; margin-left: -2vw; margin-right: -2vw; padding-left: 2vw; padding-right: 2vw; }
+        .magazine-card-info { min-height: 86px; padding: 16px; }
+        .magazine-card-title { font-size: 0.68rem; letter-spacing: 0.1em; }
+        .magazine-reader-panel { grid-template-columns: 1fr; gap: 26px; }
+        .magazine-reader-panel.open { max-height: 980px; padding: 34px 0 46px; }
+        .reader-meta { gap: 16px; }
+        .reader-title { font-size: 1.4rem; }
+        .reader-count { font-size: 0.62rem; }
+        .magazine-showcase-wrap { min-height: 50vh; padding: 38px 0 76px; }
+        .magazine { width: 44vw; max-width: 250px; }
+        .magazine-hint { font-size: 0.56rem; bottom: 20px; padding: 10px 16px; letter-spacing: 0.16em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
         .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
         .price-card { min-height: auto; height: auto; }
         .card-content { padding: 50px 6vw; gap: 40px; }
@@ -487,7 +517,7 @@
   </div>
 
   <section class="hero">
-    <video class="hero-bg-video" autoplay muted loop playsinline><source src="hero.mp4" type="video/mp4"></video>
+    <img class="hero-bg-video" src="images/works/cover/1.png" alt="">
     <div class="hero-content">
       <h1><span class="title-word">EDEN</span><span class="vertical-separator"></span><span class="title-word">DEEN</span></h1>
       <p>Visual Director / Photographer</p>
@@ -505,23 +535,23 @@
     <div class="filter-tabs">
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS</a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">THE COVER</a>
-        <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 該方案籌備中')">
+        <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // COMING SOON')">
             <span class="filter-btn">THE STORY</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
-        <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 機密檔案鎖定')">
+        <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // LOCKED')">
             <span class="filter-btn">PROJECT: ROYAL</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
     </div>
 
     <div id="gallery-essentials" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">ESSENTIALS <span>/ 聚焦・本質</span></h3>
+        <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span></h3>
         <div class="gallery-container" id="container-essentials"></div>
     </div>
 
     <div id="gallery-cover" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">THE COVER <span>/ 封面・映象</span></h3>
+        <h3 class="gallery-sub-title">THE COVER <span>/ MAGAZINE COVERS</span></h3>
         <div id="container-cover"></div>
     </div>
   </section>
@@ -532,7 +562,7 @@
           <span class="section-subtitle">Visual Personality Analysis.</span>
       </div>
       <div class="archetype-intro">
-          <p class="archetype-text">解構內在與外在的維度反差。<br>將分析結果發布於 IG 限時動態並標註 <strong>@eden_d_photo</strong>，<br>即取得「專屬視覺企劃」之徵選資格。</p>
+          <p class="archetype-text">Decode the contrast between inner identity and outer presence.<br>Share your result on Instagram Stories and tag <strong>@eden_d_photo</strong><br>to enter the selection for a dedicated visual concept.</p>
       </div>
       <div class="tool-container">
           <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="Eden Visual Archetype"></iframe>
@@ -549,7 +579,7 @@
         <div class="card-bg" style="background-image: url('images/works/essentials/essentials%20(1).jpg'); filter: brightness(0.4);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">聚焦・本質</span></div><p class="plan-philosophy">一張好的肖像，是專業的入場券。捨棄繁複背景，用頂級光影雕琢面孔細節。</p></div>
+            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">Portrait Essentials</span></div><p class="plan-philosophy">A strong portrait is a professional entry point. Clean framing and refined light keep the focus on presence, detail, and expression.</p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR</span></div>
@@ -565,7 +595,7 @@
         <div class="card-bg" style="background-image: url('images/works/cover/1.png'); filter: brightness(0.4);"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面・映象</span></div><p class="plan-philosophy">無需刻意演繹，你的存在即是頂級。包含專業妝髮與排版，將您的存在感凝縮於海報之中。</p></div>
+            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">Cover Visual</span></div><p class="plan-philosophy">Your presence becomes the visual statement. Styling, direction, and layout are composed into a polished cover image.</p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR</span></div>
@@ -581,7 +611,7 @@
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
         <div class="card-content">
-            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">敘事・畫報</span></div><p class="plan-philosophy">以設計師選品為詞，妝髮工藝為句，書寫一場視覺獨白。編纂為一本具備收藏價值的映像期刊。</p></div>
+            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">Editorial Story</span></div><p class="plan-philosophy">A narrative visual session built from styling, atmosphere, and image sequencing, prepared as a collectible editorial object.</p></div>
             <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL</span><span class="current-price metallic-gold">[ COMING SOON ]</span></div>
         </div>
       </div>
@@ -592,16 +622,16 @@
       <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
       <span class="delivery-subtitle">ELEVATING THE TANGIBLE EXPERIENCE</span>
       <div class="delivery-showcase">
-          <div class="delivery-card"><span class="delivery-icon">◈</span><h4>THE GRAND OBSIDIAN BOX</h4><p>典藏曜黑精裝盒<br>以特製的硬式結構與曜黑質感，提供最高規格的開箱儀式與收藏保護。</p></div>
-          <div class="delivery-card"><span class="delivery-icon">◈</span><h4>METAL ENGRAVED USB</h4><p>客製化刻字隨身碟<br>雷射刻印專屬英文名的金屬載體。憑此鑰匙回歸，即享檔案重啟禮遇。</p></div>
-          <div class="delivery-card"><span class="delivery-icon">◈</span><h4>WAX-SEALED AUTHENTICITY</h4><p>火漆封蠟認證卡<br>攝影師親手蓋上火漆封蠟的認證卡片，象徵每一份作品的藝術價值。</p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX</h4><p>Archive presentation box<br>A rigid black case designed for storage, protection, and a refined unboxing ritual.</p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>METAL ENGRAVED USB</h4><p>Custom engraved drive<br>A metal archive key carrying the final selected images and client identity.</p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>WAX-SEALED AUTHENTICITY</h4><p>Wax-sealed certificate<br>A physical mark of authorship and edition value for the finished work.</p></div>
       </div>
   </section>
 
   <section class="booking-cta-section">
       <button class="ritual-btn" onclick="toggleBookingSection()">
           <div class="btn-glow"></div><div class="btn-bg"></div>
-          <div class="btn-content"><span class="btn-en">SECURE YOUR SESSION</span><span class="btn-zh">預約席次</span></div>
+          <div class="btn-content"><span class="btn-en">SECURE YOUR SESSION</span><span class="btn-zh">BOOKING</span></div>
       </button>
   </section>
 
@@ -610,17 +640,17 @@
           <div class="booking-terms"><h3 class="terms-title metallic-gold">BOOKING REQUEST</h3></div>
           <div class="custom-booking-form">
               <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
-                <div class="form-group"><label>NAME / 姓名</label><input type="text" name="name" required placeholder="YOUR NAME"></div>
-                <div class="form-group"><label>CONTACT / 聯絡信箱</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
-                <div class="form-group"><label>INSTAGRAM ID / IG 帳號<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em;">* 請填寫公開帳號，我們將透過 IG 私訊確認檔期。</span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
-                <div class="form-group"><label>PLAN / 方案選擇</label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN...</option><option value="Essentials">ESSENTIALS - 聚焦・本質</option><option value="Structure">THE COVER - 封面・映象</option></select></div>
+                <div class="form-group"><label>NAME</label><input type="text" name="name" required placeholder="YOUR NAME"></div>
+                <div class="form-group"><label>CONTACT EMAIL</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
+                <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.</span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
+                <div class="form-group"><label>PLAN</label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN...</option><option value="Essentials">ESSENTIALS - Portrait Essentials</option><option value="Structure">THE COVER - Cover Visual</option></select></div>
                 <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT</span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING</span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">RETOUCH</span><span id="d-retouch" style="color:#fff; font-size:0.8rem;"></span></div>
                 </div>
-                <div class="form-group"><label>DATE / 期望日期</label><input type="date" name="date" required></div>
-                <div class="form-group"><label>VISION / 拍攝想法</label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION..."></textarea></div>
+                <div class="form-group"><label>DATE</label><input type="date" name="date" required></div>
+                <div class="form-group"><label>VISION</label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION..."></textarea></div>
                 <button type="submit" class="submit-btn">CONFIRM REQUEST</button>
               </form>
           </div>
@@ -629,7 +659,7 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main metallic-gold">創 造　時 代 封 面</h2>
+        <h2 class="about-slogan-main metallic-gold">CRAFT THE COVER</h2>
         <span class="about-slogan-sub">CRAFT THE COVER OF THE ERA.</span>
     </div>
   </section>
@@ -649,7 +679,7 @@
       <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
   </div>
 
-  <footer><p>&copy; 2025 EDEN｜DEEN. All Rights Reserved.</p></footer>
+  <footer><p>&copy; 2025 EDEN | DEEN. All Rights Reserved.</p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()"><div class="close-btn"></div><img class="lightbox-content" id="lightbox-img"></div>
 
@@ -716,7 +746,13 @@
         navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => { showToast('EMAIL COPIED // 已複製 edendphoto1118@gmail.com'); });
     }
 
-    const numEssentials = 7; 
+    const essentialImages = [
+        'essentials (1).jpg',
+        'essentials (2).jpg',
+        'essentials (3).jpg',
+        'essentials (6).jpg',
+        'essentials (7).jpg'
+    ];
     const containerEssentials = document.getElementById('container-essentials');
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => { if(entry.isIntersecting) { setTimeout(() => { entry.target.classList.add('reveal'); }, 100); observer.unobserve(entry.target); } });
@@ -724,14 +760,14 @@
 
     function generateEssentials() {
       containerEssentials.innerHTML = '';
-      for (let i = 1; i <= numEssentials; i++) {
-        const imgPath = `images/works/essentials/essentials%20(${i}).jpg`; 
+      essentialImages.forEach((fileName) => {
+        const imgPath = `images/works/essentials/${encodeURIComponent(fileName)}`;
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
         itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" onerror="this.closest('.gallery-item').remove();">`;
         containerEssentials.appendChild(itemDiv);
         revealObserver.observe(itemDiv);
-      }
+      });
     }
 
     /* --- Auto Magazine Engine --- */
@@ -765,50 +801,146 @@
         return `<div class="${sideClass}"><img src="${src}" onerror="this.style.display='none';"></div>`;
     }
 
+    function renderCardMedia(mag) {
+        const firstPage = (mag.pages || [])[0];
+        if (!firstPage) return `<div class="magazine-card-media"></div>`;
+        const src = `${mag.path}${firstPage}`;
+        const media = isVideoPage(firstPage)
+            ? `<video src="${src}" muted autoplay loop playsinline preload="metadata"></video>`
+            : `<img src="${src}" loading="lazy" alt="">`;
+        return `<div class="magazine-card-media">${media}</div>`;
+    }
+
     function generateMagazines() {
         const coverContainer = document.getElementById('container-cover');
-        coverContainer.innerHTML = '';
-        magazinesData.forEach((mag) => {
+        const magazines = magazinesData
+            .map((mag) => ({ ...mag, sheets: Array.isArray(mag.sheets) ? mag.sheets : createMagazineSheets(mag.pages || []) }))
+            .filter((mag) => mag.sheets.length > 0);
+
+        coverContainer.innerHTML = `
+            <div class="magazine-carousel-shell">
+                <div class="magazine-rail-header">
+                    <span class="rail-label">ISSUE INDEX</span>
+                    <div class="rail-controls">
+                        <button type="button" class="rail-nav-btn" id="magRailPrev" aria-label="Previous issue">&lsaquo;</button>
+                        <button type="button" class="rail-nav-btn" id="magRailNext" aria-label="Next issue">&rsaquo;</button>
+                    </div>
+                </div>
+                <div class="magazine-rail" id="magazineRail"></div>
+                <div class="magazine-reader-panel" id="magazineReader"></div>
+            </div>
+        `;
+
+        const rail = document.getElementById('magazineRail');
+        const reader = document.getElementById('magazineReader');
+        const prevBtn = document.getElementById('magRailPrev');
+        const nextBtn = document.getElementById('magRailNext');
+
+        if (!magazines.length) return;
+
+        function renderReader(mag, selectedCard, shouldScroll = true) {
+            rail.querySelectorAll('.magazine-card').forEach((card) => card.classList.remove('active'));
+            selectedCard.classList.add('active');
+
             let currentSheet = 0;
-            const sheets = Array.isArray(mag.sheets) ? mag.sheets : createMagazineSheets(mag.pages || []);
+            const sheets = mag.sheets;
             const numSheets = sheets.length;
-            if (numSheets === 0) return;
             let pagesElements = [];
-            const issueWrap = document.createElement('div'); issueWrap.className = 'magazine-issue-container';
-            const issueTitle = document.createElement('h4'); issueTitle.className = 'issue-title metallic-gold'; issueTitle.innerText = mag.title; issueWrap.appendChild(issueTitle);
-            const showcaseWrap = document.createElement('div'); showcaseWrap.className = 'magazine-showcase-wrap';
-            
-            const magazineDiv = document.createElement('div'); 
+
+            reader.classList.remove('open');
+            reader.innerHTML = `
+                <div class="reader-meta">
+                    <span class="reader-kicker">${mag.id.toUpperCase()}</span>
+                    <h4 class="reader-title metallic-gold">${mag.title}</h4>
+                    <span class="reader-count">${(mag.pages || []).length} PAGES</span>
+                    <div class="reader-actions">
+                        <button type="button" class="reader-close-btn" aria-label="Close issue">&times;</button>
+                    </div>
+                </div>
+                <div class="magazine-showcase-wrap"></div>
+            `;
+
+            const showcaseWrap = reader.querySelector('.magazine-showcase-wrap');
+            const closeBtn = reader.querySelector('.reader-close-btn');
+            const magazineDiv = document.createElement('div');
             magazineDiv.className = 'magazine' + (mag.noShadow ? ' no-shadow' : '');
-            
-            const hintDiv = document.createElement('div'); hintDiv.className = 'magazine-hint'; hintDiv.innerText = '[ 點擊翻閱 CLICK TO OPEN ]';
+            const hintDiv = document.createElement('div');
+            hintDiv.className = 'magazine-hint';
+            hintDiv.innerText = '[ OPEN ISSUE ]';
 
             sheets.forEach((sheet, index) => {
-                const pageDiv = document.createElement('div'); pageDiv.className = 'mag-page'; pageDiv.style.zIndex = numSheets - index;
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'mag-page';
+                pageDiv.style.zIndex = numSheets - index;
                 const backHtml = sheet.b ? renderMediaPage('page-back', mag, sheet.b) : `<div class="page-back" style="background:#050505;"></div>`;
                 const frontHtml = renderMediaPage('page-front', mag, sheet.f);
                 pageDiv.innerHTML = `${frontHtml}${backHtml}`;
                 pageDiv.onclick = (e) => {
                     e.stopPropagation();
-                    if (pageDiv.classList.contains('flipped')) { pageDiv.classList.remove('flipped'); currentSheet--; setTimeout(() => { pageDiv.style.zIndex = numSheets - index; }, 400); }
-                    else { pageDiv.classList.add('flipped'); currentSheet++; setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400); }
+                    if (pageDiv.classList.contains('flipped')) {
+                        pageDiv.classList.remove('flipped');
+                        currentSheet--;
+                        setTimeout(() => { pageDiv.style.zIndex = numSheets - index; }, 400);
+                    } else {
+                        pageDiv.classList.add('flipped');
+                        currentSheet++;
+                        setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400);
+                    }
                     updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
                 };
-                magazineDiv.appendChild(pageDiv); pagesElements.push(pageDiv);
+                magazineDiv.appendChild(pageDiv);
+                pagesElements.push(pageDiv);
             });
+
             hintDiv.onclick = (e) => {
                 e.stopPropagation();
                 if (currentSheet === 0) pagesElements[0].click();
-                else if (currentSheet === numSheets) { pagesElements.forEach((p, idx) => { p.classList.remove('flipped'); setTimeout(() => { p.style.zIndex = numSheets - idx; }, 400); }); currentSheet = 0; updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets); }
+                else if (currentSheet === numSheets) {
+                    pagesElements.forEach((p, idx) => {
+                        p.classList.remove('flipped');
+                        setTimeout(() => { p.style.zIndex = numSheets - idx; }, 400);
+                    });
+                    currentSheet = 0;
+                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+                }
             };
+
+            closeBtn.onclick = () => {
+                reader.classList.remove('open');
+                selectedCard.classList.remove('active');
+            };
+
             updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
-            showcaseWrap.appendChild(magazineDiv); showcaseWrap.appendChild(hintDiv); issueWrap.appendChild(showcaseWrap); coverContainer.appendChild(issueWrap);
+            showcaseWrap.appendChild(magazineDiv);
+            showcaseWrap.appendChild(hintDiv);
+            requestAnimationFrame(() => reader.classList.add('open'));
+            selectedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (shouldScroll) reader.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        magazines.forEach((mag, index) => {
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'magazine-card';
+            card.innerHTML = `
+                ${renderCardMedia(mag)}
+                <div class="magazine-card-info">
+                    <span class="magazine-card-title">${mag.title}</span>
+                    <span class="magazine-card-meta">${(mag.pages || []).length} PAGES</span>
+                </div>
+            `;
+            card.onclick = () => renderReader(mag, card);
+            rail.appendChild(card);
+            if (index === 0) requestAnimationFrame(() => renderReader(mag, card, false));
         });
+
+        prevBtn.onclick = () => rail.scrollBy({ left: -rail.clientWidth * 0.85, behavior: 'smooth' });
+        nextBtn.onclick = () => rail.scrollBy({ left: rail.clientWidth * 0.85, behavior: 'smooth' });
     }
 
     function updateMagazineCenter(magElement, hintElement, current, total) {
-        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ 點擊翻閱 CLICK TO OPEN ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
-        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = '[ 回到封面 CLOSE ISSUE ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ OPEN ISSUE ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = '[ CLOSE ISSUE ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
         else { magElement.style.transform = 'translateX(50%)'; hintElement.style.opacity = '0'; hintElement.style.pointerEvents = 'none'; }
     }
 

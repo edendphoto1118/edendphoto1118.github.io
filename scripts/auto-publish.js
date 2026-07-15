@@ -39,7 +39,7 @@ try {
     process.exit(0);
   }
 
-  run('git', ['add', '.']);
+  run('git', ['add', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works/cover*']);
 
   if (!hasChanges()) {
     log('No staged changes to publish.');
