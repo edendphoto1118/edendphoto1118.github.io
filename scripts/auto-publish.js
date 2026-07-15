@@ -29,19 +29,25 @@ function run(command, args) {
   return result.stdout.trim();
 }
 
-function hasChanges() {
-  return run('git', ['status', '--porcelain']).length > 0;
+function hasStagedChanges() {
+  const result = spawnSync('git', ['diff', '--cached', '--quiet'], {
+    cwd: rootDir,
+    encoding: 'utf8',
+    timeout: 120000,
+    windowsHide: true
+  });
+
+  if (result.status === 0) return false;
+  if (result.status === 1) return true;
+
+  const errorText = [result.stderr, result.stdout].filter(Boolean).join('\n').trim();
+  throw new Error(`git diff --cached --quiet failed: ${errorText}`);
 }
 
 try {
-  if (!hasChanges()) {
-    log('No changes to publish.');
-    process.exit(0);
-  }
-
   run('git', ['add', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works/cover*']);
 
-  if (!hasChanges()) {
+  if (!hasStagedChanges()) {
     log('No staged changes to publish.');
     process.exit(0);
   }
