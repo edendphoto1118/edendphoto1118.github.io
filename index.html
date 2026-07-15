@@ -309,8 +309,8 @@
     .price-card:hover .border-top { width: 100%; opacity: 1; transition-delay: 0s; } .price-card:hover .border-right { height: 100%; opacity: 1; transition-delay: 0.1s; }
     .price-card:hover .border-bottom { width: 100%; opacity: 1; transition-delay: 0.2s; } .price-card:hover .border-left { height: 100%; opacity: 1; transition-delay: 0.3s; }
     
-    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: all 0.8s ease; z-index: 0; background-size: cover; background-position: center; }
-    .price-card:hover .card-bg { opacity: 0.3; transform: scale(1.05); }
+    .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease, background-image 0.25s ease; z-index: 0; background-size: cover; background-position: center; filter: brightness(0.4); }
+    .price-card:hover .card-bg, .price-card.bg-preview .card-bg { opacity: 0.3; transform: scale(1.05); }
     
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
@@ -320,7 +320,8 @@
     .plan-philosophy { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
     .plan-footer { margin-top: auto; }
     .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
-    .current-price { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
+    .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
+    .price-amount, .price-hidden { display: none !important; }
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
     
@@ -564,24 +565,24 @@
       <span class="section-subtitle">Concepts & Philosophy</span>
     </div>
     <div class="pricing-grid">
-      <div class="price-card" onclick="openBookingWithPlan('Essentials')">
-        <div class="card-bg" style="background-image: url('images/works/essentials/essentials%20(1).jpg'); filter: brightness(0.4);"></div>
+      <div class="price-card dynamic-bg-card" data-bg-source="essentials" onclick="openBookingWithPlan('Essentials')">
+        <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">Portrait Essentials</span></div><p class="plan-philosophy">A strong portrait is a professional entry point. Clean framing and refined light keep the focus on presence, detail, and expression.</p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR</span></div>
-                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON (NT$ 2,500)</span></div>
+                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON</span></div>
                     <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES</span></div>
                     <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL</span></div>
                 </div>
-                <div class="plan-footer" style="margin-top:20px; text-align:center;"><span class="current-price metallic-silver">NT$ 3,600</span></div>
+                <div class="plan-footer price-hidden" style="margin-top:20px; text-align:center;" aria-hidden="true"></div>
             </div>
         </div>
       </div>
-      <div class="price-card featured" onclick="openBookingWithPlan('Structure')">
-        <div class="card-bg" style="background-image: url('images/works/cover/1.png'); filter: brightness(0.4);"></div>
+      <div class="price-card featured dynamic-bg-card" data-bg-source="cover" onclick="openBookingWithPlan('Structure')">
+        <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">Cover Visual</span></div><p class="plan-philosophy">Your presence becomes the visual statement. Styling, direction, and layout are composed into a polished cover image.</p></div>
@@ -592,7 +593,7 @@
                     <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES</span></div>
                     <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB</span></div>
                 </div>
-                <div class="plan-footer" style="margin-top:20px; text-align:center;"><span class="current-price metallic-silver">NT$ 8,800</span></div>
+                <div class="plan-footer price-hidden" style="margin-top:20px; text-align:center;" aria-hidden="true"></div>
             </div>
         </div>
       </div>
@@ -601,7 +602,7 @@
         <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
         <div class="card-content">
             <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">Editorial Story</span></div><p class="plan-philosophy">A narrative visual session built from styling, atmosphere, and image sequencing, prepared as a collectible editorial object.</p></div>
-            <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL</span><span class="current-price metallic-gold">[ COMING SOON ]</span></div>
+            <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL</span><span class="plan-status metallic-gold">[ COMING SOON ]</span></div>
         </div>
       </div>
     </div>
@@ -695,7 +696,7 @@
     }
 
     const planData = {
-        'Essentials': { time: '0.5 HR', style: 'ADD-ON (+NT$2,500)', retouch: '2 IMAGES' },
+        'Essentials': { time: '0.5 HR', style: 'ADD-ON', retouch: '2 IMAGES' },
         'Structure': { time: '1.5 HR', style: 'INCLUDED (1 LOOK)', retouch: '8 IMAGES' }
     };
 
@@ -792,6 +793,85 @@
             ? `<video src="${src}" muted autoplay loop playsinline preload="metadata"></video>`
             : `<img src="${src}" loading="lazy" alt="">`;
         return `<div class="magazine-card-media">${media}</div>`;
+    }
+
+    function getRandomImage(images, currentImage) {
+        if (!images.length) return null;
+        if (images.length === 1) return images[0];
+
+        let nextImage = images[Math.floor(Math.random() * images.length)];
+        for (let i = 0; i < 8 && nextImage === currentImage; i++) {
+            nextImage = images[Math.floor(Math.random() * images.length)];
+        }
+        return nextImage;
+    }
+
+    function getPricingBackgroundImages(source) {
+        if (source === 'essentials') {
+            return essentialImages.map((fileName) => `images/works/essentials/${encodeURIComponent(fileName)}`);
+        }
+
+        if (source === 'cover') {
+            return magazinesData
+                .map((mag) => {
+                    const firstPage = (mag.pages || [])[0];
+                    if (!firstPage || isVideoPage(firstPage)) return null;
+                    return `${mag.path}${encodeURIComponent(firstPage)}`;
+                })
+                .filter(Boolean);
+        }
+
+        return [];
+    }
+
+    function setRandomPricingBackground(card) {
+        const bg = card.querySelector('.card-bg');
+        const images = getPricingBackgroundImages(card.dataset.bgSource);
+        const nextImage = getRandomImage(images, card.dataset.currentBg || '');
+        if (!bg || !nextImage) return;
+
+        card.dataset.currentBg = nextImage;
+        bg.style.backgroundImage = `url("${nextImage}")`;
+    }
+
+    function initializePricingBackgrounds() {
+        document.querySelectorAll('.dynamic-bg-card').forEach((card) => {
+            let pressTimer = null;
+            let previewTimer = null;
+            let suppressNextClick = false;
+
+            setRandomPricingBackground(card);
+
+            card.addEventListener('pointerenter', (event) => {
+                if (event.pointerType !== 'touch') setRandomPricingBackground(card);
+            });
+
+            card.addEventListener('pointerdown', (event) => {
+                if (event.pointerType === 'mouse') return;
+                window.clearTimeout(pressTimer);
+                pressTimer = window.setTimeout(() => {
+                    suppressNextClick = true;
+                    setRandomPricingBackground(card);
+                    card.classList.add('bg-preview');
+                }, 260);
+            });
+
+            const endPress = () => {
+                window.clearTimeout(pressTimer);
+                window.clearTimeout(previewTimer);
+                previewTimer = window.setTimeout(() => card.classList.remove('bg-preview'), 900);
+            };
+
+            card.addEventListener('pointerup', endPress);
+            card.addEventListener('pointercancel', endPress);
+            card.addEventListener('pointerleave', endPress);
+            card.addEventListener('click', (event) => {
+                if (!suppressNextClick) return;
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                suppressNextClick = false;
+            }, true);
+        });
     }
 
     function attachMagazinePreviewMotion(card) {
@@ -965,6 +1045,7 @@
         else { magElement.style.transform = 'translateX(50%)'; hintElement.style.opacity = '0'; hintElement.style.pointerEvents = 'none'; }
     }
 
+    initializePricingBackgrounds();
     generateEssentials();
     generateMagazines();
 
