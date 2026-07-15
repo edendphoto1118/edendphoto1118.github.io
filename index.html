@@ -155,14 +155,16 @@
     .magazine-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
     .magazine-rail::-webkit-scrollbar-thumb { background: rgba(191,149,63,0.45); border-radius: 999px; }
     .magazine-card {
+        --card-shift-x: 0px; --card-shift-y: 0px;
         scroll-snap-align: start; border: 1px solid rgba(255,255,255,0.08); background: #070707; color: inherit;
-        padding: 0; text-align: left; cursor: pointer; overflow: hidden; min-height: 0;
+        padding: 0; text-align: left; cursor: pointer; overflow: hidden; min-height: 0; will-change: transform; transform: translate3d(var(--card-shift-x), var(--card-shift-y), 0) scale(1);
         transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
     }
-    .magazine-card:hover, .magazine-card.active { transform: translateY(-6px); border-color: rgba(191,149,63,0.75); background: #0b0b0b; box-shadow: 0 28px 70px rgba(0,0,0,0.45); }
+    .magazine-card.active { border-color: rgba(191,149,63,0.65); background: #0b0b0b; box-shadow: 0 16px 45px rgba(0,0,0,0.34); }
+    .magazine-card:hover, .magazine-card.preview-press { transform: translate3d(var(--card-shift-x), var(--card-shift-y), 0) scale(1.055); border-color: rgba(191,149,63,0.75); background: #0b0b0b; box-shadow: 0 28px 70px rgba(0,0,0,0.45); }
     .magazine-card-media { aspect-ratio: 1 / 1.414; width: 100%; background: #020202; overflow: hidden; }
-    .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%) contrast(1.08) brightness(0.78); transition: filter 0.45s ease, transform 0.55s ease; }
-    .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.active .magazine-card-media img, .magazine-card.active .magazine-card-media video { filter: grayscale(10%) contrast(1) brightness(1); transform: scale(1.025); }
+    .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(0%) contrast(1) brightness(1); transition: transform 0.55s ease; }
+    .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.preview-press .magazine-card-media img, .magazine-card.preview-press .magazine-card-media video { transform: scale(1.035); }
     .magazine-card-info { min-height: 92px; padding: 18px 18px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
     .magazine-card-title { font-family: 'Space Mono', monospace; font-size: 0.74rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.12em; text-transform: uppercase; overflow-wrap: anywhere; }
     .magazine-card-meta { font-family: 'Montserrat', sans-serif; font-size: 0.58rem; color: #777; letter-spacing: 0.24em; text-transform: uppercase; }
@@ -195,8 +197,8 @@
         height: 100%;
         transform-origin: left center;
         transform-style: preserve-3d;
-        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.8s;
-        box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow: none;
     }
     
     .page-front, .page-back {
@@ -210,31 +212,18 @@
         overflow: hidden;
     }
     
-    .page-front::after {
-        content: ''; position: absolute; top:0; left:0; width: 8%; height:100%;
-        background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%);
-        pointer-events: none;
-    }
+    .page-front::after { display: none; }
     .page-back {
         transform: rotateY(180deg);
     }
-    .page-back::after {
-        content: ''; position: absolute; top:0; right:0; width: 8%; height:100%;
-        background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, transparent 100%);
-        pointer-events: none;
-    }
-
-    .magazine.no-shadow .page-front::after,
-    .magazine.no-shadow .page-back::after {
-        display: none !important;
-    }
+    .page-back::after { display: none; }
     
     .mag-page img,
     .mag-page video { width: 100%; height: 100%; object-fit: contain; display: block; }
     
     .mag-page.flipped {
         transform: rotateY(-180deg);
-        box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
+        box-shadow: none;
     }
 
     .brand-back-cover {
@@ -805,6 +794,43 @@
         return `<div class="magazine-card-media">${media}</div>`;
     }
 
+    function attachMagazinePreviewMotion(card) {
+        let pressTimer = null;
+
+        const setFollow = (event) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width - 0.5) * 12;
+            const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
+            card.style.setProperty('--card-shift-x', `${x.toFixed(2)}px`);
+            card.style.setProperty('--card-shift-y', `${y.toFixed(2)}px`);
+        };
+
+        const resetFollow = () => {
+            card.classList.remove('preview-press');
+            card.style.setProperty('--card-shift-x', '0px');
+            card.style.setProperty('--card-shift-y', '0px');
+            window.clearTimeout(pressTimer);
+            pressTimer = null;
+        };
+
+        card.addEventListener('pointermove', (event) => {
+            if (event.pointerType === 'mouse' || card.classList.contains('preview-press')) setFollow(event);
+        });
+
+        card.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse') return;
+            window.clearTimeout(pressTimer);
+            pressTimer = window.setTimeout(() => {
+                card.classList.add('preview-press');
+                setFollow(event);
+            }, 220);
+        });
+
+        card.addEventListener('pointerleave', resetFollow);
+        card.addEventListener('pointerup', resetFollow);
+        card.addEventListener('pointercancel', resetFollow);
+    }
+
     function generateMagazines() {
         const coverContainer = document.getElementById('container-cover');
         const magazines = magazinesData
@@ -923,6 +949,7 @@
                     <span class="magazine-card-meta">${(mag.pages || []).length} PAGES</span>
                 </div>
             `;
+            attachMagazinePreviewMotion(card);
             card.onclick = () => renderReader(mag, card);
             rail.appendChild(card);
             if (index === 0) requestAnimationFrame(() => renderReader(mag, card, false));
