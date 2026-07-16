@@ -2,6 +2,9 @@
 // Add folders named VOL.07, VOL.08, etc. under images/works, then run the generator.
 globalThis.EDEN_ESSENTIALS = [
   "essentials (7).jpg",
+  "essentials (2).jpg",
+  "essentials (3).jpg",
+  "EDEN_JING_GUN (4).jpg",
   "essentials (8).jpg",
   "essentials (9).jpg",
   "essentials (10).jpg",
