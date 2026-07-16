@@ -16,7 +16,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-01",
     "volume": 1,
-    "title": "VOL.01 // 覺醒",
+    "title": "ISSUE 01 // THE AWAKENING",
+    "titleZh": "覺醒",
     "path": "images/works/cover/",
     "pages": [
       "1.png",
@@ -30,7 +31,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-02",
     "volume": 2,
-    "title": "VOL.02 // 靜默",
+    "title": "ISSUE 02 // THE SILENCE",
+    "titleZh": "靜默",
     "path": "images/works/cover2/",
     "pages": [
       "1.png",
@@ -44,7 +46,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-03",
     "volume": 3,
-    "title": "VOL.03 // 視界",
+    "title": "ISSUE 03 // THE VISION",
+    "titleZh": "視界",
     "path": "images/works/cover3/",
     "pages": [
       "1.png",
@@ -58,7 +61,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-04",
     "volume": 4,
-    "title": "VOL.04 // 瞬間",
+    "title": "ISSUE 04 // THE MOMENT",
+    "titleZh": "瞬間",
     "path": "images/works/cover4/",
     "pages": [
       "1.png",
@@ -74,7 +78,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-05",
     "volume": 5,
-    "title": "VOL.05 // 動勢",
+    "title": "ISSUE 05 // THE MOTION",
+    "titleZh": "動勢",
     "path": "images/works/cover5/",
     "pages": [
       "1.png",
@@ -88,7 +93,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-06",
     "volume": 6,
-    "title": "VOL.06 // 黑曜",
+    "title": "ISSUE 06 // THE OBSIDIAN",
+    "titleZh": "黑曜",
     "path": "images/works/cover6/",
     "pages": [
       "1.png",
@@ -102,7 +108,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-07",
     "volume": 7,
-    "title": "VOL.07 // 第 07 期",
+    "title": "ISSUE 07 // VOLUME 07",
+    "titleZh": "第 07 期",
     "path": "images/works/cover7/",
     "pages": [
       "1.png",
@@ -116,7 +123,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-08",
     "volume": 8,
-    "title": "VOL.08 // 第 08 期",
+    "title": "ISSUE 08 // VOLUME 08",
+    "titleZh": "第 08 期",
     "path": "images/works/cover8/",
     "pages": [
       "1.png",
@@ -130,7 +138,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-09",
     "volume": 9,
-    "title": "VOL.09 // 第 09 期",
+    "title": "ISSUE 09 // VOLUME 09",
+    "titleZh": "第 09 期",
     "path": "images/works/cover9/",
     "pages": [
       "1.png",
@@ -144,7 +153,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-10",
     "volume": 10,
-    "title": "VOL.10 // 第 10 期",
+    "title": "ISSUE 10 // VOLUME 10",
+    "titleZh": "第 10 期",
     "path": "images/works/cover10/",
     "pages": [
       "1.png",
@@ -158,7 +168,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-11",
     "volume": 11,
-    "title": "VOL.11 // 第 11 期",
+    "title": "ISSUE 11 // VOLUME 11",
+    "titleZh": "第 11 期",
     "path": "images/works/cover11/",
     "pages": [
       "1.png",
@@ -172,7 +183,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-12",
     "volume": 12,
-    "title": "VOL.12 // 第 12 期",
+    "title": "ISSUE 12 // VOLUME 12",
+    "titleZh": "第 12 期",
     "path": "images/works/cover12/",
     "pages": [
       "1.png",
@@ -186,7 +198,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-13",
     "volume": 13,
-    "title": "VOL.13 // 第 13 期",
+    "title": "ISSUE 13 // VOLUME 13",
+    "titleZh": "第 13 期",
     "path": "images/works/cover13/",
     "pages": [
       "1.png",
@@ -200,7 +213,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-14",
     "volume": 14,
-    "title": "VOL.14 // 第 14 期",
+    "title": "ISSUE 14 // VOLUME 14",
+    "titleZh": "第 14 期",
     "path": "images/works/cover14/",
     "pages": [
       "1.png",
@@ -214,7 +228,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-15",
     "volume": 15,
-    "title": "VOL.15 // 第 15 期",
+    "title": "ISSUE 15 // VOLUME 15",
+    "titleZh": "第 15 期",
     "path": "images/works/cover15/",
     "pages": [
       "1.png"
@@ -224,7 +239,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-16",
     "volume": 16,
-    "title": "VOL.16 // 第 16 期",
+    "title": "ISSUE 16 // VOLUME 16",
+    "titleZh": "第 16 期",
     "path": "images/works/cover16/",
     "pages": [
       "1.png",
@@ -238,7 +254,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-17",
     "volume": 17,
-    "title": "VOL.17 // 第 17 期",
+    "title": "ISSUE 17 // VOLUME 17",
+    "titleZh": "第 17 期",
     "path": "images/works/cover17/",
     "pages": [
       "1.png"
@@ -248,7 +265,8 @@ globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-18",
     "volume": 18,
-    "title": "VOL.18 // 第 18 期",
+    "title": "ISSUE 18 // VOLUME 18",
+    "titleZh": "第 18 期",
     "path": "images/works/cover18/",
     "pages": [
       "1.png",
