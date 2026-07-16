@@ -8,9 +8,7 @@ globalThis.EDEN_ESSENTIALS = [
   "essentials (5).jpg",
   "essentials (6).jpg",
   "essentials (4).jpg",
-  "essentials (3).jpg",
-  "essentials (1).jpg",
-  "essentials (2).jpg"
+  "essentials (1).jpg"
 ];
 globalThis.EDEN_MAGAZINES = [
   {
