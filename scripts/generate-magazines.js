@@ -12,15 +12,6 @@ const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
 const videoExtensions = new Set(['.mp4', '.webm', '.mov', '.m4v']);
 const mediaExtensions = new Set([...imageExtensions, ...videoExtensions]);
 
-const issueNames = {
-  1: { en: 'THE AWAKENING', zh: '覺醒' },
-  2: { en: 'THE SILENCE', zh: '靜默' },
-  3: { en: 'THE VISION', zh: '視界' },
-  4: { en: 'THE MOMENT', zh: '瞬間' },
-  5: { en: 'THE MOTION', zh: '動勢' },
-  6: { en: 'THE OBSIDIAN', zh: '黑曜' }
-};
-
 function getIncomingVolumeNumber(folderName) {
   const match = folderName.match(/^vol[\s._-]*(\d+)$/i);
   return match ? Number(match[1]) : null;
@@ -172,13 +163,10 @@ function buildMagazine(folderName) {
   if (pages.length === 0) return null;
 
   const paddedVolume = String(volume).padStart(2, '0');
-  const issueName = issueNames[volume] || { en: `VOLUME ${paddedVolume}`, zh: `第 ${paddedVolume} 期` };
-
   return {
     id: `vol-${paddedVolume}`,
     volume,
-    title: `ISSUE ${paddedVolume} // ${issueName.en}`,
-    titleZh: issueName.zh,
+    title: `ISSUE ${paddedVolume}`,
     path: `images/works/${folderName}/`,
     pages,
     noShadow: volume === 3
