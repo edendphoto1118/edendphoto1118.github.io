@@ -13,12 +13,12 @@ const videoExtensions = new Set(['.mp4', '.webm', '.mov', '.m4v']);
 const mediaExtensions = new Set([...imageExtensions, ...videoExtensions]);
 
 const issueNames = {
-  1: 'THE AWAKENING',
-  2: 'THE SILENCE',
-  3: 'THE VISION',
-  4: 'THE MOMENT',
-  5: 'THE MOTION',
-  6: 'THE OBSIDIAN'
+  1: '覺醒',
+  2: '靜默',
+  3: '視界',
+  4: '瞬間',
+  5: '動勢',
+  6: '黑曜'
 };
 
 function getIncomingVolumeNumber(folderName) {
@@ -172,12 +172,12 @@ function buildMagazine(folderName) {
   if (pages.length === 0) return null;
 
   const paddedVolume = String(volume).padStart(2, '0');
-  const issueName = issueNames[volume] || `VOLUME ${paddedVolume}`;
+  const issueName = issueNames[volume] || `第 ${paddedVolume} 期`;
 
   return {
     id: `vol-${paddedVolume}`,
     volume,
-    title: `ISSUE ${paddedVolume} // ${issueName}`,
+    title: `VOL.${paddedVolume} // ${issueName}`,
     path: `images/works/${folderName}/`,
     pages,
     noShadow: volume === 3

@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>EDEN｜DEEN — VISUAL ARCHIVE</title>
+  <title>EDEN｜DEEN — 影像作品集</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#050505">
 
@@ -17,7 +17,7 @@
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
-    body { margin: 0; padding: 0; background: #050505; color: #e0e0e0; font-family: 'Montserrat', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden; cursor: auto; user-select: none; -webkit-user-select: none; overflow-y: auto; height: auto; -webkit-font-smoothing: antialiased; word-wrap: break-word; overflow-wrap: break-word; }
+    body { margin: 0; padding: 0; background: #050505; color: #e0e0e0; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; width: 100%; max-width: 100vw; overflow-x: hidden; cursor: auto; user-select: none; -webkit-user-select: none; overflow-y: auto; height: auto; -webkit-font-smoothing: antialiased; word-wrap: break-word; overflow-wrap: break-word; }
     body.menu-open { overflow: hidden; }
     img { pointer-events: auto; -webkit-user-drag: none; max-width: 100%; display: block; }
     a, button, input, select, textarea { pointer-events: auto; }
@@ -36,8 +36,8 @@
     @keyframes opticalEmerge { 0% { opacity: 0; transform: scale(1.05); filter: blur(15px); letter-spacing: 0.6em; } 100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.4em; } }
     .enter-btn-wrapper { position: absolute; bottom: 15vh; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 1s ease; pointer-events: none; }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
-    .enter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.4em; text-transform: uppercase; cursor: pointer; padding: 18px 50px; transition: all 0.5s ease; white-space: nowrap; }
-    .enter-btn:hover { letter-spacing: 0.6em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
+    .enter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; padding: 18px 50px; transition: all 0.5s ease; white-space: nowrap; }
+    .enter-btn:hover { letter-spacing: 0.24em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
     /* --- 4. Navigation --- */
@@ -45,7 +45,7 @@
     body.site-active .top-bar { opacity: 1; }
     .nav-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; color: #fff; pointer-events: auto; z-index: 10001;}
     .nav-controls { display: flex; align-items: center; gap: 30px; pointer-events: auto; z-index: 10001;}
-    .audio-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.2em; font-family: 'Montserrat', sans-serif; cursor: pointer; border-radius: 30px; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s; }
+    .audio-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 6px 18px; font-size: 0.6rem; letter-spacing: 0.12em; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; cursor: pointer; border-radius: 30px; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s; }
     .audio-btn:hover { opacity: 1; border-color: #fff; }
     .audio-btn.active { border-color: #BF953F; color: #BF953F; }
     .sound-wave { display: flex; gap: 2px; height: 10px; align-items: flex-end; }
@@ -67,7 +67,7 @@
     .menu-overlay.active { opacity: 1; visibility: visible; }
     
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-    .menu-link { font-family: 'Cinzel', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.1em; position: relative; transform: translateY(20px); opacity: 0; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s; }
+    .menu-link { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.08em; position: relative; transform: translateY(20px); opacity: 0; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s; }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
     .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; } .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.2s; }
     .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; } .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
@@ -82,8 +82,8 @@
     .title-word { display: inline-block; margin-right: -0.4em; }
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
-    .hero p { margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: -0.6em; }
-    .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 35px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; }
+    .hero p { margin-top: 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 35px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; }
     .hero-cta-btn:hover { border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
     .scroll-indicator { position: relative; width: 2px; height: 70px; overflow: hidden; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; }
     .scroll-line { position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%); transform: translateX(-50%); animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
@@ -94,11 +94,11 @@
     /* --- 7. Gallery Refactor --- */
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
-    .section-title { font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 0.15em; font-weight: 400; margin: 0; }
-    .section-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; }
+    .section-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3.5rem; letter-spacing: 0.08em; font-weight: 400; margin: 0; }
+    .section-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; line-height: 1.8; }
     
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 80px; flex-wrap: wrap; width: 100%; z-index: 10; position: relative; }
-    .filter-btn { background: transparent; border: none; color: #555; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
+    .filter-btn { background: transparent; border: none; color: #555; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
     .filter-btn:hover, .filter-btn.active { color: #fff; }
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
@@ -110,7 +110,7 @@
     .locked-filter-wrap:hover::after { width: 100%; }
     .mini-sealing { position: absolute; top: 0; left: -10%; width: 120%; height: 100%; pointer-events: none; z-index: 10; opacity: 0; transition: opacity 0.3s; overflow: hidden; }
     .mini-tape { position: absolute; background: #fff; color: #000; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.45rem; letter-spacing: 0.1em; padding: 2px 0; width: 150%; text-align: center; white-space: nowrap; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-    .mini-tape::before { content: 'LOCKED LOCKED LOCKED LOCKED'; }
+    .mini-tape::before { content: '籌備中 籌備中 籌備中 籌備中'; }
     .mini-tape-left { top: 20%; left: -25%; transform: rotate(12deg) translateX(-100%); }
     .mini-tape-right { top: 60%; left: -25%; transform: rotate(-12deg) translateX(100%); }
     .locked-filter-wrap:hover .mini-sealing { opacity: 1; }
@@ -124,8 +124,8 @@
 
     /* Gallery Sub Sections */
     .gallery-sub-section { margin-top: 60px; margin-bottom: 120px; width: 100%; max-width: 1600px; margin-left: auto; margin-right: auto; }
-    .gallery-sub-title { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #e0e0e0; letter-spacing: 0.15em; margin-bottom: 50px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; font-weight: 400; }
-    .gallery-sub-title span { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.2em; font-weight: 300; margin-left: 15px; }
+    .gallery-sub-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2.2rem; color: #e0e0e0; letter-spacing: 0.08em; margin-bottom: 50px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; font-weight: 400; }
+    .gallery-sub-title span { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.1em; font-weight: 300; margin-left: 15px; }
     
     .gallery-container { column-count: 3; column-gap: 40px; width: 100%; }
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: pointer; opacity: 0; transform: translateY(50px) scale(0.95); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.4s; }
@@ -166,8 +166,8 @@
     .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(0%) contrast(1) brightness(1); transition: transform 0.55s ease; }
     .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.preview-press .magazine-card-media img, .magazine-card.preview-press .magazine-card-media video { transform: scale(1.035); }
     .magazine-card-info { min-height: 92px; padding: 18px 18px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
-    .magazine-card-title { font-family: 'Space Mono', monospace; font-size: 0.74rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.12em; text-transform: uppercase; overflow-wrap: anywhere; }
-    .magazine-card-meta { font-family: 'Montserrat', sans-serif; font-size: 0.58rem; color: #777; letter-spacing: 0.24em; text-transform: uppercase; }
+    .magazine-card-title { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.74rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .magazine-card-meta { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.58rem; color: #777; letter-spacing: 0.12em; text-transform: uppercase; }
     .magazine-reader-panel {
         width: 100%; display: grid; grid-template-columns: minmax(210px, 0.45fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px);
         align-items: stretch; border-top: 1px solid rgba(191,149,63,0.18); border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -177,7 +177,7 @@
     .magazine-reader-panel.open { max-height: 860px; opacity: 1; transform: translateY(0); padding: 42px 0 52px; overflow: visible; }
     .reader-meta { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 24px; min-width: 0; }
     .reader-kicker { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: #BF953F; letter-spacing: 0.32em; text-transform: uppercase; }
-    .reader-title { font-family: 'Cinzel', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.12em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
+    .reader-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.08em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
     .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.68rem; color: #777; letter-spacing: 0.24em; text-transform: uppercase; }
     .reader-actions { display: flex; gap: 12px; align-items: center; }
     .magazine-showcase-wrap {
@@ -315,9 +315,9 @@
     .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
     .plan-title-block { margin-bottom: 40px; }
-    .plan-en { display: block; font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
-    .plan-zh { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; color: #888; font-weight: 300; }
-    .plan-philosophy { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.08em; color: #fff; margin-bottom: 8px; }
+    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em; color: #888; font-weight: 300; }
+    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
     .plan-footer { margin-top: auto; }
     .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
@@ -330,7 +330,7 @@
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
     .sealing-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 0.3s; }
     .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-    .tape-strip::before, .tape-strip::after { content: 'LOCKED   LOCKED   LOCKED   LOCKED'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
+    .tape-strip::before, .tape-strip::after { content: '籌備中   籌備中   籌備中   籌備中'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
@@ -345,12 +345,12 @@
 
     /* --- 10. Delivery --- */
     .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
-    .delivery-title { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 25px; letter-spacing: 0.15em; opacity: 0.9; }
-    .delivery-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 80px; display: block; }
+    .delivery-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2.5rem; margin-bottom: 25px; letter-spacing: 0.08em; opacity: 0.9; }
+    .delivery-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 80px; display: block; line-height: 1.8; }
     .delivery-showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; }
     .delivery-card { padding: 50px 30px; border: 1px solid rgba(255,255,255,0.05); background: #050505; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; }
-    .delivery-card h4 { font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 0.1em; color: #e0e0e0; transition: color 0.4s; }
-    .delivery-card p { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #666; line-height: 1.8; font-weight: 300; transition: color 0.4s; }
+    .delivery-card h4 { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 0.06em; color: #e0e0e0; transition: color 0.4s; }
+    .delivery-card p { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.75rem; color: #666; line-height: 1.8; font-weight: 300; transition: color 0.4s; }
     .delivery-icon { font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s; }
     .delivery-showcase:hover .delivery-card { opacity: 0.3; filter: grayscale(100%); }
     .delivery-showcase .delivery-card:hover { opacity: 1; filter: grayscale(0%); transform: translateY(-15px); border-color: rgba(191, 149, 63, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
@@ -365,7 +365,7 @@
     .ritual-btn.in-view .btn-glow { opacity: 1; }
     .btn-bg { position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; }
     .btn-content { position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
-    .btn-en { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; color: #fff; }
+    .btn-en { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; }
     .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
     @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
@@ -376,7 +376,7 @@
     .booking-interface::before { content: 'TERMINAL // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     .custom-booking-form { width: 100%; margin-top: 40px; }
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .form-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: #BF953F; margin-bottom: 5px; }
+    .form-group label { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.6rem; letter-spacing: 0.1em; color: #BF953F; margin-bottom: 5px; line-height: 1.7; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
     .form-group select option:disabled { color: #555; background: #000; }
     .form-group select option { background: #111; color: #fff; padding: 10px; }
@@ -385,30 +385,30 @@
     .detail-val { color: #fff; }
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
     .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
-    .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s; }
+    .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.14em; cursor: pointer; transition: all 0.3s; }
     .submit-btn:hover { background: #BF953F; color: #000; }
 
     /* --- 13. About --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
     .about-minimal-container { text-align: center; width: 100%; max-width: 1400px; }
-    .about-slogan-main { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 0.25em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
-    .about-slogan-sub { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.3em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
+    .about-slogan-main { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3rem; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 30px 0; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.4; }
+    .about-slogan-sub { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; color: #aaa; letter-spacing: 0.12em; text-transform: uppercase; display: block; opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; line-height: 1.8; max-width: 800px; margin: 30px auto 0; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     /* --- 14. Contact --- */
     .contact-section { padding: 100px 8vw 50px; text-align: center; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); }
-    .contact-title { font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 0.25em; margin-bottom: 50px; font-weight: 400; color: #555; }
+    .contact-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 50px; font-weight: 400; color: #555; }
     .contact-links { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-    .social-link { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; text-decoration: none; letter-spacing: 0.2em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
+    .social-link { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.75rem; color: #888; text-decoration: none; letter-spacing: 0.12em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
     .social-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .social-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
 
     /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
-    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.15em; }
+    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.1em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
     .visitor-counter { display: flex; align-items: center; gap: 15px; z-index: 9001; background: #050505; padding-left: 20px; box-shadow: -10px 0 20px #050505; }
-    .visitor-label { font-family: 'Montserrat', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.15em; text-transform: uppercase; }
+    .visitor-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
     .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
     
     footer { padding: 20px 4vw 80px; text-align: right; background: #050505; }
@@ -477,7 +477,7 @@
         <span class="loader-text title-word">EDEN</span><span class="vertical-separator loader-sep"></span><span class="loader-text title-word">DEEN</span>
     </div>
     <div class="enter-btn-wrapper" id="enterWrapper">
-        <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE</button>
+        <button class="enter-btn" onclick="enterArchive()">進入作品集</button>
     </div>
   </div>
 
@@ -485,7 +485,7 @@
       <a href="#" class="nav-logo" onclick="toggleMenu(); return false;">EDEN</a>
       <div class="nav-controls">
           <button class="audio-btn" id="topAudioBtn" onclick="toggleAudio()">
-              SOUND
+              音樂
               <div class="sound-wave paused" id="soundWave">
                   <div class="bar"></div><div class="bar"></div><div class="bar"></div>
               </div>
@@ -499,10 +499,10 @@
 
   <div class="menu-overlay" id="menuOverlay">
       <div class="menu-items">
-          <a href="#work" class="menu-link" onclick="toggleMenu()">ANTHOLOGY</a>
-          <a href="#archetype" class="menu-link" onclick="toggleMenu()">ARCHETYPE</a>
-          <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS</a>
-          <a href="#contact" class="menu-link" onclick="toggleMenu()">CONNECT</a>
+          <a href="#work" class="menu-link" onclick="toggleMenu()">作品集</a>
+          <a href="#archetype" class="menu-link" onclick="toggleMenu()">影像原型</a>
+          <a href="#pricing" class="menu-link" onclick="toggleMenu()">拍攝方案</a>
+          <a href="#contact" class="menu-link" onclick="toggleMenu()">聯絡</a>
       </div>
   </div>
 
@@ -510,52 +510,52 @@
     <img class="hero-bg-video" src="images/works/cover/1.png" alt="">
     <div class="hero-content">
       <h1><span class="title-word">EDEN</span><span class="vertical-separator"></span><span class="title-word">DEEN</span></h1>
-      <p>Visual Director / Photographer</p>
-      <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE</a>
+      <p>影像導演 / 攝影師</p>
+      <a href="#work" class="hero-cta-btn">瀏覽作品</a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
   </section>
 
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
-      <h2 class="section-title metallic-silver">Visual Anthology</h2>
-      <span class="section-subtitle">Categorized Archive</span>
+      <h2 class="section-title metallic-silver">影像作品集</h2>
+      <span class="section-subtitle">依系列整理的視覺檔案</span>
     </div>
     
     <div class="filter-tabs">
-        <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS</a>
-        <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">THE COVER</a>
-        <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // COMING SOON')">
-            <span class="filter-btn">THE STORY</span>
+        <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">人像精選</a>
+        <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">封面誌</a>
+        <div class="locked-filter-wrap" onclick="showToast('此系列正在整理中')">
+            <span class="filter-btn">故事誌</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
-        <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // LOCKED')">
-            <span class="filter-btn">PROJECT: ROYAL</span>
+        <div class="locked-filter-wrap" onclick="showToast('專案尚未公開')">
+            <span class="filter-btn">未公開專案</span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
     </div>
 
     <div id="gallery-essentials" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span></h3>
+        <h3 class="gallery-sub-title">人像精選 <span>/ 單張作品</span></h3>
         <div class="gallery-container" id="container-essentials"></div>
     </div>
 
     <div id="gallery-cover" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">THE COVER <span>/ MAGAZINE COVERS</span></h3>
+        <h3 class="gallery-sub-title">封面誌 <span>/ 可翻閱作品集</span></h3>
         <div id="container-cover"></div>
     </div>
   </section>
   
   <section class="tool-section" id="archetype">
       <div class="section-header">
-          <h2 class="section-title metallic-gold">EDEN ARCHETYPE</h2>
-          <span class="section-subtitle">Visual Personality Analysis.</span>
+          <h2 class="section-title metallic-gold">EDEN 影像原型</h2>
+          <span class="section-subtitle">找出你的視覺氣質</span>
       </div>
       <div class="archetype-intro">
-          <p class="archetype-text">Decode the contrast between inner identity and outer presence.<br>Share your result on Instagram Stories and tag <strong>@eden_d_photo</strong><br>to enter the selection for a dedicated visual concept.</p>
+          <p class="archetype-text">理解你的內在性格與外在形象之間的反差。<br>完成測驗後分享到 Instagram 限時動態並標記 <strong>@eden_d_photo</strong><br>就有機會被選中，獲得一組專屬視覺概念。</p>
       </div>
       <div class="tool-container">
-          <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="Eden Visual Archetype"></iframe>
+          <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="EDEN 影像原型測驗"></iframe>
       </div>
   </section>
   
@@ -609,12 +609,12 @@
   </section>
   
   <section class="delivery-section">
-      <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
-      <span class="delivery-subtitle">ELEVATING THE TANGIBLE EXPERIENCE</span>
+      <h3 class="delivery-title metallic-gold">交付儀式</h3>
+      <span class="delivery-subtitle">讓影像成為可收藏的實體經驗</span>
       <div class="delivery-showcase">
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX</h4><p>Archive presentation box<br>A rigid black case designed for storage, protection, and a refined unboxing ritual.</p></div>
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>METAL ENGRAVED USB</h4><p>Custom engraved drive<br>A metal archive key carrying the final selected images and client identity.</p></div>
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>WAX-SEALED AUTHENTICITY</h4><p>Wax-sealed certificate<br>A physical mark of authorship and edition value for the finished work.</p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>黑曜收藏盒</h4><p>作品收納與展示盒<br>以硬殼黑盒保存影像檔案，讓交付本身也成為完整的開箱儀式。</p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>金屬刻字 USB</h4><p>客製化影像隨身碟<br>承載最終精選影像，也保留每次拍攝專屬的識別感。</p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>蠟封認證</h4><p>作品認證卡<br>以實體印記確認作品歸屬與收藏價值。</p></div>
       </div>
   </section>
 
@@ -649,27 +649,27 @@
 
   <section class="background" id="about">
     <div class="about-minimal-container">
-        <h2 class="about-slogan-main metallic-gold">CRAFT THE COVER</h2>
-        <span class="about-slogan-sub">CRAFT THE COVER OF THE ERA.</span>
+        <h2 class="about-slogan-main metallic-gold">成為封面</h2>
+        <span class="about-slogan-sub">讓你的時代感被影像記住。</span>
     </div>
   </section>
 
   <section class="contact-section" id="contact">
-      <h2 class="contact-title">CONNECT</h2>
+      <h2 class="contact-title">聯絡</h2>
       <div class="contact-links">
           <a href="https://www.instagram.com/eden_d_photo" target="_blank" class="social-link">INSTAGRAM</a>
           <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="social-link">THREADS</a>
-          <a href="#" onclick="copyEmail(event)" class="social-link">EMAIL</a>
+          <a href="#" onclick="copyEmail(event)" class="social-link">信箱</a>
           <a href="https://eden-room.vercel.app/" target="_blank" class="social-link">EDEN ROOM</a>
       </div>
   </section>
   
   <div class="tech-ticker-wrap">
-      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB AMBIENT LIGHTING // CINEMATIC PROPS // VISUAL DIRECTOR // EDEN VISUALS // ARCHIVE 2025 //</div>
-      <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
+      <div class="tech-ticker">SONY A7C2 // SONY 50MM F1.2 GM MASTER // SIGMA 16-28MM F2.8 // TAMRON 28-200MM // GODOX V1 PRO FLASH SYSTEM // RGB 氛圍燈 // 電影感道具 // 影像導演 // EDEN 視覺檔案 // 2025 //</div>
+      <div class="visitor-counter"><span class="visitor-label">檔案訪客：</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
   </div>
 
-  <footer><p>&copy; 2025 EDEN | DEEN. All Rights Reserved.</p></footer>
+  <footer><p>&copy; 2025 EDEN | DEEN. 版權所有。</p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()"><div class="close-btn"></div><img class="lightbox-content" id="lightbox-img"></div>
 
@@ -681,7 +681,7 @@
 
     function enterArchive() {
         const audio = document.getElementById('bgMusic');
-        audio.volume = 0; audio.play().catch(e=>console.log("Audio blocked"));
+        audio.volume = 0; audio.play().catch(e=>console.log("音樂播放被瀏覽器暫停"));
         let vol = 0; setInterval(() => { if(vol<0.4) { vol+=0.05; audio.volume=vol; } }, 200);
         document.getElementById('preloader').style.opacity = 0;
         setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 1500);
@@ -733,7 +733,7 @@
 
     function copyEmail(e) {
         e.preventDefault();
-        navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => { showToast('EMAIL COPIED // 已複製 edendphoto1118@gmail.com'); });
+        navigator.clipboard.writeText("edendphoto1118@gmail.com").then(() => { showToast('信箱已複製：edendphoto1118@gmail.com'); });
     }
 
     const essentialImages = Array.isArray(globalThis.EDEN_ESSENTIALS) ? globalThis.EDEN_ESSENTIALS : [];
@@ -773,7 +773,7 @@
     }
 
     function renderBrandPage(sideClass) {
-        return `<div class="${sideClass} brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">VISUAL ARCHIVE</div></div>`;
+        return `<div class="${sideClass} brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">影像檔案</div></div>`;
     }
 
     function renderMediaPage(sideClass, mag, fileName) {
@@ -920,10 +920,10 @@
         coverContainer.innerHTML = `
             <div class="magazine-carousel-shell">
                 <div class="magazine-rail-header">
-                    <span class="rail-label">ISSUE INDEX</span>
+                    <span class="rail-label">期數索引</span>
                     <div class="rail-controls">
-                        <button type="button" class="rail-nav-btn" id="magRailPrev" aria-label="Previous issue">&lsaquo;</button>
-                        <button type="button" class="rail-nav-btn" id="magRailNext" aria-label="Next issue">&rsaquo;</button>
+                        <button type="button" class="rail-nav-btn" id="magRailPrev" aria-label="上一期">&lsaquo;</button>
+                        <button type="button" class="rail-nav-btn" id="magRailNext" aria-label="下一期">&rsaquo;</button>
                     </div>
                 </div>
                 <div class="magazine-rail" id="magazineRail"></div>
@@ -952,9 +952,9 @@
                 <div class="reader-meta">
                     <span class="reader-kicker">${mag.id.toUpperCase()}</span>
                     <h4 class="reader-title metallic-gold">${mag.title}</h4>
-                    <span class="reader-count">${(mag.pages || []).length} PAGES</span>
+                    <span class="reader-count">${(mag.pages || []).length} 頁</span>
                     <div class="reader-actions">
-                        <button type="button" class="reader-close-btn" aria-label="Close issue">&times;</button>
+                        <button type="button" class="reader-close-btn" aria-label="關閉此期">&times;</button>
                     </div>
                 </div>
                 <div class="magazine-showcase-wrap"></div>
@@ -966,7 +966,7 @@
             magazineDiv.className = 'magazine' + (mag.noShadow ? ' no-shadow' : '');
             const hintDiv = document.createElement('div');
             hintDiv.className = 'magazine-hint';
-            hintDiv.innerText = '[ OPEN ISSUE ]';
+            hintDiv.innerText = '[ 開啟此期 ]';
 
             sheets.forEach((sheet, index) => {
                 const pageDiv = document.createElement('div');
@@ -1026,7 +1026,7 @@
                 ${renderCardMedia(mag)}
                 <div class="magazine-card-info">
                     <span class="magazine-card-title">${mag.title}</span>
-                    <span class="magazine-card-meta">${(mag.pages || []).length} PAGES</span>
+                    <span class="magazine-card-meta">${(mag.pages || []).length} 頁</span>
                 </div>
             `;
             attachMagazinePreviewMotion(card);
@@ -1040,8 +1040,8 @@
     }
 
     function updateMagazineCenter(magElement, hintElement, current, total) {
-        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ OPEN ISSUE ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
-        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = '[ CLOSE ISSUE ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ 開啟此期 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = '[ 收回此期 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
         else { magElement.style.transform = 'translateX(50%)'; hintElement.style.opacity = '0'; hintElement.style.pointerEvents = 'none'; }
     }
 
