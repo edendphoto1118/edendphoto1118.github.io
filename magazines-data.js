@@ -285,9 +285,15 @@ globalThis.EDEN_MAGAZINES = [
     "title": "ISSUE 20",
     "path": "images/works/cover20/",
     "pages": [
-      "24.png",
-      "25.png",
-      "26.png"
+      "91.png",
+      "92.png",
+      "93.png",
+      "94.png",
+      "95.png",
+      "96.png",
+      "97.png",
+      "98.png",
+      "99.png"
     ],
     "noShadow": false
   }

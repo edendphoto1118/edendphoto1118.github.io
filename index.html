@@ -26,7 +26,7 @@
     .metallic-gold { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #BF953F; text-shadow: 0 0 1px rgba(191, 149, 63, 0.3); }
     .metallic-silver { background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #fff; text-shadow: 0 0 2px rgba(255, 255, 255, 0.2); }
     .vertical-separator { display: inline-block; width: 1px; background: linear-gradient(to bottom, transparent 0%, #ffffff 50%, transparent 100%); opacity: 0.8; box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
-    .zh-note { display: block; margin-top: 8px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(8px, 0.58em, 13px); letter-spacing: 0.08em; line-height: 1.65; color: #8a8a8a; -webkit-text-fill-color: #8a8a8a; background: none; font-weight: 300; text-transform: none; }
+    .zh-note { display: block; margin-top: 8px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(11px, 0.76em, 14px); letter-spacing: 0.06em; line-height: 1.7; color: #949494; -webkit-text-fill-color: #949494; background: none; font-weight: 300; text-transform: none; }
 
     /* --- 2. Texture & Preloader --- */
     .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); z-index: 9000; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay; }
@@ -37,9 +37,9 @@
     @keyframes opticalEmerge { 0% { opacity: 0; transform: scale(1.05); filter: blur(15px); letter-spacing: 0.6em; } 100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.4em; } }
     .enter-btn-wrapper { position: absolute; bottom: 15vh; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 1s ease; pointer-events: none; }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
-    .enter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; padding: 18px 50px; transition: all 0.5s ease; white-space: nowrap; }
-    .enter-btn .zh-note { font-size: 0.62rem; letter-spacing: 0.08em; }
-    .enter-btn:hover { letter-spacing: 0.24em; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
+    .enter-btn { background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.025)); border: 1px solid rgba(255,255,255,0.22); color: #fff; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; padding: 18px 54px; transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.45s ease, background 0.45s ease, box-shadow 0.45s ease, letter-spacing 0.45s ease; white-space: nowrap; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 20px 50px rgba(0,0,0,0.32); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+    .enter-btn .zh-note { font-size: 0.7rem; letter-spacing: 0.08em; color: #9a9a9a; }
+    .enter-btn:hover { transform: translateY(-2px) scale(1.025); letter-spacing: 0.18em; border-color: rgba(255,255,255,0.58); background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.04)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.26), 0 24px 70px rgba(0,0,0,0.46), 0 0 28px rgba(255,255,255,0.12); text-shadow: 0 0 8px rgba(255,255,255,0.35); }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
     /* --- 4. Navigation --- */
@@ -85,10 +85,10 @@
     .title-word { display: inline-block; margin-right: -0.4em; }
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
-    .hero p { margin-top: 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
-    .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 35px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; }
-    .hero p .zh-note, .hero-cta-btn .zh-note { font-size: 0.62rem; letter-spacing: 0.08em; }
-    .hero-cta-btn:hover { border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+    .hero p { margin-top: 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.62); }
+    .hero-cta-btn { margin-top: 50px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025)); border: 1px solid rgba(255,255,255,0.22); color: #fff; padding: 13px 36px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 18px 45px rgba(0,0,0,0.28); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .hero p .zh-note, .hero-cta-btn .zh-note { font-size: 0.68rem; letter-spacing: 0.08em; }
+    .hero-cta-btn:hover { transform: translateY(-2px) scale(1.02); border-color: rgba(255,255,255,0.58); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 24px 60px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)); }
     .scroll-indicator { position: relative; width: 2px; height: 70px; overflow: hidden; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; }
     .scroll-line { position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%); transform: translateX(-50%); animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
     .scroll-line:nth-child(2) { animation-delay: 1.5s; }
@@ -99,12 +99,12 @@
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3.5rem; letter-spacing: 0.08em; font-weight: 400; margin: 0; }
-    .section-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; color: #777; text-transform: uppercase; margin-top: 25px; display: block; line-height: 1.8; }
-    .section-subtitle .zh-note { margin-top: 6px; font-size: 0.78rem; }
+    .section-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; color: #888; text-transform: uppercase; margin-top: 25px; display: block; line-height: 1.85; }
+    .section-subtitle .zh-note { margin-top: 6px; font-size: 0.82rem; }
     
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 80px; flex-wrap: wrap; width: 100%; z-index: 10; position: relative; }
-    .filter-btn { background: transparent; border: none; color: #555; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
-    .filter-btn .zh-note { margin-top: 5px; font-size: 0.62rem; letter-spacing: 0.06em; }
+    .filter-btn { background: transparent; border: none; color: #666; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
+    .filter-btn .zh-note { margin-top: 5px; font-size: 0.72rem; letter-spacing: 0.06em; }
     .filter-btn:hover, .filter-btn.active { color: #fff; }
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
@@ -131,8 +131,8 @@
     /* Gallery Sub Sections */
     .gallery-sub-section { margin-top: 60px; margin-bottom: 120px; width: 100%; max-width: 1600px; margin-left: auto; margin-right: auto; }
     .gallery-sub-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2.2rem; color: #e0e0e0; letter-spacing: 0.08em; margin-bottom: 50px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; font-weight: 400; }
-    .gallery-sub-title span { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 0.1em; font-weight: 300; margin-left: 15px; }
-    .gallery-sub-title .zh-note { display: inline-block; margin-left: 12px; font-size: 0.78rem; vertical-align: middle; }
+    .gallery-sub-title span { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.88rem; color: #777; letter-spacing: 0.08em; font-weight: 300; margin-left: 15px; }
+    .gallery-sub-title .zh-note { display: inline-block; margin-left: 12px; font-size: 0.86rem; vertical-align: middle; }
     
     .gallery-container { column-count: 3; column-gap: 40px; width: 100%; }
     .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; z-index: 1; cursor: pointer; opacity: 0; transform: translateY(50px) scale(0.95); filter: grayscale(100%) contrast(110%) brightness(0.9); transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.4s; }
@@ -144,15 +144,17 @@
     /* --- Magazine Carousel Reader --- */
     .magazine-carousel-shell { width: 100%; max-width: 1600px; margin: 0 auto; position: relative; }
     .magazine-rail-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
-    .rail-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #777; letter-spacing: 0.28em; text-transform: uppercase; }
+    .rail-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: #888; letter-spacing: 0.22em; text-transform: uppercase; }
     .rail-controls { display: flex; align-items: center; gap: 10px; }
     .rail-nav-btn, .reader-close-btn {
-        width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.12); background: rgba(5,5,5,0.85);
+        width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.14); background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
         color: #d7d7d7; display: inline-flex; align-items: center; justify-content: center;
         font-family: 'Space Mono', monospace; font-size: 1.2rem; line-height: 1; cursor: pointer;
-        transition: border-color 0.35s ease, color 0.35s ease, background 0.35s ease, transform 0.35s ease;
+        transition: border-color 0.35s ease, color 0.35s ease, background 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+        border-radius: 50%; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 30px rgba(0,0,0,0.24);
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     }
-    .rail-nav-btn:hover, .reader-close-btn:hover { border-color: rgba(191,149,63,0.7); color: #BF953F; background: rgba(191,149,63,0.08); }
+    .rail-nav-btn:hover, .reader-close-btn:hover { transform: translateY(-1px) scale(1.04); border-color: rgba(191,149,63,0.7); color: #BF953F; background: linear-gradient(180deg, rgba(191,149,63,0.16), rgba(191,149,63,0.04)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 18px 42px rgba(0,0,0,0.34), 0 0 18px rgba(191,149,63,0.16); }
     .magazine-rail {
         display: grid; grid-auto-flow: column; grid-auto-columns: clamp(190px, 20vw, 260px); gap: 22px;
         overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 4px;
@@ -173,9 +175,9 @@
     .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(0%) contrast(1) brightness(1); transition: transform 0.55s ease; }
     .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.preview-press .magazine-card-media img, .magazine-card.preview-press .magazine-card-media video { transform: scale(1.035); }
     .magazine-card-info { min-height: 92px; padding: 18px 18px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
-    .magazine-card-title { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.74rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
-    .magazine-card-title .zh-note { font-size: clamp(8px, 0.78em, 11px); }
-    .magazine-card-meta { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.58rem; color: #777; letter-spacing: 0.12em; text-transform: uppercase; }
+    .magazine-card-title { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.8rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .magazine-card-title .zh-note { font-size: clamp(10px, 0.82em, 12px); }
+    .magazine-card-meta { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem; color: #858585; letter-spacing: 0.1em; text-transform: uppercase; }
     .magazine-reader-panel {
         width: 100%; display: grid; grid-template-columns: minmax(210px, 0.45fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px);
         align-items: stretch; border-top: 1px solid rgba(191,149,63,0.18); border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -184,10 +186,10 @@
     }
     .magazine-reader-panel.open { max-height: 860px; opacity: 1; transform: translateY(0); padding: 42px 0 52px; overflow: visible; }
     .reader-meta { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 24px; min-width: 0; }
-    .reader-kicker { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: #BF953F; letter-spacing: 0.32em; text-transform: uppercase; }
+    .reader-kicker { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.26em; text-transform: uppercase; }
     .reader-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.08em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
     .reader-title .zh-note { font-size: clamp(10px, 0.44em, 14px); }
-    .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.68rem; color: #777; letter-spacing: 0.24em; text-transform: uppercase; }
+    .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.74rem; color: #888; letter-spacing: 0.18em; text-transform: uppercase; }
     .reader-actions { display: flex; gap: 12px; align-items: center; }
     .magazine-showcase-wrap {
         width: 100%; min-height: min(62vh, 660px); perspective: 2500px; display: flex; justify-content: center;
@@ -258,12 +260,25 @@
     }
     .brand-back-sub {
         font-family: 'Montserrat', sans-serif;
-        font-size: 0.5rem;
+        font-size: 0.68rem;
         color: #444;
-        letter-spacing: 0.4em;
+        letter-spacing: 0.22em;
         margin-top: 20px;
         text-transform: uppercase;
     }
+    .brand-instagram-btn {
+        margin-top: 28px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+        min-height: 38px; padding: 0 18px; border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.16); color: #ececec; text-decoration: none;
+        font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem;
+        letter-spacing: 0.14em; text-transform: uppercase;
+        background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.025));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 34px rgba(0,0,0,0.32);
+        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .brand-instagram-btn::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #BF953F; box-shadow: 0 0 16px rgba(191,149,63,0.42); }
+    .brand-instagram-btn span { color: #aaa; letter-spacing: 0.08em; text-transform: none; }
+    .brand-instagram-btn:hover { transform: translateY(-1px) scale(1.02); border-color: rgba(191,149,63,0.58); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 18px 46px rgba(0,0,0,0.42), 0 0 22px rgba(191,149,63,0.12); }
 
     .magazine-hint {
         position: absolute;
@@ -271,27 +286,31 @@
         left: 50%;
         transform: translateX(-50%);
         font-family: 'Space Mono', monospace;
-        font-size: 0.7rem;
+        font-size: 0.74rem;
         color: #BF953F;
         letter-spacing: 0.25em;
         text-transform: uppercase;
         animation: pulseBorder 2s infinite;
         transition: all 0.4s ease;
-        border: 1px solid rgba(191, 149, 63, 0.4);
-        padding: 12px 30px;
-        background: rgba(5,5,5,0.9);
+        border: 1px solid rgba(191, 149, 63, 0.36);
+        padding: 13px 28px;
+        background: linear-gradient(180deg, rgba(191,149,63,0.14), rgba(5,5,5,0.76));
         z-index: 100;
         cursor: pointer;
         pointer-events: auto;
         white-space: nowrap;
-        backdrop-filter: blur(5px);
+        border-radius: 999px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 42px rgba(0,0,0,0.34);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
     
     .magazine-hint:hover {
-        background: rgba(191, 149, 63, 0.1);
+        transform: translateX(-50%) translateY(-1px) scale(1.02);
+        background: linear-gradient(180deg, rgba(191, 149, 63, 0.22), rgba(5,5,5,0.78));
         border-color: rgba(191, 149, 63, 0.8);
         text-shadow: 0 0 8px rgba(191, 149, 63, 0.6);
-        box-shadow: 0 0 20px rgba(191, 149, 63, 0.3);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 18px 46px rgba(0,0,0,0.44), 0 0 20px rgba(191, 149, 63, 0.22);
     }
 
     @keyframes pulseBorder { 
@@ -311,7 +330,7 @@
     /* --- 9. PRICING --- */
     .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto; width: 100%; }
-    .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 750px; overflow: hidden; }
+    .price-card { border: 1px solid rgba(255,255,255,0.1); padding: 0; position: relative; transition: all 0.5s ease; display: flex; flex-direction: column; background: #080808; min-height: 750px; overflow: hidden; border-radius: 28px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 24px 70px rgba(0,0,0,0.22); }
     .price-card .border-line { position: absolute; background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); transition: all 0.4s ease-out; opacity: 0; z-index: 10; }
     .border-top { top: 0; left: 0; height: 1px; width: 0%; } .border-right { top: 0; right: 0; width: 1px; height: 0%; }
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
@@ -325,10 +344,10 @@
     .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
     .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.08em; color: #fff; margin-bottom: 8px; }
-    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em; color: #888; font-weight: 300; }
-    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.85rem; color: #aaa; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; letter-spacing: 0.06em; color: #9a9a9a; font-weight: 300; }
+    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.92rem; color: #b5b5b5; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
     .plan-footer { margin-top: auto; }
-    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
     .price-amount, .price-hidden { display: none !important; }
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
@@ -347,19 +366,19 @@
     
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .spec-key { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
-    .spec-val { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #ccc; letter-spacing: 0.05em; text-align: right; }
+    .spec-key { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
+    .spec-val { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
     .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
     .spec-gold { color: #BF953F; }
 
     /* --- 10. Delivery --- */
     .delivery-section { padding: 150px 8vw; background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
     .delivery-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2.5rem; margin-bottom: 25px; letter-spacing: 0.08em; opacity: 0.9; }
-    .delivery-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 80px; display: block; line-height: 1.8; }
+    .delivery-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; color: #777; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 80px; display: block; line-height: 1.8; }
     .delivery-showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; }
     .delivery-card { padding: 50px 30px; border: 1px solid rgba(255,255,255,0.05); background: #050505; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; }
     .delivery-card h4 { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 0.06em; color: #e0e0e0; transition: color 0.4s; }
-    .delivery-card p { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.75rem; color: #666; line-height: 1.8; font-weight: 300; transition: color 0.4s; }
+    .delivery-card p { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; color: #777; line-height: 1.8; font-weight: 300; transition: color 0.4s; }
     .delivery-icon { font-size: 2rem; color: #333; margin-bottom: 30px; display: block; transition: all 0.4s; }
     .delivery-showcase:hover .delivery-card { opacity: 0.3; filter: grayscale(100%); }
     .delivery-showcase .delivery-card:hover { opacity: 1; filter: grayscale(0%); transform: translateY(-15px); border-color: rgba(191, 149, 63, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
@@ -369,13 +388,14 @@
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: hidden; outline: 1px solid rgba(191, 149, 63, 0.2); transition: outline-color 0.5s; width: auto; transform: translateZ(0); }
+    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: hidden; outline: 1px solid rgba(191, 149, 63, 0.22); transition: outline-color 0.5s, transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.45s ease; width: auto; transform: translateZ(0); border-radius: 999px; box-shadow: 0 20px 58px rgba(0,0,0,0.32); }
     .btn-glow { position: absolute; top: 50%; left: 50%; width: 300%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(191, 149, 63, 0.8) 80%, #fcf6ba 100%); animation: spinGlow 4s linear infinite; opacity: 0; transition: opacity 1.2s ease; z-index: 0; will-change: transform; }
     .ritual-btn.in-view .btn-glow { opacity: 1; }
-    .btn-bg { position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; }
+    .btn-bg { position: absolute; inset: 1px; background: #050505; z-index: 1; transition: background 0.4s ease; border-radius: 999px; }
     .btn-content { position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
     .btn-en { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; }
     .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
+    .ritual-btn:hover { transform: translateY(-2px) translateZ(0); box-shadow: 0 28px 78px rgba(0,0,0,0.42), 0 0 24px rgba(191,149,63,0.12); }
     .ritual-btn:hover .btn-bg { background: rgba(191, 149, 63, 0.05); }
     @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
 
@@ -385,7 +405,7 @@
     .booking-interface::before { content: 'TERMINAL // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     .custom-booking-form { width: 100%; margin-top: 40px; }
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .form-group label { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.6rem; letter-spacing: 0.1em; color: #BF953F; margin-bottom: 5px; line-height: 1.7; }
+    .form-group label { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; color: #BF953F; margin-bottom: 5px; line-height: 1.7; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
     .form-group select option:disabled { color: #555; background: #000; }
     .form-group select option { background: #111; color: #fff; padding: 10px; }
@@ -394,8 +414,8 @@
     .detail-val { color: #fff; }
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
     .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
-    .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: transparent; border: 1px solid #BF953F; color: #BF953F; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.14em; cursor: pointer; transition: all 0.3s; }
-    .submit-btn:hover { background: #BF953F; color: #000; }
+    .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: linear-gradient(180deg, rgba(191,149,63,0.12), rgba(191,149,63,0.025)); border: 1px solid rgba(191,149,63,0.56); color: #d9b45e; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.12em; cursor: pointer; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 34px rgba(0,0,0,0.24); }
+    .submit-btn:hover { transform: translateY(-1px); background: #BF953F; color: #000; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 20px 48px rgba(0,0,0,0.34), 0 0 18px rgba(191,149,63,0.22); }
 
     /* --- 13. About --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
@@ -408,20 +428,20 @@
     .contact-section { padding: 100px 8vw 50px; text-align: center; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); }
     .contact-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 50px; font-weight: 400; color: #555; }
     .contact-links { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-    .social-link { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.75rem; color: #888; text-decoration: none; letter-spacing: 0.12em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
+    .social-link { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.84rem; color: #999; text-decoration: none; letter-spacing: 0.1em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
     .social-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .social-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
 
     /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
-    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.55rem; color: #333; letter-spacing: 0.1em; }
+    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.62rem; color: #3d3d3d; letter-spacing: 0.08em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
     .visitor-counter { display: flex; align-items: center; gap: 15px; z-index: 9001; background: #050505; padding-left: 20px; box-shadow: -10px 0 20px #050505; }
-    .visitor-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.45rem; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
-    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #BF953F; letter-spacing: 0.1em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
+    .visitor-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.55rem; color: #4f4f4f; letter-spacing: 0.06em; text-transform: uppercase; }
+    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.66rem; color: #BF953F; letter-spacing: 0.08em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
     
     footer { padding: 20px 4vw 80px; text-align: right; background: #050505; }
-    footer p { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; }
+    footer p { font-family: 'Montserrat', sans-serif; font-size: 0.62rem; color: #444; letter-spacing: 0.14em; }
     
     /* LIGHTBOX */
     .lightbox { display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5,5,5,0.98); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; cursor: zoom-out; backdrop-filter: blur(10px); }
@@ -447,28 +467,34 @@
         .menu-link { font-size: 2.2rem; }
         .gallery-container { column-count: 1; gap: 0; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
+        .section-subtitle { font-size: 0.78rem; letter-spacing: 0.08em; }
+        .filter-tabs { gap: 34px; }
+        .filter-btn { font-size: 0.82rem; letter-spacing: 0.08em; }
+        .filter-btn .zh-note { font-size: 0.7rem; }
         .gallery-sub-title { font-size: 1.45rem; line-height: 1.35; letter-spacing: 0.1em; }
-        .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.68rem; }
+        .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.78rem; }
         .magazine-rail-header { align-items: flex-end; gap: 16px; }
-        .rail-label { font-size: 0.58rem; letter-spacing: 0.22em; }
-        .rail-nav-btn, .reader-close-btn { width: 38px; height: 38px; }
+        .rail-label { font-size: 0.68rem; letter-spacing: 0.16em; }
+        .rail-nav-btn, .reader-close-btn { width: 40px; height: 40px; }
         .magazine-rail { grid-auto-columns: 72vw; gap: 16px; margin-left: -2vw; margin-right: -2vw; padding-left: 2vw; padding-right: 2vw; }
         .magazine-card-info { min-height: 86px; padding: 16px; }
-        .magazine-card-title { font-size: 0.68rem; letter-spacing: 0.1em; }
+        .magazine-card-title { font-size: 0.8rem; letter-spacing: 0.08em; }
         .magazine-reader-panel { grid-template-columns: 1fr; gap: 26px; }
         .magazine-reader-panel.open { max-height: 980px; padding: 34px 0 46px; }
         .reader-meta { gap: 16px; }
         .reader-title { font-size: 1.4rem; }
-        .reader-count { font-size: 0.62rem; }
+        .reader-count { font-size: 0.7rem; }
         .magazine-showcase-wrap { min-height: 50vh; padding: 38px 0 76px; }
         .magazine { width: 44vw; max-width: 250px; }
-        .magazine-hint { font-size: 0.56rem; bottom: 20px; padding: 10px 16px; letter-spacing: 0.16em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
+        .magazine-hint { font-size: 0.66rem; bottom: 20px; padding: 11px 18px; letter-spacing: 0.1em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
         .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
         .price-card { min-height: auto; height: auto; }
         .card-content { padding: 50px 6vw; gap: 40px; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
         .ritual-btn { width: 90%; max-width: 350px; }
         .btn-content { padding: 25px 0; gap: 12px; }
+        .btn-en { font-size: 1rem; }
+        .btn-zh { font-size: 0.76rem; letter-spacing: 0.24em; margin-right: -0.24em; }
         .contact-links { flex-direction: column; gap: 30px; }
         footer { text-align: center; padding-bottom: 70px; }
     }
@@ -511,7 +537,7 @@
           <a href="#work" class="menu-link" onclick="toggleMenu()">WORKS<span class="zh-note">作品集</span></a>
           <a href="#archetype" class="menu-link" onclick="toggleMenu()">ARCHETYPE<span class="zh-note">影像原型</span></a>
           <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS<span class="zh-note">拍攝方案</span></a>
-          <a href="#contact" class="menu-link" onclick="toggleMenu()">CONNECT<span class="zh-note">聯絡</span></a>
+          <a href="#contact" class="menu-link" onclick="toggleMenu()">ABOUT EDEN<span class="zh-note">關於 EDEN</span></a>
       </div>
   </div>
 
@@ -519,7 +545,6 @@
     <img class="hero-bg-video" src="images/works/cover/1.png" alt="">
     <div class="hero-content">
       <h1><span class="title-word">EDEN</span><span class="vertical-separator"></span><span class="title-word">DEEN</span></h1>
-      <p>Visual Director / Photographer<span class="zh-note">影像導演 / 攝影師</span></p>
       <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE<span class="zh-note">瀏覽作品</span></a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
@@ -528,29 +553,29 @@
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
       <h2 class="section-title metallic-silver">Visual Anthology</h2>
-      <span class="section-subtitle">Categorized Archive<span class="zh-note">依系列整理的視覺檔案</span></span>
+      <span class="section-subtitle">Works Gallery<span class="zh-note">作品迴廊</span></span>
     </div>
     
     <div class="filter-tabs">
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">人像精選</span></a>
-        <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">THE COVER<span class="zh-note">封面誌</span></a>
+        <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">MAGAZINE WORKS<span class="zh-note">雜誌作品</span></a>
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 此系列正在整理中')">
-            <span class="filter-btn">THE STORY<span class="zh-note">故事誌</span></span>
+            <span class="filter-btn">THE STORY<span class="zh-note">記事作</span></span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
         <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 專案尚未公開')">
-            <span class="filter-btn">PROJECT: ROYAL<span class="zh-note">未公開專案</span></span>
+            <span class="filter-btn">PROJECT: ROYAL<span class="zh-note">尊榮作</span></span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
     </div>
 
     <div id="gallery-essentials" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span><span class="zh-note">人像精選 / 單張作品</span></h3>
+        <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span><span class="zh-note">人像精選</span></h3>
         <div class="gallery-container" id="container-essentials"></div>
     </div>
 
     <div id="gallery-cover" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">THE COVER <span>/ MAGAZINE COVERS</span><span class="zh-note">封面誌 / 可翻閱作品集</span></h3>
+        <h3 class="gallery-sub-title">MAGAZINE WORKS <span>/ ISSUES</span><span class="zh-note">雜誌作品</span></h3>
         <div id="container-cover"></div>
     </div>
   </section>
@@ -571,7 +596,7 @@
   <section class="pricing-section" id="pricing">
     <div class="section-header">
       <h2 class="section-title metallic-silver">EDEN VISUALS</h2>
-      <span class="section-subtitle">Concepts & Philosophy<span class="zh-note">方案與理念</span></span>
+      <span class="section-subtitle">Plan Overview<span class="zh-note">方案介紹</span></span>
     </div>
     <div class="pricing-grid">
       <div class="price-card dynamic-bg-card" data-bg-source="essentials" onclick="openBookingWithPlan('Essentials')">
@@ -621,7 +646,7 @@
       <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
       <span class="delivery-subtitle">Elevating the tangible experience<span class="zh-note">讓影像成為可收藏的實體經驗</span></span>
       <div class="delivery-showcase">
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX<span class="zh-note">黑曜收藏盒</span></h4><p>Archive presentation box<br><span class="zh-note">以硬殼黑盒保存影像檔案，讓交付本身也成為完整的開箱儀式。</span></p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX<span class="zh-note">黑曜收藏盒</span></h4><p>Archive presentation box<br><span class="zh-note">以硬殼黑盒保存作品檔案，讓交付本身也成為完整的開箱儀式。</span></p></div>
           <div class="delivery-card"><span class="delivery-icon">*</span><h4>METAL ENGRAVED USB<span class="zh-note">金屬刻字 USB</span></h4><p>Custom engraved drive<br><span class="zh-note">承載最終精選影像，也保留每次拍攝專屬的識別感。</span></p></div>
           <div class="delivery-card"><span class="delivery-icon">*</span><h4>WAX-SEALED AUTHENTICITY<span class="zh-note">蠟封認證</span></h4><p>Wax-sealed certificate<br><span class="zh-note">以實體印記確認作品歸屬與收藏價值。</span></p></div>
       </div>
@@ -640,8 +665,8 @@
           <div class="custom-booking-form">
               <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
                 <div class="form-group"><label>NAME<span class="zh-note">姓名</span></label><input type="text" name="name" required placeholder="YOUR NAME / 請填寫姓名"></div>
-                <div class="form-group"><label>CONTACT EMAIL<span class="zh-note">聯絡信箱</span></label><input type="email" name="email" required placeholder="EMAIL ADDRESS / 請填寫 EMAIL"></div>
-                <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.55rem; letter-spacing:0.1em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程會以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
+                <div class="form-group"><label>CONTACT EMAIL</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
+                <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.72rem; letter-spacing:0.08em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程會以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
                 <div class="form-group"><label>PLAN<span class="zh-note">方案</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 請選擇方案</option><option value="Essentials">ESSENTIALS / 人像精選</option><option value="Structure">THE COVER / 封面視覺</option></select></div>
                 <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT<span class="zh-note">拍攝</span></span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
@@ -664,7 +689,7 @@
   </section>
 
   <section class="contact-section" id="contact">
-      <h2 class="contact-title">CONNECT<span class="zh-note">聯絡</span></h2>
+      <h2 class="contact-title">ABOUT EDEN<span class="zh-note">關於 EDEN</span></h2>
       <div class="contact-links">
           <a href="https://www.instagram.com/eden_d_photo" target="_blank" class="social-link">INSTAGRAM</a>
           <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="social-link">THREADS</a>
@@ -790,7 +815,7 @@
     }
 
     function renderBrandPage(sideClass) {
-        return `<div class="${sideClass} brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">VISUAL ARCHIVE<span class="zh-note">影像檔案</span></div></div>`;
+        return `<div class="${sideClass} brand-back-cover"><div class="brand-back-title"><span class="metallic-gold">EDEN</span><span class="vertical-separator" style="height:1em; opacity:0.3; margin: 0 10px;"></span><span class="metallic-gold">DEEN</span></div><div class="brand-back-sub">VISUAL ARCHIVE</div><a class="brand-instagram-btn" href="https://www.instagram.com/eden_d_photo" target="_blank" rel="noopener" onclick="event.stopPropagation()">Instagram <span>@eden_d_photo</span></a></div>`;
     }
 
     function renderMediaPage(sideClass, mag, fileName) {
@@ -966,6 +991,8 @@
             let currentSheet = 0;
             const sheets = mag.sheets;
             const numSheets = sheets.length;
+            const magazineIndex = magazines.findIndex((item) => item.id === mag.id);
+            const hasNextIssue = magazineIndex > -1 && magazineIndex < magazines.length - 1;
             let pagesElements = [];
 
             reader.classList.remove('open');
@@ -987,7 +1014,7 @@
             magazineDiv.className = 'magazine' + (mag.noShadow ? ' no-shadow' : '');
             const hintDiv = document.createElement('div');
             hintDiv.className = 'magazine-hint';
-            hintDiv.innerText = '[ 開啟此期 ]';
+            hintDiv.innerText = '[ 點擊翻閱 ]';
 
             sheets.forEach((sheet, index) => {
                 const pageDiv = document.createElement('div');
@@ -1007,7 +1034,7 @@
                         currentSheet++;
                         setTimeout(() => { pageDiv.style.zIndex = index + 1; }, 400);
                     }
-                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets, hasNextIssue);
                 };
                 magazineDiv.appendChild(pageDiv);
                 pagesElements.push(pageDiv);
@@ -1017,12 +1044,14 @@
                 e.stopPropagation();
                 if (currentSheet === 0) pagesElements[0].click();
                 else if (currentSheet === numSheets) {
-                    pagesElements.forEach((p, idx) => {
-                        p.classList.remove('flipped');
-                        setTimeout(() => { p.style.zIndex = numSheets - idx; }, 400);
-                    });
-                    currentSheet = 0;
-                    updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+                    if (hasNextIssue) {
+                        const nextMag = magazines[magazineIndex + 1];
+                        const nextCard = rail.querySelectorAll('.magazine-card')[magazineIndex + 1];
+                        if (nextMag && nextCard) renderReader(nextMag, nextCard);
+                        else showToast('NEXT ISSUE COMING SOON // 下期待續');
+                    } else {
+                        showToast('NEXT ISSUE COMING SOON // 下期待續');
+                    }
                 }
             };
 
@@ -1031,7 +1060,7 @@
                 selectedCard.classList.remove('active');
             };
 
-            updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets);
+            updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets, hasNextIssue);
             showcaseWrap.appendChild(magazineDiv);
             showcaseWrap.appendChild(hintDiv);
             requestAnimationFrame(() => reader.classList.add('open'));
@@ -1060,9 +1089,9 @@
         nextBtn.onclick = () => rail.scrollBy({ left: rail.clientWidth * 0.85, behavior: 'smooth' });
     }
 
-    function updateMagazineCenter(magElement, hintElement, current, total) {
-        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ 開啟此期 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
-        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = '[ 收回此期 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+    function updateMagazineCenter(magElement, hintElement, current, total, hasNextIssue) {
+        if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ 點擊翻閱 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
+        else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = hasNextIssue ? '[ 閱讀下一本 ]' : '[ 下期待續 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
         else { magElement.style.transform = 'translateX(50%)'; hintElement.style.opacity = '0'; hintElement.style.pointerEvents = 'none'; }
     }
 
