@@ -44,8 +44,34 @@ function hasStagedChanges() {
   throw new Error(`git diff --cached --quiet failed: ${errorText}`);
 }
 
+const mediaExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.mp4', '.webm', '.mov', '.m4v']);
+
+function collectMediaFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+
+  const files = [];
+  fs.readdirSync(dir, { withFileTypes: true }).forEach((entry) => {
+    const entryPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectMediaFiles(entryPath));
+      return;
+    }
+
+    if (entry.isFile() && mediaExtensions.has(path.extname(entry.name).toLowerCase())) {
+      files.push(path.relative(rootDir, entryPath));
+    }
+  });
+
+  return files;
+}
+
 try {
-  run('git', ['add', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works/cover*', 'images/works/essentials']);
+  run('git', ['add', '-u', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works']);
+
+  const mediaFiles = collectMediaFiles(path.join(rootDir, 'images', 'works'));
+  if (mediaFiles.length) {
+    run('git', ['add', '--', ...mediaFiles]);
+  }
 
   if (!hasStagedChanges()) {
     log('No staged changes to publish.');
