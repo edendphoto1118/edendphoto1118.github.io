@@ -37,9 +37,14 @@
     @keyframes opticalEmerge { 0% { opacity: 0; transform: scale(1.05); filter: blur(15px); letter-spacing: 0.6em; } 100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.4em; } }
     .enter-btn-wrapper { position: absolute; bottom: 15vh; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 1s ease; pointer-events: none; }
     .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
-    .enter-btn { background: linear-gradient(180deg, rgba(24,24,26,0.88), rgba(8,8,9,0.86)); border: 1px solid rgba(255,255,255,0.14); color: #f5f5f7; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 15px 48px; transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.42s ease, background 0.42s ease, box-shadow 0.42s ease, color 0.42s ease; white-space: nowrap; border-radius: 24px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.48), 0 10px 26px rgba(0,0,0,0.3); backdrop-filter: blur(20px) saturate(120%); -webkit-backdrop-filter: blur(20px) saturate(120%); }
+    .enter-btn { background: transparent; border: 0; color: #f5f5f7; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 14px 44px 18px; transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.42s ease; white-space: nowrap; position: relative; }
+    .enter-btn::before, .enter-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.48s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.42s ease; pointer-events: none; }
+    .enter-btn::before { width: 64%; background: rgba(255,255,255,0.24); }
+    .enter-btn::after { width: 18%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.9), transparent); opacity: 0.72; }
     .enter-btn .zh-note { font-size: 0.7rem; letter-spacing: 0.07em; color: #8f8f94; transition: color 0.42s ease; }
-    .enter-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); background: linear-gradient(180deg, rgba(34,34,36,0.94), rgba(12,12,13,0.92)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.48), 0 14px 32px rgba(0,0,0,0.38); color: #fff; }
+    .enter-btn:hover { transform: translateY(-1px); color: #fff; }
+    .enter-btn:hover::before { width: 78%; opacity: 0.85; }
+    .enter-btn:hover::after { width: 48%; opacity: 1; }
     .enter-btn:hover .zh-note { color: #b2b2b6; }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
@@ -87,9 +92,14 @@
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.62); }
-    .hero-cta-btn { margin-top: 50px; background: rgba(18,18,20,0.78); border: 1px solid rgba(255,255,255,0.16); color: #f5f5f7; padding: 13px 34px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; border-radius: 24px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 12px 30px rgba(0,0,0,0.3); backdrop-filter: blur(18px) saturate(125%); -webkit-backdrop-filter: blur(18px) saturate(125%); }
+    .hero-cta-btn { margin-top: 50px; background: transparent; border: 0; color: #f5f5f7; padding: 13px 30px 17px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; position: relative; }
+    .hero-cta-btn::before, .hero-cta-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.46s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; pointer-events: none; }
+    .hero-cta-btn::before { width: 62%; background: rgba(255,255,255,0.22); }
+    .hero-cta-btn::after { width: 16%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.7; }
     .hero p .zh-note, .hero-cta-btn .zh-note { font-size: 0.68rem; letter-spacing: 0.08em; }
-    .hero-cta-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.32); box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 16px 38px rgba(0,0,0,0.38); background: rgba(28,28,30,0.86); }
+    .hero-cta-btn:hover { transform: translateY(-1px); color: #fff; }
+    .hero-cta-btn:hover::before { width: 78%; opacity: 0.82; }
+    .hero-cta-btn:hover::after { width: 48%; opacity: 1; }
     .scroll-indicator { position: relative; width: 2px; height: 70px; overflow: hidden; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; }
     .scroll-line { position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%); transform: translateX(-50%); animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
     .scroll-line:nth-child(2) { animation-delay: 1.5s; }
@@ -148,14 +158,15 @@
     .rail-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: #888; letter-spacing: 0.22em; text-transform: uppercase; }
     .rail-controls { display: flex; align-items: center; gap: 10px; }
     .rail-nav-btn, .reader-close-btn {
-        width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.12); background: rgba(18,18,20,0.78);
+        width: 44px; height: 44px; border: 0; background: transparent;
         color: #cfcfd2; display: inline-flex; align-items: center; justify-content: center;
         font-family: 'Space Mono', monospace; font-size: 1.2rem; line-height: 1; cursor: pointer;
-        transition: border-color 0.35s ease, color 0.35s ease, background 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
-        border-radius: 50%; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 24px rgba(0,0,0,0.26);
-        backdrop-filter: blur(16px) saturate(120%); -webkit-backdrop-filter: blur(16px) saturate(120%);
+        transition: color 0.35s ease, transform 0.35s ease;
+        border-radius: 50%; position: relative;
     }
-    .rail-nav-btn:hover, .reader-close-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); color: #f5f5f7; background: rgba(30,30,32,0.9); box-shadow: inset 0 1px 0 rgba(255,255,255,0.13), 0 14px 32px rgba(0,0,0,0.34); }
+    .rail-nav-btn::after, .reader-close-btn::after { content: ''; position: absolute; left: 50%; bottom: 7px; width: 14px; height: 1px; transform: translateX(-50%); background: rgba(255,255,255,0.22); transition: width 0.35s ease, background 0.35s ease; }
+    .rail-nav-btn:hover, .reader-close-btn:hover { transform: translateY(-1px); color: #f5f5f7; }
+    .rail-nav-btn:hover::after, .reader-close-btn:hover::after { width: 22px; background: rgba(191,149,63,0.72); }
     .magazine-rail {
         display: grid; grid-auto-flow: column; grid-auto-columns: clamp(190px, 20vw, 260px); gap: 22px;
         overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 4px;
@@ -269,17 +280,18 @@
     }
     .brand-instagram-btn {
         margin-top: 28px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-        min-height: 38px; padding: 0 18px; border-radius: 20px;
-        border: 1px solid rgba(255,255,255,0.13); color: #ececec; text-decoration: none;
+        min-height: 38px; padding: 0 18px 7px; border-radius: 0;
+        border: 0; color: #ececec; text-decoration: none;
         font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem;
         letter-spacing: 0.14em; text-transform: uppercase;
-        background: rgba(18,18,20,0.82);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 26px rgba(0,0,0,0.28);
-        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+        background: transparent; box-shadow: none; position: relative;
+        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.35s ease;
     }
+    .brand-instagram-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 58%; height: 1px; transform: translateX(-50%); background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(191,149,63,0.62), rgba(255,255,255,0.16)); transition: width 0.35s ease, opacity 0.35s ease; opacity: 0.75; }
     .brand-instagram-btn::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #BF953F; box-shadow: none; }
     .brand-instagram-btn span { color: #aaa; letter-spacing: 0.08em; text-transform: none; }
-    .brand-instagram-btn:hover { transform: translateY(-1px); border-color: rgba(191,149,63,0.38); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 14px 34px rgba(0,0,0,0.36); }
+    .brand-instagram-btn:hover { transform: translateY(-1px); color: #fff; }
+    .brand-instagram-btn:hover::after { width: 78%; opacity: 1; }
 
     .magazine-hint {
         position: absolute;
@@ -293,31 +305,32 @@
         text-transform: uppercase;
         animation: pulseBorder 2s infinite;
         transition: all 0.4s ease;
-        border: 1px solid rgba(255,255,255,0.14);
-        padding: 11px 24px;
-        background: rgba(14,14,16,0.8);
+        border: 0;
+        padding: 10px 22px 14px;
+        background: transparent;
         z-index: 100;
         cursor: pointer;
         pointer-events: auto;
         white-space: nowrap;
-        border-radius: 20px;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 10px 24px rgba(0,0,0,0.3);
-        backdrop-filter: blur(18px) saturate(120%);
-        -webkit-backdrop-filter: blur(18px) saturate(120%);
+        border-radius: 0;
+        box-shadow: none;
     }
+    .magazine-hint::before, .magazine-hint::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease; pointer-events: none; }
+    .magazine-hint::before { width: 68%; background: rgba(255,255,255,0.18); }
+    .magazine-hint::after { width: 30%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.82), transparent); opacity: 0.86; }
     
     .magazine-hint:hover {
         transform: translateX(-50%) translateY(-1px);
-        background: rgba(24,24,26,0.88);
-        border-color: rgba(191, 149, 63, 0.34);
+        background: transparent;
         text-shadow: none;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 30px rgba(0,0,0,0.36);
+        box-shadow: none;
     }
+    .magazine-hint:hover::before { width: 82%; opacity: 0.9; }
+    .magazine-hint:hover::after { width: 54%; opacity: 1; }
 
     @keyframes pulseBorder { 
-        0% { border-color: rgba(255,255,255,0.12); } 
-        50% { border-color: rgba(191,149,63,0.34); } 
-        100% { border-color: rgba(255,255,255,0.12); } 
+        0%, 100% { opacity: 0.88; } 
+        50% { opacity: 1; } 
     }
 
     /* --- Archetype --- */
@@ -390,16 +403,16 @@
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: hidden; outline: 1px solid rgba(255,255,255,0.12); transition: outline-color 0.45s ease, transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.45s ease; width: auto; transform: translateZ(0); border-radius: 30px; box-shadow: 0 16px 42px rgba(0,0,0,0.28); }
-    .btn-glow { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.08) 42%, transparent 58%); opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; z-index: 0; transform: translateX(-35%); }
-    .ritual-btn.in-view .btn-glow { opacity: 0.42; }
-    .btn-bg { position: absolute; inset: 1px; background: linear-gradient(180deg, #111113, #050505); z-index: 1; transition: background 0.4s ease; border-radius: 29px; }
-    .btn-content { position: relative; z-index: 2; padding: 35px 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: visible; outline: none; transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1); width: auto; transform: translateZ(0); }
+    .btn-glow { position: absolute; left: 50%; bottom: 0; width: 48%; height: 1px; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.84), transparent); opacity: 0.72; transition: width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease; z-index: 3; transform: translateX(-50%); }
+    .ritual-btn.in-view .btn-glow { opacity: 0.9; }
+    .btn-bg { position: absolute; left: 50%; bottom: 0; width: 72%; height: 1px; background: rgba(255,255,255,0.18); z-index: 2; transition: width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease; transform: translateX(-50%); }
+    .btn-content { position: relative; z-index: 2; padding: 30px 96px 34px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
     .btn-en { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; }
     .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
-    .ritual-btn:hover { transform: translateY(-2px) translateZ(0); outline-color: rgba(191,149,63,0.28); box-shadow: 0 22px 54px rgba(0,0,0,0.36); }
-    .ritual-btn:hover .btn-glow { opacity: 0.55; transform: translateX(20%); }
-    .ritual-btn:hover .btn-bg { background: linear-gradient(180deg, #161618, #060606); }
+    .ritual-btn:hover { transform: translateY(-2px) translateZ(0); }
+    .ritual-btn:hover .btn-glow { width: 64%; opacity: 1; }
+    .ritual-btn:hover .btn-bg { width: 86%; opacity: 0.9; }
     @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
 
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
@@ -417,8 +430,13 @@
     .detail-val { color: #fff; }
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
     .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
-    .submit-btn { width: 100%; padding: 20px; margin-top: 20px; background: linear-gradient(180deg, #18181a, #070707); border: 1px solid rgba(191,149,63,0.28); color: #d9b45e; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.12em; cursor: pointer; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; border-radius: 24px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.24); }
-    .submit-btn:hover { transform: translateY(-1px); background: linear-gradient(180deg, #202023, #0a0a0a); color: #f1d187; border-color: rgba(191,149,63,0.42); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 38px rgba(0,0,0,0.32); }
+    .submit-btn { width: 100%; padding: 20px 20px 24px; margin-top: 20px; background: transparent; border: 0; color: #d9b45e; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.12em; cursor: pointer; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.35s ease; position: relative; }
+    .submit-btn::before, .submit-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease; pointer-events: none; }
+    .submit-btn::before { width: 72%; background: rgba(255,255,255,0.16); }
+    .submit-btn::after { width: 34%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.85; }
+    .submit-btn:hover { transform: translateY(-1px); color: #f1d187; }
+    .submit-btn:hover::before { width: 86%; opacity: 0.88; }
+    .submit-btn:hover::after { width: 58%; opacity: 1; }
 
     /* --- 13. About --- */
     .background { padding: 150px 8vw; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); width: 100%; display: flex; justify-content: center; align-items: center; min-height: 60vh; }
@@ -489,13 +507,13 @@
         .reader-count { font-size: 0.7rem; }
         .magazine-showcase-wrap { min-height: 50vh; padding: 38px 0 76px; }
         .magazine { width: 44vw; max-width: 250px; }
-        .magazine-hint { font-size: 0.66rem; bottom: 20px; padding: 11px 18px; letter-spacing: 0.1em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
+        .magazine-hint { font-size: 0.66rem; bottom: 20px; padding: 11px 18px 15px; letter-spacing: 0.1em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
         .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
         .price-card { min-height: auto; height: auto; }
         .card-content { padding: 50px 6vw; gap: 40px; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
         .ritual-btn { width: 90%; max-width: 350px; }
-        .btn-content { padding: 25px 0; gap: 12px; }
+        .btn-content { padding: 25px 0 30px; gap: 12px; }
         .btn-en { font-size: 1rem; }
         .btn-zh { font-size: 0.76rem; letter-spacing: 0.24em; margin-right: -0.24em; }
         .contact-links { flex-direction: column; gap: 30px; }
