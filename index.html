@@ -152,6 +152,64 @@
     .gallery-item:hover { z-index: 100; filter: grayscale(0%) contrast(100%) brightness(1); }
     .gallery-item:hover img { transform: scale(1.03); box-shadow: 0 30px 70px rgba(0,0,0,0.6); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 15px; }
 
+    /* --- Essentials Curated Rail --- */
+    .essentials-shell { position: relative; width: 100%; }
+    .essentials-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 22px; }
+    .essentials-label { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; color: #888; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.8; }
+    .essentials-count { font-family: 'Space Mono', monospace; color: #555; font-size: 0.68rem; letter-spacing: 0.14em; white-space: nowrap; }
+    .essentials-rail-wrap { position: relative; margin-left: -4vw; margin-right: -4vw; }
+    .essentials-rail {
+        display: grid; grid-auto-flow: column; grid-auto-columns: max-content; gap: clamp(18px, 2.2vw, 34px);
+        overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory;
+        padding: 6px 4vw 34px; -webkit-overflow-scrolling: touch;
+    }
+    .essentials-rail::-webkit-scrollbar { height: 6px; }
+    .essentials-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
+    .essentials-rail::-webkit-scrollbar-thumb { background: rgba(191,149,63,0.45); border-radius: 999px; }
+    .essential-frame {
+        height: clamp(360px, 58vh, 620px); width: clamp(240px, 27vw, 380px);
+        border: 0; background: transparent; padding: 0; cursor: pointer; position: relative;
+        scroll-snap-align: start; overflow: hidden; color: inherit; opacity: 0;
+        transform: translateY(36px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.9s ease;
+        filter: grayscale(100%) contrast(108%) brightness(0.92);
+    }
+    .essential-frame.reveal { opacity: 1; transform: translateY(0); }
+    .essential-frame.is-wide { width: clamp(320px, 38vw, 560px); }
+    .essential-frame.is-slim { width: clamp(220px, 23vw, 330px); }
+    .essential-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.9s ease; }
+    .essential-frame::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(191,149,63,0.72), rgba(255,255,255,0.08)); opacity: 0.55; transform: scaleX(0.32); transform-origin: left; transition: transform 0.6s ease, opacity 0.6s ease; }
+    .essential-frame:hover { filter: grayscale(0%) contrast(100%) brightness(1); }
+    .essential-frame:hover img { transform: scale(1.028); }
+    .essential-frame:hover::after { transform: scaleX(1); opacity: 1; }
+    .essentials-rail-controls { position: absolute; top: 50%; right: 4vw; transform: translateY(-50%); display: flex; gap: 12px; z-index: 5; }
+    .essentials-footer { display: flex; justify-content: center; margin-top: 18px; }
+    .essential-full-btn {
+        border: 0; background: transparent; color: #f5f5f7; cursor: pointer; position: relative;
+        padding: 14px 34px 18px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+        font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
+    }
+    .essential-full-btn::before, .essential-full-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.46s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; }
+    .essential-full-btn::before { width: 68%; background: rgba(255,255,255,0.18); }
+    .essential-full-btn::after { width: 24%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.78; }
+    .essential-full-btn:hover { transform: translateY(-1px); color: #fff; }
+    .essential-full-btn:hover::before { width: 84%; opacity: 0.88; }
+    .essential-full-btn:hover::after { width: 56%; opacity: 1; }
+
+    .essentials-archive {
+        position: fixed; inset: 0; background: #050505; z-index: 99998;
+        opacity: 0; visibility: hidden; transition: opacity 0.55s ease, visibility 0.55s ease;
+        overflow-y: auto; padding: clamp(90px, 12vh, 140px) 5vw 80px;
+    }
+    .essentials-archive.open { opacity: 1; visibility: visible; }
+    body.essentials-open, body.lightbox-open { overflow: hidden; }
+    .essentials-archive-head { max-width: 1500px; margin: 0 auto 48px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 24px; }
+    .essentials-archive-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(2rem, 5vw, 4.8rem); letter-spacing: 0.1em; color: #f2f2f2; font-weight: 400; margin: 0; }
+    .essentials-archive-grid { max-width: 1500px; margin: 0 auto; column-count: 3; column-gap: clamp(18px, 2.4vw, 38px); }
+    .essentials-archive-item { break-inside: avoid; margin-bottom: clamp(26px, 3vw, 48px); cursor: pointer; opacity: 0.92; transition: opacity 0.4s ease, transform 0.4s ease; }
+    .essentials-archive-item:hover { opacity: 1; transform: translateY(-3px); }
+    .essentials-archive-item img { width: 100%; height: auto; display: block; }
+
     /* --- Magazine Carousel Reader --- */
     .magazine-carousel-shell { width: 100%; max-width: 1600px; margin: 0 auto; position: relative; }
     .magazine-rail-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
@@ -499,6 +557,19 @@
         .filter-btn .zh-note { font-size: 0.7rem; }
         .gallery-sub-title { font-size: 1.45rem; line-height: 1.35; letter-spacing: 0.1em; }
         .gallery-sub-title span { display: block; margin-left: 0; margin-top: 10px; font-size: 0.78rem; }
+        .essentials-head { align-items: flex-start; flex-direction: column; gap: 10px; }
+        .essentials-label { font-size: 0.68rem; letter-spacing: 0.15em; }
+        .essentials-rail-wrap { margin-left: -6vw; margin-right: -6vw; }
+        .essentials-rail { gap: 16px; padding-left: 6vw; padding-right: 6vw; padding-bottom: 40px; }
+        .essential-frame, .essential-frame.is-wide, .essential-frame.is-slim { width: 74vw; height: min(62vh, 520px); }
+        .essentials-rail-controls { top: auto; right: 6vw; bottom: 50px; transform: none; }
+        .essentials-footer { justify-content: flex-start; margin-top: 8px; }
+        .essential-full-btn { width: min(100%, 330px); padding-left: 0; padding-right: 0; text-align: left; }
+        .essential-full-btn::before, .essential-full-btn::after { left: 0; transform: none; }
+        .essentials-archive { padding: 88px 6vw 70px; }
+        .essentials-archive-head { align-items: flex-start; flex-direction: column; gap: 18px; margin-bottom: 34px; padding-right: 54px; position: relative; }
+        .essentials-archive-head .reader-close-btn { position: absolute; right: 0; top: 0; }
+        .essentials-archive-grid { column-count: 1; column-gap: 0; }
         .magazine-rail-header { align-items: flex-end; gap: 16px; }
         .rail-label { font-size: 0.68rem; letter-spacing: 0.16em; }
         .rail-nav-btn, .reader-close-btn { width: 40px; height: 40px; }
@@ -599,7 +670,7 @@
 
     <div id="gallery-essentials" class="gallery-sub-section">
         <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span><span class="zh-note">凝視選輯</span></h3>
-        <div class="gallery-container" id="container-essentials"></div>
+        <div id="container-essentials"></div>
     </div>
 
     <div id="gallery-cover" class="gallery-sub-section">
@@ -734,6 +805,7 @@
   <footer><p>&copy; 2025 EDEN | DEEN. All Rights Reserved. <span class="zh-note">所有影像與文字，皆由 EDEN 保存。</span></p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()"><div class="close-btn"></div><img class="lightbox-content" id="lightbox-img"></div>
+  <div id="essentialsArchive" class="essentials-archive" aria-hidden="true"></div>
 
   <script src="magazines-data.js"></script>
   <script>
@@ -808,21 +880,101 @@
 
     const essentialImages = Array.isArray(globalThis.EDEN_ESSENTIALS) ? globalThis.EDEN_ESSENTIALS : [];
     const containerEssentials = document.getElementById('container-essentials');
+    const essentialsArchive = document.getElementById('essentialsArchive');
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => { if(entry.isIntersecting) { setTimeout(() => { entry.target.classList.add('reveal'); }, 100); observer.unobserve(entry.target); } });
     }, { threshold: 0.1 });
 
-    function generateEssentials() {
-      containerEssentials.innerHTML = '';
-      essentialImages.forEach((fileName) => {
-        const imgPath = `images/works/essentials/${encodeURIComponent(fileName)}`;
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'gallery-item';
-        itemDiv.innerHTML = `<img src="${imgPath}" loading="lazy" onclick="openLightbox(this)" onerror="this.closest('.gallery-item').remove();">`;
-        containerEssentials.appendChild(itemDiv);
-        revealObserver.observe(itemDiv);
-      });
+    function getEssentialImagePath(fileName) {
+      return `images/works/essentials/${encodeURIComponent(fileName)}`;
     }
+
+    function renderEssentialImageButton(fileName, index, className = 'essential-frame') {
+      const imgPath = getEssentialImagePath(fileName);
+      const shapeClass = index % 5 === 2 ? ' is-wide' : (index % 5 === 4 ? ' is-slim' : '');
+      return `
+        <button type="button" class="${className}${shapeClass}" aria-label="開啟凝視選輯作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))">
+          <img src="${imgPath}" loading="lazy" alt="" onerror="this.closest('button, .essentials-archive-item').remove();">
+        </button>
+      `;
+    }
+
+    function generateEssentials() {
+      if (!containerEssentials) return;
+      containerEssentials.innerHTML = '';
+      if (!essentialImages.length) return;
+
+      const featuredImages = essentialImages.slice(0, Math.min(12, essentialImages.length));
+      containerEssentials.innerHTML = `
+        <div class="essentials-shell">
+          <div class="essentials-head">
+            <span class="essentials-label">Featured Selection<span class="zh-note">首頁只留一段可滑動的凝視</span></span>
+            <span class="essentials-count">${String(featuredImages.length).padStart(2, '0')} / ${String(essentialImages.length).padStart(2, '0')}</span>
+          </div>
+          <div class="essentials-rail-wrap">
+            <div class="essentials-rail" id="essentialsRail">
+              ${featuredImages.map((fileName, index) => renderEssentialImageButton(fileName, index)).join('')}
+            </div>
+            <div class="essentials-rail-controls">
+              <button type="button" class="rail-nav-btn" id="essentialsPrev" aria-label="上一組凝視">&lsaquo;</button>
+              <button type="button" class="rail-nav-btn" id="essentialsNext" aria-label="下一組凝視">&rsaquo;</button>
+            </div>
+          </div>
+          <div class="essentials-footer">
+            <button type="button" class="essential-full-btn" id="openEssentialsArchive">VIEW FULL ESSENTIALS<span class="zh-note">展開完整選輯</span></button>
+          </div>
+        </div>
+      `;
+
+      const essentialsRail = document.getElementById('essentialsRail');
+      document.getElementById('essentialsPrev').onclick = () => essentialsRail.scrollBy({ left: -essentialsRail.clientWidth * 0.85, behavior: 'smooth' });
+      document.getElementById('essentialsNext').onclick = () => essentialsRail.scrollBy({ left: essentialsRail.clientWidth * 0.85, behavior: 'smooth' });
+      document.getElementById('openEssentialsArchive').onclick = openEssentialsArchive;
+      essentialsRail.querySelectorAll('.essential-frame').forEach((frame) => revealObserver.observe(frame));
+
+      renderEssentialsArchive();
+    }
+
+    function renderEssentialsArchive() {
+      if (!essentialsArchive) return;
+      essentialsArchive.innerHTML = `
+        <div class="essentials-archive-head">
+          <div>
+            <h3 class="essentials-archive-title">ESSENTIALS</h3>
+            <span class="section-subtitle">Complete Selection<span class="zh-note">完整凝視選輯</span></span>
+          </div>
+          <button type="button" class="reader-close-btn" id="closeEssentialsArchive" aria-label="關閉完整選輯">&times;</button>
+        </div>
+        <div class="essentials-archive-grid">
+          ${essentialImages.map((fileName, index) => {
+            const imgPath = getEssentialImagePath(fileName);
+            return `<div class="essentials-archive-item"><img src="${imgPath}" loading="lazy" alt="" onclick="openLightbox(this)" onerror="this.closest('.essentials-archive-item').remove();"></div>`;
+          }).join('')}
+        </div>
+      `;
+      document.getElementById('closeEssentialsArchive').onclick = closeEssentialsArchive;
+    }
+
+    function openEssentialsArchive() {
+      if (!essentialsArchive) return;
+      essentialsArchive.classList.add('open');
+      essentialsArchive.setAttribute('aria-hidden', 'false');
+      essentialsArchive.scrollTop = 0;
+      document.body.classList.add('essentials-open');
+    }
+
+    function closeEssentialsArchive() {
+      if (!essentialsArchive) return;
+      essentialsArchive.classList.remove('open');
+      essentialsArchive.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('essentials-open');
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && essentialsArchive && essentialsArchive.classList.contains('open')) {
+        closeEssentialsArchive();
+      }
+    });
 
     /* --- Auto Magazine Engine --- */
     const magazinesData = Array.isArray(globalThis.EDEN_MAGAZINES) ? globalThis.EDEN_MAGAZINES : [];
@@ -1144,8 +1296,8 @@
     if(!sessionStorage.getItem('session_counted')) { count = parseInt(count) + Math.floor(Math.random() * 3) + 1; localStorage.setItem('eden_visitor_count', count); sessionStorage.setItem('session_counted', 'true'); }
     document.getElementById('visitorCount').innerText = "NO. " + parseInt(count).toLocaleString('en-US', {minimumIntegerDigits: 6});
 
-    function openLightbox(el) { document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.src; document.body.style.overflow = "hidden"; }
-    function closeLightbox() { document.getElementById("lightbox").classList.remove('active'); document.body.style.overflow = "auto"; }
+    function openLightbox(el) { if (!el) return; document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.src; document.body.classList.add('lightbox-open'); }
+    function closeLightbox() { document.getElementById("lightbox").classList.remove('active'); document.body.classList.remove('lightbox-open'); }
     function toggleAudio() { const a = document.getElementById('bgMusic'), w = document.querySelector('#soundWave'), b = document.getElementById('topAudioBtn'); if(a.paused) { a.play(); w.classList.remove('paused'); b.classList.add('active'); } else { a.pause(); w.classList.add('paused'); b.classList.remove('active'); } }
   </script>
 </body>
