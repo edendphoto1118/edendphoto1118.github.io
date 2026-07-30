@@ -167,18 +167,20 @@
     .essentials-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
     .essentials-rail::-webkit-scrollbar-thumb { background: rgba(191,149,63,0.45); border-radius: 999px; }
     .essential-frame {
-        height: clamp(360px, 58vh, 620px); width: clamp(240px, 27vw, 380px);
+        --essential-width: clamp(240px, 27vw, 380px);
+        height: clamp(360px, 58vh, 620px); width: var(--essential-width);
         border: 0; background: transparent; padding: 0; cursor: pointer; position: relative;
-        scroll-snap-align: start; overflow: hidden; color: inherit; opacity: 0;
+        display: flex; align-items: center; justify-content: center;
+        scroll-snap-align: start; overflow: visible; color: inherit; opacity: 0;
         transform: translateY(36px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.9s ease;
         filter: grayscale(100%) contrast(108%) brightness(0.92);
     }
     .essential-frame.reveal { opacity: 1; transform: translateY(0); }
-    .essential-frame.is-wide { width: clamp(320px, 38vw, 560px); }
-    .essential-frame.is-slim { width: clamp(220px, 23vw, 330px); }
-    .essential-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.9s ease; }
+    .essential-frame.is-wide { --essential-width: clamp(320px, 38vw, 560px); }
+    .essential-frame.is-slim { --essential-width: clamp(220px, 23vw, 330px); }
+    .essential-frame img { width: auto; height: 100%; max-width: none; object-fit: contain; display: block; transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.9s ease; }
     .essential-frame::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(191,149,63,0.72), rgba(255,255,255,0.08)); opacity: 0.55; transform: scaleX(0.32); transform-origin: left; transition: transform 0.6s ease, opacity 0.6s ease; }
-    .essential-frame:hover { filter: grayscale(0%) contrast(100%) brightness(1); }
+    .essential-frame:hover { filter: grayscale(0%) contrast(100%) brightness(1); z-index: 4; }
     .essential-frame:hover img { transform: scale(1.028); }
     .essential-frame:hover::after { transform: scaleX(1); opacity: 1; }
     .essentials-rail-controls { position: absolute; top: 50%; right: 4vw; transform: translateY(-50%); display: flex; gap: 12px; z-index: 5; }
@@ -561,7 +563,7 @@
         .essentials-label { font-size: 0.68rem; letter-spacing: 0.15em; }
         .essentials-rail-wrap { margin-left: -6vw; margin-right: -6vw; }
         .essentials-rail { gap: 16px; padding-left: 6vw; padding-right: 6vw; padding-bottom: 40px; }
-        .essential-frame, .essential-frame.is-wide, .essential-frame.is-slim { width: 74vw; height: min(62vh, 520px); }
+        .essential-frame, .essential-frame.is-wide, .essential-frame.is-slim { width: var(--essential-width, 74vw); height: min(62vh, 520px); }
         .essentials-rail-controls { top: auto; right: 6vw; bottom: 50px; transform: none; }
         .essentials-footer { justify-content: flex-start; margin-top: 8px; }
         .essential-full-btn { width: min(100%, 330px); padding-left: 0; padding-right: 0; text-align: left; }
@@ -894,9 +896,18 @@
       const shapeClass = index % 5 === 2 ? ' is-wide' : (index % 5 === 4 ? ' is-slim' : '');
       return `
         <button type="button" class="${className}${shapeClass}" aria-label="開啟凝視選輯作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))">
-          <img src="${imgPath}" loading="lazy" alt="" onerror="this.closest('button, .essentials-archive-item').remove();">
+          <img src="${imgPath}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.closest('button, .essentials-archive-item').remove();">
         </button>
       `;
+    }
+
+    function fitEssentialFrame(img) {
+      const frame = img.closest('.essential-frame');
+      if (!frame || !img.naturalWidth || !img.naturalHeight) return;
+
+      const frameHeight = frame.getBoundingClientRect().height;
+      const width = Math.max(160, Math.round(frameHeight * (img.naturalWidth / img.naturalHeight)));
+      frame.style.setProperty('--essential-width', `${width}px`);
     }
 
     function generateEssentials() {
