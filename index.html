@@ -360,10 +360,15 @@
     .plan-title-block { margin-bottom: 40px; }
     .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.08em; color: #fff; margin-bottom: 8px; }
     .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; letter-spacing: 0.06em; color: #9a9a9a; font-weight: 300; }
-    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.92rem; color: #b5b5b5; line-height: 2; font-weight: 300; text-align: justify; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.92rem; color: #b5b5b5; line-height: 2; font-weight: 300; text-align: left; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    .plan-philosophy .zh-note, .archetype-text .zh-note, .delivery-card .zh-note, .about-slogan-sub .zh-note { letter-spacing: 0.04em; line-height: 1.85; }
     .plan-footer { margin-top: auto; }
     .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
+    .plan-status { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.28em; max-width: 100%; font-size: clamp(1rem, 2vw, 1.65rem); letter-spacing: 0.08em; line-height: 1.2; }
+    .plan-status .status-en { display: inline-flex; align-items: center; justify-content: center; gap: 0.28em; white-space: nowrap; max-width: 100%; }
+    .plan-status .status-bracket { opacity: 0.76; }
+    .plan-status .zh-note { flex-basis: 100%; width: 100%; text-align: center; }
     .price-amount, .price-hidden { display: none !important; }
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
@@ -511,6 +516,8 @@
         .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
         .price-card { min-height: auto; height: auto; }
         .card-content { padding: 50px 6vw; gap: 40px; }
+        .plan-status { font-size: clamp(0.95rem, 5.6vw, 1.35rem); letter-spacing: 0.04em; }
+        .plan-status .status-en { gap: 0.2em; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
         .ritual-btn { width: 90%; max-width: 350px; }
         .btn-content { padding: 25px 0 30px; gap: 12px; }
@@ -533,7 +540,7 @@
         <span class="loader-text title-word">EDEN</span><span class="vertical-separator loader-sep"></span><span class="loader-text title-word">DEEN</span>
     </div>
     <div class="enter-btn-wrapper" id="enterWrapper">
-        <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE<span class="zh-note">進入作品集</span></button>
+        <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE<span class="zh-note">入境典藏</span></button>
     </div>
   </div>
 
@@ -555,9 +562,9 @@
 
   <div class="menu-overlay" id="menuOverlay">
       <div class="menu-items">
-          <a href="#work" class="menu-link" onclick="toggleMenu()">WORKS<span class="zh-note">作品集</span></a>
-          <a href="#archetype" class="menu-link" onclick="toggleMenu()">ARCHETYPE<span class="zh-note">影像原型</span></a>
-          <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS<span class="zh-note">拍攝方案</span></a>
+          <a href="#work" class="menu-link" onclick="toggleMenu()">WORKS<span class="zh-note">影像篇章</span></a>
+          <a href="#archetype" class="menu-link" onclick="toggleMenu()">ARCHETYPE<span class="zh-note">氣質原型</span></a>
+          <a href="#pricing" class="menu-link" onclick="toggleMenu()">VISUALS<span class="zh-note">影像委託</span></a>
           <a href="#contact" class="menu-link" onclick="toggleMenu()">ABOUT EDEN<span class="zh-note">關於 EDEN</span></a>
       </div>
   </div>
@@ -566,7 +573,7 @@
     <img class="hero-bg-video" src="images/works/cover/1.png" alt="">
     <div class="hero-content">
       <h1><span class="title-word">EDEN</span><span class="vertical-separator"></span><span class="title-word">DEEN</span></h1>
-      <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE<span class="zh-note">瀏覽作品</span></a>
+      <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE<span class="zh-note">展開影像</span></a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
   </section>
@@ -574,29 +581,29 @@
   <section class="masterpiece-gallery" id="work">
     <div class="section-header">
       <h2 class="section-title metallic-silver">Visual Anthology</h2>
-      <span class="section-subtitle">Works Gallery<span class="zh-note">作品迴廊</span></span>
+      <span class="section-subtitle">Works Gallery<span class="zh-note">影像迴廊</span></span>
     </div>
     
     <div class="filter-tabs">
-        <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">人像精選</span></a>
-        <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">MAGAZINE WORKS<span class="zh-note">雜誌作品</span></a>
+        <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">凝視選輯</span></a>
+        <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">MAGAZINE WORKS<span class="zh-note">雜誌篇章</span></a>
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 此系列正在整理中')">
-            <span class="filter-btn">THE STORY<span class="zh-note">記事作</span></span>
+            <span class="filter-btn">THE STORY<span class="zh-note">敘事札記</span></span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
         <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 專案尚未公開')">
-            <span class="filter-btn">PROJECT: ROYAL<span class="zh-note">尊榮作</span></span>
+            <span class="filter-btn">PROJECT: ROYAL<span class="zh-note">典藏企劃</span></span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
         </div>
     </div>
 
     <div id="gallery-essentials" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span><span class="zh-note">人像精選</span></h3>
+        <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span><span class="zh-note">凝視選輯</span></h3>
         <div class="gallery-container" id="container-essentials"></div>
     </div>
 
     <div id="gallery-cover" class="gallery-sub-section">
-        <h3 class="gallery-sub-title">MAGAZINE WORKS <span>/ ISSUES</span><span class="zh-note">雜誌作品</span></h3>
+        <h3 class="gallery-sub-title">MAGAZINE WORKS <span>/ ISSUES</span><span class="zh-note">雜誌篇章</span></h3>
         <div id="container-cover"></div>
     </div>
   </section>
@@ -604,10 +611,10 @@
   <section class="tool-section" id="archetype">
       <div class="section-header">
           <h2 class="section-title metallic-gold">EDEN ARCHETYPE</h2>
-          <span class="section-subtitle">Visual Personality Analysis<span class="zh-note">找出你的視覺氣質</span></span>
+          <span class="section-subtitle">Visual Personality Analysis<span class="zh-note">辨認你的影像氣質</span></span>
       </div>
       <div class="archetype-intro">
-          <p class="archetype-text">Decode the contrast between inner identity and outer presence.<br><span class="zh-note">理解你的內在性格與外在形象之間的反差。</span>Share your result on Instagram Stories and tag <strong>@eden_d_photo</strong><br><span class="zh-note">分享到 Instagram 限時動態並標記 @eden_d_photo，就有機會被選中，獲得一組專屬視覺概念。</span></p>
+          <p class="archetype-text">Decode the contrast between inner identity and outer presence.<br><span class="zh-note">看見內在輪廓與外在氣場之間的微妙落差。</span>Share your result on Instagram Stories and tag <strong>@eden_d_photo</strong><br><span class="zh-note">將結果分享至 Instagram 限時動態並標記 @eden_d_photo，可能收到一組為你延伸的專屬視覺概念。</span></p>
       </div>
       <div class="tool-container">
           <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="EDEN 影像原型測驗"></iframe>
@@ -617,20 +624,20 @@
   <section class="pricing-section" id="pricing">
     <div class="section-header">
       <h2 class="section-title metallic-silver">EDEN VISUALS</h2>
-      <span class="section-subtitle">Plan Overview<span class="zh-note">方案介紹</span></span>
+      <span class="section-subtitle">Plan Overview<span class="zh-note">委託形式</span></span>
     </div>
     <div class="pricing-grid">
       <div class="price-card dynamic-bg-card" data-bg-source="essentials" onclick="openBookingWithPlan('Essentials')">
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">基礎人像方案</span></div><p class="plan-philosophy">A strong portrait is a professional entry point.<span class="zh-note">一張有力量的人像，是你專業形象的入口。</span>Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以乾淨構圖與細緻光線保留人物的神情、輪廓與存在感。</span></p></div>
+            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">凝視起點</span></div><p class="plan-philosophy">A strong portrait is a professional entry point.<span class="zh-note">一張安靜而有力量的肖像，是形象被記住的起點。</span>Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以克制構圖與細膩光線，留下神情、輪廓與當下的氣息。</span></p></div>
             <div>
                 <div class="spec-list">
-                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">拍攝 0.5 小時</span></span></div>
-                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">可加購</span></span></div>
-                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES<span class="zh-note">2 張影像</span></span></div>
-                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL<span class="zh-note">數位檔案</span></span></div>
+                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">半小時凝視</span></span></div>
+                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">可另置造型</span></span></div>
+                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES<span class="zh-note">兩幅精修</span></span></div>
+                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL<span class="zh-note">數位收藏</span></span></div>
                 </div>
                 <div class="plan-footer price-hidden" style="margin-top:20px; text-align:center;" aria-hidden="true"></div>
             </div>
@@ -640,13 +647,13 @@
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面主視覺方案</span></div><p class="plan-philosophy">Your presence becomes the visual statement.<span class="zh-note">讓你的存在感成為畫面的主視覺。</span>Styling, direction, and layout are composed into a polished cover image.<span class="zh-note">從造型、引導到版面感，整理成一張完整、有記憶點的封面影像。</span></p></div>
+            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面敘像</span></div><p class="plan-philosophy">Your presence becomes the visual statement.<span class="zh-note">讓你的存在感成為畫面最先被讀見的語句。</span>Styling, direction, and layout are composed into a polished cover image.<span class="zh-note">從造型、引導到版面節奏，收束成一張可被記憶的封面。</span></p></div>
             <div>
                 <div class="spec-list">
-                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR<span class="zh-note">拍攝 1.5 小時</span></span></div>
-                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val spec-highlight">INCLUDED<span class="zh-note">含 1 套造型</span></span></div>
-                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES<span class="zh-note">8 張影像</span></span></div>
-                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB<span class="zh-note">海報 + USB</span></span></div>
+                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR<span class="zh-note">一場半影像敘事</span></span></div>
+                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val spec-highlight">INCLUDED<span class="zh-note">含一套造型</span></span></div>
+                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES<span class="zh-note">八幅精修</span></span></div>
+                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB<span class="zh-note">海報與隨身典藏</span></span></div>
                 </div>
                 <div class="plan-footer price-hidden" style="margin-top:20px; text-align:center;" aria-hidden="true"></div>
             </div>
@@ -656,8 +663,8 @@
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
         <div class="card-content">
-            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">編輯式敘事方案</span></div><p class="plan-philosophy">A narrative visual session built from styling, atmosphere, and image sequencing.<span class="zh-note">以造型、氛圍與影像排序延伸成完整敘事。</span>Prepared as a collectible editorial object.<span class="zh-note">最後製作成可收藏的編輯式影像作品。</span></p></div>
-            <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL<span class="zh-note">A4 影像誌</span></span><span class="plan-status metallic-gold">[ COMING SOON ]<span class="zh-note">籌備中</span></span></div>
+            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">敘事成冊</span></div><p class="plan-philosophy">A narrative visual session built from styling, atmosphere, and image sequencing.<span class="zh-note">以造型、氛圍與影像順序，寫成一段完整的視覺敘事。</span>Prepared as a collectible editorial object.<span class="zh-note">最後成為可翻閱、可收藏的編輯式作品。</span></p></div>
+            <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL<span class="zh-note">A4 影像誌</span></span><span class="plan-status metallic-gold"><span class="status-en"><span class="status-bracket">[</span><span>COMING SOON</span><span class="status-bracket">]</span></span><span class="zh-note">尚待開卷</span></span></div>
         </div>
       </div>
     </div>
@@ -665,38 +672,38 @@
   
   <section class="delivery-section">
       <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
-      <span class="delivery-subtitle">Elevating the tangible experience<span class="zh-note">讓影像成為可收藏的實體經驗</span></span>
+      <span class="delivery-subtitle">Elevating the tangible experience<span class="zh-note">讓影像離開螢幕，成為可被收藏的實體記憶</span></span>
       <div class="delivery-showcase">
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX<span class="zh-note">黑曜收藏盒</span></h4><p>Archive presentation box<br><span class="zh-note">以硬殼黑盒保存作品檔案，讓交付本身也成為完整的開箱儀式。</span></p></div>
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>METAL ENGRAVED USB<span class="zh-note">金屬刻字 USB</span></h4><p>Custom engraved drive<br><span class="zh-note">承載最終精選影像，也保留每次拍攝專屬的識別感。</span></p></div>
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>WAX-SEALED AUTHENTICITY<span class="zh-note">蠟封認證</span></h4><p>Wax-sealed certificate<br><span class="zh-note">以實體印記確認作品歸屬與收藏價值。</span></p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX<span class="zh-note">黑曜收藏盒</span></h4><p>Archive presentation box<br><span class="zh-note">以硬殼黑盒收納作品，讓交付也保有開啟典藏的儀式感。</span></p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>METAL ENGRAVED USB<span class="zh-note">金屬刻名 USB</span></h4><p>Custom engraved drive<br><span class="zh-note">承載最終影像，也留下每次拍攝獨有的識別痕跡。</span></p></div>
+          <div class="delivery-card"><span class="delivery-icon">*</span><h4>WAX-SEALED AUTHENTICITY<span class="zh-note">蠟封憑證</span></h4><p>Wax-sealed certificate<br><span class="zh-note">以實體印記標示作品歸屬，為影像留下可收藏的證明。</span></p></div>
       </div>
   </section>
 
   <section class="booking-cta-section">
       <button class="ritual-btn" onclick="toggleBookingSection()">
           <div class="btn-glow"></div><div class="btn-bg"></div>
-          <div class="btn-content"><span class="btn-en">SECURE YOUR SESSION</span><span class="btn-zh">預約拍攝 / 立即填寫</span></div>
+          <div class="btn-content"><span class="btn-en">SECURE YOUR SESSION</span><span class="btn-zh">預留一場影像</span></div>
       </button>
   </section>
 
   <div id="hiddenBooking" class="hidden-booking-container">
       <div class="booking-interface">
-          <div class="booking-terms"><h3 class="terms-title metallic-gold">BOOKING REQUEST<span class="zh-note">預約表單</span></h3></div>
+          <div class="booking-terms"><h3 class="terms-title metallic-gold">BOOKING REQUEST<span class="zh-note">委託邀約</span></h3></div>
           <div class="custom-booking-form">
               <form action="https://formspree.io/f/xgovddwr" method="POST" id="bookingForm">
-                <div class="form-group"><label>NAME<span class="zh-note">姓名</span></label><input type="text" name="name" required placeholder="YOUR NAME / 請填寫姓名"></div>
+                <div class="form-group"><label>NAME<span class="zh-note">你的名字</span></label><input type="text" name="name" required placeholder="YOUR NAME / 請留下名字"></div>
                 <div class="form-group"><label>CONTACT EMAIL</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
-                <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.72rem; letter-spacing:0.08em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程會以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
-                <div class="form-group"><label>PLAN<span class="zh-note">方案</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 請選擇方案</option><option value="Essentials">ESSENTIALS / 人像精選</option><option value="Structure">THE COVER / 封面視覺</option></select></div>
+                <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.72rem; letter-spacing:0.08em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程將以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
+                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 凝視選輯</option><option value="Structure">THE COVER / 封面敘像</option></select></div>
                 <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT<span class="zh-note">拍攝</span></span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING<span class="zh-note">造型</span></span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">RETOUCH<span class="zh-note">精修</span></span><span id="d-retouch" style="color:#fff; font-size:0.8rem;"></span></div>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT<span class="zh-note">拍攝節奏</span></span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING<span class="zh-note">造型設定</span></span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">RETOUCH<span class="zh-note">後期精修</span></span><span id="d-retouch" style="color:#fff; font-size:0.8rem;"></span></div>
                 </div>
-                <div class="form-group"><label>DATE<span class="zh-note">希望日期</span></label><input type="date" name="date" required></div>
-                <div class="form-group"><label>VISION<span class="zh-note">拍攝想法</span></label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION... / 可以簡單描述你想要的形象、用途或氛圍"></textarea></div>
-                <button type="submit" class="submit-btn">CONFIRM REQUEST<span class="zh-note">送出預約</span></button>
+                <div class="form-group"><label>DATE<span class="zh-note">偏好的日期</span></label><input type="date" name="date" required></div>
+                <div class="form-group"><label>VISION<span class="zh-note">想被留下的樣子</span></label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION... / 描述你想被看見的形象、用途或氛圍"></textarea></div>
+                <button type="submit" class="submit-btn">CONFIRM REQUEST<span class="zh-note">送出邀約</span></button>
               </form>
           </div>
       </div>
@@ -705,7 +712,7 @@
   <section class="background" id="about">
     <div class="about-minimal-container">
         <h2 class="about-slogan-main metallic-gold">CRAFT THE COVER</h2>
-        <span class="about-slogan-sub">Craft the cover of the era.<span class="zh-note">讓你的時代感被影像記住。</span></span>
+        <span class="about-slogan-sub">Craft the cover of the era.<span class="zh-note">讓屬於你的時代感，被影像溫柔地留下。</span></span>
     </div>
   </section>
 
@@ -724,7 +731,7 @@
       <div class="visitor-counter"><span class="visitor-label">ARCHIVE VISITOR:</span><span class="visitor-number" id="visitorCount">NO. 012,840</span></div>
   </div>
 
-  <footer><p>&copy; 2025 EDEN | DEEN. All Rights Reserved. <span class="zh-note">版權所有。</span></p></footer>
+  <footer><p>&copy; 2025 EDEN | DEEN. All Rights Reserved. <span class="zh-note">所有影像與文字，皆由 EDEN 保存。</span></p></footer>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()"><div class="close-btn"></div><img class="lightbox-content" id="lightbox-img"></div>
 
@@ -752,14 +759,14 @@
 
     const planData = {
         'Essentials': {
-            time: '0.5 HR<span class="zh-note">0.5 小時</span>',
-            style: 'ADD-ON<span class="zh-note">可加購</span>',
-            retouch: '2 IMAGES<span class="zh-note">2 張影像</span>'
+            time: '0.5 HR<span class="zh-note">半小時凝視</span>',
+            style: 'ADD-ON<span class="zh-note">可另置造型</span>',
+            retouch: '2 IMAGES<span class="zh-note">兩幅精修</span>'
         },
         'Structure': {
-            time: '1.5 HR<span class="zh-note">1.5 小時</span>',
-            style: 'INCLUDED<span class="zh-note">含 1 套造型</span>',
-            retouch: '8 IMAGES<span class="zh-note">8 張影像</span>'
+            time: '1.5 HR<span class="zh-note">一場半影像敘事</span>',
+            style: 'INCLUDED<span class="zh-note">含一套造型</span>',
+            retouch: '8 IMAGES<span class="zh-note">八幅精修</span>'
         }
     };
 
