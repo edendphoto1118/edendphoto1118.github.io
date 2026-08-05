@@ -671,7 +671,7 @@
     </div>
     
     <div class="filter-tabs">
-        <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">凝視選輯</span></a>
+        <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">人像選輯</span></a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">MAGAZINE WORKS<span class="zh-note">雜誌篇章</span></a>
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 此系列正在整理中')">
             <span class="filter-btn">THE STORY<span class="zh-note">敘事札記</span></span>
@@ -717,10 +717,10 @@
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">凝視起點</span></div><p class="plan-philosophy">A strong portrait is a professional entry point.<span class="zh-note">一張安靜而有力量的肖像，是形象被記住的起點。</span>Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以客製構圖與細膩光線，留下神情、輪廓與當下的氣息。</span></p></div>
+            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">人像起點</span></div><p class="plan-philosophy">A strong portrait is a professional entry point.<span class="zh-note">一張安靜而有力量的肖像，是形象被記住的起點。</span>Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以客製構圖與細膩光線，留下神情、輪廓與當下的氣息。</span></p></div>
             <div>
                 <div class="spec-list">
-                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">半小時凝視</span></span></div>
+                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">半小時拍攝</span></span></div>
                     <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">可另置造型</span></span></div>
                     <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES<span class="zh-note">兩幅精修</span></span></div>
                     <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL<span class="zh-note">數位收藏</span></span></div>
@@ -781,7 +781,7 @@
                 <div class="form-group"><label>NAME<span class="zh-note">你的名字</span></label><input type="text" name="name" required placeholder="YOUR NAME / 請留下名字"></div>
                 <div class="form-group"><label>CONTACT EMAIL</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
                 <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.72rem; letter-spacing:0.08em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程將以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
-                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 凝視選輯</option><option value="Structure">THE COVER / 封面敘像</option></select></div>
+                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 人像選輯</option><option value="Structure">THE COVER / 封面敘像</option></select></div>
                 <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT<span class="zh-note">拍攝節奏</span></span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING<span class="zh-note">造型設定</span></span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
@@ -846,7 +846,7 @@
 
     const planData = {
         'Essentials': {
-            time: '0.5 HR<span class="zh-note">半小時凝視</span>',
+            time: '0.5 HR<span class="zh-note">半小時拍攝</span>',
             style: 'ADD-ON<span class="zh-note">可另置造型</span>',
             retouch: '2 IMAGES<span class="zh-note">兩幅精修</span>'
         },
@@ -908,7 +908,7 @@
       const imgPath = getEssentialImagePath(fileName);
       const shapeClass = index % 5 === 2 ? ' is-wide' : (index % 5 === 4 ? ' is-slim' : '');
       return `
-        <button type="button" class="${className}${shapeClass}" aria-label="開啟凝視選輯作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))">
+        <button type="button" class="${className}${shapeClass}" aria-label="開啟人像選輯作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))">
           <img src="${imgPath}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.closest('button, .essentials-archive-item').remove();">
         </button>
       `;
@@ -940,8 +940,8 @@
               ${featuredImages.map((fileName, index) => renderEssentialImageButton(fileName, index)).join('')}
             </div>
             <div class="essentials-rail-controls">
-              <button type="button" class="rail-nav-btn" id="essentialsPrev" aria-label="上一組凝視">&lsaquo;</button>
-              <button type="button" class="rail-nav-btn" id="essentialsNext" aria-label="下一組凝視">&rsaquo;</button>
+              <button type="button" class="rail-nav-btn" id="essentialsPrev" aria-label="上一組人像">&lsaquo;</button>
+              <button type="button" class="rail-nav-btn" id="essentialsNext" aria-label="下一組人像">&rsaquo;</button>
             </div>
           </div>
           <div class="essentials-footer">
