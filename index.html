@@ -413,9 +413,9 @@
     .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
 
     /* --- 9. PRICING --- */
-    .pricing-section { padding: 150px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto; width: 100%; }
-    .price-card { border: 1px solid rgba(255,255,255,0.08); padding: 0; position: relative; transition: border-color 0.5s ease, background 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease; display: flex; flex-direction: column; background: #070707; min-height: 750px; overflow: hidden; border-radius: 18px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.035), 0 18px 48px rgba(0,0,0,0.18); }
+    .pricing-section { padding: 150px clamp(24px, 4vw, 56px) 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(22px, 2.4vw, 34px); max-width: 1540px; margin: 0 auto; width: 100%; }
+    .price-card { border: 1px solid rgba(255,255,255,0.08); padding: 0; position: relative; transition: border-color 0.5s ease, background 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease; display: flex; flex-direction: column; background: #070707; aspect-ratio: 4 / 5; min-height: auto; overflow: hidden; border-radius: 18px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.035), 0 18px 48px rgba(0,0,0,0.18); }
     .price-card .border-line { position: absolute; background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); transition: all 0.4s ease-out; opacity: 0; z-index: 10; }
     .border-top { top: 0; left: 0; height: 1px; width: 0%; } .border-right { top: 0; right: 0; width: 1px; height: 0%; }
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
@@ -426,17 +426,18 @@
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease, background-image 0.25s ease; z-index: 0; background-size: cover; background-position: center; filter: brightness(0.4); }
     .price-card:hover .card-bg, .price-card.bg-preview .card-bg { opacity: 0.3; transform: scale(1.05); }
     
-    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 60px 40px; justify-content: space-between; }
-    .plan-id { font-family: 'Cinzel', serif; font-size: 1rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
-    .plan-title-block { margin-bottom: 40px; }
-    .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.08em; color: #fff; margin-bottom: 8px; }
-    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; letter-spacing: 0.06em; color: #9a9a9a; font-weight: 300; }
-    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.92rem; color: #b5b5b5; line-height: 2; font-weight: 300; text-align: left; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
-    .plan-philosophy .zh-note, .archetype-text .zh-note, .delivery-card .zh-note, .about-slogan-sub .zh-note { letter-spacing: 0.04em; line-height: 1.85; }
+    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: clamp(24px, 2.35vw, 34px) clamp(24px, 2.35vw, 36px); justify-content: space-between; }
+    .plan-id { font-family: 'Cinzel', serif; font-size: 1.05rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
+    .plan-title-block { margin-bottom: clamp(12px, 1.4vw, 18px); }
+    .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(2.05rem, 2.1vw, 2.45rem); letter-spacing: 0.08em; color: #fff; margin-bottom: 10px; }
+    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.98rem; letter-spacing: 0.06em; color: #9a9a9a; font-weight: 300; }
+    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.96rem; color: #b5b5b5; line-height: 1.45; font-weight: 300; text-align: left; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 18px; margin: 0; }
+    .plan-philosophy .zh-note { letter-spacing: 0.04em; line-height: 1.55; }
+    .archetype-text .zh-note, .delivery-card .zh-note, .about-slogan-sub .zh-note { letter-spacing: 0.04em; line-height: 1.85; }
     .plan-footer { margin-top: auto; }
-    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
-    .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.8rem; display: block; color: #fff; }
-    .plan-status { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.28em; max-width: 100%; font-size: clamp(1rem, 2vw, 1.65rem); letter-spacing: 0.08em; line-height: 1.2; }
+    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.76rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.9rem; display: block; color: #fff; }
+    .plan-status { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.28em; max-width: 100%; font-size: clamp(1.15rem, 1.9vw, 1.85rem); letter-spacing: 0.08em; line-height: 1.2; }
     .plan-status .status-en { display: inline-flex; align-items: center; justify-content: center; gap: 0.28em; white-space: nowrap; max-width: 100%; }
     .plan-status .status-bracket { opacity: 0.76; }
     .plan-status .zh-note { flex-basis: 100%; width: 100%; text-align: center; }
@@ -456,9 +457,10 @@
     @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
     
     .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
-    .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .spec-key { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
-    .spec-val { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
+    .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .spec-key { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
+    .spec-val { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
+    .spec-val .zh-note { margin-top: 4px; font-size: 0.72rem; line-height: 1.35; }
     .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
     .spec-gold { color: #BF953F; }
 
@@ -552,6 +554,10 @@
 
     @keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
 
+    @media (max-width: 1180px) and (min-width: 769px) {
+        .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 980px; }
+    }
+
     /* =========================================
        V39.0 MOBILE OPTIMIZATION (THE FIX)
        ========================================= */
@@ -599,7 +605,7 @@
         .magazine { width: 44vw; max-width: 250px; }
         .magazine-hint { font-size: 0.66rem; bottom: 20px; padding: 11px 18px 15px; letter-spacing: 0.1em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
         .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
-        .price-card { min-height: auto; height: auto; }
+        .price-card { aspect-ratio: auto; min-height: auto; height: auto; }
         .card-content { padding: 50px 6vw; gap: 40px; }
         .plan-status { font-size: clamp(0.95rem, 5.6vw, 1.35rem); letter-spacing: 0.04em; }
         .plan-status .status-en { gap: 0.2em; }
