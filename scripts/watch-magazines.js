@@ -9,6 +9,8 @@ const publisher = path.join(__dirname, 'auto-publish.js');
 const logFile = path.join(rootDir, 'magazines-watch.log');
 let running = false;
 let pending = false;
+let publishing = false;
+let publishPending = false;
 let lastSnapshot = '';
 
 function log(message) {
@@ -40,6 +42,12 @@ function runGenerator() {
 }
 
 function runPublisher() {
+  if (publishing) {
+    publishPending = true;
+    return;
+  }
+
+  publishing = true;
   const child = spawn(process.execPath, [publisher], {
     cwd: rootDir,
     stdio: 'ignore',
@@ -47,7 +55,12 @@ function runPublisher() {
   });
 
   child.on('exit', (code) => {
+    publishing = false;
     if (code !== 0) log('Auto-publish exited with an error.');
+    if (publishPending) {
+      publishPending = false;
+      runPublisher();
+    }
   });
 }
 
