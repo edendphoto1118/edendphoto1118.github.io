@@ -344,7 +344,8 @@ globalThis.EDEN_MAGAZINES = [
     "path": "images/works/cover23/",
     "pages": [
       "122.png",
-      "123.png"
+      "123.png",
+      "124.png"
     ],
     "noShadow": false
   },
