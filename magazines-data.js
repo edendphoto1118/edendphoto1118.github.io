@@ -351,8 +351,7 @@ globalThis.EDEN_MAGAZINES = [
       "127.png",
       "128.png",
       "129.png",
-      "130.png",
-      "132.png"
+      "130.png"
     ],
     "noShadow": false
   },
@@ -362,6 +361,7 @@ globalThis.EDEN_MAGAZINES = [
     "title": "ISSUE 24",
     "path": "images/works/cover24/",
     "pages": [
+      "131.png",
       "133.png",
       "134.png",
       "135.png",
