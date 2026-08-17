@@ -345,7 +345,11 @@ globalThis.EDEN_MAGAZINES = [
     "pages": [
       "122.png",
       "123.png",
-      "124.png"
+      "124.png",
+      "125.png",
+      "126.png",
+      "127.png",
+      "128.png"
     ],
     "noShadow": false
   },
