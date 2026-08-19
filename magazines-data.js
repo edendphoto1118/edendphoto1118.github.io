@@ -361,6 +361,7 @@ globalThis.EDEN_MAGAZINES = [
     "title": "ISSUE 24",
     "path": "images/works/cover24/",
     "pages": [
+      "131.png",
       "132.png",
       "133.png",
       "134.png",
