@@ -84,7 +84,11 @@
 
     /* --- 6. Hero --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; background: #000; }
-    .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; opacity: 0.5; }
+    .hero-bg-video { display: none; }
+    .hero-trailer { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #000; }
+    .hero-trailer::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 44%, rgba(0,0,0,0.18), rgba(0,0,0,0.74) 62%, rgba(0,0,0,0.94) 100%), linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.7)); z-index: 3; pointer-events: none; }
+    .hero-slide { position: absolute; inset: -3vh -3vw; width: 106vw; height: 106vh; object-fit: cover; opacity: 0; filter: brightness(0.42) contrast(1.08) saturate(0.72); transform: scale(1.05); transition: opacity 2.2s ease, transform 8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .hero-slide.active { opacity: 0.34; transform: scale(1); }
     .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
     .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
@@ -92,14 +96,7 @@
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.62); }
-    .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.14); color: #f5f5f7; padding: 14px 32px 18px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease, border-color 0.35s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; position: relative; }
-    .hero-cta-btn::before, .hero-cta-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.46s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; pointer-events: none; }
-    .hero-cta-btn::before { width: 62%; background: rgba(255,255,255,0.22); }
-    .hero-cta-btn::after { width: 16%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.7; }
-    .hero p .zh-note, .hero-cta-btn .zh-note { font-size: 0.68rem; letter-spacing: 0.08em; }
-    .hero-cta-btn:hover { transform: translateY(-1px); color: #fff; border-color: rgba(191,149,63,0.38); }
-    .hero-cta-btn:hover::before { width: 78%; opacity: 0.82; }
-    .hero-cta-btn:hover::after { width: 48%; opacity: 1; }
+    .hero p .zh-note { font-size: 0.68rem; letter-spacing: 0.04em; }
     .scroll-indicator { position: relative; width: 2px; height: 70px; overflow: hidden; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; }
     .scroll-line { position: absolute; top: -100%; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, #ffffff 30%, #ffffff 70%, transparent 100%); transform: translateX(-50%); animation: scrollFlow 3s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
     .scroll-line:nth-child(2) { animation-delay: 1.5s; }
@@ -400,12 +397,26 @@
     }
 
     /* --- Archetype --- */
-    .tool-section { padding: 120px 8vw 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
-    .archetype-intro { margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .archetype-text { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #aaa; line-height: 1.8; letter-spacing: 0.15em; font-weight: 300; }
+    .tool-section { padding: 120px 8vw 120px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .archetype-intro { margin-bottom: 44px; max-width: 760px; margin-left: auto; margin-right: auto; }
+    .archetype-text { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(0.92rem, 1vw, 1.05rem); color: #b8b8b8; line-height: 1.75; letter-spacing: 0.035em; font-weight: 300; }
     .archetype-text strong { color: #BF953F; font-weight: 500; }
-    .tool-container { width: 100%; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(191,149,63,0.2); height: 800px; position: relative; }
-    .tool-frame { width: 100%; height: 100%; border: none; filter: contrast(1.1) grayscale(0.2); }
+    .selection-panel { width: min(100%, 1060px); margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.006)); padding: clamp(24px, 4vw, 54px); text-align: left; }
+    .selection-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+    .selection-kicker { display: block; color: #BF953F; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; }
+    .selection-copy h3 { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.8rem, 3.2vw, 3.4rem); line-height: 1.15; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 22px; color: #f2f2f2; }
+    .selection-copy p { margin: 0 0 28px; color: #aaa; font-size: 0.96rem; line-height: 1.8; letter-spacing: 0.035em; }
+    .selection-points { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+    .selection-points li { border-left: 1px solid rgba(191,149,63,0.34); padding-left: 16px; color: #c8c8c8; font-size: 0.9rem; line-height: 1.6; letter-spacing: 0.03em; }
+    .selection-form { display: grid; gap: 18px; }
+    .selection-field { border: 1px solid rgba(255,255,255,0.1); padding: 18px 18px 20px; background: rgba(0,0,0,0.16); }
+    .selection-field label { display: block; color: #d9c37d; font-size: 0.76rem; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 10px; }
+    .selection-field .zh-note { margin-top: 3px; font-size: 0.78rem; letter-spacing: 0.035em; }
+    .selection-field input, .selection-field textarea, .selection-field select { width: 100%; border: 0; outline: 0; background: transparent; color: #f5f5f5; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.98rem; line-height: 1.6; padding: 2px 0; }
+    .selection-field textarea { resize: vertical; min-height: 86px; }
+    .selection-field input::placeholder, .selection-field textarea::placeholder { color: #5f5f5f; }
+    .selection-submit { margin-top: 4px; min-height: 58px; border: 1px solid rgba(191,149,63,0.34); background: transparent; color: #f1d187; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: border-color 0.35s ease, color 0.35s ease, transform 0.35s ease; }
+    .selection-submit:hover { border-color: rgba(191,149,63,0.68); color: #fff; transform: translateY(-1px); }
 
     /* --- 9. PRICING --- */
     .pricing-section { padding: 150px clamp(24px, 4vw, 56px) 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
@@ -580,6 +591,12 @@
         .gallery-container { column-count: 1; gap: 0; }
         .masterpiece-gallery, .tool-section, .pricing-section, .delivery-section, .background, .contact-section { padding-left: 6vw; padding-right: 6vw; }
         .section-subtitle { font-size: 0.78rem; letter-spacing: 0.08em; }
+        .archetype-text { font-size: 0.9rem; letter-spacing: 0.025em; }
+        .selection-panel { padding: 24px 18px; }
+        .selection-grid { grid-template-columns: 1fr; gap: 30px; }
+        .selection-copy h3 { font-size: 2rem; }
+        .selection-copy p, .selection-points li { font-size: 0.88rem; letter-spacing: 0.025em; }
+        .selection-field { padding: 16px; }
         .filter-tabs { gap: 34px; }
         .filter-btn { font-size: 0.82rem; letter-spacing: 0.08em; }
         .filter-btn .zh-note { font-size: 0.7rem; }
@@ -667,10 +684,9 @@
   </div>
 
   <section class="hero">
-    <img class="hero-bg-video" src="images/works/cover/1.png" alt="">
+    <div class="hero-trailer" id="heroTrailer" aria-hidden="true"></div>
     <div class="hero-content">
       <h1><span class="title-word">EDEN</span><span class="vertical-separator"></span><span class="title-word">DEEN</span></h1>
-      <a href="#work" class="hero-cta-btn">EXPLORE ARCHIVE<span class="zh-note">展開影像</span></a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
   </section>
@@ -707,14 +723,70 @@
   
   <section class="tool-section" id="archetype">
       <div class="section-header">
-          <h2 class="section-title metallic-gold">EDEN ARCHETYPE</h2>
-          <span class="section-subtitle">Visual Personality Analysis<span class="zh-note">專屬的視覺測驗</span></span>
+          <h2 class="section-title metallic-gold">THE EDEN SELECTION</h2>
+          <span class="section-subtitle">Model Call for Shared Creation<span class="zh-note">互惠影像邀請</span></span>
       </div>
       <div class="archetype-intro">
-          <p class="archetype-text">Decode the contrast between inner identity and outer presence.<br><span class="zh-note">看見內在輪廓與外在氣場之間的微妙落差。</span>Share your result on Instagram Stories and tag <strong>@eden_d_photo</strong><br><span class="zh-note">將結果分享至 Instagram 限時動態並標記 @eden_d_photo，將有機會入選每月互惠資格。</span></p>
+          <p class="archetype-text">A simple entry for people who want new portraits, stronger images, or a first editorial-style shoot.<br><span class="zh-note">如果你想留下新的形象照、建立作品集，或嘗試雜誌感拍攝，可以從這裡留下資料。</span></p>
       </div>
-      <div class="tool-container">
-          <iframe src="https://the-impression-audit.vercel.app/" class="tool-frame" title="EDEN 影像原型測驗"></iframe>
+      <div class="selection-panel">
+          <div class="selection-grid">
+              <div class="selection-copy">
+                  <span class="selection-kicker">OPEN ENTRY</span>
+                  <h3>Want to model for EDEN?</h3>
+                  <p>This is a quick entry for people who want to try an EDEN-style shoot. Leave your Instagram, your preferred image mood, and a short note. If your look fits an upcoming project, I will reach out by DM.</p>
+                  <ul class="selection-points">
+                      <li>No long test. A short entry is enough.</li>
+                      <li>New faces, portfolio builders, and expressive people are welcome.</li>
+                      <li>Selection is based on visual fit, schedule, and public sharing permission.</li>
+                  </ul>
+              </div>
+              <form class="selection-form" action="https://formspree.io/f/xgovddwr" method="POST">
+                  <div class="selection-field">
+                      <label>Instagram<span class="zh-note">公開帳號優先，方便確認氣質與聯繫。</span></label>
+                      <input type="text" name="instagram" required placeholder="@your_id">
+                  </div>
+                  <div class="selection-field">
+                      <label>What do you want to shoot?<span class="zh-note">你最想嘗試哪種影像？</span></label>
+                      <select name="shoot_direction" required>
+                          <option value="" disabled selected>Choose one direction</option>
+                          <option>New portraits for myself</option>
+                          <option>Portfolio / model book</option>
+                          <option>Editorial-style shoot</option>
+                          <option>I am open to EDEN's direction</option>
+                      </select>
+                  </div>
+                  <div class="selection-field">
+                      <label>Your strongest visual mood<span class="zh-note">你覺得自己最適合的氣質。</span></label>
+                      <select name="visual_mood" required>
+                          <option value="" disabled selected>Choose the closest mood</option>
+                          <option>Clean and quiet</option>
+                          <option>Cool and cinematic</option>
+                          <option>Soft and elegant</option>
+                          <option>Bold and expressive</option>
+                      </select>
+                  </div>
+                  <div class="selection-field">
+                      <label>Tell me one thing about you<span class="zh-note">一句話就好，讓我知道你為什麼想拍。</span></label>
+                      <textarea name="message" required placeholder="I want images that feel..."></textarea>
+                  </div>
+                  <div class="selection-field">
+                      <label>Where and when can you shoot?<span class="zh-note">你方便拍攝的地區與時間。</span></label>
+                      <input type="text" name="availability" placeholder="Taipei / weekends / weekday nights">
+                  </div>
+                  <div class="selection-field">
+                      <label>Can EDEN share the final images?<span class="zh-note">互惠拍攝會優先考慮可公開分享者。</span></label>
+                      <select name="sharing_permission" required>
+                          <option value="" disabled selected>Choose one option</option>
+                          <option>Yes, Instagram and portfolio use are both okay</option>
+                          <option>Yes, but I want to review first</option>
+                          <option>Selected images only</option>
+                          <option>I prefer not to share publicly</option>
+                      </select>
+                  </div>
+                  <button class="selection-submit" type="submit">Send Entry<span class="zh-note">送出互惠邀請</span></button>
+              </form>
+          </div>
       </div>
   </section>
   
@@ -918,6 +990,44 @@
 
     function getEssentialImagePath(fileName) {
       return `images/works/essentials/${encodeURIComponent(fileName)}`;
+    }
+
+    function initializeHeroTrailer() {
+      const trailer = document.getElementById('heroTrailer');
+      if (!trailer) return;
+
+      const essentialSources = essentialImages.map((fileName) => getEssentialImagePath(fileName));
+      const coverSources = magazinesData
+        .map((mag) => {
+          const firstPage = Array.isArray(mag.pages) ? mag.pages.find((page) => page && page.type === 'image') : null;
+          return firstPage ? `${mag.path}${firstPage.file}` : null;
+        })
+        .filter(Boolean);
+      const sources = [...essentialSources, ...coverSources]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 14);
+
+      if (!sources.length) {
+        sources.push('images/works/cover/1.png');
+      }
+
+      trailer.innerHTML = `
+        <img class="hero-slide active" src="${sources[0]}" alt="">
+        <img class="hero-slide" src="${sources[1] || sources[0]}" alt="">
+      `;
+
+      const slides = [...trailer.querySelectorAll('.hero-slide')];
+      let sourceIndex = 1;
+      let activeIndex = 0;
+
+      window.setInterval(() => {
+        const nextIndex = activeIndex === 0 ? 1 : 0;
+        sourceIndex = (sourceIndex + 1) % sources.length;
+        slides[nextIndex].src = sources[sourceIndex];
+        slides[nextIndex].classList.add('active');
+        slides[activeIndex].classList.remove('active');
+        activeIndex = nextIndex;
+      }, 5200);
     }
 
     function renderEssentialImageButton(fileName, index, className = 'essential-frame') {
@@ -1378,6 +1488,7 @@
     initializePricingBackgrounds();
     generateEssentials();
     generateMagazines();
+    initializeHeroTrailer();
 
     function scrollToSection(e, sectionId) {
         e.preventDefault();
