@@ -7,11 +7,14 @@ const worksDir = path.join(rootDir, 'images', 'works');
 const generator = path.join(__dirname, 'generate-magazines.js');
 const publisher = path.join(__dirname, 'auto-publish.js');
 const logFile = path.join(rootDir, 'magazines-watch.log');
+const pollIntervalMs = 2000;
+const settleDelayMs = 15000;
 let running = false;
 let pending = false;
 let publishing = false;
 let publishPending = false;
 let lastSnapshot = '';
+let lastChangeAt = 0;
 
 function log(message) {
   fs.appendFileSync(logFile, `${new Date().toISOString()} ${message}\n`, 'utf8');
@@ -86,10 +89,18 @@ lastSnapshot = snapshotDirectory(worksDir);
 
 setInterval(() => {
   const nextSnapshot = snapshotDirectory(worksDir);
-  if (nextSnapshot === lastSnapshot) return;
-  lastSnapshot = nextSnapshot;
-  log('Change detected.');
+  if (nextSnapshot !== lastSnapshot) {
+    lastSnapshot = nextSnapshot;
+    lastChangeAt = Date.now();
+    log('Change detected. Waiting for files to finish copying.');
+    return;
+  }
+
+  if (!lastChangeAt || Date.now() - lastChangeAt < settleDelayMs) return;
+
+  lastChangeAt = 0;
+  log('Changes settled. Updating site data.');
   runGenerator();
-}, 2000);
+}, pollIntervalMs);
 
 log(`Watching ${path.relative(rootDir, worksDir)} for magazine updates.`);
