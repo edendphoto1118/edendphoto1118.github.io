@@ -85,10 +85,11 @@
     /* --- 6. Hero --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; background: #000; }
     .hero-bg-video { display: none; }
-    .hero-trailer { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #000; }
-    .hero-trailer::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 44%, rgba(0,0,0,0.18), rgba(0,0,0,0.74) 62%, rgba(0,0,0,0.94) 100%), linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.7)); z-index: 3; pointer-events: none; }
-    .hero-slide { position: absolute; inset: -3vh -3vw; width: 106vw; height: 106vh; object-fit: cover; opacity: 0; filter: brightness(0.42) contrast(1.08) saturate(0.72); transform: scale(1.05); transition: opacity 2.2s ease, transform 8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .hero-slide.active { opacity: 0.34; transform: scale(1); }
+    .hero-trailer { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #030303; }
+    .hero-trailer::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.62), rgba(0,0,0,0.18) 42%, rgba(0,0,0,0.52)), linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.34)); z-index: 2; pointer-events: none; }
+    .hero-trailer::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 48%, rgba(255,255,255,0.045), rgba(0,0,0,0.18) 64%, rgba(0,0,0,0.44) 100%); z-index: 3; pointer-events: none; }
+    .hero-slide { position: absolute; inset: -2vh -2vw; width: 104vw; height: 104vh; object-fit: cover; object-position: center 42%; opacity: 0; filter: grayscale(82%) brightness(0.84) contrast(0.96) saturate(0.86); transform: scale(1.035); transition: opacity 2.2s ease, transform 9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .hero-slide.active { opacity: 0.48; transform: scale(1); }
     .hero-content { z-index: 2; opacity: 0; transform: translateY(30px); width: 100%; padding: 0 20px; transition: opacity 2s ease, transform 2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
     body.site-active .hero-content { opacity: 1; transform: translateY(0); }
     .hero h1 { font-family: 'Cinzel', serif; font-size: 4.5vw; line-height: 1; font-weight: 400; letter-spacing: 0.4em; margin: 0; background: linear-gradient(135deg, #d8d8d8 0%, #ffffff 50%, #9e9e9e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,0.9); white-space: nowrap; display: flex; align-items: center; justify-content: center; }
@@ -999,13 +1000,18 @@
       const essentialSources = essentialImages.map((fileName) => getEssentialImagePath(fileName));
       const coverSources = magazinesData
         .map((mag) => {
-          const firstPage = Array.isArray(mag.pages) ? mag.pages.find((page) => page && page.type === 'image') : null;
-          return firstPage ? `${mag.path}${firstPage.file}` : null;
+          if (!Array.isArray(mag.pages)) return null;
+          const firstPage = mag.pages.find((page) => {
+            if (typeof page === 'string') return /\.(png|jpe?g|webp|gif)$/i.test(page);
+            return page && page.type === 'image';
+          });
+          if (!firstPage) return null;
+          const fileName = typeof firstPage === 'string' ? firstPage : firstPage.file;
+          return fileName ? `${mag.path}${fileName}` : null;
         })
         .filter(Boolean);
-      const sources = [...essentialSources, ...coverSources]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 14);
+      const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
+      const sources = (coverSources.length ? shuffle(coverSources) : shuffle(essentialSources)).slice(0, 14);
 
       if (!sources.length) {
         sources.push('images/works/cover/1.png');
