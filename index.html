@@ -74,13 +74,13 @@
     .menu-overlay.active { opacity: 1; visibility: visible; }
     
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-    .menu-link { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.08em; position: relative; transform: translateY(14px); opacity: 0; transition: transform 0.36s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.36s, color 0.28s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.28s; }
-    .menu-link .zh-note { font-size: 0.9rem; letter-spacing: 0.08em; margin-top: 6px; }
+    .menu-link { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3rem; color: #c9c9c9; text-decoration: none; letter-spacing: 0.07em; position: relative; transform: translateY(14px); opacity: 0; transition: transform 0.36s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.36s, color 0.28s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.28s; }
+    .menu-link .zh-note { font-size: 0.9rem; letter-spacing: 0.04em; margin-top: 6px; color: #a7a7a7; -webkit-text-fill-color: #a7a7a7; }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
     .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.03s; } .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.06s; }
     .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.09s; } .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.12s; }
     .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.15s; }
-    .menu-link:hover { color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(191,149,63,0.2); }
+    .menu-link:hover { color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.45), 0 0 30px rgba(191,149,63,0.18); }
 
     /* --- 6. Hero --- */
     .hero { height: 100vh; position: relative; overflow: hidden; width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; background: #000; }
@@ -405,15 +405,17 @@
     .selection-panel { width: min(100%, 1060px); margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.006)); padding: clamp(24px, 4vw, 54px); text-align: left; }
     .selection-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
     .selection-kicker { display: block; color: #BF953F; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; }
-    .selection-copy h3 { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.8rem, 3.2vw, 3.4rem); line-height: 1.15; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 22px; color: #f2f2f2; }
-    .selection-copy p { margin: 0 0 28px; color: #aaa; font-size: 0.96rem; line-height: 1.8; letter-spacing: 0.035em; }
-    .selection-points { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
-    .selection-points li { border-left: 1px solid rgba(191,149,63,0.34); padding-left: 16px; color: #c8c8c8; font-size: 0.9rem; line-height: 1.6; letter-spacing: 0.03em; }
+    .selection-copy h3 { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.8rem, 3.2vw, 3.4rem); line-height: 1.15; letter-spacing: 0.055em; font-weight: 400; margin: 0 0 20px; color: #f2f2f2; }
+    .selection-copy p { margin: 0 0 24px; color: #b6b6b6; font-size: 0.98rem; line-height: 1.72; letter-spacing: 0.005em; }
+    .selection-points { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .selection-points li { border-left: 1px solid rgba(191,149,63,0.34); padding-left: 16px; color: #c8c8c8; font-size: 0.9rem; line-height: 1.55; letter-spacing: 0.005em; }
     .selection-form { display: grid; gap: 18px; }
     .selection-field { border: 1px solid rgba(255,255,255,0.1); padding: 18px 18px 20px; background: rgba(0,0,0,0.16); }
-    .selection-field label { display: block; color: #d9c37d; font-size: 0.76rem; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 10px; }
-    .selection-field .zh-note { margin-top: 3px; font-size: 0.78rem; letter-spacing: 0.035em; }
+    .selection-field label { display: block; color: #d9c37d; font-size: 0.76rem; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 10px; }
+    .selection-field .zh-note { margin-top: 3px; font-size: 0.78rem; letter-spacing: 0.02em; }
     .selection-field input, .selection-field textarea, .selection-field select { width: 100%; border: 0; outline: 0; background: transparent; color: #f5f5f5; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.98rem; line-height: 1.6; padding: 2px 0; }
+    .selection-field select option { background: #0b0b0b; color: #f2f2f2; }
+    .selection-field select option:disabled { color: #777; }
     .selection-field textarea { resize: vertical; min-height: 86px; }
     .selection-field input::placeholder, .selection-field textarea::placeholder { color: #5f5f5f; }
     .selection-submit { margin-top: 4px; min-height: 58px; border: 1px solid rgba(191,149,63,0.34); background: transparent; color: #f1d187; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: border-color 0.35s ease, color 0.35s ease, transform 0.35s ease; }
@@ -596,7 +598,7 @@
         .selection-panel { padding: 24px 18px; }
         .selection-grid { grid-template-columns: 1fr; gap: 30px; }
         .selection-copy h3 { font-size: 2rem; }
-        .selection-copy p, .selection-points li { font-size: 0.88rem; letter-spacing: 0.025em; }
+        .selection-copy p, .selection-points li { font-size: 0.88rem; letter-spacing: 0.005em; }
         .selection-field { padding: 16px; }
         .filter-tabs { gap: 34px; }
         .filter-btn { font-size: 0.82rem; letter-spacing: 0.08em; }
@@ -728,18 +730,18 @@
           <span class="section-subtitle">Model Call for Shared Creation<span class="zh-note">互惠影像邀請</span></span>
       </div>
       <div class="archetype-intro">
-          <p class="archetype-text">A simple entry for people who want new portraits, stronger images, or a first editorial-style shoot.<br><span class="zh-note">如果你想留下新的形象照、建立作品集，或嘗試雜誌感拍攝，可以從這裡留下資料。</span></p>
+          <p class="archetype-text">For new portraits, portfolio building, or an EDEN-style shoot.<br><span class="zh-note">想留下新形象、建立作品集，或嘗試 EDEN 風格拍攝，可以從這裡開始。</span></p>
       </div>
       <div class="selection-panel">
           <div class="selection-grid">
               <div class="selection-copy">
                   <span class="selection-kicker">OPEN ENTRY</span>
                   <h3>Want to model for EDEN?</h3>
-                  <p>This is a quick entry for people who want to try an EDEN-style shoot. Leave your Instagram, your preferred image mood, and a short note. If your look fits an upcoming project, I will reach out by DM.</p>
+                  <p>Leave your Instagram and the image mood you want. If your look fits an upcoming EDEN shoot, I will DM you.</p>
                   <ul class="selection-points">
-                      <li>No long test. A short entry is enough.</li>
-                      <li>New faces, portfolio builders, and expressive people are welcome.</li>
-                      <li>Selection is based on visual fit, schedule, and public sharing permission.</li>
+                      <li>Short entry. No test.</li>
+                      <li>New faces and portfolio builders welcome.</li>
+                      <li>Priority goes to public-share friendly shoots.</li>
                   </ul>
               </div>
               <form class="selection-form" action="https://formspree.io/f/xgovddwr" method="POST">
