@@ -35,17 +35,6 @@
     .loader-text { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; text-transform: uppercase; letter-spacing: 0.4em; margin-right: -0.4em; }
     .loader-sep { height: 2.5rem; margin: 0 40px; }
     @keyframes opticalEmerge { 0% { opacity: 0; transform: scale(1.05); filter: blur(15px); letter-spacing: 0.6em; } 100% { opacity: 1; transform: scale(1); filter: blur(0); letter-spacing: 0.4em; } }
-    .enter-btn-wrapper { position: absolute; bottom: 15vh; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 1s ease; pointer-events: none; }
-    .enter-btn-wrapper.ready { opacity: 1; pointer-events: auto; }
-    .enter-btn { background: transparent; border: 0; color: #f5f5f7; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 14px 44px 18px; transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.42s ease; white-space: nowrap; position: relative; }
-    .enter-btn::before, .enter-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.48s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.42s ease; pointer-events: none; }
-    .enter-btn::before { width: 64%; background: rgba(255,255,255,0.24); }
-    .enter-btn::after { width: 18%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.9), transparent); opacity: 0.72; }
-    .enter-btn .zh-note { font-size: 0.7rem; letter-spacing: 0.07em; color: #8f8f94; transition: color 0.42s ease; }
-    .enter-btn:hover { transform: translateY(-1px); color: #fff; }
-    .enter-btn:hover::before { width: 78%; opacity: 0.85; }
-    .enter-btn:hover::after { width: 48%; opacity: 1; }
-    .enter-btn:hover .zh-note { color: #b2b2b6; }
     body.site-active #preloader { opacity: 0; visibility: hidden; }
 
     /* --- 4. Navigation --- */
@@ -172,8 +161,11 @@
     .essentials-rail {
         display: grid; grid-auto-flow: column; grid-auto-columns: max-content; gap: clamp(18px, 2.2vw, 34px);
         overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory;
-        padding: 6px 4vw 34px; -webkit-overflow-scrolling: touch;
+        padding: 6px 4vw 34px; -webkit-overflow-scrolling: touch; cursor: grab; scroll-behavior: smooth;
+        touch-action: pan-x; user-select: none;
     }
+    .essentials-rail.is-dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+    .essentials-rail.is-dragging .essential-frame { pointer-events: none; }
     .essentials-rail::-webkit-scrollbar { height: 6px; }
     .essentials-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
     .essentials-rail::-webkit-scrollbar-thumb { background: rgba(191,149,63,0.45); border-radius: 999px; }
@@ -241,8 +233,11 @@
     .magazine-rail {
         display: grid; grid-auto-flow: column; grid-auto-columns: clamp(190px, 20vw, 260px); gap: 22px;
         overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 4px;
-        padding: 6px 4px 26px; margin-bottom: 42px; -webkit-overflow-scrolling: touch;
+        padding: 6px 4px 26px; margin-bottom: 42px; -webkit-overflow-scrolling: touch; cursor: grab; scroll-behavior: smooth;
+        touch-action: pan-x; user-select: none;
     }
+    .magazine-rail.is-dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+    .magazine-rail.is-dragging .magazine-card { pointer-events: none; }
     .magazine-rail::-webkit-scrollbar { height: 6px; }
     .magazine-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
     .magazine-rail::-webkit-scrollbar-thumb { background: rgba(191,149,63,0.45); border-radius: 999px; }
@@ -630,9 +625,6 @@
     <div class="loader-content-wrap">
         <span class="loader-text title-word">EDEN</span><span class="vertical-separator loader-sep"></span><span class="loader-text title-word">DEEN</span>
     </div>
-    <div class="enter-btn-wrapper" id="enterWrapper">
-        <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE<span class="zh-note">入境典藏</span></button>
-    </div>
   </div>
 
   <div class="top-bar">
@@ -831,12 +823,17 @@
   <script src="magazines-data.js"></script>
   <script>
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
-    window.addEventListener('load', () => { window.scrollTo(0, 0); });
-    setTimeout(() => { document.getElementById('enterWrapper').classList.add('ready'); }, 2500);
+    window.addEventListener('load', () => {
+        window.scrollTo(0, 0);
+        window.setTimeout(enterArchive, 3200);
+    });
 
     function enterArchive() {
+        if (document.body.classList.contains('site-active')) return;
         const audio = document.getElementById('bgMusic');
-        audio.volume = 0; audio.play().catch(e=>console.log("音樂播放被瀏覽器暫停"));
+        audio.muted = true;
+        audio.volume = 0;
+        audio.play().catch(e=>console.log("音樂播放被瀏覽器暫停"));
         let vol = 0; setInterval(() => { if(vol<0.4) { vol+=0.05; audio.volume=vol; } }, 200);
         document.getElementById('preloader').style.opacity = 0;
         setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 1500);
@@ -929,6 +926,64 @@
       frame.style.setProperty('--essential-width', `${width}px`);
     }
 
+    function enableSilkyHorizontalRail(rail) {
+      if (!rail) return;
+
+      let isPointerDown = false;
+      let hasDragged = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+      let pointerId = null;
+
+      rail.addEventListener('wheel', (event) => {
+        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+        const maxScroll = rail.scrollWidth - rail.clientWidth;
+        if (maxScroll <= 0) return;
+        const nextScrollLeft = rail.scrollLeft + event.deltaY;
+        const isInsideRail = nextScrollLeft > 0 && nextScrollLeft < maxScroll;
+        const isAtEdge = rail.scrollLeft <= 0 || rail.scrollLeft >= maxScroll;
+        if (!isInsideRail && isAtEdge) return;
+        event.preventDefault();
+        rail.scrollBy({ left: event.deltaY, behavior: 'auto' });
+      }, { passive: false });
+
+      rail.addEventListener('pointerdown', (event) => {
+        if (event.button !== undefined && event.button !== 0) return;
+        isPointerDown = true;
+        hasDragged = false;
+        startX = event.clientX;
+        startScrollLeft = rail.scrollLeft;
+        pointerId = event.pointerId;
+        rail.classList.add('is-dragging');
+        rail.setPointerCapture(pointerId);
+      });
+
+      rail.addEventListener('pointermove', (event) => {
+        if (!isPointerDown) return;
+        const deltaX = event.clientX - startX;
+        if (Math.abs(deltaX) > 4) hasDragged = true;
+        rail.scrollLeft = startScrollLeft - deltaX;
+      });
+
+      const endDrag = () => {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        rail.classList.remove('is-dragging');
+        if (pointerId !== null && rail.hasPointerCapture(pointerId)) rail.releasePointerCapture(pointerId);
+        pointerId = null;
+      };
+
+      rail.addEventListener('pointerup', endDrag);
+      rail.addEventListener('pointercancel', endDrag);
+      rail.addEventListener('lostpointercapture', endDrag);
+      rail.addEventListener('click', (event) => {
+        if (!hasDragged) return;
+        event.preventDefault();
+        event.stopPropagation();
+        hasDragged = false;
+      }, true);
+    }
+
     function generateEssentials() {
       if (!containerEssentials) return;
       containerEssentials.innerHTML = '';
@@ -957,6 +1012,7 @@
       `;
 
       const essentialsRail = document.getElementById('essentialsRail');
+      enableSilkyHorizontalRail(essentialsRail);
       document.getElementById('essentialsPrev').onclick = () => essentialsRail.scrollBy({ left: -essentialsRail.clientWidth * 0.85, behavior: 'smooth' });
       document.getElementById('essentialsNext').onclick = () => essentialsRail.scrollBy({ left: essentialsRail.clientWidth * 0.85, behavior: 'smooth' });
       document.getElementById('openEssentialsArchive').onclick = openEssentialsArchive;
@@ -1297,6 +1353,7 @@
 
         prevBtn.onclick = () => rail.scrollBy({ left: -rail.clientWidth * 0.85, behavior: 'smooth' });
         nextBtn.onclick = () => rail.scrollBy({ left: rail.clientWidth * 0.85, behavior: 'smooth' });
+        enableSilkyHorizontalRail(rail);
     }
 
     function updateMagazineCenter(magElement, hintElement, current, total, hasNextIssue) {
@@ -1328,7 +1385,20 @@
 
     function openLightbox(el) { if (!el) return; document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.src; document.body.classList.add('lightbox-open'); }
     function closeLightbox() { document.getElementById("lightbox").classList.remove('active'); document.body.classList.remove('lightbox-open'); }
-    function toggleAudio() { const a = document.getElementById('bgMusic'), w = document.querySelector('#soundWave'), b = document.getElementById('topAudioBtn'); if(a.paused) { a.play(); w.classList.remove('paused'); b.classList.add('active'); } else { a.pause(); w.classList.add('paused'); b.classList.remove('active'); } }
+    function toggleAudio() {
+        const a = document.getElementById('bgMusic'), w = document.querySelector('#soundWave'), b = document.getElementById('topAudioBtn');
+        if (a.paused || a.muted) {
+            a.muted = false;
+            a.volume = 0.4;
+            a.play();
+            w.classList.remove('paused');
+            b.classList.add('active');
+        } else {
+            a.pause();
+            w.classList.add('paused');
+            b.classList.remove('active');
+        }
+    }
   </script>
 </body>
 </html>
