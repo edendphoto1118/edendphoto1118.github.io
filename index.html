@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* --- 1. Base & Reset --- */
@@ -26,7 +26,7 @@
     .metallic-gold { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #BF953F; text-shadow: 0 0 1px rgba(191, 149, 63, 0.3); }
     .metallic-silver { background: linear-gradient(135deg, #cfcfcf 0%, #ffffff 45%, #a8a8a8 70%, #d4d4d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #fff; text-shadow: 0 0 2px rgba(255, 255, 255, 0.2); }
     .vertical-separator { display: inline-block; width: 1px; background: linear-gradient(to bottom, transparent 0%, #ffffff 50%, transparent 100%); opacity: 0.8; box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
-    .zh-note { display: block; margin-top: 8px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(11px, 0.76em, 14px); letter-spacing: 0.06em; line-height: 1.7; color: #949494; -webkit-text-fill-color: #949494; background: none; font-weight: 300; text-transform: none; }
+    .zh-note { display: block; margin-top: 4px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(11px, 0.78em, 14px); letter-spacing: 0.04em; line-height: 1.55; color: #949494; -webkit-text-fill-color: #949494; background: none; font-weight: 300; text-transform: none; }
 
     /* --- 2. Texture & Preloader --- */
     .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); z-index: 9000; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay; }
@@ -70,16 +70,16 @@
         45% { background: rgba(255,255,255,1); box-shadow: 0 0 14px rgba(191,149,63,0.58), 0 0 28px rgba(191,149,63,0.18); }
     }
     
-    .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s; }
+    .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.32s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.32s; }
     .menu-overlay.active { opacity: 1; visibility: visible; }
     
     .menu-items { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-    .menu-link { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.08em; position: relative; transform: translateY(20px); opacity: 0; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s, color 0.6s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s; }
-    .menu-link .zh-note { font-size: 0.9rem; letter-spacing: 0.1em; }
+    .menu-link { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3rem; color: #555; text-decoration: none; letter-spacing: 0.08em; position: relative; transform: translateY(14px); opacity: 0; transition: transform 0.36s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.36s, color 0.28s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.28s; }
+    .menu-link .zh-note { font-size: 0.9rem; letter-spacing: 0.08em; margin-top: 6px; }
     .menu-overlay.active .menu-link { transform: translateY(0); opacity: 1; }
-    .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.1s; } .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.2s; }
-    .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.3s; } .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.4s; }
-    .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.5s; }
+    .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.03s; } .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.06s; }
+    .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.09s; } .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.12s; }
+    .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.15s; }
     .menu-link:hover { color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(191,149,63,0.2); }
 
     /* --- 6. Hero --- */
@@ -92,12 +92,12 @@
     
     .hero .vertical-separator { height: 1.5em; width: 1px; margin: 0 3.5vw; }
     .hero p { margin-top: 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.62); }
-    .hero-cta-btn { margin-top: 50px; background: transparent; border: 0; color: #f5f5f7; padding: 13px 30px 17px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; position: relative; }
+    .hero-cta-btn { margin-top: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.14); color: #f5f5f7; padding: 14px 32px 18px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease, border-color 0.35s ease; text-decoration: none; opacity: 0; animation: fadeIn 2s 1.5s forwards; position: relative; }
     .hero-cta-btn::before, .hero-cta-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.46s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; pointer-events: none; }
     .hero-cta-btn::before { width: 62%; background: rgba(255,255,255,0.22); }
     .hero-cta-btn::after { width: 16%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.7; }
     .hero p .zh-note, .hero-cta-btn .zh-note { font-size: 0.68rem; letter-spacing: 0.08em; }
-    .hero-cta-btn:hover { transform: translateY(-1px); color: #fff; }
+    .hero-cta-btn:hover { transform: translateY(-1px); color: #fff; border-color: rgba(191,149,63,0.38); }
     .hero-cta-btn:hover::before { width: 78%; opacity: 0.82; }
     .hero-cta-btn:hover::after { width: 48%; opacity: 1; }
     .scroll-indicator { position: relative; width: 2px; height: 70px; overflow: hidden; opacity: 0; animation: fadeIn 2s 2s forwards; z-index: 5; margin-bottom: 30px; }
@@ -114,19 +114,19 @@
     .section-subtitle .zh-note { margin-top: 6px; font-size: 0.82rem; }
     
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 80px; flex-wrap: wrap; width: 100%; z-index: 10; position: relative; }
-    .filter-btn { background: transparent; border: none; color: #666; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; position: relative; padding-bottom: 10px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
+    .filter-btn { background: transparent; border: 1px solid transparent; color: #666; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; position: relative; padding: 12px 18px 16px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
     .filter-btn .zh-note { margin-top: 5px; font-size: 0.72rem; letter-spacing: 0.06em; }
-    .filter-btn:hover, .filter-btn.active { color: #fff; }
+    .filter-btn:hover, .filter-btn.active { color: #fff; border-color: rgba(255,255,255,0.12); }
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .filter-btn.active::after { width: 100%; }
 
     /* Locked Filter Animation */
-    .locked-filter-wrap { position: relative; display: inline-block; cursor: pointer; padding-bottom: 10px; }
-    .locked-filter-wrap .filter-btn { pointer-events: none; padding-bottom: 0; }
+    .locked-filter-wrap { position: relative; display: inline-block; cursor: pointer; }
+    .locked-filter-wrap .filter-btn { pointer-events: none; }
     .locked-filter-wrap::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
     .locked-filter-wrap:hover::after { width: 100%; }
     .mini-sealing { position: absolute; top: 0; left: -10%; width: 120%; height: 100%; pointer-events: none; z-index: 10; opacity: 0; transition: opacity 0.3s; overflow: hidden; }
-    .mini-tape { position: absolute; background: #fff; color: #000; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.45rem; letter-spacing: 0.1em; padding: 2px 0; width: 150%; text-align: center; white-space: nowrap; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+    .mini-tape { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-weight: 700; font-size: 0.45rem; letter-spacing: 0.1em; padding: 2px 0; width: 150%; text-align: center; white-space: nowrap; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
     .mini-tape::before { content: 'LOCKED  鎖定中  LOCKED  鎖定中'; }
     .mini-tape-left { top: 20%; left: -25%; transform: rotate(12deg) translateX(-100%); }
     .mini-tape-right { top: 60%; left: -25%; transform: rotate(-12deg) translateX(100%); }
@@ -136,7 +136,7 @@
     .locked-filter-wrap:hover .filter-btn { opacity: 0.3; }
 
     /* Toast Notification */
-    #toast-msg { position: fixed; top: 120px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(191, 149, 63, 0.1); border: 1px solid rgba(191, 149, 63, 0.5); color: #BF953F; padding: 15px 40px; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0; visibility: hidden; z-index: 99999; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(10px); text-align: center; line-height: 1.6; text-transform: uppercase; box-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
+    #toast-msg { position: fixed; top: 120px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(191, 149, 63, 0.1); border: 1px solid rgba(191, 149, 63, 0.5); color: #BF953F; padding: 15px 40px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0; visibility: hidden; z-index: 99999; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(10px); text-align: center; line-height: 1.6; text-transform: uppercase; box-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
     #toast-msg.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
     /* Gallery Sub Sections */
@@ -155,8 +155,8 @@
     /* --- Essentials Curated Rail --- */
     .essentials-shell { position: relative; width: 100%; }
     .essentials-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 22px; }
-    .essentials-label { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; color: #888; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.8; }
-    .essentials-count { font-family: 'Space Mono', monospace; color: #555; font-size: 0.68rem; letter-spacing: 0.14em; white-space: nowrap; }
+    .essentials-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #888; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.8; }
+    .essentials-count { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #555; font-size: 0.68rem; letter-spacing: 0.14em; white-space: nowrap; }
     .essentials-rail-wrap { position: relative; margin-left: -4vw; margin-right: -4vw; }
     .essentials-rail {
         display: grid; grid-auto-flow: column; grid-auto-columns: max-content; gap: clamp(18px, 2.2vw, 34px);
@@ -189,7 +189,7 @@
     .essentials-rail-controls { position: absolute; top: 50%; right: 4vw; transform: translateY(-50%); display: flex; gap: 12px; z-index: 5; }
     .essentials-footer { display: flex; justify-content: center; margin-top: 18px; }
     .essential-full-btn {
-        border: 0; background: transparent; color: #f5f5f7; cursor: pointer; position: relative;
+        border: 1px solid rgba(255,255,255,0.12); background: transparent; color: #f5f5f7; cursor: pointer; position: relative;
         padding: 14px 34px 18px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
         font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
         transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
@@ -197,7 +197,7 @@
     .essential-full-btn::before, .essential-full-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.46s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; }
     .essential-full-btn::before { width: 68%; background: rgba(255,255,255,0.18); }
     .essential-full-btn::after { width: 24%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.78; }
-    .essential-full-btn:hover { transform: translateY(-1px); color: #fff; }
+    .essential-full-btn:hover { transform: translateY(-1px); color: #fff; border-color: rgba(191,149,63,0.35); }
     .essential-full-btn:hover::before { width: 84%; opacity: 0.88; }
     .essential-full-btn:hover::after { width: 56%; opacity: 1; }
 
@@ -218,12 +218,12 @@
     /* --- Magazine Carousel Reader --- */
     .magazine-carousel-shell { width: 100%; max-width: 1600px; margin: 0 auto; position: relative; }
     .magazine-rail-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
-    .rail-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: #888; letter-spacing: 0.22em; text-transform: uppercase; }
+    .rail-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; color: #888; letter-spacing: 0.22em; text-transform: uppercase; }
     .rail-controls { display: flex; align-items: center; gap: 10px; }
     .rail-nav-btn, .reader-close-btn {
         width: 44px; height: 44px; border: 0; background: transparent;
         color: #cfcfd2; display: inline-flex; align-items: center; justify-content: center;
-        font-family: 'Space Mono', monospace; font-size: 1.2rem; line-height: 1; cursor: pointer;
+        font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 1.2rem; line-height: 1; cursor: pointer;
         transition: color 0.35s ease, transform 0.35s ease;
         border-radius: 50%; position: relative;
     }
@@ -253,7 +253,7 @@
     .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(0%) contrast(1) brightness(1); transition: transform 0.55s ease; }
     .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.preview-press .magazine-card-media img, .magazine-card.preview-press .magazine-card-media video { transform: scale(1.035); }
     .magazine-card-info { min-height: 92px; padding: 18px 18px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
-    .magazine-card-title { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.8rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .magazine-card-title { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
     .magazine-card-title .zh-note { font-size: clamp(10px, 0.82em, 12px); }
     .magazine-card-meta { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem; color: #858585; letter-spacing: 0.1em; text-transform: uppercase; }
     .magazine-reader-panel {
@@ -264,7 +264,7 @@
     }
     .magazine-reader-panel.open { max-height: 860px; opacity: 1; transform: translateY(0); padding: 42px 0 52px; overflow: visible; }
     .reader-meta { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 24px; min-width: 0; }
-    .reader-kicker { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.26em; text-transform: uppercase; }
+    .reader-kicker { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.26em; text-transform: uppercase; }
     .reader-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.08em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
     .reader-title .zh-note { font-size: clamp(10px, 0.44em, 14px); }
     .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.74rem; color: #888; letter-spacing: 0.18em; text-transform: uppercase; }
@@ -364,14 +364,14 @@
         bottom: 28px;
         left: 50%;
         transform: translateX(-50%);
-        font-family: 'Space Mono', monospace;
+        font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
         font-size: 0.74rem;
         color: #c6a45d;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         animation: pulseBorder 2s infinite;
         transition: all 0.4s ease;
-        border: 0;
+        border: 1px solid rgba(255,255,255,0.13);
         padding: 10px 22px 14px;
         background: transparent;
         z-index: 100;
@@ -421,16 +421,18 @@
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease, background-image 0.25s ease; z-index: 0; background-size: cover; background-position: center; filter: brightness(0.4); }
     .price-card:hover .card-bg, .price-card.bg-preview .card-bg { opacity: 0.3; transform: scale(1.05); }
     
-    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: clamp(24px, 2.35vw, 34px) clamp(24px, 2.35vw, 36px); justify-content: space-between; }
+    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: clamp(26px, 2.45vw, 38px) clamp(24px, 2.35vw, 38px); justify-content: space-between; }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1.05rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
-    .plan-title-block { margin-bottom: clamp(12px, 1.4vw, 18px); }
-    .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(2.05rem, 2.1vw, 2.45rem); letter-spacing: 0.08em; color: #fff; margin-bottom: 10px; }
-    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.98rem; letter-spacing: 0.06em; color: #9a9a9a; font-weight: 300; }
-    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.96rem; color: #b5b5b5; line-height: 1.45; font-weight: 300; text-align: left; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 18px; margin: 0; }
-    .plan-philosophy .zh-note { letter-spacing: 0.04em; line-height: 1.55; }
+    .plan-title-block { margin-bottom: clamp(16px, 1.6vw, 22px); }
+    .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(2.1rem, 2.15vw, 2.52rem); letter-spacing: 0.08em; color: #fff; margin-bottom: 6px; }
+    .plan-zh { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 1.04rem; letter-spacing: 0.045em; color: #aaa; font-weight: 300; }
+    .plan-philosophy { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(0.94rem, 0.86vw, 1rem); color: #bdbdbd; line-height: 1.5; font-weight: 300; text-align: left; border-left: 1px solid rgba(255,255,255,0.12); padding-left: 20px; margin: 0; }
+    .plan-line { display: block; margin-top: 14px; }
+    .plan-line:first-child { margin-top: 0; }
+    .plan-line .zh-note { margin-top: 5px; letter-spacing: 0.035em; line-height: 1.45; color: #8e8e8e; }
     .archetype-text .zh-note, .delivery-card .zh-note, .about-slogan-sub .zh-note { letter-spacing: 0.04em; line-height: 1.85; }
     .plan-footer { margin-top: auto; }
-    .artifact-info { display: block; font-family: 'Space Mono', monospace; font-size: 0.76rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .artifact-info { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.76rem; color: #BF953F; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
     .current-price, .plan-status { font-family: 'Cinzel', serif; font-size: 1.9rem; display: block; color: #fff; }
     .plan-status { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.28em; max-width: 100%; font-size: clamp(1.15rem, 1.9vw, 1.85rem); letter-spacing: 0.08em; line-height: 1.2; }
     .plan-status .status-en { display: inline-flex; align-items: center; justify-content: center; gap: 0.28em; white-space: nowrap; max-width: 100%; }
@@ -451,10 +453,10 @@
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
     @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
     
-    .spec-list { margin-top: auto; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
+    .spec-list { margin-top: clamp(22px, 2vw, 34px); border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .spec-key { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
-    .spec-val { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
+    .spec-key { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
+    .spec-val { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
     .spec-val .zh-note { margin-top: 4px; font-size: 0.72rem; line-height: 1.35; }
     .spec-highlight { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
     .spec-gold { color: #BF953F; }
@@ -476,14 +478,14 @@
 
     /* --- 11. Booking --- */
     .booking-cta-section { padding: 100px 0; text-align: center; background: #050505; }
-    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: none; cursor: pointer; position: relative; overflow: visible; outline: none; transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1); width: auto; transform: translateZ(0); }
+    .ritual-btn { display: block; margin: 0 auto; padding: 0; background: transparent; border: 1px solid rgba(255,255,255,0.16); cursor: pointer; position: relative; overflow: visible; outline: none; transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease, box-shadow 0.35s ease; width: min(88vw, 560px); transform: translateZ(0); }
     .btn-glow { position: absolute; left: 50%; bottom: 0; width: 48%; height: 1px; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.84), transparent); opacity: 0.72; transition: width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease; z-index: 3; transform: translateX(-50%); }
     .ritual-btn.in-view .btn-glow { opacity: 0.9; }
     .btn-bg { position: absolute; left: 50%; bottom: 0; width: 72%; height: 1px; background: rgba(255,255,255,0.18); z-index: 2; transition: width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease; transform: translateX(-50%); }
-    .btn-content { position: relative; z-index: 2; padding: 30px 96px 34px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
-    .btn-en { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; }
-    .btn-zh { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.5em; color: #BF953F; margin-right: -0.5em; opacity: 0.9; }
-    .ritual-btn:hover { transform: translateY(-2px) translateZ(0); }
+    .btn-content { position: relative; z-index: 2; padding: 34px 56px 38px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+    .btn-en { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.55rem, 2.4vw, 2.25rem); letter-spacing: 0.12em; color: #fff; line-height: 1.15; }
+    .btn-zh { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(1rem, 1.25vw, 1.22rem); letter-spacing: 0.28em; color: #BF953F; margin-right: -0.28em; opacity: 0.95; }
+    .ritual-btn:hover { transform: translateY(-2px) translateZ(0); border-color: rgba(191,149,63,0.42); box-shadow: 0 18px 46px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.05); }
     .ritual-btn:hover .btn-glow { width: 64%; opacity: 1; }
     .ritual-btn:hover .btn-bg { width: 86%; opacity: 0.9; }
     @keyframes spinGlow { 0% { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); } }
@@ -491,19 +493,19 @@
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
     .booking-interface { width: 100%; max-width: 900px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 60px; position: relative; }
-    .booking-interface::before { content: 'TERMINAL // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
+    .booking-interface::before { content: 'BOOKING // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
     .custom-booking-form { width: 100%; margin-top: 40px; }
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .form-group label { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; color: #BF953F; margin-bottom: 5px; line-height: 1.7; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Cinzel', serif; font-size: 1rem; padding: 10px 0; outline: none; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 1rem; padding: 10px 0; outline: none; }
     .form-group select option:disabled { color: #555; background: #000; }
     .form-group select option { background: #111; color: #fff; padding: 10px; }
     #plan-details-box { background: rgba(191,149,63, 0.05); border: 1px solid rgba(191,149,63, 0.2); padding: 30px; margin: 30px 0; display: none; }
-    .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+    .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
     .detail-val { color: #fff; }
     .deposit-row { margin-top: 20px; border-top: 1px solid rgba(191,149,63,0.3); padding-top: 15px; color: #BF953F; font-weight: bold; }
     .confirmation-text { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #666; text-align: center; margin-top: 30px; line-height: 1.6; }
-    .submit-btn { width: 100%; padding: 20px 20px 24px; margin-top: 20px; background: transparent; border: 0; color: #d9b45e; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.86rem; letter-spacing: 0.12em; cursor: pointer; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.35s ease; position: relative; }
+    .submit-btn { width: 100%; padding: 20px 20px 24px; margin-top: 20px; background: transparent; border: 1px solid rgba(191,149,63,0.24); color: #d9b45e; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; letter-spacing: 0.12em; cursor: pointer; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.35s ease, border-color 0.35s ease; position: relative; }
     .submit-btn::before, .submit-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease; pointer-events: none; }
     .submit-btn::before { width: 72%; background: rgba(255,255,255,0.16); }
     .submit-btn::after { width: 34%; background: linear-gradient(90deg, transparent, rgba(191,149,63,0.86), transparent); opacity: 0.85; }
@@ -521,18 +523,29 @@
     /* --- 14. Contact --- */
     .contact-section { padding: 100px 8vw 50px; text-align: center; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); }
     .contact-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 50px; font-weight: 400; color: #555; }
-    .contact-links { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-    .social-link { font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.84rem; color: #999; text-decoration: none; letter-spacing: 0.1em; transition: all 0.4s ease; position: relative; padding-bottom: 5px; cursor: pointer; }
-    .social-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
-    .social-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    .contact-links { display: flex; justify-content: center; gap: clamp(14px, 2vw, 24px); flex-wrap: wrap; }
+    .social-link {
+        min-width: 156px; min-height: 54px; display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+        font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; color: #9b9b9b;
+        text-decoration: none; letter-spacing: 0.11em; transition: color 0.35s ease, border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
+        position: relative; padding: 13px 18px 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.012);
+    }
+    .social-link::after { content: ''; position: absolute; bottom: 8px; left: 50%; width: 26%; height: 1px; background: rgba(191,149,63,0.45); transition: width 0.35s ease, opacity 0.35s ease; transform: translateX(-50%); opacity: 0.62; }
+    .social-icon {
+        width: 26px; height: 26px; border: 1px solid rgba(191,149,63,0.42); border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center; color: #d9c37d;
+        font-size: 0.68rem; letter-spacing: 0; line-height: 1; flex: 0 0 auto;
+    }
+    .social-link:hover { color: #fff; border-color: rgba(191,149,63,0.38); background: rgba(191,149,63,0.04); transform: translateY(-2px); }
+    .social-link:hover::after { width: 48%; opacity: 1; }
 
     /* --- Ticker & Footer --- */
     .tech-ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 35px; background: #050505; border-top: 1px solid #111; overflow: hidden; white-space: nowrap; z-index: 9000; display: flex; align-items: center; justify-content: space-between; padding-right: 30px; pointer-events: none; }
-    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Space Mono', 'Noto Sans TC', 'Microsoft JhengHei', monospace; font-size: 0.62rem; color: #3d3d3d; letter-spacing: 0.08em; }
+    .tech-ticker { display: inline-block; padding-left: 100%; animation: ticker 60s linear infinite; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.62rem; color: #3d3d3d; letter-spacing: 0.08em; }
     @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
     .visitor-counter { display: flex; align-items: center; gap: 15px; z-index: 9001; background: #050505; padding-left: 20px; box-shadow: -10px 0 20px #050505; }
     .visitor-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.55rem; color: #4f4f4f; letter-spacing: 0.06em; text-transform: uppercase; }
-    .visitor-number { font-family: 'Space Mono', monospace; font-size: 0.66rem; color: #BF953F; letter-spacing: 0.08em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
+    .visitor-number { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem; color: #BF953F; letter-spacing: 0.08em; text-shadow: 0 0 5px rgba(191, 149, 63, 0.2); animation: pulseText 4s infinite ease-in-out; }
     
     footer { padding: 20px 4vw 80px; text-align: right; background: #050505; }
     footer p { font-family: 'Montserrat', sans-serif; font-size: 0.62rem; color: #444; letter-spacing: 0.14em; }
@@ -579,8 +592,7 @@
         .essential-frame, .essential-frame.is-wide, .essential-frame.is-slim { width: var(--essential-width, 74vw); height: min(62vh, 520px); }
         .essentials-rail-controls { top: auto; right: 6vw; bottom: 50px; transform: none; }
         .essentials-footer { justify-content: flex-start; margin-top: 8px; }
-        .essential-full-btn { width: min(100%, 330px); padding-left: 0; padding-right: 0; text-align: left; }
-        .essential-full-btn::before, .essential-full-btn::after { left: 0; transform: none; }
+        .essential-full-btn { width: min(100%, 330px); padding-left: 18px; padding-right: 18px; text-align: center; }
         .essentials-archive { padding: 88px 6vw 70px; }
         .essentials-archive-head { align-items: flex-start; flex-direction: column; gap: 18px; margin-bottom: 34px; padding-right: 54px; position: relative; }
         .essentials-archive-head .reader-close-btn { position: absolute; right: 0; top: 0; }
@@ -605,11 +617,12 @@
         .plan-status { font-size: clamp(0.95rem, 5.6vw, 1.35rem); letter-spacing: 0.04em; }
         .plan-status .status-en { gap: 0.2em; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
-        .ritual-btn { width: 90%; max-width: 350px; }
+        .ritual-btn { width: min(90%, 460px); max-width: none; }
         .btn-content { padding: 25px 0 30px; gap: 12px; }
         .btn-en { font-size: 1rem; }
         .btn-zh { font-size: 0.76rem; letter-spacing: 0.24em; margin-right: -0.24em; }
-        .contact-links { flex-direction: column; gap: 30px; }
+        .contact-links { flex-direction: column; gap: 16px; align-items: stretch; }
+        .social-link { width: 100%; }
         footer { text-align: center; padding-bottom: 70px; }
     }
   </style>
@@ -715,7 +728,7 @@
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">人像起點</span></div><p class="plan-philosophy">A strong portrait is a professional entry point.<span class="zh-note">一張安靜而有力量的肖像，是形象被記住的起點。</span>Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以客製構圖與細膩光線，留下神情、輪廓與當下的氣息。</span></p></div>
+            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">人像起點</span></div><p class="plan-philosophy"><span class="plan-line">A strong portrait is a professional entry point.<span class="zh-note">一張安靜而有力量的肖像，是形象被記住的起點。</span></span><span class="plan-line">Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以客製構圖與細膩光線，留下神情、輪廓與當下的氣息。</span></span></p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">半小時拍攝</span></span></div>
@@ -731,7 +744,7 @@
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面敘像</span></div><p class="plan-philosophy">Your presence becomes the visual statement.<span class="zh-note">讓你的存在感成為畫面最先被讀見的語句。</span>Styling, direction, and layout are composed into a polished cover image.<span class="zh-note">從造型、引導到版面節奏，收束成一張可被記憶的封面。</span></p></div>
+            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面敘像</span></div><p class="plan-philosophy"><span class="plan-line">Your presence becomes the visual statement.<span class="zh-note">讓你的存在感成為畫面最先被讀見的語句。</span></span><span class="plan-line">Styling, direction, and layout are composed into a polished cover image.<span class="zh-note">從造型、引導到版面節奏，收束成一張可被記憶的封面。</span></span></p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR<span class="zh-note">一場半影像敘事</span></span></div>
@@ -747,7 +760,7 @@
         <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
         <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
         <div class="card-content">
-            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">敘事成冊</span></div><p class="plan-philosophy">A narrative visual session built from styling, atmosphere, and image sequencing.<span class="zh-note">以造型、氛圍與影像順序，寫成一段完整的視覺敘事。</span>Prepared as a collectible editorial object.<span class="zh-note">最後成為可翻閱、可收藏的編輯式作品。</span></p></div>
+            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">敘事成冊</span></div><p class="plan-philosophy"><span class="plan-line">A narrative visual session built from styling, atmosphere, and image sequencing.<span class="zh-note">以造型、氛圍與影像順序，寫成一段完整的視覺敘事。</span></span><span class="plan-line">Prepared as a collectible editorial object.<span class="zh-note">最後成為可翻閱、可收藏的編輯式作品。</span></span></p></div>
             <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL<span class="zh-note">A4 影像誌</span></span><span class="plan-status metallic-gold"><span class="status-en"><span class="status-bracket">[</span><span>COMING SOON</span><span class="status-bracket">]</span></span><span class="zh-note">尚待開卷</span></span></div>
         </div>
       </div>
@@ -803,10 +816,10 @@
   <section class="contact-section" id="contact">
       <h2 class="contact-title">ABOUT EDEN<span class="zh-note">關於 EDEN</span></h2>
       <div class="contact-links">
-          <a href="https://www.instagram.com/eden_d_photo" target="_blank" class="social-link">INSTAGRAM</a>
-          <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="social-link">THREADS</a>
-          <a href="#" onclick="copyEmail(event)" class="social-link">EMAIL</a>
-          <a href="https://eden-room.vercel.app/" target="_blank" class="social-link">EDEN ROOM</a>
+          <a href="https://www.instagram.com/eden_d_photo" target="_blank" class="social-link"><span class="social-icon">IG</span><span>INSTAGRAM</span></a>
+          <a href="https://www.threads.net/@eden_d_photo" target="_blank" class="social-link"><span class="social-icon">TH</span><span>THREADS</span></a>
+          <a href="#" onclick="copyEmail(event)" class="social-link"><span class="social-icon">@</span><span>EMAIL</span></a>
+          <a href="https://eden-room.vercel.app/" target="_blank" class="social-link"><span class="social-icon">ER</span><span>EDEN ROOM</span></a>
       </div>
   </section>
   
