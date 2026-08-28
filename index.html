@@ -1109,14 +1109,16 @@
         startX = event.clientX;
         startScrollLeft = rail.scrollLeft;
         pointerId = event.pointerId;
-        rail.classList.add('is-dragging');
-        rail.setPointerCapture(pointerId);
       });
 
       rail.addEventListener('pointermove', (event) => {
         if (!isPointerDown) return;
         const deltaX = event.clientX - startX;
-        if (Math.abs(deltaX) > 4) hasDragged = true;
+        if (Math.abs(deltaX) > 6) {
+          hasDragged = true;
+          rail.classList.add('is-dragging');
+          if (pointerId !== null && !rail.hasPointerCapture(pointerId)) rail.setPointerCapture(pointerId);
+        }
         rail.scrollLeft = startScrollLeft - deltaX;
       });
 
