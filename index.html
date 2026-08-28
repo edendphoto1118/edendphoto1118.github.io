@@ -108,11 +108,11 @@
     .masterpiece-gallery { padding: 100px 4vw; min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; }
     .section-header { text-align: center; margin-bottom: 80px; position: relative; width: 100%; margin-top: 80px; }
     .section-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: 3.5rem; letter-spacing: 0.08em; font-weight: 400; margin: 0; }
-    .section-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; color: #888; text-transform: uppercase; margin-top: 25px; display: block; line-height: 1.85; }
+    .section-subtitle { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.055em; color: #888; text-transform: uppercase; margin-top: 25px; display: block; line-height: 1.85; }
     .section-subtitle .zh-note { margin-top: 6px; font-size: 0.82rem; }
     
     .filter-tabs { display: flex; justify-content: center; gap: 60px; margin-bottom: 80px; flex-wrap: wrap; width: 100%; z-index: 10; position: relative; }
-    .filter-btn { background: transparent; border: 1px solid transparent; color: #666; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; position: relative; padding: 12px 18px 16px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
+    .filter-btn { background: transparent; border: 1px solid transparent; color: #666; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; position: relative; padding: 12px 18px 16px; transition: all 0.4s ease; display: inline-block; text-decoration: none; }
     .filter-btn .zh-note { margin-top: 5px; font-size: 0.72rem; letter-spacing: 0.06em; }
     .filter-btn:hover, .filter-btn.active { color: #fff; border-color: rgba(255,255,255,0.12); }
     .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: #BF953F; transition: all 0.4s ease; transform: translateX(-50%); }
@@ -153,8 +153,8 @@
     /* --- Essentials Curated Rail --- */
     .essentials-shell { position: relative; width: 100%; }
     .essentials-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 22px; }
-    .essentials-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #888; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.8; }
-    .essentials-count { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #555; font-size: 0.68rem; letter-spacing: 0.14em; white-space: nowrap; }
+    .essentials-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #888; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.8; }
+    .essentials-count { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #555; font-size: 0.68rem; letter-spacing: 0.06em; white-space: nowrap; }
     .essentials-rail-wrap { position: relative; margin-left: -4vw; margin-right: -4vw; }
     .essentials-rail {
         display: grid; grid-auto-flow: column; grid-auto-columns: max-content; gap: clamp(18px, 2.2vw, 34px);
@@ -189,7 +189,7 @@
     .essential-full-btn {
         border: 1px solid rgba(255,255,255,0.12); background: transparent; color: #f5f5f7; cursor: pointer; position: relative;
         padding: 14px 34px 18px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-        font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+        font-size: 0.78rem; letter-spacing: 0.075em; text-transform: uppercase;
         transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
     }
     .essential-full-btn::before, .essential-full-btn::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; transform: translateX(-50%); transition: width 0.46s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; }
@@ -216,7 +216,7 @@
     /* --- Magazine Carousel Reader --- */
     .magazine-carousel-shell { width: 100%; max-width: 1600px; margin: 0 auto; position: relative; }
     .magazine-rail-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
-    .rail-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; color: #888; letter-spacing: 0.22em; text-transform: uppercase; }
+    .rail-label { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; color: #888; letter-spacing: 0.085em; text-transform: uppercase; }
     .rail-controls { display: flex; align-items: center; gap: 10px; }
     .rail-nav-btn, .reader-close-btn {
         width: 44px; height: 44px; border: 0; background: transparent;
@@ -251,25 +251,26 @@
     .magazine-card-media img, .magazine-card-media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(0%) contrast(1) brightness(1); transition: transform 0.55s ease; }
     .magazine-card:hover .magazine-card-media img, .magazine-card:hover .magazine-card-media video, .magazine-card.preview-press .magazine-card-media img, .magazine-card.preview-press .magazine-card-media video { transform: scale(1.035); }
     .magazine-card-info { min-height: 92px; padding: 18px 18px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
-    .magazine-card-title { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.08em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .magazine-card-title { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.8rem; line-height: 1.55; color: #e2e2e2; letter-spacing: 0.045em; text-transform: uppercase; overflow-wrap: anywhere; }
     .magazine-card-title .zh-note { font-size: clamp(10px, 0.82em, 12px); }
-    .magazine-card-meta { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem; color: #858585; letter-spacing: 0.1em; text-transform: uppercase; }
+    .magazine-card-meta { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem; color: #858585; letter-spacing: 0.055em; text-transform: uppercase; }
     .magazine-reader-panel {
-        width: 100%; display: grid; grid-template-columns: minmax(210px, 0.45fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px);
+        width: 100%; display: grid; grid-template-columns: minmax(150px, 260px) minmax(0, 1fr); gap: clamp(18px, 3vw, 44px);
         align-items: stretch; border-top: 1px solid rgba(191,149,63,0.18); border-bottom: 1px solid rgba(255,255,255,0.05);
         padding: 0; max-height: 0; opacity: 0; overflow: hidden; transform: translateY(30px);
         transition: max-height 0.9s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.55s ease, transform 0.75s cubic-bezier(0.25, 1, 0.5, 1), padding 0.75s ease;
     }
     .magazine-reader-panel.open { max-height: 860px; opacity: 1; transform: translateY(0); padding: 42px 0 52px; overflow: visible; }
-    .reader-meta { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 24px; min-width: 0; }
-    .reader-kicker { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.26em; text-transform: uppercase; }
-    .reader-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.08em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
+    .reader-meta { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 18px; min-width: 0; transform: translateX(0); opacity: 1; transition: transform 0.82s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.62s ease; }
+    .magazine-reader-panel.reading .reader-meta { transform: translateX(-34px); opacity: 0.62; }
+    .magazine-reader-panel.complete .reader-meta { transform: translateX(0); opacity: 1; }
+    .reader-kicker { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.7rem; color: #BF953F; letter-spacing: 0.11em; text-transform: uppercase; }
+    .reader-title { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.35rem, 2vw, 2.2rem); line-height: 1.35; letter-spacing: 0.055em; color: #ededed; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
     .reader-title .zh-note { font-size: clamp(10px, 0.44em, 14px); }
-    .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.74rem; color: #888; letter-spacing: 0.18em; text-transform: uppercase; }
-    .reader-actions { display: flex; gap: 12px; align-items: center; }
+    .reader-count { font-family: 'Montserrat', sans-serif; font-size: 0.74rem; color: #888; letter-spacing: 0.07em; text-transform: uppercase; }
     .magazine-showcase-wrap {
-        width: 100%; min-height: min(62vh, 660px); perspective: 2500px; display: flex; justify-content: center;
-        align-items: center; padding: 42px clamp(24px, 4vw, 80px) 82px; position: relative; overflow: visible;
+        width: 100%; min-height: min(62vh, 660px); perspective: 2500px; display: flex; justify-content: flex-start;
+        align-items: center; padding: 42px clamp(12px, 2.6vw, 48px) 82px; position: relative; overflow: visible;
     }
     .magazine {
         position: relative; width: min(30vw, 380px); aspect-ratio: 1 / 1.414; transform-style: preserve-3d;
@@ -326,8 +327,8 @@
     .brand-back-title {
         font-family: 'Cinzel', serif;
         font-size: 2rem;
-        letter-spacing: 0.25em;
-        margin-right: -0.25em;
+        letter-spacing: 0.14em;
+        margin-right: -0.14em;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -338,7 +339,7 @@
         font-family: 'Montserrat', sans-serif;
         font-size: 0.68rem;
         color: #444;
-        letter-spacing: 0.22em;
+        letter-spacing: 0.08em;
         margin-top: 20px;
         text-transform: uppercase;
     }
@@ -347,7 +348,7 @@
         min-height: 38px; padding: 0 18px 7px; border-radius: 0;
         border: 0; color: #ececec; text-decoration: none;
         font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.66rem;
-        letter-spacing: 0.14em; text-transform: uppercase;
+        letter-spacing: 0.065em; text-transform: uppercase;
         background: transparent; box-shadow: none; position: relative;
         transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.35s ease;
     }
@@ -365,7 +366,7 @@
         font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
         font-size: 0.74rem;
         color: #c6a45d;
-        letter-spacing: 0.22em;
+        letter-spacing: 0.075em;
         text-transform: uppercase;
         animation: pulseBorder 2s infinite;
         transition: all 0.4s ease;
@@ -460,7 +461,7 @@
     .price-card.locked-plan .card-content { filter: grayscale(80%); opacity: 0.5; transition: all 0.5s; }
     .price-card.locked-plan:hover .card-content { filter: grayscale(100%) brightness(0.4); opacity: 0.4; }
     .sealing-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 0.3s; }
-    .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
+    .tape-strip { position: absolute; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.12em; padding: 6px 0; width: 150%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.8); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
     .tape-strip::before, .tape-strip::after { content: 'LOCKED   鎖定中   LOCKED   鎖定中'; white-space: nowrap; margin: 0 20px; opacity: 0.9; }
     .tape-left { top: 40%; left: -25%; transform: rotate(20deg) translateX(-120%); }
     .tape-right { top: 60%; left: -25%; transform: rotate(-20deg) translateX(120%); }
@@ -498,7 +499,7 @@
     .btn-bg { position: absolute; left: 50%; bottom: 0; width: 72%; height: 1px; background: rgba(255,255,255,0.18); z-index: 2; transition: width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease; transform: translateX(-50%); }
     .btn-content { position: relative; z-index: 2; padding: 34px 56px 38px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
     .btn-en { font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.55rem, 2.4vw, 2.25rem); letter-spacing: 0.12em; color: #fff; line-height: 1.15; }
-    .btn-zh { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(1rem, 1.25vw, 1.22rem); letter-spacing: 0.28em; color: #BF953F; margin-right: -0.28em; opacity: 0.95; }
+    .btn-zh { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(1rem, 1.25vw, 1.22rem); letter-spacing: 0.14em; color: #BF953F; margin-right: -0.14em; opacity: 0.95; }
     .ritual-btn:hover { transform: translateY(-2px) translateZ(0); border-color: rgba(191,149,63,0.42); box-shadow: 0 18px 46px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.05); }
     .ritual-btn:hover .btn-glow { width: 64%; opacity: 1; }
     .ritual-btn:hover .btn-bg { width: 86%; opacity: 0.9; }
@@ -507,7 +508,7 @@
     .hidden-booking-container { max-height: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s; opacity: 0; background: #080808; width: 100%; display: flex; justify-content: center; }
     .hidden-booking-container.open { max-height: 2500px; opacity: 1; padding: 100px 4vw; }
     .booking-interface { width: 100%; max-width: 900px; border: 1px solid rgba(191, 149, 63, 0.15); background: #050505; padding: 60px; position: relative; }
-    .booking-interface::before { content: 'BOOKING // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.5rem; letter-spacing: 0.2em; color: #333; }
+    .booking-interface::before { content: 'BOOKING // 001'; position: absolute; top: 20px; left: 20px; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.5rem; letter-spacing: 0.08em; color: #333; }
     .custom-booking-form { width: 100%; margin-top: 40px; }
     .form-group { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .form-group label { display: block; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; color: #BF953F; margin-bottom: 5px; line-height: 1.7; }
@@ -626,6 +627,7 @@
         .magazine-reader-panel { grid-template-columns: 1fr; gap: 26px; }
         .magazine-reader-panel.open { max-height: 980px; padding: 34px 0 46px; }
         .reader-meta { gap: 16px; }
+        .magazine-reader-panel.reading .reader-meta { transform: translateX(0); opacity: 0.8; }
         .reader-title { font-size: 1.4rem; }
         .reader-count { font-size: 0.7rem; }
         .magazine-showcase-wrap { min-height: 50vh; padding: 38px 0 76px; }
@@ -640,7 +642,7 @@
         .ritual-btn { width: min(90%, 460px); max-width: none; }
         .btn-content { padding: 25px 0 30px; gap: 12px; }
         .btn-en { font-size: 1rem; }
-        .btn-zh { font-size: 0.76rem; letter-spacing: 0.24em; margin-right: -0.24em; }
+        .btn-zh { font-size: 0.76rem; letter-spacing: 0.12em; margin-right: -0.12em; }
         .contact-links { flex-direction: column; gap: 16px; align-items: stretch; }
         .social-link { width: 100%; }
         footer { text-align: center; padding-bottom: 70px; }
@@ -1399,21 +1401,17 @@
             const hasNextIssue = magazineIndex > -1 && magazineIndex < magazines.length - 1;
             let pagesElements = [];
 
-            reader.classList.remove('open');
+            reader.classList.remove('open', 'reading', 'complete');
             reader.innerHTML = `
                 <div class="reader-meta">
                     <span class="reader-kicker">${mag.id.toUpperCase()}</span>
                     <h4 class="reader-title metallic-gold">${renderIssueTitle(mag)}</h4>
                     <span class="reader-count">${(mag.pages || []).length} 頁</span>
-                    <div class="reader-actions">
-                        <button type="button" class="reader-close-btn" aria-label="關閉此期">&times;</button>
-                    </div>
                 </div>
                 <div class="magazine-showcase-wrap"></div>
             `;
 
             const showcaseWrap = reader.querySelector('.magazine-showcase-wrap');
-            const closeBtn = reader.querySelector('.reader-close-btn');
             const magazineDiv = document.createElement('div');
             magazineDiv.className = 'magazine' + (mag.noShadow ? ' no-shadow' : '');
             const hintDiv = document.createElement('div');
@@ -1459,11 +1457,6 @@
                 }
             };
 
-            closeBtn.onclick = () => {
-                reader.classList.remove('open');
-                selectedCard.classList.remove('active');
-            };
-
             updateMagazineCenter(magazineDiv, hintDiv, currentSheet, numSheets, hasNextIssue);
             showcaseWrap.appendChild(magazineDiv);
             showcaseWrap.appendChild(hintDiv);
@@ -1495,6 +1488,11 @@
     }
 
     function updateMagazineCenter(magElement, hintElement, current, total, hasNextIssue) {
+        const panel = magElement.closest('.magazine-reader-panel');
+        if (panel) {
+            panel.classList.toggle('reading', current > 0 && current < total);
+            panel.classList.toggle('complete', current === total);
+        }
         if (current === 0) { magElement.style.transform = 'translateX(0)'; hintElement.innerHTML = '[ 點擊翻閱 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
         else if (current === total) { magElement.style.transform = 'translateX(100%)'; hintElement.innerHTML = hasNextIssue ? '[ 閱讀下一本 ]' : '[ 下期待續 ]'; hintElement.style.opacity = '1'; hintElement.style.pointerEvents = 'auto'; }
         else { magElement.style.transform = 'translateX(50%)'; hintElement.style.opacity = '0'; hintElement.style.pointerEvents = 'none'; }
