@@ -15,6 +15,7 @@ globalThis.EDEN_ESSENTIALS = [
   "essentials (9).jpg",
   "essentials (23).jpg",
   "essentials (22).jpg",
+  "essentials (32).jpg",
   "essentials (10).jpg",
   "essentials (24).jpg",
   "essentials (28).jpg",
