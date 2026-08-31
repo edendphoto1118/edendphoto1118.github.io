@@ -468,7 +468,11 @@
     .plan-status .status-en { display: inline-flex; align-items: center; justify-content: center; gap: 0.28em; white-space: nowrap; max-width: 100%; }
     .plan-status .status-bracket { opacity: 0.76; }
     .plan-status .zh-note { flex-basis: 100%; width: 100%; text-align: center; }
-    .price-amount, .price-hidden { display: none !important; }
+    .price-hidden { display: none !important; }
+    .price-amount { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(1.45rem, 1.65vw, 1.85rem); color: #f1d187; letter-spacing: 0.055em; line-height: 1.2; }
+    .price-note { display: block; margin-top: 7px; color: #858585; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.78rem; line-height: 1.5; letter-spacing: 0.02em; }
+    .price-card.featured { border-color: rgba(191,149,63,0.32); }
+    .price-card.featured .plan-id { color: #bf953f; }
     .price-card.vision-card .card-content { border: 1px solid rgba(0,255,255,0.05); }
     .price-card.vision-card:hover .plan-en { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
     
@@ -719,6 +723,7 @@
     
     <div class="filter-tabs">
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">人像選輯</span></a>
+        <a href="#gallery-night" class="filter-btn" onclick="scrollToSection(event, 'gallery-night')">NIGHT ISSUE<span class="zh-note">夜行</span></a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">MAGAZINE WORKS<span class="zh-note">雜誌篇章</span></a>
         <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 此系列正在整理中')">
             <span class="filter-btn">THE STORY<span class="zh-note">敘事札記</span></span>
@@ -733,6 +738,11 @@
     <div id="gallery-essentials" class="gallery-sub-section">
         <h3 class="gallery-sub-title">ESSENTIALS <span>/ FOCUS</span></h3>
         <div id="container-essentials"></div>
+    </div>
+
+    <div id="gallery-night" class="gallery-sub-section" hidden>
+        <h3 class="gallery-sub-title">NIGHT ISSUE <span>/ AFTER DARK</span><span class="zh-note">夜行選輯</span></h3>
+        <div id="container-night-issue"></div>
     </div>
 
     <div id="gallery-cover" class="gallery-sub-section">
@@ -827,40 +837,40 @@
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">人像起點</span></div><p class="plan-philosophy"><span class="plan-line">A strong portrait is a professional entry point.<span class="zh-note">一張安靜而有力量的肖像，是形象被記住的起點。</span></span><span class="plan-line">Clean framing and refined light keep the focus on presence, detail, and expression.<span class="zh-note">以客製構圖與細膩光線，留下神情、輪廓與當下的氣息。</span></span></p></div>
+            <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">人像選輯</span></div><p class="plan-philosophy"><span class="plan-line">Your first image, kept with clarity.<span class="zh-note">為第一次留下影像的人準備，以乾淨構圖與自然光感，留住當下最像你的樣子。</span></span></p></div>
             <div>
                 <div class="spec-list">
                     <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">半小時拍攝</span></span></div>
-                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">可另置造型</span></span></div>
+                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">妝髮依需求另計</span></span></div>
                     <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES<span class="zh-note">兩幅精修</span></span></div>
-                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL<span class="zh-note">數位收藏</span></span></div>
+                    <div class="spec-row"><span class="spec-key">SPACE</span><span class="spec-val">ADD-ON<span class="zh-note">棚費另計</span></span></div>
                 </div>
-                <div class="plan-footer price-hidden" style="margin-top:20px; text-align:center;" aria-hidden="true"></div>
+                <div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$1,500</span><span class="price-note">棚費、妝髮依需求另計</span></div>
             </div>
         </div>
       </div>
-      <div class="price-card featured dynamic-bg-card" data-bg-source="cover" onclick="openBookingWithPlan('Structure')">
+      <div class="price-card featured dynamic-bg-card" data-bg-source="night-issue" onclick="openBookingWithPlan('NightIssue')">
         <div class="card-bg" aria-hidden="true"></div>
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. I</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面敘像</span></div><p class="plan-philosophy"><span class="plan-line">Your presence becomes the visual statement.<span class="zh-note">讓你的存在感成為畫面最先被讀見的語句。</span></span><span class="plan-line">Styling, direction, and layout are composed into a polished cover image.<span class="zh-note">從造型、引導到版面節奏，收束成一張可被記憶的封面。</span></span></p></div>
+            <div><span class="plan-id">NO. I / EDEN RECOMMENDS</span><div class="plan-title-block"><span class="plan-en">NIGHT ISSUE</span><span class="plan-zh">夜行</span></div><p class="plan-philosophy"><span class="plan-line">The city after dark, shaped into your scene.<span class="zh-note">在城市入夜之後拍攝，讓街燈、車流、陰影與閃光，成為一段有情緒的影像敘事。</span></span></p></div>
             <div>
                 <div class="spec-list">
-                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR<span class="zh-note">一場半影像敘事</span></span></div>
-                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val spec-highlight">INCLUDED<span class="zh-note">含一套造型</span></span></div>
-                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">8 IMAGES<span class="zh-note">八幅精修</span></span></div>
-                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">POSTER + USB<span class="zh-note">海報與隨身典藏</span></span></div>
+                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">NIGHT SESSION<span class="zh-note">夜間外拍</span></span></div>
+                    <div class="spec-row"><span class="spec-key">STYLE</span><span class="spec-val">SELF PREPARED<span class="zh-note">需自行完成妝髮</span></span></div>
+                    <div class="spec-row"><span class="spec-key">MOOD</span><span class="spec-val spec-highlight">AFTER DARK<span class="zh-note">夜色與閃光</span></span></div>
+                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL<span class="zh-note">數位作品</span></span></div>
                 </div>
-                <div class="plan-footer price-hidden" style="margin-top:20px; text-align:center;" aria-hidden="true"></div>
+                <div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$3,600</span><span class="price-note">場地與交通需求於拍攝前確認</span></div>
             </div>
         </div>
       </div>
-      <div class="price-card locked-plan">
-        <div class="card-bg" style="background-image: url('plan-scale.jpg')"></div>
-        <div class="sealing-container"><div class="tape-strip tape-left"></div><div class="tape-strip tape-right"></div></div>
+      <div class="price-card dynamic-bg-card" data-bg-source="cover" onclick="openBookingWithPlan('Cover')">
+        <div class="card-bg" aria-hidden="true"></div>
+        <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
-            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en metallic-gold">THE STORY</span><span class="plan-zh">敘事成冊</span></div><p class="plan-philosophy"><span class="plan-line">A narrative visual session built from styling, atmosphere, and image sequencing.<span class="zh-note">以造型、氛圍與影像順序，寫成一段完整的視覺敘事。</span></span><span class="plan-line">Prepared as a collectible editorial object.<span class="zh-note">最後成為可翻閱、可收藏的編輯式作品。</span></span></p></div>
-            <div class="plan-footer" style="margin-top:auto; text-align:center;"><span class="artifact-info">A4 JOURNAL<span class="zh-note">A4 影像誌</span></span><span class="plan-status metallic-gold"><span class="status-en"><span class="status-bracket">[</span><span>COMING SOON</span><span class="status-bracket">]</span></span><span class="zh-note">尚待開卷</span></span></div>
+            <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面誌</span></div><p class="plan-philosophy"><span class="plan-line">A composed cover image, designed to stay with you.<span class="zh-note">從拍攝、引導到版面編排，完成一張能成為個人企劃與作品集主視覺的封面影像。</span></span></p></div>
+            <div><div class="spec-list"><div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR<span class="zh-note">一場半影像敘事</span></span></div><div class="spec-row"><span class="spec-key">LAYOUT</span><span class="spec-val spec-highlight">INCLUDED<span class="zh-note">含封面版面編排</span></span></div><div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">妝髮依需求另計</span></span></div><div class="spec-row"><span class="spec-key">SPACE</span><span class="spec-val">ADD-ON<span class="zh-note">棚費另計</span></span></div></div><div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$5,000</span><span class="price-note">棚費、妝髮依需求另計</span></div></div>
         </div>
       </div>
     </div>
@@ -891,7 +901,7 @@
                 <div class="form-group"><label>NAME<span class="zh-note">你的名字</span></label><input type="text" name="name" required placeholder="YOUR NAME / 請留下名字"></div>
                 <div class="form-group"><label>CONTACT EMAIL</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
                 <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.72rem; letter-spacing:0.08em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程將以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
-                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 人像選輯</option><option value="Structure">THE COVER / 封面敘像</option></select></div>
+                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 人像選輯</option><option value="NightIssue">NIGHT ISSUE / 夜行</option><option value="Cover">THE COVER / 封面誌</option></select></div>
                 <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT<span class="zh-note">拍攝節奏</span></span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
                     <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING<span class="zh-note">造型設定</span></span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
@@ -962,13 +972,18 @@
     const planData = {
         'Essentials': {
             time: '0.5 HR<span class="zh-note">半小時拍攝</span>',
-            style: 'ADD-ON<span class="zh-note">可另置造型</span>',
+            style: 'ADD-ON<span class="zh-note">棚費、妝髮依需求另計</span>',
             retouch: '2 IMAGES<span class="zh-note">兩幅精修</span>'
         },
-        'Structure': {
+        'NightIssue': {
+            time: 'NIGHT SESSION<span class="zh-note">夜間外拍</span>',
+            style: 'SELF PREPARED<span class="zh-note">需自行完成妝髮</span>',
+            retouch: 'EDEN EDIT<span class="zh-note">依夜行風格完成影像</span>'
+        },
+        'Cover': {
             time: '1.5 HR<span class="zh-note">一場半影像敘事</span>',
-            style: 'INCLUDED<span class="zh-note">含一套造型</span>',
-            retouch: '8 IMAGES<span class="zh-note">八幅精修</span>'
+            style: 'LAYOUT INCLUDED<span class="zh-note">含封面版面編排；棚費、妝髮另計</span>',
+            retouch: 'COVER EDIT<span class="zh-note">封面影像後期製作</span>'
         }
     };
 
@@ -1009,7 +1024,10 @@
     }
 
     const essentialImages = Array.isArray(globalThis.EDEN_ESSENTIALS) ? globalThis.EDEN_ESSENTIALS : [];
+    const nightIssueImages = Array.isArray(globalThis.EDEN_NIGHT_ISSUE) ? globalThis.EDEN_NIGHT_ISSUE : [];
     const containerEssentials = document.getElementById('container-essentials');
+    const containerNightIssue = document.getElementById('container-night-issue');
+    const nightIssueSection = document.getElementById('gallery-night');
     const essentialsArchive = document.getElementById('essentialsArchive');
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => { if(entry.isIntersecting) { setTimeout(() => { entry.target.classList.add('reveal'); }, 100); observer.unobserve(entry.target); } });
@@ -1017,6 +1035,10 @@
 
     function getEssentialImagePath(fileName) {
       return `images/works/essentials/${encodeURIComponent(fileName)}`;
+    }
+
+    function getNightIssueImagePath(fileName) {
+      return `images/works/night%20issue/${encodeURIComponent(fileName)}`;
     }
 
     function initializeHeroTrailer() {
@@ -1178,6 +1200,40 @@
       renderEssentialsArchive();
     }
 
+    function generateNightIssue() {
+      if (!containerNightIssue || !nightIssueSection) return;
+      if (!nightIssueImages.length) {
+        nightIssueSection.hidden = true;
+        return;
+      }
+
+      nightIssueSection.hidden = false;
+      const featuredImages = nightIssueImages.slice(0, Math.min(12, nightIssueImages.length));
+      containerNightIssue.innerHTML = `
+        <div class="essentials-shell">
+          <div class="essentials-head">
+            <span class="essentials-label">After Dark Selection</span>
+            <span class="essentials-count">${String(featuredImages.length).padStart(2, '0')} / ${String(nightIssueImages.length).padStart(2, '0')}</span>
+          </div>
+          <div class="essentials-rail-wrap">
+            <div class="essentials-rail" id="nightIssueRail">
+              ${featuredImages.map((fileName, index) => `<button type="button" class="essential-frame" aria-label="開啟夜行作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))"><img src="${getNightIssueImagePath(fileName)}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.closest('button').remove();"></button>`).join('')}
+            </div>
+            <div class="essentials-rail-controls">
+              <button type="button" class="rail-nav-btn" id="nightIssuePrev" aria-label="上一組夜行作品">&lsaquo;</button>
+              <button type="button" class="rail-nav-btn" id="nightIssueNext" aria-label="下一組夜行作品">&rsaquo;</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const nightIssueRail = document.getElementById('nightIssueRail');
+      enableSilkyHorizontalRail(nightIssueRail);
+      document.getElementById('nightIssuePrev').onclick = () => nightIssueRail.scrollBy({ left: -nightIssueRail.clientWidth * 0.85, behavior: 'smooth' });
+      document.getElementById('nightIssueNext').onclick = () => nightIssueRail.scrollBy({ left: nightIssueRail.clientWidth * 0.85, behavior: 'smooth' });
+      nightIssueRail.querySelectorAll('.essential-frame').forEach((frame) => revealObserver.observe(frame));
+    }
+
     function renderEssentialsArchive() {
       if (!essentialsArchive) return;
       essentialsArchive.innerHTML = `
@@ -1288,6 +1344,10 @@
                     return `${mag.path}${encodeURIComponent(firstPage)}`;
                 })
                 .filter(Boolean);
+        }
+
+        if (source === 'night-issue') {
+            return nightIssueImages.map((fileName) => getNightIssueImagePath(fileName));
         }
 
         return [];
@@ -1517,6 +1577,7 @@
 
     initializePricingBackgrounds();
     generateEssentials();
+    generateNightIssue();
     generateMagazines();
     initializeHeroTrailer();
 
