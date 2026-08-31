@@ -434,6 +434,13 @@
     .selection-field select option:disabled { color: #777; }
     .selection-field textarea { resize: vertical; min-height: 86px; }
     .selection-field input::placeholder, .selection-field textarea::placeholder { color: #5f5f5f; }
+    .portfolio-consent { border: 1px solid rgba(191,149,63,0.22); background: rgba(191,149,63,0.035); padding: 16px 18px; }
+    .portfolio-consent label { display: flex; align-items: flex-start; gap: 12px; margin: 0; color: #d4d4d4; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; line-height: 1.65; letter-spacing: 0.01em; cursor: pointer; }
+    .portfolio-consent input[type='checkbox'] { appearance: none; -webkit-appearance: none; flex: 0 0 17px; width: 17px; height: 17px; margin: 4px 0 0; border: 1px solid rgba(191,149,63,0.58); background: transparent; cursor: pointer; display: grid; place-content: center; }
+    .portfolio-consent input[type='checkbox']::after { content: ''; width: 8px; height: 4px; border-left: 1px solid #f1d187; border-bottom: 1px solid #f1d187; transform: rotate(-45deg) scale(0); transform-origin: center; transition: transform 0.18s ease; margin-top: -2px; }
+    .portfolio-consent input[type='checkbox']:checked { background: rgba(191,149,63,0.13); border-color: #d9c37d; }
+    .portfolio-consent input[type='checkbox']:checked::after { transform: rotate(-45deg) scale(1); }
+    .portfolio-consent .zh-note { margin: 6px 0 0; font-size: 0.76rem; line-height: 1.55; color: #949494; }
     .selection-submit { margin-top: 4px; min-height: 58px; border: 1px solid rgba(191,149,63,0.34); background: transparent; color: #f1d187; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; letter-spacing: 0.08em; text-transform: none; cursor: pointer; transition: border-color 0.35s ease, color 0.35s ease, transform 0.35s ease; }
     .selection-submit:hover { border-color: rgba(191,149,63,0.68); color: #fff; transform: translateY(-1px); }
 
@@ -811,15 +818,8 @@
                           <option>時間彈性，可再討論</option>
                       </select>
                   </div>
-                  <div class="selection-field">
-                      <label>是否可公開分享成品？</label>
-                      <select name="sharing_permission" required>
-                          <option value="" disabled selected>選擇公開授權範圍</option>
-                          <option>可以，用於 Instagram 與作品集</option>
-                          <option>可以，但希望先確認照片</option>
-                          <option>僅限部分照片</option>
-                          <option>暫時不希望公開</option>
-                      </select>
+                  <div class="portfolio-consent">
+                      <label><input type="checkbox" name="portfolio_publication_consent" value="我同意公開於 EDEN 官方網站、作品集與 Instagram" required><span>我同意 EDEN 選用本次互惠拍攝的成品，公開展示於官方網站、作品集與 Instagram。<span class="zh-note">若希望指定照片不上架、匿名呈現或日後撤下，可直接聯繫 EDEN。</span></span></label>
                   </div>
                   <button class="selection-submit" type="submit">送出互惠邀請</button>
               </form>
@@ -909,6 +909,7 @@
                 </div>
                 <div class="form-group"><label>DATE<span class="zh-note">偏好的日期</span></label><input type="date" name="date" required></div>
                 <div class="form-group"><label>VISION<span class="zh-note">想被留下的樣子</span></label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION... / 描述你想被看見的形象、用途或氛圍"></textarea></div>
+                <div class="portfolio-consent"><label><input type="checkbox" name="portfolio_publication_consent" value="我同意公開於 EDEN 官方網站、作品集與 Instagram"><span>我同意 EDEN 選用本次拍攝成品，公開展示於官方網站、作品集與 Instagram。<span class="zh-note">此項為選填；若勾選後想指定照片不上架、匿名呈現或撤下，可直接聯繫 EDEN。</span></span></label></div>
                 <button type="submit" class="submit-btn">CONFIRM REQUEST<span class="zh-note">送出邀約</span></button>
               </form>
           </div>
