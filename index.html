@@ -434,6 +434,8 @@
     .selection-field select option:disabled { color: #777; }
     .selection-field textarea { resize: vertical; min-height: 86px; }
     .selection-field input::placeholder, .selection-field textarea::placeholder { color: #5f5f5f; }
+    .selection-other-input { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .selection-other-input[hidden] { display: none; }
     .portfolio-consent { border: 1px solid rgba(191,149,63,0.22); background: rgba(191,149,63,0.035); padding: 16px 18px; }
     .portfolio-consent label { display: flex; align-items: flex-start; gap: 12px; margin: 0; color: #d4d4d4; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.9rem; line-height: 1.65; letter-spacing: 0.01em; cursor: pointer; }
     .portfolio-consent input[type='checkbox'] { appearance: none; -webkit-appearance: none; flex: 0 0 17px; width: 17px; height: 17px; margin: 4px 0 0; border: 1px solid rgba(191,149,63,0.58); background: transparent; cursor: pointer; display: grid; place-content: center; }
@@ -791,7 +793,11 @@
                           <option>作品集 / 模特兒卡</option>
                           <option>雜誌感拍攝</option>
                           <option>想交給 EDEN 發揮</option>
+                          <option value="__other__">其他</option>
                       </select>
+                      <div class="selection-other-input" hidden>
+                          <input type="text" name="shoot_direction_other" placeholder="請告訴我你想嘗試的影像方向">
+                      </div>
                   </div>
                   <div class="selection-field">
                       <label>你覺得自己最適合的氣質？</label>
@@ -801,7 +807,11 @@
                           <option>冷感、電影感</option>
                           <option>柔和、優雅</option>
                           <option>鮮明、有表現力</option>
+                          <option value="__other__">其他</option>
                       </select>
+                      <div class="selection-other-input" hidden>
+                          <input type="text" name="visual_mood_other" placeholder="請形容你的氣質或想呈現的感覺">
+                      </div>
                   </div>
                   <div class="selection-field">
                       <label>想拍的原因<span class="zh-note">這題可以自由寫，一句話也可以。</span></label>
@@ -816,7 +826,11 @@
                           <option>週末白天</option>
                           <option>週末晚上</option>
                           <option>時間彈性，可再討論</option>
+                          <option value="__other__">其他</option>
                       </select>
+                      <div class="selection-other-input" hidden>
+                          <input type="text" name="availability_other" placeholder="請填寫你方便的時間">
+                      </div>
                   </div>
                   <div class="portfolio-consent">
                       <label><input type="checkbox" name="portfolio_publication_consent" value="我同意公開於 EDEN 官方網站、作品集與 Instagram" required><span>我同意 EDEN 選用本次互惠拍攝的成品，公開展示於官方網站、作品集與 Instagram。<span class="zh-note">若希望指定照片不上架、匿名呈現或日後撤下，可直接聯繫 EDEN。</span></span></label>
@@ -997,6 +1011,24 @@
             document.getElementById('d-retouch').innerHTML = planData[select.value].retouch;
             box.style.display = 'block';
         } else { box.style.display = 'none'; }
+    }
+
+    function initializeSelectionOtherFields() {
+        document.querySelectorAll('.selection-form select').forEach((select) => {
+            const otherInputWrap = select.parentElement.querySelector('.selection-other-input');
+            const otherInput = otherInputWrap?.querySelector('input');
+            if (!otherInputWrap || !otherInput) return;
+
+            const updateOtherField = () => {
+                const isOther = select.value === '__other__';
+                otherInputWrap.hidden = !isOther;
+                otherInput.required = isOther;
+                if (!isOther) otherInput.value = '';
+            };
+
+            select.addEventListener('change', updateOtherField);
+            updateOtherField();
+        });
     }
 
     function toggleBookingSection() {
@@ -1577,6 +1609,7 @@
     }
 
     initializePricingBackgrounds();
+    initializeSelectionOtherFields();
     generateEssentials();
     generateNightIssue();
     generateMagazines();
