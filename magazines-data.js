@@ -429,5 +429,21 @@ globalThis.EDEN_MAGAZINES = [
       "18.png"
     ],
     "noShadow": false
+  },
+  {
+    "id": "vol-27",
+    "volume": 27,
+    "title": "ISSUE 27",
+    "path": "images/works/cover27/",
+    "pages": [
+      "19.png",
+      "20.png",
+      "21.png",
+      "22.png",
+      "23.png",
+      "24.png",
+      "25.png"
+    ],
+    "noShadow": false
   }
 ];
