@@ -44,7 +44,8 @@ function normalizeIncomingFolders() {
     const targetPath = path.join(worksDir, targetName);
 
     if (fs.existsSync(targetPath)) {
-      throw new Error(`Cannot rename ${entry.name} to ${targetName}: target folder already exists.`);
+      console.warn(`Skipped ${entry.name}: ${targetName} already exists.`);
+      return;
     }
 
     fs.renameSync(sourcePath, targetPath);
