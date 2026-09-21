@@ -66,11 +66,16 @@ function collectMediaFiles(dir) {
 }
 
 try {
-  run('git', ['add', '-u', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images/works']);
+  run('git', ['add', '-u', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images']);
 
   const mediaFiles = collectMediaFiles(path.join(rootDir, 'images', 'works'));
   if (mediaFiles.length) {
     run('git', ['add', '--', ...mediaFiles]);
+  }
+
+  const previewFiles = collectMediaFiles(path.join(rootDir, 'images', 'previews'));
+  if (previewFiles.length) {
+    run('git', ['add', '--', ...previewFiles]);
   }
 
   if (!hasStagedChanges()) {

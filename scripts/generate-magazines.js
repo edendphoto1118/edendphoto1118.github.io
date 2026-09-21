@@ -8,6 +8,8 @@ const essentialsDir = path.join(worksDir, 'essentials');
 const nightIssueDir = path.join(worksDir, 'night issue');
 const outputFile = path.join(rootDir, 'magazines-data.js');
 const toneAnalyzer = path.join(__dirname, 'analyze-essentials-tone.py');
+const previewGenerator = path.join(__dirname, 'generate-previews.py');
+const previewsDir = path.join(rootDir, 'images', 'previews', 'works');
 const pythonExecutable = process.env.EDEN_PYTHON || 'C:\\Users\\syding\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe';
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
 const videoExtensions = new Set(['.mp4', '.webm', '.mov', '.m4v']);
@@ -163,6 +165,25 @@ function sortEssentialsByTone(files) {
   }
 }
 
+function generatePreviews() {
+  if (!fs.existsSync(previewGenerator) || !fs.existsSync(pythonExecutable)) return;
+
+  const result = spawnSync(pythonExecutable, [previewGenerator, worksDir, previewsDir], {
+    cwd: rootDir,
+    encoding: 'utf8',
+    windowsHide: true,
+    timeout: 600000
+  });
+
+  if (result.status !== 0) {
+    const errorText = [result.stderr, result.stdout].filter(Boolean).join('\n').trim();
+    console.warn(`Preview generation skipped: ${errorText}`);
+    return;
+  }
+
+  if (result.stdout.trim()) console.log(result.stdout.trim());
+}
+
 function buildMagazine(folderName) {
   const volume = getVolumeNumber(folderName);
   if (!volume) return null;
@@ -187,6 +208,7 @@ function buildMagazine(folderName) {
 
 const renamedFolders = normalizeIncomingFolders();
 const renamedEssentials = normalizeEssentialFiles();
+generatePreviews();
 
 const magazines = fs.readdirSync(worksDir, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())

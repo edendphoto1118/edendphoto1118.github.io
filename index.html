@@ -30,7 +30,7 @@
 
     /* --- 2. Texture & Preloader --- */
     .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); z-index: 9000; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay; }
-    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease, visibility 1.5s ease; }
+    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.65s ease, visibility 0.65s ease; }
     .loader-content-wrap { display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(1.05); filter: blur(10px); animation: opticalEmerge 3s ease forwards; }
     .loader-text { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; text-transform: uppercase; letter-spacing: 0.4em; margin-right: -0.4em; }
     .loader-sep { height: 2.5rem; margin: 0 40px; }
@@ -960,9 +960,9 @@
   <script src="magazines-data.js"></script>
   <script>
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
-    window.addEventListener('load', () => {
+    window.addEventListener('DOMContentLoaded', () => {
         window.scrollTo(0, 0);
-        window.setTimeout(enterArchive, 3200);
+        window.setTimeout(enterArchive, 700);
     });
 
     function enterArchive() {
@@ -973,7 +973,7 @@
         audio.play().catch(e=>console.log("音樂播放被瀏覽器暫停"));
         let vol = 0; setInterval(() => { if(vol<0.4) { vol+=0.05; audio.volume=vol; } }, 200);
         document.getElementById('preloader').style.opacity = 0;
-        setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 1500);
+        setTimeout(() => { document.body.classList.add('site-active'); document.getElementById('preloader').style.display='none'; }, 650);
     }
 
     function toggleMenu() {
@@ -1070,15 +1070,27 @@
       return `images/works/essentials/${encodeURIComponent(fileName)}`;
     }
 
+    function getPreviewPath(sourcePath) {
+      return sourcePath.replace(/^images\/works\//, 'images/previews/works/').replace(/\.[^.]+$/, '.webp');
+    }
+
+    function getEssentialPreviewPath(fileName) {
+      return getPreviewPath(getEssentialImagePath(fileName));
+    }
+
     function getNightIssueImagePath(fileName) {
       return `images/works/night%20issue/${encodeURIComponent(fileName)}`;
+    }
+
+    function getNightIssuePreviewPath(fileName) {
+      return getPreviewPath(getNightIssueImagePath(fileName));
     }
 
     function initializeHeroTrailer() {
       const trailer = document.getElementById('heroTrailer');
       if (!trailer) return;
 
-      const essentialSources = essentialImages.map((fileName) => getEssentialImagePath(fileName));
+      const essentialSources = essentialImages.map((fileName) => getEssentialPreviewPath(fileName));
       const coverSources = magazinesData
         .map((mag) => {
           if (!Array.isArray(mag.pages)) return null;
@@ -1088,7 +1100,7 @@
           });
           if (!firstPage) return null;
           const fileName = typeof firstPage === 'string' ? firstPage : firstPage.file;
-          return fileName ? `${mag.path}${fileName}` : null;
+          return fileName ? getPreviewPath(`${mag.path}${fileName}`) : null;
         })
         .filter(Boolean);
       const shuffle = (items) => [...items].sort(() => Math.random() - 0.5);
@@ -1118,11 +1130,12 @@
     }
 
     function renderEssentialImageButton(fileName, index, className = 'essential-frame') {
-      const imgPath = getEssentialImagePath(fileName);
+      const fullPath = getEssentialImagePath(fileName);
+      const imgPath = getEssentialPreviewPath(fileName);
       const shapeClass = index % 5 === 2 ? ' is-wide' : (index % 5 === 4 ? ' is-slim' : '');
       return `
         <button type="button" class="${className}${shapeClass}" aria-label="開啟人像選輯作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))">
-          <img src="${imgPath}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.closest('button, .essentials-archive-item').remove();">
+          <img src="${imgPath}" data-full-src="${fullPath}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.onerror=null;this.src=this.dataset.fullSrc;">
         </button>
       `;
     }
@@ -1250,7 +1263,7 @@
           </div>
           <div class="essentials-rail-wrap">
             <div class="essentials-rail" id="nightIssueRail">
-              ${featuredImages.map((fileName, index) => `<button type="button" class="essential-frame" aria-label="開啟夜行作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))"><img src="${getNightIssueImagePath(fileName)}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.closest('button').remove();"></button>`).join('')}
+              ${featuredImages.map((fileName, index) => `<button type="button" class="essential-frame" aria-label="開啟夜行作品 ${index + 1}" onclick="openLightbox(this.querySelector('img'))"><img src="${getNightIssuePreviewPath(fileName)}" data-full-src="${getNightIssueImagePath(fileName)}" loading="lazy" alt="" onload="fitEssentialFrame(this)" onerror="this.onerror=null;this.src=this.dataset.fullSrc;"></button>`).join('')}
             </div>
             <div class="essentials-rail-controls">
               <button type="button" class="rail-nav-btn" id="nightIssuePrev" aria-label="上一組夜行作品">&lsaquo;</button>
@@ -1279,8 +1292,9 @@
         </div>
         <div class="essentials-archive-grid">
           ${essentialImages.map((fileName, index) => {
-            const imgPath = getEssentialImagePath(fileName);
-            return `<div class="essentials-archive-item"><img src="${imgPath}" loading="lazy" alt="" onclick="openLightbox(this)" onerror="this.closest('.essentials-archive-item').remove();"></div>`;
+            const fullPath = getEssentialImagePath(fileName);
+            const imgPath = getEssentialPreviewPath(fileName);
+            return `<div class="essentials-archive-item"><img src="${imgPath}" data-full-src="${fullPath}" loading="lazy" alt="" onclick="openLightbox(this)" onerror="this.onerror=null;this.src=this.dataset.fullSrc;"></div>`;
           }).join('')}
         </div>
       `;
@@ -1333,19 +1347,21 @@
     function renderMediaPage(sideClass, mag, fileName) {
         if (fileName === 'BRAND') return renderBrandPage(sideClass);
         const src = `${mag.path}${fileName}`;
+        const previewSrc = getPreviewPath(src);
         if (isVideoPage(fileName)) {
             return `<div class="${sideClass}"><video src="${src}" muted autoplay loop playsinline preload="metadata" onerror="this.style.display='none';"></video></div>`;
         }
-        return `<div class="${sideClass}"><img src="${src}" onerror="this.style.display='none';"></div>`;
+        return `<div class="${sideClass}"><img src="${previewSrc}" data-full-src="${src}" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.fullSrc;"></div>`;
     }
 
     function renderCardMedia(mag) {
         const firstPage = (mag.pages || [])[0];
         if (!firstPage) return `<div class="magazine-card-media"></div>`;
         const src = `${mag.path}${firstPage}`;
+        const previewSrc = getPreviewPath(src);
         const media = isVideoPage(firstPage)
             ? `<video src="${src}" muted autoplay loop playsinline preload="metadata"></video>`
-            : `<img src="${src}" loading="lazy" alt="">`;
+            : `<img src="${previewSrc}" data-full-src="${src}" loading="lazy" alt="" onerror="this.onerror=null;this.src=this.dataset.fullSrc;">`;
         return `<div class="magazine-card-media">${media}</div>`;
     }
 
@@ -1366,7 +1382,7 @@
 
     function getPricingBackgroundImages(source) {
         if (source === 'essentials') {
-            return essentialImages.map((fileName) => `images/works/essentials/${encodeURIComponent(fileName)}`);
+            return essentialImages.map((fileName) => getEssentialPreviewPath(fileName));
         }
 
         if (source === 'cover') {
@@ -1374,13 +1390,13 @@
                 .map((mag) => {
                     const firstPage = (mag.pages || [])[0];
                     if (!firstPage || isVideoPage(firstPage)) return null;
-                    return `${mag.path}${encodeURIComponent(firstPage)}`;
+                    return getPreviewPath(`${mag.path}${encodeURIComponent(firstPage)}`);
                 })
                 .filter(Boolean);
         }
 
         if (source === 'night-issue') {
-            return nightIssueImages.map((fileName) => getNightIssueImagePath(fileName));
+            return nightIssueImages.map((fileName) => getNightIssuePreviewPath(fileName));
         }
 
         return [];
@@ -1632,7 +1648,7 @@
     if(!sessionStorage.getItem('session_counted')) { count = parseInt(count) + Math.floor(Math.random() * 3) + 1; localStorage.setItem('eden_visitor_count', count); sessionStorage.setItem('session_counted', 'true'); }
     document.getElementById('visitorCount').innerText = "NO. " + parseInt(count).toLocaleString('en-US', {minimumIntegerDigits: 6});
 
-    function openLightbox(el) { if (!el) return; document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.src; document.body.classList.add('lightbox-open'); }
+    function openLightbox(el) { if (!el) return; document.getElementById("lightbox").classList.add('active'); document.getElementById("lightbox-img").src = el.dataset.fullSrc || el.src; document.body.classList.add('lightbox-open'); }
     function closeLightbox() { document.getElementById("lightbox").classList.remove('active'); document.body.classList.remove('lightbox-open'); }
     function toggleAudio() {
         const a = document.getElementById('bgMusic'), w = document.querySelector('#soundWave'), b = document.getElementById('topAudioBtn');
