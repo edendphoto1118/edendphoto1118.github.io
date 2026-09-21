@@ -67,6 +67,7 @@ function collectMediaFiles(dir) {
 
 try {
   run('git', ['add', '-u', '--', '.gitignore', 'README.md', 'index.html', 'magazines-data.js', 'scripts', 'images']);
+  run('git', ['add', '--', 'scripts']);
 
   const mediaFiles = collectMediaFiles(path.join(rootDir, 'images', 'works'));
   if (mediaFiles.length) {
