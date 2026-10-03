@@ -493,5 +493,45 @@ globalThis.EDEN_MAGAZINES = [
       "9.png"
     ],
     "noShadow": false
+  },
+  {
+    "id": "vol-29",
+    "volume": 29,
+    "title": "ISSUE 29",
+    "path": "images/works/cover29/",
+    "pages": [
+      "35.png",
+      "36.png",
+      "37.png",
+      "38.png",
+      "39.png",
+      "40.png",
+      "41.png",
+      "42.png",
+      "43.png",
+      "44.png",
+      "45.png",
+      "46.png",
+      "47.png"
+    ],
+    "noShadow": false
+  },
+  {
+    "id": "vol-30",
+    "volume": 30,
+    "title": "ISSUE 30",
+    "path": "images/works/cover30/",
+    "pages": [
+      "39.png",
+      "40.png",
+      "41.png",
+      "42.png",
+      "43.png",
+      "44.png",
+      "45.png",
+      "46.png",
+      "47.png"
+    ],
+    "noShadow": false
   }
 ];
