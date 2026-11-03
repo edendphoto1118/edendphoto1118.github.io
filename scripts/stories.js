@@ -62,6 +62,7 @@
         panel.setAttribute('aria-hidden', 'true');
         panel.inert = true;
         count.textContent = `${story.pages.length} 頁  ＋`;
+        document.body.classList.remove('story-reading');
         if (active === close) active = null;
       };
       const open = () => {
@@ -81,6 +82,7 @@
           loaded = true;
         }
         item.classList.add('is-open');
+        document.body.classList.add('story-reading');
         cover.setAttribute('aria-expanded', 'true');
         panel.setAttribute('aria-hidden', 'false');
         panel.inert = false;

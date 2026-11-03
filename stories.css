@@ -15,6 +15,7 @@
 .story-caption > span:last-child { color: #aaa28f; font-size: 12px; white-space: nowrap; }
 .story-cover:focus-visible, .story-page:focus-visible { outline: 1px solid #d0b77b; outline-offset: -2px; }
 .story-readers { width: 100%; min-width: 0; }
+body.story-reading .top-bar { background: #050505; mix-blend-mode: normal; }
 .story-panel { display: none; width: 100%; overflow: hidden; scroll-margin-top: 90px; }
 .story-panel[aria-hidden="false"] { display: block; animation: story-reader-reveal 350ms ease both; }
 @keyframes story-reader-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
