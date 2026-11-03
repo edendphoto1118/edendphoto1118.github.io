@@ -506,6 +506,7 @@
     .spec-list { margin-top: 0; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
     .spec-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 12px; align-items: center; min-height: 76px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .spec-key .zh-note { font-size: 0.72rem; letter-spacing: 0; }
+    .spec-row-output { min-height: 132px; }
     .spec-key { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
     .spec-val { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
     .spec-val .zh-note { margin-top: 4px; font-size: 0.72rem; line-height: 1.35; }
@@ -865,15 +866,6 @@
     </div>
   </section>
   
-  <section class="delivery-section">
-      <h3 class="delivery-title metallic-gold">THE UNBOXING RITUAL</h3>
-      <span class="delivery-subtitle">Elevating the tangible experience<span class="zh-note">讓影像離開螢幕，成為可被收藏的實體記憶</span></span>
-      <div class="delivery-showcase">
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>THE GRAND OBSIDIAN BOX<span class="zh-note">黑曜收藏盒</span></h4></div>
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>METAL ENGRAVED USB<span class="zh-note">金屬刻名 USB</span></h4></div>
-          <div class="delivery-card"><span class="delivery-icon">*</span><h4>HANDWRITTEN LETTER<span class="zh-note">手寫信箋</span></h4></div>
-      </div>
-  </section>
 
   <section class="booking-cta-section">
       <button class="ritual-btn" onclick="toggleBookingSection()">
@@ -963,7 +955,7 @@
             style: '+ NT$1,500<span class="zh-note">可加購妝髮服務</span>',
             retouch: '6 IMAGES<span class="zh-note">6 張精修照片</span>',
             color: '15 IMAGES<span class="zh-note">15 張調色檔，未精修</span>',
-            output: 'DIGITAL<span class="zh-note">電子檔案；可加購相框、海報等輸出品</span>',
+            output: 'DIGITAL<span class="zh-note">電子檔案；相框、海報、刻名 USB 可加購</span><span class="zh-note">加購實體輸出附手寫信；收藏包裝另選</span>',
             space: 'INCLUDED<span class="zh-note">已含棚費</span>'
         },
         'NightIssue': {
@@ -971,7 +963,7 @@
             style: 'SELF PREPARED<span class="zh-note">需自行完成妝髮</span>',
             retouch: '10 IMAGES<span class="zh-note">10 張精修照片</span>',
             color: '20–30 IMAGES<span class="zh-note">20–30 張調色檔，未精修</span>',
-            output: 'DIGITAL<span class="zh-note">電子檔案；可加購相框、海報等輸出品</span>',
+            output: 'DIGITAL<span class="zh-note">電子檔案；相框、海報、刻名 USB 可加購</span><span class="zh-note">加購實體輸出附手寫信；收藏包裝另選</span>',
             space: 'NOT INCLUDED<span class="zh-note">如使用攝影棚，棚費另計</span>'
         },
         'Cover': {
@@ -979,7 +971,7 @@
             style: '+ NT$1,500<span class="zh-note">可加購妝髮服務</span>',
             retouch: '10 IMAGES<span class="zh-note">1 張封面精修排版＋9 張精修照</span>',
             color: '20 IMAGES<span class="zh-note">20 張調色檔，未精修</span>',
-            output: 'COVER PRINT<span class="zh-note">電子檔案＋雜誌封面實體輸出</span>',
+            output: 'COVER PRINT<span class="zh-note">電子檔案＋雜誌封面實體輸出</span><span class="zh-note">含專屬收藏包裝與手寫信</span><span class="zh-note">刻名 USB 可加購</span>',
             space: 'NOT INCLUDED<span class="zh-note">棚費另計</span>'
         }
     };
@@ -989,7 +981,7 @@
         style: '+ NT$1,500<span class="zh-note">可加購妝髮服務</span>',
         retouch: '10 IMAGES<span class="zh-note">1 張海報精修排版＋9 張精修照</span>',
         color: '20 IMAGES<span class="zh-note">20 張調色檔，未精修</span>',
-        output: 'POSTER PRINT<span class="zh-note">電子檔案＋海報實體輸出</span>',
+        output: 'POSTER PRINT<span class="zh-note">電子檔案＋海報實體輸出</span><span class="zh-note">含專屬收藏包裝與手寫信</span><span class="zh-note">刻名 USB 可加購</span>',
         space: 'NOT INCLUDED<span class="zh-note">棚費另計</span>'
     };
 
@@ -1003,7 +995,7 @@
     ];
 
     function renderPlanSpecs(plan) {
-        return planSpecFields.map(([key, label, note]) => `<div class="spec-row"><span class="spec-key">${label}<span class="zh-note">${note}</span></span><span class="spec-val">${plan[key]}</span></div>`).join('');
+        return planSpecFields.map(([key, label, note]) => `<div class="spec-row${key === 'output' ? ' spec-row-output' : ''}"><span class="spec-key">${label}<span class="zh-note">${note}</span></span><span class="spec-val">${plan[key]}</span></div>`).join('');
     }
     document.querySelectorAll('[data-plan-specs]').forEach((list) => {
         list.innerHTML = renderPlanSpecs(planData[list.dataset.planSpecs]);
