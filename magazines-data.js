@@ -590,15 +590,21 @@ globalThis.EDEN_MAGAZINES = [
     "title": "ISSUE 30",
     "path": "images/works/cover30/",
     "pages": [
-      "39.png",
-      "40.png",
-      "41.png",
-      "42.png",
-      "43.png",
-      "44.png",
-      "45.png",
-      "46.png",
-      "47.png"
+      "23.png",
+      "24.png",
+      "25.png"
+    ],
+    "noShadow": false
+  },
+  {
+    "id": "vol-31",
+    "volume": 31,
+    "title": "ISSUE 31",
+    "path": "images/works/cover31/",
+    "pages": [
+      "26.png",
+      "27.png",
+      "28.png"
     ],
     "noShadow": false
   }
