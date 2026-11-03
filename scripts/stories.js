@@ -8,7 +8,9 @@
     const rail = document.createElement('div');
     rail.className = 'story-rail';
     rail.setAttribute('aria-label', '敘事企劃');
-    container.replaceChildren(rail);
+    const readers = document.createElement('div');
+    readers.className = 'story-readers';
+    container.replaceChildren(rail, readers);
     let active = null;
 
     const image = (story, file, label) => {
@@ -46,6 +48,8 @@
       const panel = document.createElement('div');
       panel.id = `story-pages-${index}`;
       panel.className = 'story-panel';
+      panel.setAttribute('role', 'region');
+      panel.setAttribute('aria-label', `${story.title} 完整閱讀區`);
       panel.inert = true;
       panel.setAttribute('aria-hidden', 'true');
       const pages = document.createElement('div');
@@ -63,12 +67,12 @@
       const open = () => {
         if (active && active !== close) active();
         if (!loaded) {
-          const files = story.pages.length > 1 ? story.pages.slice(1) : story.pages;
+          const files = story.pages;
           files.forEach((file, pageIndex) => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'story-page';
-            button.setAttribute('aria-label', `放大 ${story.title} 第 ${story.pages.length > 1 ? pageIndex + 2 : 1} 頁`);
+            button.setAttribute('aria-label', `放大 ${story.title} 第 ${pageIndex + 1} 頁`);
             const img = image(story, file, `${story.title} / ${file}`);
             button.append(img);
             button.addEventListener('click', () => openLightbox(img));
@@ -84,15 +88,18 @@
         active = close;
       };
       item.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') open(); });
-      item.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') close(); });
       cover.addEventListener('click', () => {
-        if (matchMedia('(hover: hover) and (pointer: fine)').matches) open();
-        else if (item.classList.contains('is-open')) close();
-        else open();
+        open();
+        requestAnimationFrame(() => panel.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
       });
       item.addEventListener('keydown', (event) => { if (event.key === 'Escape') { close(); cover.focus(); } });
+      panel.addEventListener('keydown', (event) => { if (event.key === 'Escape') { close(); cover.focus(); } });
       const controls = document.createElement('div');
       controls.className = 'story-controls';
+      const heading = document.createElement('span');
+      heading.className = 'story-reader-title';
+      heading.textContent = `${story.title} / ${story.pages.length} 頁`;
+      controls.append(heading);
       [-1, 1].forEach((direction) => {
         const button = document.createElement('button');
         button.type = 'button';
@@ -102,9 +109,10 @@
         button.addEventListener('click', () => pages.scrollBy({ left: direction * pages.clientWidth * 0.85, behavior: 'smooth' }));
         controls.append(button);
       });
-      panel.append(pages, controls);
-      item.append(cover, panel);
+      panel.append(controls, pages);
+      item.append(cover);
       rail.append(item);
+      readers.append(panel);
       enableSilkyHorizontalRail(pages);
       pages.addEventListener('wheel', (event) => event.stopPropagation(), { passive: true });
       pages.addEventListener('pointerdown', (event) => event.stopPropagation());
