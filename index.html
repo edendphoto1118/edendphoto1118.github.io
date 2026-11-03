@@ -428,6 +428,11 @@
     .selection-points li { border-left: 1px solid rgba(191,149,63,0.34); padding-left: 16px; color: #c8c8c8; font-size: 0.9rem; line-height: 1.55; letter-spacing: 0.005em; }
     .selection-form { display: grid; gap: 18px; }
     .selection-field { border: 1px solid rgba(255,255,255,0.1); padding: 18px 18px 20px; background: rgba(0,0,0,0.16); }
+    .selection-instagram { animation: instagram-border-breathe 2.8s ease-in-out infinite; }
+    .selection-instagram:focus-within { animation: none; border-color: #d9c37d; }
+    @keyframes instagram-border-breathe { 0%, 100% { border-color: rgba(191,149,63,0.3); box-shadow: 0 0 0 rgba(191,149,63,0); } 50% { border-color: rgba(217,195,125,0.9); box-shadow: 0 0 12px rgba(191,149,63,0.12); } }
+    .selection-dm-reminder { display: block; margin-top: 10px; color: #ff8b8b; font-size: 0.85rem; line-height: 1.6; letter-spacing: 0; }
+    @media (prefers-reduced-motion: reduce) { .selection-instagram { animation: none; border-color: #d9c37d; } }
     .selection-field label { display: block; color: #d9c37d; font-size: 0.82rem; letter-spacing: 0.04em; text-transform: none; margin-bottom: 10px; }
     .selection-field .zh-note { margin-top: 3px; font-size: 0.78rem; letter-spacing: 0.02em; }
     .selection-field input, .selection-field textarea, .selection-field select { width: 100%; border: 0; outline: 0; background: transparent; color: #f5f5f5; font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.98rem; line-height: 1.6; padding: 2px 0; }
@@ -775,17 +780,12 @@
               <div class="selection-copy">
                   <span class="selection-kicker">開放登記</span>
                   <h3>想成為 EDEN 的拍攝對象？</h3>
-                  <p>留下你的帳號、想嘗試的影像方向與拍攝原因。若氣質符合近期企劃，我會透過 Instagram 聯繫你。</p>
-                  <ul class="selection-points">
-                      <li>填寫很短，不是測驗。</li>
-                      <li>歡迎新面孔、作品集需求與想嘗試鏡頭的人。</li>
-                      <li>可公開分享作品者會優先考慮。</li>
-                  </ul>
+                  <p>留下帳號與想拍的方向，讓我們一起創作。合適的企劃將透過 IG 私訊邀請。</p>
               </div>
               <form class="selection-form" action="https://formspree.io/f/xgovddwr" method="POST">
-                  <div class="selection-field">
-                      <label>Instagram 帳號<span class="zh-note">公開帳號優先，方便確認氣質與聯繫。</span></label>
-                      <input type="text" name="instagram" required placeholder="@your_id">
+                  <div class="selection-field selection-instagram">
+                      <label for="selection-instagram">Instagram 帳號<span class="zh-note">僅限公開帳號並追蹤eden_d_photo</span></label>
+                      <input id="selection-instagram" type="text" name="instagram" required placeholder="@your_id" autocapitalize="none" spellcheck="false">
                   </div>
                   <div class="selection-field">
                       <label>你最想嘗試哪種影像？</label>
@@ -802,42 +802,14 @@
                       </div>
                   </div>
                   <div class="selection-field">
-                      <label>你覺得自己最適合的氣質？</label>
-                      <select name="visual_mood" required>
-                          <option value="" disabled selected>選擇最接近的一項</option>
-                          <option>乾淨、安靜</option>
-                          <option>冷感、電影感</option>
-                          <option>柔和、優雅</option>
-                          <option>鮮明、有表現力</option>
-                          <option value="__other__">其他</option>
-                      </select>
-                      <div class="selection-other-input" hidden>
-                          <input type="text" name="visual_mood_other" placeholder="請形容你的氣質或想呈現的感覺">
-                      </div>
-                  </div>
-                  <div class="selection-field">
-                      <label>想拍的原因<span class="zh-note">這題可以自由寫，一句話也可以。</span></label>
-                      <textarea name="message" required placeholder="我想拍是因為..."></textarea>
-                  </div>
-                  <div class="selection-field">
-                      <label>你方便拍攝的時間？</label>
-                      <select name="availability" required>
-                          <option value="" disabled selected>選擇可配合時段</option>
-                          <option>平日白天</option>
-                          <option>平日晚上</option>
-                          <option>週末白天</option>
-                          <option>週末晚上</option>
-                          <option>時間彈性，可再討論</option>
-                          <option value="__other__">其他</option>
-                      </select>
-                      <div class="selection-other-input" hidden>
-                          <input type="text" name="availability_other" placeholder="請填寫你方便的時間">
-                      </div>
+                      <label for="selection-message">給EDEN的話</label>
+                      <textarea id="selection-message" name="message" required placeholder="想拍的畫面，或任何想對我說的話..."></textarea>
                   </div>
                   <div class="portfolio-consent">
                       <label><input type="checkbox" name="portfolio_publication_consent" value="我同意公開於 EDEN 官方網站、作品集與 Instagram" required><span>我同意 EDEN 選用本次互惠拍攝的成品，公開展示於官方網站、作品集與 Instagram。<span class="zh-note">若希望指定照片不上架、匿名呈現或日後撤下，可直接聯繫 EDEN。</span></span></label>
+                      <span class="selection-dm-reminder">請留意 IG 私訊與陌生訊息，以免錯過拍攝邀請。</span>
                   </div>
-                  <button class="selection-submit" type="submit">送出互惠邀請</button>
+                  <button class="selection-submit" type="submit">寄送申請</button>
               </form>
           </div>
       </div>
