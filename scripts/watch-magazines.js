@@ -1,6 +1,7 @@
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const { storySourceDir } = require('./story-source');
 
 const rootDir = path.resolve(__dirname, '..');
 const worksDir = path.join(rootDir, 'images', 'works');
@@ -33,10 +34,10 @@ function runGenerator() {
     windowsHide: true
   });
 
-  child.on('exit', () => {
+  child.on('exit', (code) => {
     running = false;
-    log('Generated magazine data.');
-    runPublisher();
+    log(code === 0 ? 'Generated magazine data.' : `Generator failed (${code}); publishing skipped.`);
+    if (code === 0) runPublisher();
     if (pending) {
       pending = false;
       runGenerator();
@@ -71,6 +72,7 @@ function snapshotDirectory(dir) {
   const entries = [];
 
   function walk(currentDir) {
+    if (!fs.existsSync(currentDir)) return;
     fs.readdirSync(currentDir, { withFileTypes: true }).forEach((entry) => {
       const fullPath = path.join(currentDir, entry.name);
       const relativePath = path.relative(worksDir, fullPath);
@@ -81,6 +83,7 @@ function snapshotDirectory(dir) {
   }
 
   walk(dir);
+  walk(storySourceDir);
   return entries.sort().join('\n');
 }
 

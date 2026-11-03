@@ -26,6 +26,19 @@ This project serves as a showcase for advanced frontend techniques & visual dire
 
 ## Magazine Updates
 
+### THE STORY
+
+`THE STORY` reads numbered project folders from `../../02 雜誌/正式版/THE STORY`
+relative to this repository. Set `EDEN_STORY_SOURCE` to override that source on
+another computer. Source files are copied into `images/works/the-story`; original
+folders and filenames stay untouched. The lowest numbered image becomes the
+poster, and remaining pages keep their numeric order. The watcher also monitors
+the source folder. Local previews can run from the copied assets when the source
+folder is unavailable. Removing a page from the source removes it from the next
+generated index; retained copied originals are not automatically deleted.
+
+Run `node scripts/generate-magazines.js` to import and generate previews manually.
+
 Magazine issues are generated from folders in `images/works`.
 
 * `cover` is VOL.01.

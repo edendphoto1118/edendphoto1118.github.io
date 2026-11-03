@@ -5,6 +5,7 @@
   <title>EDEN｜DEEN — Visual Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#050505">
+  <link rel="stylesheet" href="stories.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -734,10 +735,7 @@
         <a href="#gallery-essentials" class="filter-btn active" onclick="scrollToSection(event, 'gallery-essentials')">ESSENTIALS<span class="zh-note">人像選輯</span></a>
         <a href="#gallery-night" class="filter-btn" onclick="scrollToSection(event, 'gallery-night')">NIGHT ISSUE<span class="zh-note">夜行</span></a>
         <a href="#gallery-cover" class="filter-btn" onclick="scrollToSection(event, 'gallery-cover')">MAGAZINE WORKS<span class="zh-note">雜誌篇章</span></a>
-        <div class="locked-filter-wrap" onclick="showToast('UNDER PREPARATION // 此系列正在整理中')">
-            <span class="filter-btn">THE STORY<span class="zh-note">敘事札記</span></span>
-            <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
-        </div>
+        <a href="#gallery-story" class="filter-btn" onclick="scrollToSection(event, 'gallery-story')">THE STORY<span class="zh-note">敘事企劃</span></a>
         <div class="locked-filter-wrap" onclick="showToast('PROJECT CLASSIFIED // 專案尚未公開')">
             <span class="filter-btn">PROJECT: ROYAL<span class="zh-note">典藏企劃</span></span>
             <div class="mini-sealing"><div class="mini-tape mini-tape-left"></div><div class="mini-tape mini-tape-right"></div></div>
@@ -757,6 +755,10 @@
     <div id="gallery-cover" class="gallery-sub-section">
         <h3 class="gallery-sub-title">MAGAZINE WORKS <span>/ ISSUES</span><span class="zh-note">雜誌篇章</span></h3>
         <div id="container-cover"></div>
+    </div>
+    <div id="gallery-story" class="gallery-sub-section" hidden>
+        <h3 class="gallery-sub-title">THE STORY <span>/ VISUAL STORIES</span><span class="zh-note">敘事企劃</span></h3>
+        <div id="container-story"></div>
     </div>
   </section>
   
@@ -958,6 +960,7 @@
   <div id="essentialsArchive" class="essentials-archive" aria-hidden="true"></div>
 
   <script src="magazines-data.js"></script>
+  <script src="scripts/stories.js"></script>
   <script>
     if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
     window.addEventListener('DOMContentLoaded', () => {
@@ -1628,6 +1631,7 @@
     initializeSelectionOtherFields();
     generateEssentials();
     generateNightIssue();
+    generateStories();
     generateMagazines();
     initializeHeroTrailer();
 

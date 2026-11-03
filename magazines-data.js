@@ -65,6 +65,74 @@ globalThis.EDEN_NIGHT_ISSUE = [
   "MEITU_20251029_183904303.jpg",
   "VIP_Temp_File_image_repair_1761701413812.jpg"
 ];
+globalThis.EDEN_STORIES = [
+  {
+    "id": "001",
+    "title": "STORY 001",
+    "path": "images/works/the-story/001/",
+    "pages": [
+      "48.png",
+      "49.png",
+      "50.png",
+      "51.png",
+      "52.png",
+      "53.png",
+      "54.png",
+      "55.png",
+      "56.png",
+      "57.png",
+      "58.png",
+      "59.png",
+      "60.png",
+      "61.png",
+      "62.png",
+      "63.png",
+      "64.png"
+    ]
+  },
+  {
+    "id": "002",
+    "title": "STORY 002",
+    "path": "images/works/the-story/002/",
+    "pages": [
+      "66.png",
+      "67.png",
+      "68.png",
+      "69.png",
+      "70.png",
+      "71.png",
+      "72.png",
+      "73.png",
+      "74.png",
+      "75.png",
+      "76.png",
+      "77.png",
+      "78.png",
+      "79.png",
+      "80.png",
+      "81.png",
+      "82.png",
+      "83.png",
+      "84.png"
+    ]
+  },
+  {
+    "id": "003",
+    "title": "STORY 003",
+    "path": "images/works/the-story/003/",
+    "pages": [
+      "90.png",
+      "91.png",
+      "92.png",
+      "93.png",
+      "94.png",
+      "95.png",
+      "96.png",
+      "97.png",
+      "98.png"
+    ]
+  }
+];
 globalThis.EDEN_MAGAZINES = [
   {
     "id": "vol-01",
