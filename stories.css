@@ -16,9 +16,9 @@
 .story-cover:focus-visible, .story-page:focus-visible { outline: 1px solid #d0b77b; outline-offset: -2px; }
 .story-panel { width: 0; overflow: hidden; opacity: 0; transition: width 650ms cubic-bezier(.22,1,.36,1), opacity 350ms ease; }
 .story-item.is-open .story-panel { width: min(58vw, 900px); opacity: 1; }
-.story-pages { display: flex; gap: 20px; height: var(--story-height); margin-left: 28px; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: #8e7540 #151515; overscroll-behavior-x: contain; }
-.story-page { flex: 0 0 auto; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
-.story-page img { height: 100%; width: auto; max-width: none; object-fit: contain; }
+.story-pages { display: flex; gap: 0; height: var(--story-height); margin-left: 28px; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: #8e7540 #151515; overscroll-behavior-x: contain; }
+.story-page { display: block; flex: 0 0 auto; height: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; line-height: 0; cursor: zoom-in; }
+.story-page img { display: block; height: 100%; width: auto; max-width: none; object-fit: contain; }
 .story-controls { height: 54px; display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
 .story-rail.is-dragging, .story-pages.is-dragging { cursor: grabbing; }
 .story-rail.is-dragging .story-cover, .story-pages.is-dragging .story-page { pointer-events: none; }
