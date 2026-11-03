@@ -454,9 +454,10 @@
 
     /* --- 9. PRICING --- */
     .pricing-section { padding: 150px clamp(24px, 4vw, 56px) 100px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(22px, 2.4vw, 34px); max-width: 1540px; margin: 0 auto; width: 100%; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(22px, 2.4vw, 34px); max-width: 1200px; margin: 0 auto; width: 100%; }
     .price-card { border: 1px solid rgba(255,255,255,0.08); padding: 0; position: relative; transition: border-color 0.5s ease, background 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease; display: flex; flex-direction: column; background: #070707; aspect-ratio: 4 / 5; min-height: auto; overflow: hidden; border-radius: 18px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.035), 0 18px 48px rgba(0,0,0,0.18); }
     .price-card .border-line { position: absolute; background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); transition: all 0.4s ease-out; opacity: 0; z-index: 10; }
+    .pricing-grid .price-card { aspect-ratio: auto; }
     .border-top { top: 0; left: 0; height: 1px; width: 0%; } .border-right { top: 0; right: 0; width: 1px; height: 0%; }
     .border-bottom { bottom: 0; right: 0; height: 1px; width: 0%; } .border-left { bottom: 0; left: 0; width: 1px; height: 0%; }
     .price-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.055), 0 24px 58px rgba(0,0,0,0.26); }
@@ -466,7 +467,7 @@
     .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease, background-image 0.25s ease; z-index: 0; background-size: cover; background-position: center; filter: brightness(0.4); }
     .price-card:hover .card-bg, .price-card.bg-preview .card-bg { opacity: 0.3; transform: scale(1.05); }
     
-    .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: clamp(26px, 2.45vw, 38px) clamp(24px, 2.35vw, 38px); justify-content: space-between; }
+    .card-content { position: relative; z-index: 2; height: auto; flex: 1; display: grid; grid-template-rows: minmax(230px, auto) 1fr; gap: 20px; padding: clamp(26px, 2.45vw, 38px) clamp(24px, 2.35vw, 38px); }
     .plan-id { font-family: 'Cinzel', serif; font-size: 1.05rem; color: #555; letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
     .plan-title-block { margin-bottom: clamp(16px, 1.6vw, 22px); }
     .plan-en { display: block; font-family: 'Cinzel', 'Noto Serif TC', 'Microsoft JhengHei', serif; font-size: clamp(2.1rem, 2.15vw, 2.52rem); letter-spacing: 0.08em; color: #fff; margin-bottom: 6px; }
@@ -502,8 +503,9 @@
     @media (hover: hover) { .price-card.locked-plan:hover .sealing-container { opacity: 1; } .price-card.locked-plan:hover .tape-left { transform: rotate(20deg) translateX(0); } .price-card.locked-plan:hover .tape-right { transform: rotate(-20deg) translateX(0); } }
     @media (hover: none) { .price-card.locked-plan .sealing-container { opacity: 1; } .tape-left { transform: rotate(20deg) translateX(0); } .tape-right { transform: rotate(-20deg) translateX(0); } .price-card.locked-plan .card-content { opacity: 0.3; } }
     
-    .spec-list { margin-top: clamp(22px, 2vw, 34px); border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
-    .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .spec-list { margin-top: 0; border-top: 2px solid rgba(255,255,255,0.1); width: 100%; }
+    .spec-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 12px; align-items: center; min-height: 76px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .spec-key .zh-note { font-size: 0.72rem; letter-spacing: 0; }
     .spec-key { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.72rem; color: #777; letter-spacing: 0.08em; text-transform: uppercase; }
     .spec-val { font-family: 'Montserrat', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; font-size: 0.82rem; color: #d0d0d0; letter-spacing: 0.04em; text-align: right; }
     .spec-val .zh-note { margin-top: 4px; font-size: 0.72rem; line-height: 1.35; }
@@ -669,7 +671,7 @@
         .magazine-hint { font-size: 0.66rem; bottom: 20px; padding: 11px 18px 15px; letter-spacing: 0.1em; max-width: calc(100vw - 48px); white-space: normal; text-align: center; }
         .pricing-grid { display: flex; flex-direction: column; gap: 40px; } 
         .price-card { aspect-ratio: auto; min-height: auto; height: auto; }
-        .card-content { height: auto; padding: 50px 6vw; gap: 40px; justify-content: flex-start; }
+        .card-content { height: auto; padding: 36px 6vw; gap: 28px; grid-template-rows: auto auto; }
         .plan-status { font-size: clamp(0.95rem, 5.6vw, 1.35rem); letter-spacing: 0.04em; }
         .plan-status .status-en { gap: 0.2em; }
         .delivery-showcase { display: flex; flex-direction: column; gap: 30px; }
@@ -827,13 +829,8 @@
         <div class="card-content">
             <div><span class="plan-id">NO. 0</span><div class="plan-title-block"><span class="plan-en">ESSENTIALS</span><span class="plan-zh">人像選輯</span></div><p class="plan-philosophy"><span class="plan-line">Your first image, kept with clarity.<span class="zh-note">為第一次留下影像的人準備，以乾淨構圖與自然光感，留住當下最像你的樣子。</span></span></p></div>
             <div>
-                <div class="spec-list">
-                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">0.5 HR<span class="zh-note">半小時拍攝</span></span></div>
-                    <div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">妝髮依需求另計</span></span></div>
-                    <div class="spec-row"><span class="spec-key">RETOUCH</span><span class="spec-val">2 IMAGES<span class="zh-note">兩幅精修</span></span></div>
-                    <div class="spec-row"><span class="spec-key">SPACE</span><span class="spec-val">ADD-ON<span class="zh-note">棚費另計</span></span></div>
-                </div>
-                <div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$1,500</span><span class="price-note">棚費、妝髮依需求另計</span></div>
+                <div class="spec-list" data-plan-specs="Essentials"></div>
+                <div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$2,500</span><span class="price-note">已含棚費；加妝髮共 NT$4,000</span></div>
             </div>
         </div>
       </div>
@@ -843,13 +840,8 @@
         <div class="card-content">
             <div><span class="plan-id">NO. I / EDEN RECOMMENDS</span><div class="plan-title-block"><span class="plan-en">NIGHT ISSUE</span><span class="plan-zh">夜行</span></div><p class="plan-philosophy"><span class="plan-line">The city after dark, shaped into your scene.<span class="zh-note">在城市入夜之後拍攝，讓街燈、車流、陰影與閃光，成為一段有情緒的影像敘事。</span></span></p></div>
             <div>
-                <div class="spec-list">
-                    <div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">NIGHT SESSION<span class="zh-note">夜間外拍</span></span></div>
-                    <div class="spec-row"><span class="spec-key">STYLE</span><span class="spec-val">SELF PREPARED<span class="zh-note">需自行完成妝髮</span></span></div>
-                    <div class="spec-row"><span class="spec-key">MOOD</span><span class="spec-val spec-highlight">AFTER DARK<span class="zh-note">夜色與閃光</span></span></div>
-                    <div class="spec-row"><span class="spec-key">OUTPUT</span><span class="spec-val">DIGITAL<span class="zh-note">數位作品</span></span></div>
-                </div>
-                <div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$3,600</span><span class="price-note">場地與交通需求於拍攝前確認</span></div>
+                <div class="spec-list" data-plan-specs="NightIssue"></div>
+                <div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$3,600</span><span class="price-note">妝髮自備；如使用攝影棚，棚費另計</span></div>
             </div>
         </div>
       </div>
@@ -858,7 +850,15 @@
         <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
         <div class="card-content">
             <div><span class="plan-id">NO. II</span><div class="plan-title-block"><span class="plan-en">THE COVER</span><span class="plan-zh">封面誌</span></div><p class="plan-philosophy"><span class="plan-line">A composed cover image, designed to stay with you.<span class="zh-note">從拍攝、引導到版面編排，完成一張能成為個人企劃與作品集主視覺的封面影像。</span></span></p></div>
-            <div><div class="spec-list"><div class="spec-row"><span class="spec-key">SHOOT</span><span class="spec-val">1.5 HR<span class="zh-note">一場半影像敘事</span></span></div><div class="spec-row"><span class="spec-key">LAYOUT</span><span class="spec-val spec-highlight">INCLUDED<span class="zh-note">含封面版面編排</span></span></div><div class="spec-row"><span class="spec-key">STYLING</span><span class="spec-val">ADD-ON<span class="zh-note">妝髮依需求另計</span></span></div><div class="spec-row"><span class="spec-key">SPACE</span><span class="spec-val">ADD-ON<span class="zh-note">棚費另計</span></span></div></div><div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$5,000</span><span class="price-note">棚費、妝髮依需求另計</span></div></div>
+            <div><div class="spec-list" data-plan-specs="Cover"></div><div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$5,000</span><span class="price-note">含封面精修、排版與輸出；棚費另計</span></div></div>
+        </div>
+      </div>
+      <div class="price-card dynamic-bg-card" data-bg-source="story" onclick="openBookingWithPlan('Story')">
+        <div class="card-bg" aria-hidden="true"></div>
+        <span class="border-line border-top"></span><span class="border-line border-right"></span><span class="border-line border-bottom"></span><span class="border-line border-left"></span>
+        <div class="card-content">
+            <div><span class="plan-id">NO. III</span><div class="plan-title-block"><span class="plan-en">THE STORY</span><span class="plan-zh">敘事企劃</span></div><p class="plan-philosophy"><span class="plan-line">Your story, made into a poster.<span class="zh-note">讓一組影像有了主題，將你的故事收進一張電影感海報。</span></span></p></div>
+            <div><div class="spec-list" data-plan-specs="Story"></div><div class="plan-footer" style="margin-top:20px;"><span class="price-amount">NT$6,000</span><span class="price-note">含海報精修、排版與輸出；棚費另計</span></div></div>
         </div>
       </div>
     </div>
@@ -889,11 +889,8 @@
                 <div class="form-group"><label>NAME<span class="zh-note">你的名字</span></label><input type="text" name="name" required placeholder="YOUR NAME / 請留下名字"></div>
                 <div class="form-group"><label>CONTACT EMAIL</label><input type="email" name="email" required placeholder="EMAIL ADDRESS"></div>
                 <div class="form-group"><label>INSTAGRAM ID<span style="display:block; margin-top:5px; color:#BF953F; font-size:0.72rem; letter-spacing:0.08em;">* Please use a public account. Scheduling will be confirmed by Instagram DM.<span class="zh-note">請使用公開帳號，拍攝時程將以 Instagram 私訊確認。</span></span></label><input type="text" name="instagram" required placeholder="@YOUR_ID"></div>
-                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 人像選輯</option><option value="NightIssue">NIGHT ISSUE / 夜行</option><option value="Cover">THE COVER / 封面誌</option></select></div>
+                <div class="form-group"><label>PLAN<span class="zh-note">委託形式</span></label><select name="plan" id="planSelect" onchange="updatePlanDetails()"><option value="" disabled selected>SELECT A PLAN... / 選擇一種影像形式</option><option value="Essentials">ESSENTIALS / 人像選輯</option><option value="NightIssue">NIGHT ISSUE / 夜行</option><option value="Cover">THE COVER / 封面誌</option><option value="Story">THE STORY / 敘事企劃</option></select></div>
                 <div id="plan-details-box" style="display:none; background: rgba(191,149,63, 0.05); padding:20px; border:1px solid rgba(191,149,63,0.2); margin-bottom:30px;">
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">SHOOT<span class="zh-note">拍攝節奏</span></span><span id="d-time" style="color:#fff; font-size:0.8rem;"></span></div>
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">STYLING<span class="zh-note">造型設定</span></span><span id="d-style" style="color:#fff; font-size:0.8rem;"></span></div>
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding:10px 0;"><span style="font-size:0.7rem; color:#666;">RETOUCH<span class="zh-note">後期精修</span></span><span id="d-retouch" style="color:#fff; font-size:0.8rem;"></span></div>
                 </div>
                 <div class="form-group"><label>DATE<span class="zh-note">偏好的日期</span></label><input type="date" name="date" required></div>
                 <div class="form-group"><label>VISION<span class="zh-note">想被留下的樣子</span></label><textarea name="message" rows="3" placeholder="TELL ME ABOUT YOUR VISION... / 描述你想被看見的形象、用途或氛圍"></textarea></div>
@@ -961,29 +958,61 @@
 
     const planData = {
         'Essentials': {
-            time: '0.5 HR<span class="zh-note">半小時拍攝</span>',
-            style: 'ADD-ON<span class="zh-note">棚費、妝髮依需求另計</span>',
-            retouch: '2 IMAGES<span class="zh-note">兩幅精修</span>'
+            time: '1 HR<span class="zh-note">1 小時拍攝</span>',
+            style: '+ NT$1,500<span class="zh-note">可加購妝髮服務</span>',
+            retouch: '6 IMAGES<span class="zh-note">6 張精修照片</span>',
+            color: '15 IMAGES<span class="zh-note">15 張調色檔，未精修</span>',
+            output: 'DIGITAL<span class="zh-note">電子檔案；可加購相框、海報等輸出品</span>',
+            space: 'INCLUDED<span class="zh-note">已含棚費</span>'
         },
         'NightIssue': {
-            time: 'NIGHT SESSION<span class="zh-note">夜間外拍</span>',
+            time: '2 HR<span class="zh-note">2 小時夜間拍攝</span>',
             style: 'SELF PREPARED<span class="zh-note">需自行完成妝髮</span>',
-            retouch: 'EDEN EDIT<span class="zh-note">依夜行風格完成影像</span>'
+            retouch: '10 IMAGES<span class="zh-note">10 張精修照片</span>',
+            color: '20–30 IMAGES<span class="zh-note">20–30 張調色檔，未精修</span>',
+            output: 'DIGITAL<span class="zh-note">電子檔案；可加購相框、海報等輸出品</span>',
+            space: 'NOT INCLUDED<span class="zh-note">如使用攝影棚，棚費另計</span>'
         },
         'Cover': {
-            time: '1.5 HR<span class="zh-note">一場半影像敘事</span>',
-            style: 'LAYOUT INCLUDED<span class="zh-note">含封面版面編排；棚費、妝髮另計</span>',
-            retouch: 'COVER EDIT<span class="zh-note">封面影像後期製作</span>'
+            time: '2 HR<span class="zh-note">2 小時拍攝</span>',
+            style: '+ NT$1,500<span class="zh-note">可加購妝髮服務</span>',
+            retouch: '10 IMAGES<span class="zh-note">1 張封面精修排版＋9 張精修照</span>',
+            color: '20 IMAGES<span class="zh-note">20 張調色檔，未精修</span>',
+            output: 'COVER PRINT<span class="zh-note">電子檔案＋雜誌封面實體輸出</span>',
+            space: 'NOT INCLUDED<span class="zh-note">棚費另計</span>'
         }
     };
+
+    planData.Story = {
+        time: '2 HR<span class="zh-note">2 小時拍攝</span>',
+        style: '+ NT$1,500<span class="zh-note">可加購妝髮服務</span>',
+        retouch: '10 IMAGES<span class="zh-note">1 張海報精修排版＋9 張精修照</span>',
+        color: '20 IMAGES<span class="zh-note">20 張調色檔，未精修</span>',
+        output: 'POSTER PRINT<span class="zh-note">電子檔案＋海報實體輸出</span>',
+        space: 'NOT INCLUDED<span class="zh-note">棚費另計</span>'
+    };
+
+    const planSpecFields = [
+        ['time', 'SHOOT', '拍攝時間'],
+        ['style', 'STYLING', '妝髮造型'],
+        ['retouch', 'PHOTO', '精修照片'],
+        ['color', 'COLOR EDITS', '調色檔・未精修'],
+        ['output', 'OUTPUT', '交付內容'],
+        ['space', 'SPACE', '拍攝場地']
+    ];
+
+    function renderPlanSpecs(plan) {
+        return planSpecFields.map(([key, label, note]) => `<div class="spec-row"><span class="spec-key">${label}<span class="zh-note">${note}</span></span><span class="spec-val">${plan[key]}</span></div>`).join('');
+    }
+    document.querySelectorAll('[data-plan-specs]').forEach((list) => {
+        list.innerHTML = renderPlanSpecs(planData[list.dataset.planSpecs]);
+    });
 
     function updatePlanDetails() {
         const select = document.getElementById('planSelect');
         const box = document.getElementById('plan-details-box');
         if (planData[select.value]) {
-            document.getElementById('d-time').innerHTML = planData[select.value].time;
-            document.getElementById('d-style').innerHTML = planData[select.value].style;
-            document.getElementById('d-retouch').innerHTML = planData[select.value].retouch;
+            box.innerHTML = renderPlanSpecs(planData[select.value]);
             box.style.display = 'block';
         } else { box.style.display = 'none'; }
     }
@@ -1356,6 +1385,10 @@
     }
 
     function getPricingBackgroundImages(source) {
+        if (source === 'story') {
+            return (globalThis.EDEN_STORIES || []).filter((story) => story.pages?.length)
+                .map((story) => getPreviewPath(`${story.path}${encodeURIComponent(story.pages[0])}`));
+        }
         if (source === 'essentials') {
             return essentialImages.map((fileName) => getEssentialPreviewPath(fileName));
         }
