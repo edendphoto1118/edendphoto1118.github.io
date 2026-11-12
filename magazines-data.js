@@ -131,6 +131,14 @@ globalThis.EDEN_STORIES = [
       "97.png",
       "98.png"
     ]
+  },
+  {
+    "id": "XXX",
+    "title": "STORY XXX",
+    "path": "images/works/the-story/XXX/",
+    "pages": [
+      "EDENDEEN_MAGAZINE.png"
+    ]
   }
 ];
 globalThis.EDEN_MAGAZINES = [
